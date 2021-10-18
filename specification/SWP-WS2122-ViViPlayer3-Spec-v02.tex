@@ -1,0 +1,113 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amssymb}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[top=2.5cm, bottom=2cm, left=2cm, right=2cm]{geometry}
+\usepackage{fancyhdr}
+
+% header style
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\thepage}
+\lhead{\textit{SW-Projekt 2021/22}}
+\chead{\textit{PROJEKTNAME}}
+
+% pdf options
+\hypersetup{
+	pdfauthor = {Gruppe ViViPlayer3},
+	pdftitle = {Spezifikation ViViPlayer3},
+	pdfsubject = {Softwareprojekt},
+	pdfcreator = {VORNAME NACHNAME}}
+
+% command to add the signateure-fields
+\newcommand*{\SignatureAndDate}[1]{%
+    \par\noindent\makebox[\linewidth]{\hrulefill}%
+    \par\noindent\makebox[\linewidth][l]{#1}%
+}%
+
+% command to add a TODO Line
+\newcommand*{\todo}[1]{\textbf{\textcolor{red}{TODO: #1}\\}}
+
+\definecolor{lightlightgray}{RGB}{222,222,222}
+
+\begin{document}
+	\thispagestyle{empty} % no header on first page
+	\begin{center}
+		{\Huge Softwareprojekt Wintersemester 2021/2022}\\[.35cm]
+		{\large am Fachgebiet Software Engineering, Leibniz Universität Hannover}\\[.1cm]
+	\end{center}
+	\begin{center}
+	\colorbox{lightlightgray}{
+		\begin{minipage}{\linewidth}
+			\begin{center}
+				\vspace{0.2cm}
+				{\Huge Spezifikation}\\[.1cm]
+				{\Huge ViViPlayer3}\\[.3cm]
+				\texttt{SWP-WS2122-ViViPlayer3-Spec-v01.pdf}
+				\vspace{0.2cm}
+			\end{center}
+		\end{minipage}
+	}
+	\end{center}
+	\textbf{Vorgelegt}\\
+		\hspace*{1cm}am TT.MM.JJJJ \\
+		\hspace*{1cm}von ViViPlayer3\\[0.2cm]
+	\textbf{Ausführende:}
+		\begin{center}
+			\begin{tabular}{|l|l|l|}
+				\hline
+				\textit{Nachname} 				& \textit{Vorname} 	& \textit{Rolle} \\ \hline\hline
+				Nguyen							& Dinh Minh				& Projektleiter \\ \hline
+				Anfuso							& Matthew				& Qualitätsbeauftragter \\ \hline
+				Bohlmann							& Tim			& \\ \hline
+				Tran							& The			& \\ \hline
+				Hartmann							& Jakob			& \\ \hline
+				Puglisi							& Joshua			& \\ \hline
+				NACHNAME							& VORNAME			& \\ \hline
+				NACHNAME							& VORNAME				& \\ \hline
+				NACHNAME							& VORNAME			& \\ \hline
+			\end{tabular}
+		\end{center}
+		\vspace{0.3cm}
+	\textbf{Das Dokument enthält}\\[0.1cm]
+		\hspace*{1cm}$\boxtimes$ Die Anforderungen aus Kundensicht (User Requirements)\\[0.1cm]
+		\hspace*{1cm}$\boxtimes$ Anforderungen, wie das zu System zu gestalten ist (System Requirements)\\[1cm]
+	\SignatureAndDate{Datum, Unterschrift des Projektleiters, auch für die anderen Projektangehörigen}\\[0.3cm]
+	\textbf{Kunden-Bewertung}\\[0.4cm]
+		Der Kunde, KUNDENNAME, bestätigt mit seiner Unterschrift, diese Anforderungsspezifikation erhalten, geprüft und für inhaltlich $\square$ \textbf{in Ordnung} \textbar~ $\square$ \textbf{weitgehend in Ordnung} \textbar ~ $\square$ \textbf{deutlich zu verbessernd} \textbar ~ $\square$ \textbf{nicht akzeptabel} befunden zu haben.\\[1cm]
+	\SignatureAndDate{Datum, Unterschrift des Kunden; evtl. Vermerk.}
+
+	\pagebreak
+	\tableofcontents
+	\pagebreak
+
+	\raggedright
+
+	\input{sections/kapitel1}
+	\pagebreak
+	\input{sections/kapitel2}
+	\pagebreak
+	\input{sections/kapitel3}
+	\pagebreak
+	\input{sections/kapitel4}
+	\pagebreak
+	\input{sections/kapitel5}
+	\pagebreak
+	\input{sections/kapitel6}
+	\pagebreak
+	\input{sections/kapitel7}
+	\pagebreak
+	\input{sections/kapitel8}
+	\pagebreak
+	\input{sections/kapitel9}
+
+\end{document}
+
