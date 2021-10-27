@@ -1,7 +1,18 @@
 \section{Rahmenbedingungen und Umfeld}
 
 \subsection{Einschränkungen und Vorgaben}
+Der Zugang zu der Web-App ist durch Anmeldedaten beschränkt, d.h. sind Username und Passwort notwendig, um sich einzuloggen. Alternative Login wie TAN ist auch möglich. Nutzer kann entweder als Moderator einloggen oder als Teilnehmer. Eine Session kann allerdings nur von dem Moderator vorbereitet werden.
+\linebreak
+\linebreak
+Bevor ein Session anfängt, hat der Moderator die Möglichkeiten, Video hochzuladen oder von Cloud einzubetten, das Video abzuspielen und auch zu segmentieren. Nachdem Hochladen wird das Video zuerst automatisch segmentiert, um die Aufwand zu minimieren, das Video selbst zu segmentieren. Moderator hat die Freiheit, mehrere Segmentierungen zu machen. Außerdem ist es auch möglich für Moderator, Annotationen für Verständnisfragen in dem Video zu stellen. Werden keine weitere Änderungen für das Video gemacht, kann Moderator auf ''Fertig'' klicken, dann startet eine Session.
+\linebreak
+\linebreak
+Während des Sessions kann der Moderator das Video abspielen und navigieren für den Teilnehmer. Teilnehmer kann das Abspielen des Videos live verfolgen, Fragen beantworten, und auch Stories schreiben. In dem Fall würde eine Frage im bestimmten Zeitpunkt kommen, kann der Teilnehmer auf die Antwort einfach klicken, und die wird dann gleich sichtbar. Zusätzlich werden die geschriebenen User Stories als .odt Datei in Jira hochgeladen nach Klicken des ''Upload'' Button. \linebreak
+\linebreak
+Nach Kundenpräferenz ist die maximale Anzahl von Moderator und Teilnehmer 18 Personen in einem Session.
 
 \subsection{Anwender}
+Durch das Abspielen des Vision Videos können die Kunden bewusst sein, was in dem Projekt passiert, und wie die Entwickler die Anforderungen erfüllen. Das gebotene User Stories Feature auch ermöglicht die direkte Kommunikation an der Entwickler, über alles was verbessert werden könnte. Softwareentwickler können damit verstehen was wirklich von den Kunden des Projekts gefordert ist. Kenntnis über Requirements Engineering ist die kern Voraussetzung, um Nutzer dieser WebApp zu werden.
 
 \subsection{Schnittstellen und angrenzende Systeme} 
+In diesem Projekt wird Django als Framework benutzt, da Django sowohl Frontend als auch Backend übernimmt. HTML5, CSS, JavaScript können in Django integriert werden mithilfe von frontend Bibliotheken von Django. Für Backend ist Django mit SQLite kompatibel, da es die Standarddatenbank ist.
