@@ -28,15 +28,15 @@ const markersDefault = [
   },
 ];
 const App = () => {
+  const videoRef = useRef(null);
   const [marker, setMarkers] = useState();
   const [player, setPlayer] = useState(null);
   const [manuellSegment, setManuellSegment] = useState();
   const [updateComponent, setUpdateComponent] = useState(false);
   let getSegmentFromStogare = localStorage.getItem("segmentSetting");
-  console.log("typeof Segment", typeof JSON.parse(getSegmentFromStogare));
-  console.log("typeof markersDefault", typeof markersDefault);
-  console.log(updateComponent);
-  const videoRef = useRef(null);
+  // console.log("typeof Segment", typeof JSON.parse(getSegmentFromStogare));
+  // console.log("typeof markersDefault", typeof markersDefault);
+  // console.log(updateComponent);
   // set state for default markers and video
   useEffect(() => {
     setMarkers(markersDefault);
@@ -48,7 +48,7 @@ const App = () => {
   useEffect(() => {
     setManuellSegment(JSON.parse(getSegmentFromStogare));
     buildMarkers(player, manuellSegment);
-    console.log(manuellSegment);
+    // console.log(manuellSegment);
   }, [getSegmentFromStogare]);
 
   const jumpToChapter = (video, { text, time }) => {
