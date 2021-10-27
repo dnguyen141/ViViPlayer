@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  redis:
+    image: redis:5
+    ports:
+      - "6379:6379"
+  django:
+    build: ./viviplayer
+    command: ["/app/venv/bin/python", "manage.py", "runserver", "0.0.0.0:8000"]
+    volumes:
+      - ./viviplayer:/app/backend
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+  frontend:
+    build: ./viviplayer-frontend
+    command: ["npm", "--prefix=/app/node_modules", "start"]
+    volumes:
+      - /app/frontend/node_modules
+      - ./viviplayer-frontend:/app/frontend
+    ports:
+      - "3000:3000"
+

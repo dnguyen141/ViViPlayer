@@ -2,8 +2,8 @@
 
 To compile the specification you will need a LaTeX installation. You can then compile the .tex file with the pdflatex command to receive a pdf file.
 
-### run dev server
+### run server
 
-you need to prepare your dvelopment server once before first use by executing `docker build -t viviplayer_env .` in the project root directory
+to start the server execute  `docker-compose up` in thr root direktory of this project
 
-to then start the development server execute  `docker run -p 8000:8000 -ti viviplayer_env python manage.py runserver 0.0.0.0:8000`
+the backend should the be available at `127.0.0.1:8000` and the frontend at `127.0.0.1:3000`
