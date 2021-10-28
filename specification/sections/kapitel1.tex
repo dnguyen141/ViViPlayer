@@ -1,13 +1,39 @@
 \section{Mission des Projekts}
 
 \subsection{Erläuterung des zu lösenden Problems}
+Das Projekt ViViPlayer (Visionsvideo Player) ist eine Webanwendung, welche die gemeinsame Arbeit 
+bei der Anforderungsanalyse im Requirement Engineering effektiver und kommunikativer macht.
+Es ist möglich sich gemeinsam ein Visionsvideo anzuschauen und direkt in der Anwendung User Stories
+zu verfassen. Durch interaktive Funktionen kann man sich einen Überblick schaffen über die Ansichten und Vorstellungen der Teilnehmer.
+
+Die Anwendung verfolgt also das Ziel die effektiv Anforderungen zu sammeln und dabei alle möglichst viel mit einzubeziehen.
+Deswegen ist dieses Projekt als Webanwendung konzipiert, um möglichst vielen einfachen Zugriff auf das Programm zu geben.
 
 \subsection{Wünsche und Prioritäten des Kunden}
 	Es folgen die Wünsche des Kunden, nach absteigender Priorität geordnet:
 	\begin{itemize}
-		\item Wunsch 1
+		\item In der Webanwendung ist es möglich synchron mit den anderen Teilnehmern Video wiederzugeben. Der Moderator ist hierbei derjenige der den Player bedient.
+		\item Der Moderator kann entweder das Video bis zum Ende abspielen oder bis zum nächsten Segment.
+		\item Das Video wird automatisch segmentiert, sodass der Moderator an die verschiedenen Punkte springen kann. Der Moderator kann manuell segmentieren.
+		\item Die Teilnehmer können User Stories zu einer Einstellung oder mehreren Einstellungen direkt in der Webanwendung erstellen mit Hilfe einer Schablone.
+		\item Die Teilnehmer können sich vertraulich und sicher mit einem Passwort anmelden.
+		\item User Stories können direkt zu dem JIRA Board exportiert werden. Man kann diese User Stories direkt integrieren.
+		\item Es ist möglich direkt Verständnisfragen zu stellen.
+		\item Annotationen können direkt im Video eingeblendet werden.
+		\item Die Screenshots zu den verschiedenen Segmenten im Video können in eine .odt exportiert werden.
+		\item Implementierung anhand von Design Patterns zur späteren Erweiterung als Android App zum Beispiel.
+		\item Die Webanwendung kann automatisch vervollständigen oder Rückmeldungen anhand von Anleitungen.
 	\end{itemize}
 
 \subsection{Domänenbeschreibung}
-	
+    Eingesetzt wird dieses Programm in einem Treffen mit einem Kunden zur Anforderungsanalyse.
+    Hierbei kann sich sowohl Online als auch in Präsenz getroffen werden. Auch eine hybride Variante,
+    wo sowohl Online- als auch Präsenzteilnehmer anwesend sind ist denkbar. 
+    Anwesend sind immer ein bis zwei Moderatoren, die die Sitzung leiten und den Videoplayer bedienen.
+	Zielgruppe sind also sowohl die Entwickler als auch der Vertreter des Kundens, welcher auch verantwortlich für die Anforderungen ist.
 \subsection{Maßnahmen zur Anforderungsanalyse}
+    Um die Anforderungen auf unserer Seite zu klären haben wir mehrere Prototypen gebaut.
+    Direkt zu Anfang haben wir einen Prototypen erstellt, um zu ermitteln wie man Video segmentieren kann.
+    Zudem haben wir einen weiteren Prototypen erstellt, mit welchem wir die Synchronisation erprobt haben.
+    Hierbei stand rein die technische Umsetzung im Vordergrund und wie man Videos synchronisieren kann.
+    Beide Prototypen sind JavaScript Anwendungen die bereits im Browser laufen.
