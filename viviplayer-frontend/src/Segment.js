@@ -3,7 +3,7 @@ import { Form, Input, InputNumber, Button, Space } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 
 const Segment = ({ updateSegment, setUpdateSegment }) => {
-  console.log(updateSegment);
+  //console.log(updateSegment);
   const onFinish = (values) => {
     // console.log("Received values of form:", values);
     // console.log(values.users);

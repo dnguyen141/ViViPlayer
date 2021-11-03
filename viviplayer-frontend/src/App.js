@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Button, Rate } from "antd";
 import Segment from "./Segment";
+import io from "socket.io-client";
 const markersDefault = [
   {
     time: 2,
@@ -27,6 +28,7 @@ const markersDefault = [
     text: "Chapter 6",
   },
 ];
+let socket;
 const App = () => {
   const videoRef = useRef(null);
   const [marker, setMarkers] = useState();
@@ -38,6 +40,17 @@ const App = () => {
   // console.log("typeof markersDefault", typeof markersDefault);
   // console.log(updateComponent);
   // set state for default markers and video
+
+  // Connection opened
+
+  // const ENDPOINT = "http://192.168.2.143:3000/";
+  // socket = io(ENDPOINT);
+  // socket.on("connection", (socket) => {
+  //   socket.emit("hello", "world");
+  // });
+  // socket.on("hello", (arg) => {
+  //   console.log(arg); // world
+  // });
   useEffect(() => {
     setMarkers(markersDefault);
     if (videoRef.current != null) {
