@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import { Button, Rate } from "antd";
+import { Button } from "antd";
 import Segment from "./Segment";
 import io from "socket.io-client";
 const markersDefault = [
