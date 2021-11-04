@@ -16,5 +16,11 @@ io.on("connection", (socket) => {
     // callback();
     io.emit("codeTransaction", code + "HAHAHA");
   });
+  socket.on("playVideo", () => {
+    io.emit("getCommandToPlayVideo");
+  });
+  socket.on("pauseVideo", () => {
+    io.emit("getCommandToPauseVideo");
+  });
 });
 console.log("Running 5000");

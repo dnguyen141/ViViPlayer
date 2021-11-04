@@ -53,18 +53,6 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    // const chatSocket = new WebSocket(
-    //   "ws://" + window.location.host + "/ws/chat/" + roomName + "/"
-    // );
-    // console.log(chatSocket);
-    // socket.on("connection", (socket) => {
-    //   socket.emit("hello", "world");
-    // });
-    // socket.on("hello", (arg) => {
-    //   console.log(arg); // world
-    // });
-
-    console.log(socket);
     setManuellSegment(JSON.parse(getSegmentFromStogare));
     buildMarkers(player, manuellSegment);
     // console.log(manuellSegment);
@@ -78,6 +66,24 @@ const App = () => {
     console.log(code);
     // callback();
   });
+  socket.on("getCommandToPlayVideo", () => {
+    if (player) {
+      player.play();
+    }
+  });
+  socket.on("getCommandToPauseVideo", () => {
+    if (player) {
+      player.pause();
+    }
+  });
+  const playVideo = () => {
+    player.play();
+    socket.emit("playVideo");
+  };
+  const pauseVideo = () => {
+    player.pause();
+    socket.emit("pauseVideo");
+  };
 
   const sendCode = (code) => {
     if (code) {
@@ -91,7 +97,6 @@ const App = () => {
     socket.on("sendCode", (code) => {
       console.log(code);
     });
-    console.log("run effect socket on ");
   }, [code]);
   // const notiChapter = (text, time) => {
   //   return (
@@ -169,6 +174,8 @@ const App = () => {
           setUpdateSegment={setUpdateComponent}
         />
         <button onClick={() => sendCode("ABC")}>Send code</button>
+        <button onClick={() => playVideo()}> Play video</button>
+        <button onClick={() => pauseVideo()}> Pause video</button>
       </div>
     </div>
   );
