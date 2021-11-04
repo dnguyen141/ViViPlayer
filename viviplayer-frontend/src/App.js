@@ -32,6 +32,7 @@ let socket;
 const App = () => {
   const videoRef = useRef(null);
   const [marker, setMarkers] = useState();
+  const [code, setCode] = useState("");
   const [player, setPlayer] = useState(null);
   const [manuellSegment, setManuellSegment] = useState();
   const [updateComponent, setUpdateComponent] = useState(false);
@@ -42,15 +43,8 @@ const App = () => {
   // set state for default markers and video
 
   // Connection opened
-
-  // const ENDPOINT = "http://192.168.2.143:3000/";
-  // socket = io(ENDPOINT);
-  // socket.on("connection", (socket) => {
-  //   socket.emit("hello", "world");
-  // });
-  // socket.on("hello", (arg) => {
-  //   console.log(arg); // world
-  // });
+  // const roomName = "demo";
+  socket = io("http://localhost:5000");
   useEffect(() => {
     setMarkers(markersDefault);
     if (videoRef.current != null) {
@@ -59,16 +53,46 @@ const App = () => {
   }, []);
 
   useEffect(() => {
+    // const chatSocket = new WebSocket(
+    //   "ws://" + window.location.host + "/ws/chat/" + roomName + "/"
+    // );
+    // console.log(chatSocket);
+    // socket.on("connection", (socket) => {
+    //   socket.emit("hello", "world");
+    // });
+    // socket.on("hello", (arg) => {
+    //   console.log(arg); // world
+    // });
+
+    console.log(socket);
     setManuellSegment(JSON.parse(getSegmentFromStogare));
     buildMarkers(player, manuellSegment);
     // console.log(manuellSegment);
-  }, [getSegmentFromStogare]);
+  }, [getSegmentFromStogare, code]);
 
   const jumpToChapter = (video, { text, time }) => {
     video.currentTime = time;
     // return video;
   };
+  socket.on("codeTransaction", (code) => {
+    console.log(code);
+    // callback();
+  });
 
+  const sendCode = (code) => {
+    if (code) {
+      socket.emit("sendCode", code, () => setCode(code));
+    }
+
+    console.log("sencode function", code);
+  };
+
+  useEffect(() => {
+    socket.on("sendCode", (code) => {
+      console.log(code);
+    });
+    console.log("run effect socket on ");
+  }, [code]);
   // const notiChapter = (text, time) => {
   //   return (
   //     <Modal title="Basic Modal" visible={isModalVisible}>
@@ -144,6 +168,7 @@ const App = () => {
           updateSegment={updateComponent}
           setUpdateSegment={setUpdateComponent}
         />
+        <button onClick={() => sendCode("ABC")}>Send code</button>
       </div>
     </div>
   );

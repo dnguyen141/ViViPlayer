@@ -1,11 +1,20 @@
-const { Server } = require("socket.io");
+const { httpServer } = require("socket.io");
 
-const io = new Server({
-  /* options */
-});
-
-io.on("connection", (socket) => {
-  console.log("Socket connection");
+const io = require("socket.io")(httpServer, {
+  cors: {
+    origin: "http://192.168.2.143:3000",
+    methods: ["GET", "POST"],
+  },
 });
 
 io.listen(5000);
+
+io.on("connection", (socket) => {
+  console.log("MAKE CONNECT TO SOCKER", socket.id);
+  socket.on("sendCode", (code) => {
+    console.log(code);
+    // callback();
+    io.emit("codeTransaction", code + "HAHAHA");
+  });
+});
+console.log("Running 5000");
