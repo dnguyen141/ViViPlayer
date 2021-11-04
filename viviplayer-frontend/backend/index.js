@@ -11,11 +11,6 @@ io.listen(5000);
 
 io.on("connection", (socket) => {
   console.log("MAKE CONNECT TO SOCKER", socket.id);
-  // socket.on("sendCode", (code) => {
-  //   console.log(code);
-  //   // callback();
-  //   io.emit("codeTransaction", code + "HAHAHA");
-  // });
   socket.on("playVideo", () => {
     io.emit("getCommandToPlayVideo");
   });

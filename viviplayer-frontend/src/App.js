@@ -49,8 +49,12 @@ const App = () => {
     setManuellSegment(JSON.parse(getSegmentFromStogare));
     buildMarkers(player, manuellSegment);
     // console.log(manuellSegment);
-  }, []);
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [marker, getSegmentFromStogare]);
+  // remove controls
+  // if (player) {
+  //   player.removeAttribute("controls");
+  // }
   const jumpToChapter = (video, { text, time }) => {
     video.currentTime = time;
     socket.emit("jumpToChapter", time);
@@ -66,6 +70,7 @@ const App = () => {
     if (player) {
       player.play();
     }
+    console.log("play video");
   });
   socket.on("getCommandToPauseVideo", () => {
     if (player) {
@@ -126,15 +131,7 @@ const App = () => {
   };
   return (
     <div className="App">
-      <video
-        id="test_video"
-        ref={videoRef}
-        controls
-        preload="none"
-        className="video-js vjs-default-skin"
-        width="600"
-        height="400"
-      >
+      <video ref={videoRef} controls preload="none" width="600" height="400">
         <source
           src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
           type="video/mp4"
