@@ -1,16 +1,29 @@
 \section{Rahmenbedingungen und Umfeld}
 
 \subsection{Einschränkungen und Vorgaben}
-Der Zugang zu der Web-App ist durch Anmeldedaten beschränkt, d.h. sind Username und Passwort notwendig, um sich einzuloggen. Alternative Login wie TAN ist auch möglich. Nutzer kann entweder als Moderator einloggen oder als Teilnehmer. Eine ViViPlayer-Session zwischen Moderator und Teilnehmer kann allerdings nur von dem Moderator vorbereitet werden.\linebreak
+Der Zugang zu der Web-App ist durch Anmeldedaten beschränkt, d.h. sind Username und Passwort notwendig, um sich einzuloggen. Alternative Login wie TAN ist auch möglich. 
+Nutzer kann entweder als Moderator einloggen oder als Teilnehmer. Eine ViViPlayer-Session zwischen Moderator und Teilnehmer kann allerdings nur von dem Moderator 
+vorbereitet werden.\linebreak
 \linebreak
-Bevor eine Session anfängt, hat der Moderator die Möglichkeiten, Video von Cloud einzubetten, das Video abzuspielen und auch zu segmentieren. Der Moderator kann das Video entweder automatisch oder manuell segmentieren. Noch ein weiteres Feature ist Annotationen für Verständnisfragen in dem Video zu legen. Werden keine weiteren Änderungen für das Video gemacht, kann Moderator auf ''Fertig'' klicken, dann startet eine Session.\linebreak
+Bevor eine Session anfängt, hat der Moderator die Möglichkeiten, Video von Cloud einzubetten, das Video abzuspielen und auch zu segmentieren. Der Moderator kann 
+das Video entweder automatisch oder manuell segmentieren. Noch ein weiteres Feature ist Annotationen für Verständnisfragen in dem Video zu betten. Werden keine 
+weitere Änderungen für das Video gemacht, ist der Moderator fertig mit der Bearbeitung, und er kann dann die ViViPlayer-Session starten.\linebreak
 \linebreak
-Während der Session kann der Moderator das Video abspielen und navigieren für den Teilnehmer. Teilnehmer kann das Abspielen des Videos live verfolgen, Multiple-Choice-Fragen beantworten, und auch Stories schreiben. Würde eine Frage im bestimmten Zeitpunkt kommen, kann der Teilnehmer auf die Antwort einfach klicken, und die wird dann gleich in Form eines Balken- oder Kreisdiagramms sichtbar. Der Teilnehmer kann auch eine alternative Antwortmethode wählen. Alle Annotationen und Antworten werden als .odt-Datei zusammengefasst, und im Server gespeichert. Zum Schreiben der User Stories kann auch der Teilnehmer ein Screenshot hinzufügen. Schlüsselsätze als .odt-Datei zusammen mit dem Screenshot werden zu JIRA Board exportiert.\linebreak
+Während der Session kann der Moderator das Video abspielen und navigieren für den Teilnehmer. Teilnehmer kann das Abspielen des Videos live verfolgen, Multiple-Choice-Fragen 
+beantworten. Würde eine Frage im bestimmten Zeitpunkt kommen, kann der Teilnehmer auf die Antwort einfach klicken, und die wird dann gleich in Form eines Balkendiagramms sichtbar. 
+Sowohl Moderator als auch Teilnehmer können User Story herstellen während das Abspielen des Videos. Zum Schreiben der User Stories ist es auch möglich ein Screenshot aufzunehmen 
+mithilfe von PySceneDetect ohne das Bild manuell Hochzuladen. Schlusselsätze von User Story zusammen mit dem Screenshot werden zu JIRA Board exportiert. 
+Alle Annotationen, geschriebene User Stories und Antworten können zusammengefasst und als odt-Datei exportiert werden.\linebreak
 \linebreak
-Nach Kundenpräferenz ist die Anzahl von Benutzer der Web-App unbegrenzt. Zunächst wird die Web-App 18 Personen bedient.
+Nach Kundenpräferenz ist die Anzahl von Nutzer der Web-App unbegrenzt. Zunächst wird die Web-App 18 Personen bedient.
 
 \subsection{Anwender}
-Sowohl Moderator als auch Teilnehmer dieser Web-App sollten mindestens Kenntnisse über Requirements Engineering besetzen. Die "Moderator"-Rolle sollte von entweder SCRUM Master oder Projektleiter behandelt werden. Kundenvertreter oder Product Owner übernehmen die Rolle als Teilnehmer, weil sie ihre Vision dann durch User Stories übermitteln können. Diese Web-App sollte leicht bedienbar sein, damit Nutzer mit durchschnittlichen Computerkenntnissen durch die App leicht navigieren können.
+Sowohl Moderator als auch Teilnehmer dieser Web-App sollten mindestens Kenntnise über Requirements Engineering besetzen. Die Rolle Moderator sollte von entweder SCRUM Master 
+oder Projektleiter behandelt werden. Kundenvertreter oder Product Owner übernimmt die Rolle als Teilnehmer, weil sie ihre Vision dann durch User Story übermitteln können. 
+Diese Web-App sollte leicht bedientbar sein, damit Nutzer mit durchschnittliche Computerkenntnise durch die App leicht navigieren können.
 
 \subsection{Schnittstellen und angrenzende Systeme} 
-In diesem Projekt wird Django als Backend-Framework benutzt. Als Frontend werden HTML5, CSS, JavaScript sowie Jinja-Template und React-Framework benutzt. Zusätzlich dient SQLite als Datenbank für Backend.
+
+In diesem Projekt wird Django als Framework benutzt, da Django sowohl Frontend als auch Backend übernimmt. HTML5, CSS, JavaScript können in Django integriert werden mithilfe 
+von frontend Bibliotheken von Django. Für Backend wird SQLite als Datenbank benutzt. Direkte Aufnahme von Screenshots wird mithilfe von einem internen Programm PySceneDetect 
+und OpenCV ermöglicht.
