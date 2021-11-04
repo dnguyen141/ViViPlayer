@@ -32,39 +32,35 @@ let socket;
 const App = () => {
   const videoRef = useRef(null);
   const [marker, setMarkers] = useState();
-  const [code, setCode] = useState("");
   const [player, setPlayer] = useState(null);
   const [manuellSegment, setManuellSegment] = useState();
   const [updateComponent, setUpdateComponent] = useState(false);
   let getSegmentFromStogare = localStorage.getItem("segmentSetting");
-  // console.log("typeof Segment", typeof JSON.parse(getSegmentFromStogare));
-  // console.log("typeof markersDefault", typeof markersDefault);
-  // console.log(updateComponent);
-  // set state for default markers and video
 
-  // Connection opened
-  // const roomName = "demo";
   socket = io("http://localhost:5000");
   useEffect(() => {
     setMarkers(markersDefault);
     if (videoRef.current != null) {
       setPlayer(videoRef.current);
     }
-  }, []);
+  }, [marker]);
 
   useEffect(() => {
     setManuellSegment(JSON.parse(getSegmentFromStogare));
     buildMarkers(player, manuellSegment);
     // console.log(manuellSegment);
-  }, [getSegmentFromStogare, code]);
+  }, []);
 
   const jumpToChapter = (video, { text, time }) => {
     video.currentTime = time;
+    socket.emit("jumpToChapter", time);
+
     // return video;
   };
-  socket.on("codeTransaction", (code) => {
-    console.log(code);
-    // callback();
+  socket.on("getCommandToJumpChapter", (time) => {
+    if (player) {
+      player.currentTime = time;
+    }
   });
   socket.on("getCommandToPlayVideo", () => {
     if (player) {
@@ -85,19 +81,6 @@ const App = () => {
     socket.emit("pauseVideo");
   };
 
-  const sendCode = (code) => {
-    if (code) {
-      socket.emit("sendCode", code, () => setCode(code));
-    }
-
-    console.log("sencode function", code);
-  };
-
-  useEffect(() => {
-    socket.on("sendCode", (code) => {
-      console.log(code);
-    });
-  }, [code]);
   // const notiChapter = (text, time) => {
   //   return (
   //     <Modal title="Basic Modal" visible={isModalVisible}>
@@ -158,7 +141,12 @@ const App = () => {
         />
       </video>
       <div>
-        Video rating: <Rate />
+        <Button type="primary" onClick={() => playVideo()}>
+          Play video
+        </Button>
+        <Button type="danger" onClick={() => pauseVideo()}>
+          Pause video
+        </Button>
       </div>
       <ul id="marker-list"></ul>
       <h2>Chapter</h2>
@@ -173,9 +161,6 @@ const App = () => {
           updateSegment={updateComponent}
           setUpdateSegment={setUpdateComponent}
         />
-        <button onClick={() => sendCode("ABC")}>Send code</button>
-        <button onClick={() => playVideo()}> Play video</button>
-        <button onClick={() => pauseVideo()}> Pause video</button>
       </div>
     </div>
   );

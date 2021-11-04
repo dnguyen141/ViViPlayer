@@ -11,16 +11,19 @@ io.listen(5000);
 
 io.on("connection", (socket) => {
   console.log("MAKE CONNECT TO SOCKER", socket.id);
-  socket.on("sendCode", (code) => {
-    console.log(code);
-    // callback();
-    io.emit("codeTransaction", code + "HAHAHA");
-  });
+  // socket.on("sendCode", (code) => {
+  //   console.log(code);
+  //   // callback();
+  //   io.emit("codeTransaction", code + "HAHAHA");
+  // });
   socket.on("playVideo", () => {
     io.emit("getCommandToPlayVideo");
   });
   socket.on("pauseVideo", () => {
     io.emit("getCommandToPauseVideo");
+  });
+  socket.on("jumpToChapter", (timeReceived) => {
+    io.emit("getCommandToJumpChapter", timeReceived);
   });
 });
 console.log("Running 5000");
