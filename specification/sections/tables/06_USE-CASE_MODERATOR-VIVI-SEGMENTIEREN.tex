@@ -1,0 +1,34 @@
+\begin{tabularx}{\linewidth}{|l|X|}
+	\hline
+	Use Case Nr. 06			& \textbf{Moderator Vision-Video Segmentieren} \\ \hline
+	Erläuterungen			& Vision-Video segmentieren ist der zweite Schritt zur 
+							  Vorbereitung einer ViViPlayer-Session. \\ \hline
+	Systemgrenzen (Scope)	& Applikation. \\ \hline
+	Ebene					& Hauptebene \\ \hline
+	Vorbedingung			& Die Web-App ist betriebsbereit. Der Benutzer hat Moderator-Rechten \\ \hline
+	Mindestgarantie			& Im Fehlerfall wird das Video nicht segmentiert. \\ \hline
+	Erfolgsgarantie			& Das ViVi wird erfolgreich segmentiert. \\ \hline
+	Stakeholder				& Der Benutzer - will eine produktive Session mit den Teilnehmer via
+							  ViViPlayer. \\
+							& Herr Jianwei Shi - möchte alle Sessions in der Web-App erfolgreich durchgeführt
+							  werden. \\ \hline
+	Hauptakteur				& Der Benutzer \\ \hline
+	Auslöser				& Der Benutzer hat schon ein ViVi ausgewählt und klick auf ``Weiter''-Button. 
+							  \\ \hline	
+	Hauptszenario			& 1. Das System zeigt ViVi-Segmentieren-Oberfläche. \\
+							& 2. Von dem Video-Fenster spielt der Benutzer das Video ab, bis zu seinem
+							  gewünschten Zeitstempel für ein neues Segment, danach benennt er das Segment nach 
+							  seinem Wunsch und klickt ``Hinzufügen''. \\
+							& 3. Das System fügt das neue Segment in der Segmente-Liste hinzu. \\
+							& 4. Der Benutzer klickt auf ``Weiter''-Button. \\
+							& 5. Das System zeigt Verständnisfrage-Vorbereiten-Oberfläche   
+							  an. \\ \hline
+	Erweiterung				& 2a. Alternativ kann der Benutzer die automatische 
+							  Segmentierung nutzen. \\
+							& 3a. Wenn der Benutzer noch nicht fertig mit dem Segmentierung 
+							  ist, geht der Benutzer zurück zu Schritt 2. \\ 
+							& 3b. Falls der Name eines Segments leer oder eine Zeitstempel 
+							  nicht gültig ist, wird eine Fehlermeldung ausgegeben. Kein neues Segment wird hinzugefügt. \\ \hline
+	Priorität				& sehr hoch \\ \hline
+	Verwendungshäufigkeit	& häufig \\ \hline
+\end{tabularx}
