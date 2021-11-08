@@ -1,0 +1,34 @@
+\begin{tabularx}{\linewidth}{|l|X|}
+	\hline
+	Use Case Nr. 02			& \textbf{ViViPlayer Sign-up} \\ \hline
+	Erläuterungen			& Jeder Benutzer braucht eine Konto, um im System anzumelden und damit die Funktionen
+							  der Web-App nutzen kann. \\ \hline
+	Status					& Der Benutzer befindet sich in der Hauptseite der ViViPlayer-Web-App. \\ \hline
+	Systemgrenzen (Scope)	& Register-System \\ \hline
+	Ebene					& Hauptebene \\ \hline
+	Vorbedingung			& Die Web-App ist betriebsbereit \\ \hline
+	Mindestgarantie			& Die Registrierung wird abgesagt, wenn die eingegebenen Daten vom Benutzer nicht gültig
+							  ist, keine Daten wird im Datenbank abgespeichert. \\ \hline
+	Erfolgsgarantie			& Die Identität des Benutzers wird erfolgreich im System abgespeichert. Der Benutzer
+							  wird zur Hauptseite weitergeleitet, damit er mit der neuen Konto einloggen kann. \\ \hline
+	Stakeholder				& Der Benutzer - möchte die Funktionen der Web-App schnell wie möglich nutzen. \newline
+							  Jianwei Shi - möchte die Funktionen der Web-App für die Benutzer mit korrekter Identität
+							  verfügbar sein.\\ \hline
+	Hauptakteur				& Der Benutzer \\ \hline
+	Auslöser				& Der Benutzer möchte registrieren und klickt auf "Registration"-Button \\ \hline	
+	Hauptszenario			& 1. Das System fordert den Benutzer auf, seine Daten einzugeben, damit es seine
+							  Identität im System speichert kann. \\
+							& 2. Der Benutzer gibt alle seine Daten ein: Email-Adresse, Vorname, Nachname, Passwort 
+							  und Passwort-Wiederholung.\\
+							& 3. Das System validiert die vom Benutzer Daten. Wenn alles klappt, wird die Daten
+							  im Datenbank gespeichert, und ein Email wird dem Benutzer geschickt, damit er selbst
+							  für die Registrierung bestätigen kann. \\
+							& 4. Den Benutzer wird im System angemeldet und weiter zur Teilnehmer/Moderator-Hauptseite
+							  geleitet. \\ \hline
+	Erweiterung				& 3a. Wenn der Vorname des Benutzers nicht eingegeben wird, funktioniert die Registrierung
+							  wie normal. \\
+							& 3b. Wenn das System feststellt, dass es noch mindestens ein Stück von Information (nicht
+							  Vorname) fehlt, dann wird eine Fehlermeldung ausgegeben. Der Benutzer muss alle fehlende Information sowie die Passwort und Passwort-Wiederholung noch einmal eingeben, wenn er noch registrieren möchte. \\ \hline
+	Priorität				& mittel \\ \hline
+	Verwendungshäufigkeit	& mittel \\ \hline
+\end{tabularx}
