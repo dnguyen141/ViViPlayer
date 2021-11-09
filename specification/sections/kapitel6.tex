@@ -1,7 +1,10 @@
 \section{Probleme und Risiken}
 \begin{enumerate}
 	\item
-    \textbf{WENN} es zu Verzögerungen im Projekt kommt \textbf{DANN} reicht die Zeit nicht aus, um nicht wesentliche Anforderungen zu entwickeln. Kunde wird am Ende unzufrieden sein.
+    \textbf{WENN} es zu Verzögerungen im Projekt kommt \textbf{DANN} reicht die Zeit nicht aus, um nicht wesentliche Anforderungen zu entwickeln.
+    \linebreak
+    \linebreak
+    \textbf{Konsequenzen:} Kunde wird am Ende unzufrieden sein.
     \linebreak
     \linebreak
     \textbf{Wahrscheinlichkeit:}  Da dieses Team zum ersten Mal zusammengearbeitet hat, ist es sehr schwer abzuschätzen, wie viel das Team in einem Sprint erreichen kann.
@@ -11,7 +14,10 @@
     \linebreak
 
     \item
-    \textbf{WENN} die Technologie mit dem bereitgestellten Produktionsserver nicht richtig funktioniert \textbf{DANN} sind Änderungen am Server und/oder der Software erforderlich, um die Kompatibilität zu gewährleisten. Dies kann später im Projektzyklus zu großen Verzögerungen führen.
+    \textbf{WENN} die Technologie mit dem bereitgestellten Produktionsserver nicht richtig funktioniert \textbf{DANN} sind Änderungen am Server und/oder der Software erforderlich, um die Kompatibilität zu gewährleisten.
+    \linebreak
+    \linebreak
+    \textbf{Konsequenzen:} Dies kann später im Projektzyklus zu großen Verzögerungen führen.
     \linebreak
     \linebreak
     \textbf{Wahrscheinlichkeit:} Da der Server von der IT-Abteilung der Universität bereitgestellt wird und wir ein empfohlenes Framework (Django) verwenden, ist die Wahrscheinlichkeit einer Inkompatibilität gering.
@@ -21,7 +27,11 @@
     \linebreak
     
     \item
-    \textbf{WENN} nur 1 Entwickler allein für den Kerncode verantwortlich ist \textbf{DANN} kann es zu Problemen kommen, wenn der Entwickler krankheits- oder aus anderen persönlichen Gründen arbeitsunfähig ist. Dies kann zu großen Verzögerungen im Projekt führen.
+    \textbf{WENN} nur 1 Entwickler allein für den Kerncode verantwortlich ist \textbf{DANN} kann es zu Problemen kommen, wenn der Entwickler krankheits- oder aus anderen persönlichen Gründen arbeitsunfähig ist. 
+    \linebreak
+    \linebreak
+    \textbf{Konsequenzen:}
+    Dies kann zu großen Verzögerungen im Projekt führen.
     \linebreak
     \linebreak
     \textbf{Wahrscheinlichkeit:} Es besteht immer die Möglichkeit, dass ein Entwickler seine Arbeit nicht fortsetzen kann.
@@ -31,7 +41,10 @@
     \linebreak
 
     \item
-    \textbf{WENN} es Verzögerungen bei der Synchronisierung von Videos gibt \textbf{DANN} können diese Verzögerungen dazu führen, dass sich Benutzer an einem falschen Ort befinden oder eine ruckartige Wiedergabe erleben.
+    \textbf{WENN} es Verzögerungen bei der Synchronisierung von Videos gibt \textbf{DANN} können diese Verzögerungen dazu führen.
+    \linebreak
+    \linebreak
+    \textbf{Konsequenzen:} Benutzer kann sich an einem falschen Ort im Video befinden oder eine ruckartige Wiedergabe erleben.
     \linebreak
     \linebreak
     \textbf{Wahrscheinlichkeit:} Aufgrund normaler Schwankungen in der Verbindungsgeschwindigkeit und -verzögerung ist es sehr wahrscheinlich, dass Benutzer ein gewisses Maß an Synchronisierungsproblemen haben.
@@ -41,17 +54,23 @@
     \linebreak
     
     \item
-    \textbf{WENN} Benutzer einen inkompatiblen Browser verwenden \textbf{DANN} funktionieren möglicherweise bestimmte Funktionen nicht wie beabsichtigt.
+    \textbf{WENN} der Benutzer einen inkompatiblen Browser verwendet \textbf{DANN} wird  bestimmte Funktionen nicht wie beabsichtigt funktionieren.
+    \linebreak
+    \linebreak
+    \textbf{Konsequenzen:} Wichtige Funktionen funktionieren möglicherweise nicht, insbesondere bei HTML5-Elementen wie dem Videoplayer, wodurch die Software unbrauchbar wird.
     \linebreak
     \linebreak
     \textbf{Wahrscheinlichkeit:} Aufgrund der Vielzahl von Browsern, die unter anderem auf mobilen Geräten verwendet werden, ist es möglich, dass viele Browser nicht alle HTML 5-Standards oder -Funktionen unterstützen.
     \linebreak
     \linebreak
-    \textbf{Abhilfe:} Die Website kann auf den gängigsten Webbrowsern der Welt getestet werden. Dies wird die Mehrheit der Benutzer abdecken. Außerdem können den Benutzern Browser-Empfehlungen präsentiert werden, um die Kompatibilität sicherzustellen.
+    \textbf{Abhilfe:} Die Website kann auf den gängigsten Webbrowsern getestet (z.B. Chrome, Firefox, Safari und Edge) werden. Dies wird die Mehrheit der Benutzer abdecken. Außerdem können den Benutzern Browser-Empfehlungen präsentiert werden, um die Kompatibilität sicherzustellen.
     \linebreak
     
     \item
-    \textbf{WENN} SQLite auf dem Entwicklungsserver verwendet wird \textbf{DANN} kann es zu Problemen bei der Migration auf ein anderes erforderliches und besser geeignetes Datenbankverwaltungssystem, z.B.  MySQL oder PostgreSQL,  kommen.
+    \textbf{WENN} SQLite auf dem Entwicklungsserver verwendet wird \textbf{DANN} kann es zu Problemen bei dem Produktionsserver führen.
+    \linebreak
+    \linebreak
+    \textbf{Konsequenzen:} Migration auf ein anderes und besser geeignetes Datenbankverwaltungssystem, z.B.  MySQL oder PostgreSQL,  wird erforderlich.  Dies kann zu großen Verzögerungen im Projekt führen.
     \linebreak
     \linebreak
     \textbf{Wahrscheinlichkeit:} Die Wahrscheinlichkeit, dass SQlite bei mehreren Benutzern zu Leistungsproblemen führt, ist relativ hoch. Daher ist auch die Wahrscheinlichkeit einer erforderlichen Migration auf ein anderes Datenbankverwaltungssystem hoch. Obwohl die Datenbankmigration bei der Entwicklung von Django ein übliches Problem ist, sind die Konsequenzen schwer vorherzusagen.
