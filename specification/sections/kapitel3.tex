@@ -1,7 +1,7 @@
 \section{Funktionale Anforderungen}
 
 \subsection{Use Case-Diagramm}
-
+\includepdf[pages={1}]{sections/diagrams/viviplayer-uc-diagramm.pdf}
 \pagebreak
 
 \subsection{Use Case-Beschreibungen}
@@ -21,19 +21,19 @@
 \\[0.5cm]
 \pagebreak
 
-\subsubsection{UC: Moderator ViViPlayer-Vorbereiten}
+\subsubsection{UC: Moderator Session-Vorbereiten}
 \input{sections/tables/04_USE-CASE_MODERATOR-VIVIPLAYER-VORBEREITEN}
 \\[0.5cm]
 \textbf{Erläuterungen und Details}
 \begin{itemize}
+	\item ViVi: die Abkürzung von dem Begriff ``Vision-Video''.
 	\item ViVi-Auswählen-Oberfläche: Eine Menge von ViVis werden hier angezeigt, damit der Benutzer eines davon auswählen kann.
 	\item ViVi-Segmentieren-Oberfläche: da gibt es ein Video-Fenster mit Controller, eine Liste von Segmenten mit ihrem Namen und Zeitstempeln sowie ein Button zum Hinzufügen der neuen Segmente. 
-	\item Verständnisfrage-Vorbereiten-Oberfläche: es gibt eine Liste von erstellten Fragen
-	sowie ein Fenster zum Bearbeitung einer neuen Verständnisfrage.
+	\item Frage-Vorbereiten-Oberfläche: es gibt eine Liste von erstellten Fragen
+	sowie ein Fenster zum Bearbeitung einer neuen Frage.
 	\item TAN-Oberfläche: man kann entweder manuell oder automatisch TAN für die Session hier erzeugen.
 	\item ViVi-Überblick-Oberfläche: hier kann der Benutzer seine schon eingegebene Konfiguration nachschauen, um Fehler zu checken.
-	\item Für die ViVI-Auswählen-, ViVi-Segmentieren-, TAN- und ViVi-Überblick-Oberfläche gibt es immer eine 
-	``Zurück''-Button, damit man modifizieren kann, wenn es Fehler gibt.
+	\item Für die ViVi-Auswählen-, ViVi-Segmentieren-, TAN- und ViVi-Überblick-Oberfläche gibt es möglich ein ``Zurück''-Button, damit man nach Wunsch modifizieren kann.
 \end{itemize}
 \pagebreak
 
@@ -45,10 +45,14 @@
 \subsubsection{UC: Moderator ViVi Segmentieren}
 \input{sections/tables/06_USE-CASE_MODERATOR-VIVI-SEGMENTIEREN}
 \\[0.5cm]
+\textbf{Erläuterungen und Details}
+\begin{itemize}
+	\item Shot: Ein anonymer Begriff für Segment.
+\end{itemize}
 \pagebreak
 
-\subsubsection{UC: Moderator Verständnisfragen Erstellen}
-\input{sections/tables/07_USE-CASE_MODERATOR-VERSTÄNDNISFRAGEN-ERSTELLEN}
+\subsubsection{UC: Moderator Fragen Erstellen}
+\input{sections/tables/07_USE-CASE_MODERATOR-FRAGEN-ERSTELLEN}
 \\[0.5cm]
 \pagebreak
 
@@ -67,12 +71,16 @@
 \\[0.5cm]
 \pagebreak
 
-\subsubsection{UC: User Story}
+\subsubsection{UC: User-Story Schreiben}
 \input{sections/tables/11_USE-CASE-USERSTORY}
 \\[0.5cm]
 \pagebreak
 
-\subsubsection{UC: Comments}
+\subsubsection{UC: Kommentaren}
 \input{sections/tables/12_USE-CASE-COMMENT}
 \\[0.5cm]
+\pagebreak
+
+\subsubsection{UC: Moderator Log-Dateien Exportieren}
+\input{sections/tables/13_USE-CASE-MODERATOR-LOGDATEIEN-EXPORTIEREN}
 \pagebreak

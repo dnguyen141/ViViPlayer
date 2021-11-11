@@ -2,30 +2,34 @@
 	\hline
 	Use Case Nr. 01			& \textbf{Moderator Registrieren} \\ \hline
 	Erläuterungen			& Um alle Rechte eines Moderators zu bekommen, muss ein 
-							Benutzer als Moderator registrieren. \\ \hline
+							Benutzer als Moderator registriert werden. \\ \hline
 	Systemgrenzen (Scope)	& Registrierung-System. \\ \hline
-	Ebene					& Hauptebene \\ \hline
+	Ebene					& Hauptfunktion \\ \hline
 	Vorbedingung			& Die Web-App ist betriebsbereit. \\ \hline
-	Mindestgarantie			& Keine Moderator-Konto wird im System registriert. \\ \hline
-	Erfolgsgarantie			& Eine neue Moderator-Konto wird erstellt. \\ \hline
-	Stakeholder				& Der Benutzer - möchte die Funktionen der Web-App schnell 
+	Mindestgarantie			& Keine neue Moderator-Konto wird im System registriert. 
+							  Klare Fehlermeldung wird ausgegeben. \\ \hline
+	Erfolgsfall  			& Ein neues Moderator-Konto wurde erstellt. \\ \hline
+	Stakeholder				& Systembediener - möchte die Funktionen der Web-App so schnell 
 							  wie möglich nutzen. \\
-							& Herr Jianwei Shi - möchte die Funktionen der Web-App für die 
-							  Benutzer mit korrektem Zugriffrecht verfügbar sein.\\ \hline
-	Hauptakteur				& Der Benutzer \\ \hline
-	Auslöser				& Der Benutzer möchte als Moderator registrieren und klickt 
-							  auf ``Registrieren''-Button in der Login-Seite. \\ \hline	
-	Hauptszenario			& 1. Das System fordert den Benutzer auf, eine Email-Adresse 
+							& Herr Jianwei Shi (Systembesitzer) - möchte die Funktionen der 
+							  Web-App für die Benutzer mit korrektem Zugriffsrecht verfügbar sein.\\ \hline
+	Hauptakteur				& Systembediener, die als Moderator registriert werden möchten \\ 
+	                          \hline
+	Auslöser				& Der Benutzer möchte als Moderator für ViViPlayer-Web-App 
+							  registriert werden und klickt auf ``Registrieren''-Button in der Hauptseite von ViViPlayer-Web-App. \\ \hline	
+	Hauptszenario			& 1. Der Benutzer klickt auf ``Registrieren''-Button in der 
+							  Hauptseite von ViViPlayer-Web-App. \\
+							& 2. Das System fordert den Benutzer auf, eine Email-Adresse 
 							  sowie die Passwort für die neue Konto einzugeben. \\
-							& 2. Der Benutzer gibt seine Email-Adresse und seine Passwort 
+							& 3. Der Benutzer gibt seine Email-Adresse und seine Passwort 
 							  ein und bestätigt \\
-							& 3. Das System und ein anderer Moderator validiert die vom 
+							& 4. Das System und ein anderer Moderator validiert die vom 
 							  Benutzer eingegebene Daten. Eine Meldung wird als 
 							  Anleitung angezeigt, was der neue Benutzer weiter machen soll. \\
-							& 4. Dem Benutzer wird zurück zur Hauptseite geleitet. 
+							& 5. Der Benutzer wird zurück zur Hauptseite geleitet. 
 							  \\ \hline
-	Erweiterung				& 3a. Wenn das System feststellt, dass die eingegebene Daten 
-							  (Benutzername/Email-Adresse und Passwort) nicht abgestimmt sind, wird eine Fehlermeldung ausgegeben. \\ \hline
+	Erweiterungen			& 4a. WENN das System feststellt, dass die eingegebene Daten 
+							  (Benutzername/Email-Adresse und Passwort) nicht abgestimmt sind, DANN wird eine Fehlermeldung ausgegeben. Das System geht zurück zu Schritt 2. \\ \hline
 	Priorität				& niedrig \\ \hline
-	Verwendungshäufigkeit	& selten \\ \hline
+	Verwendungshäufigkeit	& kaum \\ \hline
 \end{tabularx}

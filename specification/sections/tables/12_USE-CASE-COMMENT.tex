@@ -1,24 +1,32 @@
 \begin{tabularx}{\linewidth}{|l|X|}
 	\hline
-	Use Case Nr. 12			& \textbf{ViViPlayer Comments} \\ \hline
-	Erläuterungen			&  Einen Kommentar/Satz verfassen. \\ \hline
-	Status					&  Der Nutzer befindet sich auf der Hauptseite der ViViPlayer App. \\ \hline
-	Systemgrenzen (Scope)	&  Kommentar-System\\ \hline
-	Ebene					&  Hauptebene\\ \hline
-	Vorbedingung			&  Das System ist betriebsbereit.\\ \hline
-	Mindestgarantie			&  Der Benutzer erhält eine Fehlermeldung und es werden keine Daten in der Datenbank abgespeichert.\\ \hline
-	Erfolgsgarantie			&  Der Benutzer verfasst eine Nachricht und der Server speichert diese ab. Die Nachricht wird einem Segment zugeordnet.\\ \hline
-	Stakeholder				&  Benutzer - möchte Kommentare einfach verfassen können.\\ 
-                            &  Kunden - möchten Feedback geben können. \\
-                            &   Entwickler - möchten Kommentare für ihr Projekt haben und verfassen können. \\ \hline
-	Hauptakteur				&  Der Benutzer\\ \hline
-	Auslöser				&  Der Benutzer möchte eine User Story schreiben und klickt in das Textfeld. \\ \hline	
-	Hauptszenario			&  1. Der Benutzer wählt den Kommentar Modus aus. \\
-                            &  2. Der Benutzer gibt seinen Kommentar ein und bestätigt, wenn er fertig ist\\
-							&  3. Das System verarbeitet diese Anfrage und speichert den Kommentar ab. Zudem wird er dem jeweiligen Segment zugeordnet. \\
+	Use Case Nr. 12			& \textbf{ViViPlayer Kommentaren} \\ \hline
+	Erläuterungen			&  Der Benutzer möchte einen Kommentar/Satz verfassen. \\ \hline
+	Status					&  Der Benutzer befindet sich auf der ViViPlayer-Seite der Web-App. 
+							   \\ \hline
+	Systemgrenzen (Scope)	&  Kommentar-System. \\ \hline
+	Ebene					&  Hauptfunktion. \\ \hline
+	Vorbedingung			&  Das System ist betriebsbereit. Der Benutzer hat Moderator- oder 
+							   Teilnehmer-Rechte\\ \hline
+	Mindestgarantie			&  Der Benutzer erhält eine Fehlermeldung und es werden keine Daten 
+							   in der Datenbank abgespeichert. Die Daten von anderen Benutzer werden abgespeichert. Das Dateisystem vom Server funktioniert einwandfrei. \\ \hline
+	Erfolgsfall				&  Der Benutzer hat eine Nachricht verfasst und der Server hat 
+							   diese abgespeichert. Die Nachricht wird einem Segment zugeordnet.\\ \hline
+	Stakeholder				&  Systembediener - möchte Kommentare einfach verfassen oder 
+							   Feedback geben können.\\ 
+                            &  Entwickler - möchten Kommentare für ihr Projekt haben und 
+                               verfassen können. \\ \hline
+	Hauptakteur				&  Systembediener mit Moderator- oder Teilnehmer-Rolle \\ \hline
+	Auslöser				&  Der Benutzer wählt den Kommentar-Modus aus. \\ \hline	
+	Hauptszenario			&  1. Der Benutzer wählt den Kommentar-Modus aus. \\
+                            &  2. Der Benutzer gibt seinen Kommentar ein und bestätigt, wenn er 
+                               fertig ist\\
+							&  3. Das System verarbeitet diese Anfrage und speichert den 
+							   Kommentar ab. Zudem wird er dem jeweiligen Segment zugeordnet. \\
 							&  4. Das System zeigt den neuen Kommentar den anderen Nutzern an.\\
 							&  5. Der Nutzer kann einen weiteren Kommentar verfassen. \\ \hline
-	Erweiterung				& 3a. WENN ein Fehler auftritt DANN wird der Benutzer benachrichtigt und er kann den Kommentar nochmal eingeben. Es werden keine Daten in der Datenbank abgespeichert.\\ \hline
+	Erweiterungen			&  3a. WENN ein Fehler auftritt DANN wird der Benutzer 
+							   benachrichtigt und er kann den Kommentar nochmal eingeben. Es werden keine Daten in der Datenbank abgespeichert.\\ \hline
 	Priorität				&  hoch \\ \hline
-	Verwendungshäufigkeit	&  hoch \\ \hline
+	Verwendungshäufigkeit	&  sehr häufig \\ \hline
 \end{tabularx}

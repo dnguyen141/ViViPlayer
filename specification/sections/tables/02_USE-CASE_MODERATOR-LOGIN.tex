@@ -1,39 +1,38 @@
 \begin{tabularx}{\linewidth}{|l|X|}
 	\hline
 	Use Case Nr. 02			& \textbf{Moderator Einloggen} \\ \hline
-	Erläuterungen			& Als ein ScrumMaster/Projektleiter möchte der Benutzer einloggen und
-							  damit er eine Session im ViViPlayer abhalten kann.  
-							  \\ \hline
+	Erläuterungen			& Der Benutzer möchte als Moderator einloggen, damit er eine 
+							  Session im ViViPlayer abhalten kann. \\ \hline
 	Systemgrenzen (Scope)	& Login-System \\ \hline
-	Ebene					& Hauptebene \\ \hline
-	Vorbedingung			& Die Web-App ist betriebsbereit. Der Benutzer befindet sich in
+	Ebene					& Hauptfunktion \\ \hline
+	Vorbedingung			& Die Web-App ist betriebsbereit. Der Benutzer befindet sich auf
 							  Hauptseite der Web-App \\ \hline
-	Mindestgarantie			& Das Log-in des Benutzers wird abgesagt, falls der eingegebene
-							  Benutzername/die Email-Adresse nicht im Datenbank oder die Passwort falsch ist. Eine Fehlermeldung wird auf jedem Fall ausgegeben.
+	Mindestgarantie			& Das Einloggen des Benutzers wird abgesagt, falls der eingegebene
+							  Benutzername/die Email-Adresse nicht im Datenbank oder die Passwort falsch ist. Eine Fehlermeldung wird dann ausgegeben.
 							  \\ \hline
-	Erfolgsgarantie			& Der Zugriff des Benutzers wird erfolgreich bestätigt. Der
-							  Benutzer wird zur Moderator-Hauptseiten weitergeleitet. 
+	Erfolgsfall 			& Der Zugriff des Benutzers wurde erfolgreich bestätigt. Der
+							  Benutzer hat sich auf der Moderator-Hauptseite befindet. 
 							  \\ \hline
-	Stakeholder				& Moderator - möchte die Funktionen der Web-App schnell 
+	Stakeholder				& Systembediener - möchte die Funktionen der Web-App schnell 
 							  wie möglich nutzen. \\
-							& Herr Jianwei Shi - möchte die Funktionen der Web-App für die Benutzer 
-							  mit korrektem Zugriffrecht  verfügbar sein.\\ \hline
-	Hauptakteur				& Der Benutzer \\ \hline
-	Auslöser				& Der Benutzer möchte als Moderator einloggen.
-							  \\ \hline	
-	Hauptszenario			& 1. Das System fordert den Benutzer auf, als Moderator ein
+							& Herr Jianwei Shi (Systembesitzer) - möchte die Funktionen der 
+							  Web-App für die Benutzer mit korrektem Zugriffsrecht verfügbar sein.\\ \hline
+	Hauptakteur				& Systembediener, die Moderator-Rechte haben möchten \\ \hline
+	Auslöser				& Der Benutzer möchte als Moderator einloggen. Er befindet sich 
+							  auf der Hauptseite der Web-App, dann klickt auf die "Einloggen als Moderator"-Option.\\ \hline	
+	Hauptszenario			& 1. Der Benutzer befindet sich auf der Hauptseite der Web-App, 
+							  um einzuloggen. Er klickt auf die "Einloggen als Moderator"-Option.\\
+							& 2. Das System fordert den Benutzer auf, als Moderator ein
 							  Benutzername/eine Email-Adresse sowie die Passwort einzugeben. \\
-							& 2. Der Benutzer gibt sein Benutzername/seine Email-Adresse und seine
-							  Passwort ein. \\
-							& 3. Das System validiert die vom Benutzer eingegebene
+							& 3. Der Benutzer gibt sein Benutzername/seine Email-Adresse und 
+							  seine Passwort ein. \\
+							& 4. Das System validiert die vom Benutzer eingegebene
 							  Log-in-Daten. \\
-							& 4. Dem Benutzer wird im System angemeldet und weiter zur
+							& 5. Der Benutzer wird im System angemeldet und weiter zur
 							  Moderator-Hauptseite geleitet. \\ \hline
-	Erweiterung				& 3a. Wenn das System feststellt, dass die eingegebene Daten (Benutzername/
-							  Email-Adresse und Passwort) nicht abgestimmt sind, wird eine Fehlermeldung 
-							  ausgegeben. Der Benutzer wird dann zurück zur Hauptseite geleitet, damit
-							  er noch einmal versuchen kann.
-							  \\ \hline
+	Erweiterungen			& 1a. Wenn das System feststellt, dass die eingegebene Daten 
+							  (Benutzername/Email-Adresse und Passwort) nicht abgestimmt sind, wird eine Fehlermeldung ausgegeben. Das System geht 
+							  zurück zu Schritt 2. \\ \hline
 	Priorität				& mittel \\ \hline
 	Verwendungshäufigkeit	& häufig \\ \hline
 \end{tabularx}

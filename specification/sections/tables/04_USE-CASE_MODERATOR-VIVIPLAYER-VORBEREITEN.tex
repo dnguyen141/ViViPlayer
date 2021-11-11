@@ -1,38 +1,47 @@
 \begin{tabularx}{\linewidth}{|l|X|}
 	\hline
-	Use Case Nr. 04			& \textbf{Moderator Vision-Video Vorbereiten} \\ \hline
-	Erläuterungen			& Bevor ein Moderator eine Session mit den Teilnehmer anfangen kann,
-							  muss er zuerst vorbereiten. \\ \hline
-	Systemgrenzen (Scope)	& Applikation. \\ \hline
-	Ebene					& Hauptebene. \\ \hline
-	Vorbedingung			& Die Web-App ist betriebsbereit. Der Benutzer hat Moderator-Rechten. \\ \hline
+	Use Case Nr. 04			& \textbf{Moderator Session Vorbereiten} \\ \hline
+	Erläuterungen			& Bevor ein Moderator eine Session mit den Teilnehmer anfangen 
+	                          kann, muss er zuerst vorbereiten. Das heißt: er muss das ViVi einbetten und segmentieren, Verständnisfragen vorbereiten und TAN für die Session erzeugen. \\ \hline
+	Systemgrenzen (Scope)	& Gesamtsystem. \\ \hline
+	Ebene					& Hauptfunktion. \\ \hline
+	Vorbedingung			& Die Web-App ist betriebsbereit. Der Benutzer hat 
+	                          Moderator-Rechte. \\ \hline
 	Mindestgarantie			& Im Fehlerfall wird keine Session erstellt.\\ \hline
-	Erfolgsgarantie			& Das segmentierte Vision-Video sowie eine sichere TAN sind bereitgestellt für
-							  eine ViViPlayer-Session. \\ \hline
-	Stakeholder				& Der Benutzer - will eine produktive Session mit den Teilnehmer via
-							  ViViPlayer. \\
-							& Herr Jianwei Shi - möchte alle Sessions in der Web-App erfolgreich durchgeführt
-							  werden. \\ \hline
-	Hauptakteur				& Der Benutzer. \\ \hline
-	Auslöser				& Der Benutzer wählt die Möglichkeit, eine neue Session zu erstellen, von der
-							  Moderator-Hauptseite. \\ \hline	
-	Hauptszenario			& 1. Das System zeigt ViVi-Auswählen-Oberfläche an. \\
-							& 2. Der Benutzer wählt ein ViVi und bestätigt. \\ 
-							& 3. Das System zeigt ViVi-Segmentieren-Oberfläche. \\ 
-							& 4. Der Benutzer segmentiert das von ihm ausgewählte Video und bestätigt. \\
-							& 5. Das Systen zeigt Verständnisfrage-Vorbereiten-Oberfläche. \\
-							& 6. Der Benutzer schreibt die Multiple-Choice-Fragen für die Teilnehmer und 
-							  bestätigt. \\
-							& 7. Das System zeigt TAN-Oberfläche an. \\
-							& 8. Der Benutzer erzeugt eine neue TAN für die Session und bestätigt. \\ 
-							& 9. Das System zeigt ViVi-Überblick-Oberfläche an. \\ 
-							& 10. Der Benutzer prüft noch mal die Einstellung und erstellt neue Session. \\
-							& 11. Das System zeigt ViViPlayer-Oberfläche an. \\ \hline
-	Erweiterung				& 3a. Falls das Video nicht eingebettet werden kann, wird eine Fehlermeldung 
-							  gezeigt. \\
-							& 5a. Falls die Segmentierung nicht gültig ist, wird eine Fehlermeldung 
-							  ausgegeben. \\
-							& 11a. Wenn die TAN nicht sicher genug ist, wird eine Fehlermeldung ausgegeben.
+	Erfolgsfall  			& Das segmentierte Vision-Video sowie eine sichere TAN sind 
+	                          bereitgestellt für eine ViViPlayer-Session. \\ \hline
+	Stakeholder				& Systembediener - will eine produktive Session mit den 
+	                          Teilnehmer via ViViPlayer. \\
+							& Herr Jianwei Shi (Systembesitzer) - möchte, dass alle Sessions 
+							  in der Web-App erfolgreich durchgeführt werden. \\ \hline
+	Hauptakteur				& Systembediener mit Moderator-Rolle. \\ \hline
+	Auslöser				& Der Benutzer wählt die Möglichkeit, eine neue Session zu 
+	                          erstellen, von der Moderator-Hauptseite. \\ \hline	
+	Hauptszenario			& 1. Der Benutzer wählt die Möglichkeit, eine neue Session zu 
+	                          erstellen, von der Moderator-Hauptseite. \\ 
+							& 2. Das System zeigt die ViVi-Auswählen-Oberfläche an. \\
+							& 3. Der Benutzer wählt ein ViVi und bestätigt. (UC 3.2.5) \\ 
+							& 4. Das System zeigt die ViVi-Segmentieren-Oberfläche. \\ 
+							& 5. Der Benutzer segmentiert das von ihm ausgewählte Video und 
+							  bestätigt. (UC 3.2.6) \\
+							& 6. Das System zeigt die Frage-Vorbereiten-Oberfläche. \\
+							& 7. Der Benutzer schreibt die Multiple-Choice-Fragen für die 
+							  Teilnehmer sowie den Typ der Frage und bestätigt. (UC 3.2.7) \\
+							& 8. Das System zeigt die TAN-Oberfläche. \\
+							& 9. Der Benutzer erzeugt eine neue TAN für die Session und 
+							  bestätigt. (UC 3.2.8) \\ 
+							& 10. Das System zeigt die ViVi-Überblick-Oberfläche. \\ 
+							& 11. Der Benutzer prüft noch mal alle Vorbereitungschritte und 
+							  erstellt neue Session. \\
+							& 12. Das System zeigt die ViViPlayer-Oberfläche. \\ \hline
+	Erweiterungen			& 4a. Falls das Video nicht eingebettet werden kann, wird eine 
+	                          Fehlermeldung gezeigt. Das System geht zurück zu Schritt 2. \\
+							& 6a. Falls die Segmentierung nicht gültig ist, wird eine 
+							  Fehlermeldung ausgegeben. Das System geht zurück zu Schritt 4.\\
+							& 8a. Falls es Fehler bei der Eingabe der Fragen, wird 
+							  eine Fehlermeldung ausgegeben. Das System geht zurück zu Schritt 4. \\
+							& 10a. Wenn die TAN nicht sicher genug ist, wird eine 
+							  Fehlermeldung ausgegeben. Das System geht zurück zu Schritt 8. 
 							  \\ \hline
 	Priorität				& hoch \\ \hline
 	Verwendungshäufigkeit	& häufig \\ \hline

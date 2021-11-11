@@ -10,28 +10,28 @@
 	Mindestgarantie			& Das Log-in des Benutzers wird abgesagt, falls die eingegebene
 							  TAN nicht richtig ist. Eine Fehlermeldung wird ausgegeben
 							  \\ \hline
-	Erfolgsgarantie			& Der Zugriff des Benutzers wird erfolgreich bestätigt. Der
-							  Benutzer wird zur Teilnehmer-Hauptseiten weitergeleitet. 
-							  \\ \hline
-	Stakeholder				& Der Teilnehmer - möchte die Funktionen der Web-App schnell 
+	Erfolgsfall 			& Der Zugriff des Benutzers wurde erfolgreich bestätigt. Der
+							  Benutzer hat sich auf der Moderator-Hauptseite befindet. \\ \hline
+	Stakeholder				& Systembediener - möchte die Funktionen der Web-App schnell 
 							  wie möglich nutzen. \\
-							& Herr Jianwei Shi - möchte die Funktionen der Web-App für die Benutzer 
-							  mit korrektem Zugriffrecht verfügbar sein.\\ \hline
-	Hauptakteur				& Der Benutzer \\ \hline
-	Auslöser				& Der Benutzer möchte in einem Session des ViViPlayer teilnehmen
-							  \\ \hline	
-	Hauptszenario			& 1. Das System fordert den Benutzer auf, als Teilnehmer eine
+							& Herr Jianwei Shi (Systembesitzer) - möchte die Funktionen der 
+							  Web-App für die Benutzer mit korrektem Zugriffsrecht verfügbar sein.\\ \hline
+	Hauptakteur				& Systembediener, die Teilnehmer-Rechte haben möchten \\ \hline
+	Auslöser				& Der Benutzer möchte an einem Session des ViViPlayer
+							  teilnehmen. Er befindet sich auf der Hauptseite der Web-App,
+							  um mit TAN einzuloggen. \\ \hline	
+	Hauptszenario			& 1. Der Benutzer befindet sich auf der Hauptseite der Web-App,
+	                          um mit TAN einzuloggen. \\
+	                        & 2. Das System fordert den Benutzer auf, als Teilnehmer eine
 							  TAN einzugeben. \\
-							& 2. Der Benutzer gibt seine vom Moderator erhaltene TAN ein. \\
-							& 3. Das System validiert die vom Benutzer eingegebene
+							& 3. Der Benutzer gibt seine vom Moderator erhaltene TAN ein. \\
+							& 4. Das System validiert die vom Benutzer eingegebene
 							  TAN. \\
-							& 4. Dem Benutzer wird im System angemeldet und weiter zur
+							& 5. Dem Benutzer wird im System angemeldet und weiter zur
 							  Teilnehmer-Hauptseite geleitet. \\ \hline
-	Erweiterung				& 3a. Wenn das System feststellt, dass die eingegebene TAN nicht 
+	Erweiterungen			& 4a. Wenn das System feststellt, dass die eingegebene TAN nicht 
 							  eine von System generierte TAN ist, wird eine Fehlermeldung 
-							  ausgegeben. Dem Benutzer wird wieder zurück zu Hauptseite des
-							  ViViPlayer geleitet, damit er noch einmal versuchen kann. \\
-							  \hline
+							  ausgegeben. Das System geht zurück zu Schritt 2. \\ \hline
 	Priorität				& mittel \\ \hline
 	Verwendungshäufigkeit	& sehr häufig \\ \hline
 \end{tabularx}

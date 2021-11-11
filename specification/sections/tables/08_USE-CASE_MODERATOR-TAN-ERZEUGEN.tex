@@ -2,30 +2,31 @@
 	\hline
 	Use Case Nr. 08			& \textbf{Moderator TAN für ViViPlayer-Session Erzeugen} \\ \hline
 	Erläuterungen			& TAN erzeugen ist der letzte Schritt zur Vorbereitung einer 
-							  ViViPlayer-Session. \\ \hline
-	Systemgrenzen (Scope)	& Applikation. \\ \hline
-	Ebene					& Hauptebene. \\ \hline
+							  ViViPlayer-Session. Danach kann die Teilnehmer mit TAN einloggen. \\ \hline
+	Systemgrenzen (Scope)	& Gesamtsystem. \\ \hline
+	Ebene					& Hauptfunktion. \\ \hline
 	Vorbedingung			& Die Web-App ist betriebsbereit. Der Benutzer hat Moderator-
-							  Rechten. \\ \hline
+							  Rechte und schon ein ViVi ausgewählt (UC 3.2.5), segmentiert (UC 3.2.6) sowie eine Liste von Fragen hinzugefügt (UC 3.2.7), und klickt auf ``Weiter''. \\ \hline
 	Mindestgarantie			& Im Fehlerfall wird keine TAN sowie keine Session erstellt.
 							  \\ \hline
-	Erfolgsgarantie			& Eine sichere TAN wird für die Session erstellt. \\ \hline
-	Stakeholder				& Der Benutzer - will eine produktive Session mit den Teilnehmer 
+	Erfolgsfall 			& Eine sichere TAN ist für die Session erstellt. \\ \hline
+	Stakeholder				& Systembediener - will eine produktive Session mit den Teilnehmer 
 							  via ViViPlayer. \\
-							& Herr Jianwei Shi - möchte alle Sessions in der Web-App 
-							  erfolgreich durchgeführt werden. \\ \hline
-	Hauptakteur				& Der Benutzer. \\ \hline
-	Auslöser				& Der Benutzer hat schon ein ViVi ausgewählt, segmentiert sowie 
-							  eine Liste von Verständnisfragen hinzugefügt, und klickt auf 
-							  ``Weiter''. \\ \hline	
-	Hauptszenario			& 1. Das System zeigt TAN-Oberfläche. \\
-							& 2. Der Benutzer erzeugt eine neue TAN für die Session, und klickt auf das 
-							  ``Weiter''-Button. \\ 
-							& 3. Das System zeigt ViVi-Überblick-Oberfläche an. \\ \hline
-	Erweiterung				& 2a. Alternativ kann man die automatische TAN-Erzeugung nutzen. 
+							& Herr Jianwei Shi (Systembesitzer) - möchte alle Sessions in der 
+							  Web-App erfolgreich durchgeführt werden. \\ \hline
+	Hauptakteur				& Systembediener mit Moderator-Rolle. \\ \hline
+	Auslöser				& Der Benutzer befindet sich auf der ViVi-Fragen-Vorbereiten-Seite 
+	                          und klickt auf ``Weiter''. \\ \hline	
+	Hauptszenario			& 1. Der Benutzer befindet sich auf ViVi-Fragen-Vorbereiten-Seite
+							  und klickt auf ``Weiter''. \\
+							& 2. Das System zeigt TAN-Oberfläche. \\
+							& 3. Der Benutzer erzeugt eine neue TAN für die Session, und klickt 
+							  auf das ``Weiter''-Button. \\ 
+							& 4. Das System zeigt ViVi-Überblick-Oberfläche an. \\ \hline
+	Erweiterungen			& 3a. Alternativ kann man die automatische TAN-Erzeugung nutzen. 
 							  \\
-							& 2b. Wenn die TAN nicht sicher genug ist, wird eine Fehlermeldung ausgegeben. 
-							  \\ \hline
+							& 3b. Wenn die TAN nicht sicher genug ist, wird eine Fehlermeldung 
+							  ausgegeben. Das System geht zurück zu Schritt 2. \\ \hline
 	Priorität				& hoch \\ \hline
 	Verwendungshäufigkeit	& häufig \\ \hline
 \end{tabularx}

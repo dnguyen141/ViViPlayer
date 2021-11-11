@@ -3,27 +3,30 @@
 	Use Case Nr. 05			& \textbf{Moderator Vision-Video Auswählen} \\ \hline
 	Erläuterungen			& Vision-Video auswählen ist der erste Schritt zur Vorbereitung 
 							  einer ViViPlayer-Session. \\ \hline
-	Systemgrenzen (Scope)	& Applikation. \\ \hline
+	Systemgrenzen (Scope)	& Gesamtsystem. \\ \hline
 	Ebene					& Hauptebene \\ \hline
 	Vorbedingung			& Die Web-App ist betriebsbereit. Der Benutzer hat 
-							  Moderator-Rechten. \\ \hline
+							  Moderator-Rechte. \\ \hline
 	Mindestgarantie			& Im Fehlerfall wird kein Video ausgewählt und somit keine 
 							  Session.\\ \hline
-	Erfolgsgarantie			& Der Benutzer kann sein gewünschtes Video problemlos auswählen. 
+	Erfolgsfall 			& Der Benutzer konnte sein gewünschtes Video problemlos auswählen. 
 							  \\ \hline
-	Stakeholder				& Der Benutzer - will eine produktive Session mit den Teilnehmer 
+	Stakeholder				& Systembediener - will eine produktive Session mit den Teilnehmer 
 							  via ViViPlayer. \\
-							& Herr Jianwei Shi - möchte alle Sessions in der Web-App 
-							  erfolgreich durchgeführt werden. \\ \hline
-	Hauptakteur				& Der Benutzer. \\ \hline
+							& Herr Jianwei Shi (Systembesitzer) - möchte alle Sessions in der 
+							  Web-App erfolgreich durchgeführt werden. \\ \hline
+	Hauptakteur				& Systembediener mit Moderator-Rolle. \\ \hline
 	Auslöser				& Der Benutzer wählt die Möglichkeit, eine neue Session zu 
 							  erstellen, von der Moderator-Hauptseite. \\ \hline	
-	Hauptszenario			& 1. Das System zeigt ViVi-Auswählen-Oberfläche an. \\
-							& 2. Der Benutzer kann ein ViVi vom Cloud auswählen und klickt auf das ``Weiter''-Button, wenn er schon fertig ist. \\
-							& 3. Das System zeigt ViVi-Segmentieren-Oberfläche an. \\ \hline
-	Erweiterung				& 2a. Alternativ kann das Video via URL eingebettet werden. \\ 
-							& 3a. Falls das Video nicht ausgewählt werden kann, wird eine 
-							  Fehlermeldung gezeigt. \\ \hline
+	Hauptszenario			& 1. Der Benutzer wählt die Möglichkeit, eine neue Session zu 
+	                          erstellen, von der Moderator-Hauptseite. \\
+							& 2. Das System zeigt die ViVi-Auswählen-Oberfläche an. \\
+							& 3. Der Benutzer kann ein ViVi vom Server-Dateisystem auswählen 
+							  und klickt auf dem ``Weiter''-Button, wenn er fertig ist. \\
+							& 4. Das System zeigt die ViVi-Segmentieren-Oberfläche an. \\ \hline
+	Erweiterungen			& 3a. Alternativ kann das Video via Pfad eingebettet werden. \\ 
+							& 4a. Falls das Video nicht ausgewählt werden kann, wird eine 
+							  Fehlermeldung gezeigt. Das System \\ \hline
 	Priorität				& sehr hoch \\ \hline
 	Verwendungshäufigkeit	& häufig \\ \hline
 \end{tabularx}

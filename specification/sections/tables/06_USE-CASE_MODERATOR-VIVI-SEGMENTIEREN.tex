@@ -3,32 +3,38 @@
 	Use Case Nr. 06			& \textbf{Moderator Vision-Video Segmentieren} \\ \hline
 	Erläuterungen			& Vision-Video segmentieren ist der zweite Schritt zur 
 							  Vorbereitung einer ViViPlayer-Session. \\ \hline
-	Systemgrenzen (Scope)	& Applikation. \\ \hline
-	Ebene					& Hauptebene \\ \hline
-	Vorbedingung			& Die Web-App ist betriebsbereit. Der Benutzer hat Moderator-Rechten \\ \hline
-	Mindestgarantie			& Im Fehlerfall wird das Video nicht segmentiert. \\ \hline
-	Erfolgsgarantie			& Das ViVi wird erfolgreich segmentiert. \\ \hline
-	Stakeholder				& Der Benutzer - will eine produktive Session mit den Teilnehmer via
-							  ViViPlayer. \\
-							& Herr Jianwei Shi - möchte alle Sessions in der Web-App erfolgreich durchgeführt
-							  werden. \\ \hline
-	Hauptakteur				& Der Benutzer \\ \hline
-	Auslöser				& Der Benutzer hat schon ein ViVi ausgewählt und klick auf ``Weiter''-Button. 
-							  \\ \hline	
-	Hauptszenario			& 1. Das System zeigt ViVi-Segmentieren-Oberfläche. \\
-							& 2. Von dem Video-Fenster spielt der Benutzer das Video ab, bis zu seinem
-							  gewünschten Zeitstempel für ein neues Segment, danach benennt er das Segment nach 
-							  seinem Wunsch und klickt ``Hinzufügen''. \\
-							& 3. Das System fügt das neue Segment in der Segmente-Liste hinzu. \\
-							& 4. Der Benutzer klickt auf ``Weiter''-Button. \\
-							& 5. Das System zeigt Verständnisfrage-Vorbereiten-Oberfläche   
+	Systemgrenzen (Scope)	& Gesamtsystem. \\ \hline
+	Ebene					& Hauptfunktion \\ \hline
+	Vorbedingung			& Die Web-App ist betriebsbereit. Der Benutzer hat 
+	                          Moderator-Rechte und schon ein ViVi ausgewählt (UC 3.2.5). \\ \hline
+	Mindestgarantie			& Im Fehlerfall wird das Video nicht segmentiert und nicht 
+	                          gelöscht. \\ \hline
+	Erfolgsfall 			& Das ViVi wurde erfolgreich segmentiert. \\ \hline
+	Stakeholder				& Systembediener - will eine produktive Session mit den 
+	                          Teilnehmer via ViViPlayer. \\
+							& Herr Jianwei Shi (Systembesitzer)- möchte, dass alle Sessions 
+							  in der Web-App erfolgreich durchgeführt werden. \\ \hline
+	Hauptakteur				& Systembediener mit Moderator-Rolle \\ \hline
+	Auslöser				& Der Benutzer befindet sich auf der ViVi-Auswählen-Seite 
+							  und klickt auf ``Weiter''-Button. \\ \hline	
+	Hauptszenario			& 1. Der Benutzer befindet sich auf der ViVi-Auswählen-Seite
+							  und klickt auf ``Weiter''-Button. \\
+							& 2. Das System zeigt die ViVi-Segmentieren-Oberfläche. \\
+							& 3. Von dem Video-Fenster spielt der Benutzer das Video ab, bis 
+							  zu seinem gewünschten Zeitstempel für ein neues Shot, danach 
+							  benennt er das Shot nach seinem Wunsch und klickt 
+							  ``Hinzufügen''. \\
+							& 4. Das System fügt das neue Shot in der Shots-Liste 
+							  hinzu. \\
+							& 5. Der Benutzer klickt auf dem ``Weiter''-Button. \\
+							& 6. Das System zeigt die Verständnisfrage-Vorbereiten-Oberfläche 
 							  an. \\ \hline
-	Erweiterung				& 2a. Alternativ kann der Benutzer die automatische 
+	Erweiterungen			& 3a. Alternativ kann der Benutzer die automatische 
 							  Segmentierung nutzen. \\
-							& 3a. Wenn der Benutzer noch nicht fertig mit dem Segmentierung 
+							& 4a. Wenn der Benutzer noch nicht fertig mit dem Segmentierung 
 							  ist, geht der Benutzer zurück zu Schritt 2. \\ 
-							& 3b. Falls der Name eines Segments leer oder eine Zeitstempel 
-							  nicht gültig ist, wird eine Fehlermeldung ausgegeben. Kein neues Segment wird hinzugefügt. \\ \hline
+							& 4b. Falls der Name eines Shots leer oder eine Zeitstempel 
+							  nicht gültig ist, wird eine Fehlermeldung ausgegeben. Kein neues Shot wird hinzugefügt. Das System geht zurück zu Schritt 2. \\ \hline
 	Priorität				& sehr hoch \\ \hline
 	Verwendungshäufigkeit	& häufig \\ \hline
 \end{tabularx}
