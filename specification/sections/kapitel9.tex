@@ -1,177 +1,179 @@
 \section{Abnahme-Testfälle}
 \begin{enumerate}
-	\item \underline{\textbf{Testfall}} \linebreak
-	\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und öffnet die Web-App. Er befindet sich jetzt im Hauptmenü. Es gibt 2 Knöpfe, ''Session als Moderator starten'' und ''Session Teilnehmen''.\linebreak
+	\item \underline{\textbf{Testfall: Moderator Session vorbereiten}} \linebreak
+	\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er befindet sich jetzt im Hauptmenü.\linebreak
 	\textbf{Eingabe:} Der Nutzer klickt ''Session als Moderator starten'' an.\linebreak
 	\textbf{Ausgabe:} Ein Login Fenster taucht auf.\linebreak
 	\textbf{Eingabe:} Der Nutzer gibt seine E-Mail und sein Passwort ein und klickt auf ''Anmelden''.\linebreak
 	\textbf{Ausgabe:} Ein Loading Screen erscheint. Nach ein paar Sekunden hat der Nutzer Zugriff auf dem Server und auf die Videos.
 	
-	\item \underline{\textbf{Testfall}} \linebreak
-	\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und öffnet die Web-App. Er befindet sich jetzt im Hauptmenü. Es gibt 2 Knöpfe, ''Session als Moderator starten'' und ''Session Teilnehmen''. \linebreak
+	\item \underline{\textbf{Testfall: Moderator einloggen}} \linebreak
+	\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er befindet sich jetzt im Hauptmenü. \linebreak
 	\textbf{Eingabe:} Der Nutzer klickt auf ''Session als Moderator starten''. \linebreak
 	\textbf{Ausgabe:} Ein Login Fenster taucht auf.\linebreak
 	\textbf{Eingabe:} Der Nutzer hat noch kein Konto erstellt und klickt auf ''Anmelden''.\linebreak
 	\textbf{Ausgabe:} Die Fehlermeldung ''Ungültige Anmeldedaten.'' erscheint unter dem Eingabefeld.
 	
-	\item \underline{\textbf{Testfall}} \linebreak
-	\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und öffnet die Web-App. Er befindet sich jetzt im Hauptmenü. Es gibt 2 Knöpfe, ''Session als Moderator starten'' und ''Session Teilnehmen''.\linebreak
+	\item \underline{\textbf{Testfall: Moderator Registrieren}} \linebreak
+	\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er befindet sich jetzt im Hauptmenü.\linebreak
 	\textbf{Eingabe:} Der Nutzer klickt ''Session als Moderator starten'' an. \linebreak
 	\textbf{Ausgabe:} Ein Login Fenster taucht auf.\linebreak
 	\textbf{Eingabe:} Der Nutzer klickt auf ''Registrieren.''.\linebreak
 	\textbf{Ausgabe:} Der Nutzer wird zu Registrierungsseite weitergeleitet.\linebreak
 	\textbf{Eingabe:} Der Nutzer gibt seine E-Mailadresse und ein Passwort und bestätigt dieses. Er klickt danach an ''Registrieren''. \linebreak
-	\textbf{Ausgabe:} Der Nutzer befindet sich jetzt in Validierungsvorgang. Die Validierung ist erfolgreich. Nutzer ist gleich zurück zu Hauptmenü weitergeleitet und die Nachricht ''Sie können sich als Moderator anmelden.'' wird gezeigt.
+	\textbf{Ausgabe:} Die Daten sind zu einem Moderator weitergeleitet worden zum validieren.  Der Nutzer wird zum Hauptmenü weitergeleitet.
 	
-	\item \underline{\textbf{Testfall}} \linebreak
-	\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und öffnet die Web-App. Er befindet sich jetzt im Hauptmenü. Es gibt 2 Knöpfe, ''Session als Moderator starten'' und ''Session Teilnehmen''. \linebreak
-	\textbf{Eingabe:} Der Nutzer klickt auf ''Session als Moderator starten''. \linebreak
-	\textbf{Ausgabe:} Ein Login Fenster taucht auf.\linebreak
-	\textbf{Eingabe:} Der Nutzer klickt ''Registrieren.'' an.\linebreak
-	\textbf{Ausgabe:} Der Nutzer wird zu Registrierungsseite weitergeleitet.\linebreak
-	\textbf{Eingabe:} Der Nutzer gibt seine E-Mailadresse und ein Passwort und bestätigt dieses. Er klickt danach auf ''Registrieren'' an. \linebreak
-	\textbf{Ausgabe:} Der Nutzer befindet sich jetzt in Validierungsvorgang. Die Validierung ist nicht erfolgreich. Nutzer ist gleich zurück zu Hauptmenü weitergeleitet und die Nachricht ''Registrierung Fehlgeschlagen.'' wird gezeigt.\linebreak
+	%\item \underline{\textbf{Testfall}} \linebreak
+	%\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er befindet sich jetzt im Hauptmenü. \linebreak
+	%\textbf{Eingabe:} Der Nutzer klickt auf ''Session als Moderator starten''. \linebreak
+	%\textbf{Ausgabe:} Ein Login Fenster taucht auf.\linebreak
+	%\textbf{Eingabe:} Der Nutzer klickt ''Registrieren.'' an.\linebreak
+	%\textbf{Ausgabe:} Der Nutzer wird zu Registrierungsseite weitergeleitet.\linebreak
+	%\textbf{Eingabe:} Der Nutzer gibt seine E-Mailadresse und ein Passwort und bestätigt dieses. Er klickt danach auf ''Registrieren'' an. \linebreak
+	%\textbf{Ausgabe:} Der Nutzer befindet sich jetzt in Validierungsvorgang. Die Validierung ist nicht erfolgreich. Nutzer ist gleich zurück zu Hauptmenü weitergeleitet und die Nachricht ''Registrierung Fehlgeschlagen.'' wird gezeigt.\linebreak
 	
-	\item \underline{\textbf{Testfall}} \linebreak
-	\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und öffnet die Web-App. Er befindet sich jetzt im Hauptmenü. Es gibt 2 Knöpfe, ''Session als Moderator starten'' und ''Session Teilnehmen''.
+	\item \underline{\textbf{Testfall: Teilnehmer Einloggen}} \linebreak
+	\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er befindet sich jetzt im Hauptmenü. Eine ViViPlayer-Session ist von dem Moderator gestartet worden und im System ist die TAN 493489458 hinterlegt.
 	Eine ViViPlayer-Session ist aber noch nicht von dem Moderator gestartet. \linebreak
 	\textbf{Eingabe:} Der Nutzer klickt auf ''Session Teilnehmen.'' an. \linebreak
-	\textbf{Ausgabe:} Ein Login Fenster taucht auf. Es gibt ein Eingabefeld für TAN.\linebreak
-	\textbf{Eingabe:} Der Nutzer gibt eine 'falsche' TAN ein. \linebreak
+	\textbf{Ausgabe:} Ein Login Fenster taucht auf.\linebreak
+	\textbf{Eingabe:} Der Nutzer gibt die TAN 0230230 ein. \linebreak
 	\textbf{Ausgabe:} Eine Fehlermeldung wird gezeigt.
 	
-	\item \underline{\textbf{Testfall}} \linebreak
-	\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und öffnet die Web-App. Er befindet sich jetzt im Hauptmenü. Es gibt 2 Knöpfe, ''Session als Moderator starten'' und ''Session Teilnehmen''. Eine ViViPlayer-Session ist von dem Moderator gestartet worden und der Nutzer hat schon eine TAN Nummer bekommen. \linebreak
+	\item \underline{\textbf{Testfall: Teilnehmer Einloggen}} \linebreak
+	\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er befindet sich jetzt im Hauptmenü. Eine ViViPlayer-Session ist von dem Moderator gestartet worden und im System ist die TAN 493489458 hinterlegt. \linebreak
 	\textbf{Eingabe:} Der Nutzer klickt auf ''Session Teilnehmen.''. \linebreak
-	\textbf{Ausgabe:} Ein Login Fenster taucht auf. Es gibt ein Eingabefeld für die TAN.\linebreak
-	\textbf{Eingabe:} Der Nutzer gibt die gegebene TAN ein. \linebreak
+	\textbf{Ausgabe:} Ein Login Fenster taucht auf. .\linebreak
+	\textbf{Eingabe:} Der Nutzer gibt die hinterlegte TAN ein. \linebreak
 	\textbf{Ausgabe:} Der Nutzer bekommt eine Bestätigungsnachricht und er wird zu der ViViPlayer-Session weitergeleitet als Teilnehmer.
 	
-	\item \underline{\textbf{Testfall}} \linebreak
-	\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und öffnet die Web-App. Er meldet sich als Moderator an. Der Nutzer befindet sich jetzt in dem ViViPlayer Hauptmenü, die mit dem Server verbunden ist. Die Vision Videos sind auf dem Server gespeichert. \linebreak
+	\item \underline{\textbf{Testfall: Moderator ViVi Auswählen}} \linebreak
+	\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er ist als Moderator angemeldet. Der Nutzer befindet sich jetzt in dem ViViPlayer Hauptmenü. ein Visionvideo ist auf dem Server gespeichert. \linebreak
 	\textbf{Eingabe:} Der Nutzer klickt auf einem Video und danach auf ''Weiter''. \linebreak
 	\textbf{Ausgabe:} Der Nutzer wird auf die Videobearbeitungsseite weitergeleitet. 
 	
-	\item \underline{\textbf{Testfall}} \linebreak
-	\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und öffnet die Web-App. Er meldet sich als Moderator an. Der Nutzer befindet sich jetzt in dem ViViPlayer Hauptmenü, die mit dem Server verbunden ist. Die Vision Videos sind auf dem Server gespeichert.\linebreak
-	\textbf{Eingabe:} Der Nutzer gibt einen Pfad in das Eingabefeld ein. Er klickt danach auf ''Bestätigen''. \linebreak
-	\textbf{Ausgabe:} Das System überprüft de Pfad. \linebreak
-	\textbf{Eingabe:} Der Nutzer klickt auf ''Weiter''.\linebreak
-	\textbf{Ausgabe:} Der Nutzer wird auf die Videobearbeitungsseite weitergeleitet.
+%	\item \underline{\textbf{Testfall}} \linebreak
+%	\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er meldet sich als Moderator an. Der Nutzer befindet sich jetzt in dem ViViPlayer Hauptmenü, die mit dem Server verbunden ist. Die Vision Videos sind auf dem Server gespeichert.\linebreak
+%	\textbf{Eingabe:} Der Nutzer gibt einen Pfad in das Eingabefeld ein. Er klickt danach auf ''Bestätigen''. \linebreak
+%	\textbf{Ausgabe:} Das System überprüft den Pfad. \linebreak
+%	\textbf{Eingabe:} Der Nutzer klickt auf ''Weiter''.\linebreak
+%	\textbf{Ausgabe:} Der Nutzer wird auf die Videobearbeitungsseite weitergeleitet.
 	
-	\item \underline{\textbf{Testfall}} \linebreak
-	\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und öffnet die Web-App. Er meldet sich als Moderator an. Der Nutzer befindet sich jetzt in dem ViViPlayer Hauptmenü, das mit dem Server verbunden ist. Die Vision Videos sind auf dem Server gespeichert.\linebreak
-	\textbf{Eingabe:} Der Nutzer gibt einen Pfad in das Eingabefeld ein. Er klickt danach auf ''Bestätigen''. \linebreak
-	\textbf{Ausgabe:} Das System überprüft den Pfad. Der Pfad funktioniert nicht. \linebreak
-	\textbf{Ausgabe:} Eine Fehlermeldung wird angezeigt.
+%	\item \underline{\textbf{Testfall}} \linebreak
+%	\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er meldet sich als Moderator an. Der Nutzer befindet sich jetzt in dem ViViPlayer Hauptmenü, das mit dem Server verbunden ist. Die Vision Videos sind auf dem Server gespeichert.\linebreak
+%	\textbf{Eingabe:} Der Nutzer gibt einen Pfad in das Eingabefeld ein. Er klickt danach auf ''Bestätigen''. \linebreak
+%	\textbf{Ausgabe:} Das System überprüft den Pfad. Der Pfad funktioniert nicht. \linebreak
+%	\textbf{Ausgabe:} Eine Fehlermeldung wird angezeigt.
 	
-	\item \underline{\textbf{Testfall}} \linebreak
-	\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und öffnet die Web-App. Er meldet sich als Moderator an. Der Nutzer befindet sich jetzt in dem ViViPlayer Hauptmenü, das mit dem Server verbunden ist. Die Vision Videos sind auf dem Server gespeichert.\linebreak
+	\item \underline{\textbf{Testfall: Moderator ViVi Auswählen}} \linebreak
+	\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Der Benutzer ist als Moderator angemeldet. Der Nutzer befindet sich jetzt in dem ViViPlayer Hauptmenü. Ein Vision Video ist auf dem Server gespeichert.\linebreak
 	\textbf{Eingabe:} Der Nutzer klickt auf ''Weiter'', es ist aber kein Video ausgewählt. \linebreak
 	\textbf{Ausgabe:} Eine Fehlermeldung wird gezeigt.
 	
-	\item \underline{\textbf{Testfall}} \linebreak
-	\textbf{Setup:}Der Nutzer ist mit dem Internet verbunden und öffnet die Web-App. Er meldet sich als Moderator an. Der Nutzer hat ein Video ausgewählt, und jetzt ist er auf der Videobearbeitungsseite.\linebreak
+	\item \underline{\textbf{Testfall: Moderator ViVi Segmentieren}} \linebreak
+	\textbf{Setup:}Der Nutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Der Benutzer ist als Moderator angemeldet. Es ist ein Video auf dem Server gespeichert. Der Nutzer hat ein Video ausgewählt und ist auf der Videobearbeitungsseite.\linebreak
 	\textbf{Eingabe:} Der Nutzer klickt auf den Video Slider, um einen bestimmten Shot auszuwählen. Er gibt den Titel für den Shot ein und klickt auf ''Shot Hinzufügen''. \linebreak
 	\textbf{Ausgabe:} Ein Zeitstempel für den ausgewählten Shot wird dem Slider hinzugefügt.\linebreak
 	\textbf{Eingabe:} Der Nutzer klickt auf ''Weiter''. \linebreak
 	\textbf{Ausgabe:} Der Nutzer wird zur nächsten Seite weitergeleitet. Eine Benutzeroberfläche für das Einfügen von Annotationen wird gezeigt.
 	
-	\item \underline{\textbf{Testfall}} \linebreak
-	\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und öffnet die Web-App. Er meldet sich als Moderator an. Der Nutzer hat ein Video ausgewählt, und jetzt ist er auf der Videobearbeitungsseite.\linebreak
+	\item \underline{\textbf{Testfall: Moderator ViVi Segmentieren}} \linebreak
+	\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er meldet sich als Moderator an. Es ist ein Video auf dem Server gespeichert. Der Nutzer hat ein Video ausgewählt und ist auf der Videobearbeitungsseite.\linebreak
 	\textbf{Eingabe:} Der Nutzer klickt auf den Video Slider, um einen bestimmten Shot auszuwählen. Er gibt keinen Titel für den Shot ein und klickt auf ''Shot Hinzufügen''. \linebreak
 	\textbf{Ausgabe:} Eine Fehlermeldung wird gezeigt und kein neuer Shot wird hinzugefügt.
 	
-	\item \underline{\textbf{Testfall}} \linebreak
-	\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und öffnet die Web-App. Er meldet sich als Moderator an. Der Nutzer hat ein Video ausgewählt und das Video in Shots segmentiert. Er befindet sich jetzt auf der nächsten Seite, wo man Annotationen dem Video hinzufügen kann.\linebreak
-	\textbf{Eingabe:} Der Nutzer wählt einen Shot, und gibt seinen Text in dem Eingabefeld neben dem Player ein. Danach klickt er auf ''Annotation Hinzufügen.''.\linebreak
-	\textbf{Ausgabe:} Die Annotation wird in der Mitte des ViViPlayers hinzugefügt.\linebreak
-	\textbf{Eingabe:} Der Nutzer klickt auf die Annotation und zieht die irgendwo in den Shot.\linebreak
-	\textbf{Ausgabe:} Die Annotation ist jetzt in einer neuen Position in dem Shot.\linebreak
-	\textbf{Eingabe:} Der Nutzer klickt auf ''Weiter'' an. \linebreak
-	\textbf{Ausgabe:} Der Nutzer wird zur nächsten Seite weitergeleitet. Eine Benutzeroberfläche für die Erstellung von einer TAN wird gezeigt.
+%	\item \underline{\textbf{Testfall}} \linebreak
+%	\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er meldet sich als Moderator an. Der Nutzer hat ein Video ausgewählt und das Video in Shots segmentiert. Er befindet sich jetzt auf der nächsten Seite, wo man Annotationen dem Video hinzufügen kann.\linebreak
+%	\textbf{Eingabe:} Der Nutzer wählt einen Shot, und gibt seinen Text in dem Eingabefeld neben dem Player ein. Danach klickt er auf ''Annotation Hinzufügen.''.\linebreak
+%	\textbf{Ausgabe:} Die Annotation wird in der Mitte des ViViPlayers hinzugefügt.\linebreak
+%	\textbf{Eingabe:} Der Nutzer klickt auf die Annotation und zieht die irgendwo in den Shot.\linebreak
+%	\textbf{Ausgabe:} Die Annotation ist jetzt in einer neuen Position in dem Shot.\linebreak
+%	\textbf{Eingabe:} Der Nutzer klickt auf ''Weiter'' an. \linebreak
+%	\textbf{Ausgabe:} Der Nutzer wird zur nächsten Seite weitergeleitet. Eine Benutzeroberfläche für die Erstellung von einer TAN wird gezeigt.
 	
-	\item \underline{\textbf{Testfall}} \linebreak
-	\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und öffnet die Web-App. Er meldet sich als Moderator an. Der Nutzer hat ein Video ausgewählt, und hat das Video in Shots segmentiert. Er befindet sich jetzt auf der nächsten Seite, wo man Annotationen in dem Video hinzufügen kann.\linebreak
-	\textbf{Eingabe:} Der Nutzer wählt ein Shot und gibt keinen Text in dem Eingabefeld neben dem Player ein. Danach klickt er auf ''Annotation Hinzufügen.'' an.\linebreak
-	\textbf{Ausgabe:} Eine Fehlermeldung wird gezeigt und es wird keine neue Annotation hinzugefügt.
+%	\item \underline{\textbf{Testfall}} \linebreak
+%	\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er meldet sich als Moderator an. Der Nutzer hat ein Video ausgewählt, und hat das Video in Shots segmentiert. Er befindet sich jetzt auf der nächsten Seite, wo man Annotationen in dem Video hinzufügen kann.\linebreak
+%	\textbf{Eingabe:} Der Nutzer wählt ein Shot und gibt keinen Text in dem Eingabefeld neben dem Player ein. Danach klickt er auf ''Annotation Hinzufügen.'' an.\linebreak
+%	\textbf{Ausgabe:} Eine Fehlermeldung wird gezeigt und es wird keine neue Annotation hinzugefügt.
 	
-	\item \underline{\textbf{Testfall}} \linebreak
-	\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und öffnet die Web-App. Er meldet sich als Moderator an. Der Nutzer hat ein Video ausgewählt, das Video in Shots segmentiert und Annotationen eingebettet. Er befindet sich jetzt auf der TAN-Erstellungsseite.\linebreak
-	\textbf{Eingabe:} Der Nutzer gibt eine sichere TAN ein.\linebreak
-	\textbf{Ausgabe:} Das System überprüft die eingegebene TAN. Eine Nachricht ''TAN ist sicher.'' wird gezeigt automatisch.\linebreak
-	\textbf{Eingabe:} Der Nutzer klickt auf ''Weiter'' an.\linebreak
-	\textbf{Ausgabe:} Der Nutzer wird zur nächsten Seite weitergeleitet und die ViVi-Überblick-Oberfläche wird von dem System angezeigt.
+%	\item \underline{\textbf{Testfall UC 8}} \linebreak
+%	\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er meldet sich als Moderator an. Der Nutzer hat ein Video ausgewählt und das Video in Shots segmentiert. Er befindet sich jetzt auf der TAN-Erstellungsseite.\linebreak
+%	\textbf{Eingabe:} Der Nutzer gibt eine sichere TAN ein.\linebreak
+%	\textbf{Ausgabe:} Das System überprüft die eingegebene TAN. Eine Nachricht ''TAN ist sicher.'' wird gezeigt automatisch.\linebreak
+%	\textbf{Eingabe:} Der Nutzer klickt auf ''Weiter'' an.\linebreak
+%	\textbf{Ausgabe:} Der Nutzer wird zur nächsten Seite weitergeleitet und die ViVi-Überblick-Oberfläche wird von dem System angezeigt.
 	
-	\item \underline{\textbf{Testfall}} \linebreak
-	\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und öffnet die Web-App. Er meldet sich als Moderator an. Der Nutzer hat ein Video ausgewählt, das Video in Shots segmentiert und Annotationen eingebettet. Er befindet sich jetzt auf der TAN-Erstellungsseite.\linebreak
-	\textbf{Eingabe:} Der Nutzer gibt eine TAN ein.\linebreak
-	\textbf{Ausgabe:} Das System überprüft die eingegebene TAN. Die Fehlermeldung ''TAN ist unsicher!'' wird gezeigt.\linebreak
-	\textbf{Eingabe:} Der Nutzer klickt auf ''Weiter'' an.\linebreak
-	\textbf{Ausgabe:} Eine Fehlermeldung wird gezeigt und die Session kann nicht gestartet werden.
+%	\item \underline{\textbf{Testfall}} \linebreak
+%	\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er meldet sich als Moderator an. Der Nutzer hat ein Video ausgewählt, das Video in Shots segmentiert und Annotationen eingebettet. Er befindet sich jetzt auf der TAN-Erstellungsseite.\linebreak
+%	\textbf{Eingabe:} Der Nutzer gibt eine TAN ein.\linebreak
+%	\textbf{Ausgabe:} Das System überprüft die eingegebene TAN. Die Fehlermeldung ''TAN ist unsicher!'' wird gezeigt.\linebreak
+%	\textbf{Eingabe:} Der Nutzer klickt auf ''Weiter'' an.\linebreak
+%	\textbf{Ausgabe:} Eine Fehlermeldung wird gezeigt und die Session kann nicht gestartet werden.
 	
-	\item \underline{\textbf{Testfall}} \linebreak
-	\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und öffnet die Web-App. Er meldet sich als Moderator an. Der Nutzer hat ein Video ausgewählt, das Video in Shots segmentiert und Annotationen eingebettet. Er befindet sich jetzt auf der TAN-Erstellungsseite.\linebreak
+	\item \underline{\textbf{Testfall: Moderator TAN erzeugen}} \linebreak
+	\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er meldet sich als Moderator an. Es ist ein Video auf dem Server gespeichert. Der Nutzer hat ein Video ausgewählt und das Video in Shots segmentiert. Er befindet sich jetzt auf der TAN-Erstellungsseite.\linebreak
 	\textbf{Eingabe:} Der Nutzer klickt auf ''TAN generieren''.\linebreak
-	\textbf{Ausgabe:} Das System überprüft die generierte TAN.\linebreak
+	\textbf{Ausgabe:} Das System zeigt die vom System generierte TAN an.\linebreak
 	\textbf{Eingabe:} Der Nutzer klickt auf ''Weiter''.\linebreak
 	\textbf{Ausgabe:} Der Nutzer wird zur nächsten Seite weitergeleitet und die ViVi-Überblick-Oberfläche wird von dem System angezeigt.
 	
-	\item \underline{\textbf{Testfall}} \linebreak
-	\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und öffnet die Web-App. Er meldet sich als Teilnehmer per TAN oder als Moderator bei der bereits erstellten Sitzung an.\\
+	\item \underline{\textbf{Testfall: Kommentar erstellen}} \linebreak
+	\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Der Benutzer ist angemeldet.\\
 	\textbf{Eingabe:} Der Nutzer wählt den ''Kommentar''-Modus aus. \\
 	\textbf{Ausgabe:} Das System zeigt die ''Kommentar''-Eingabe. \\
-	\textbf{Eingabe:} Der Nutzer gibt seinen Kommentar ein und bestätigt wenn er fertig ist.\\
+	\textbf{Eingabe:} Der Nutzer gibt ''Hello World'' ein und bestätigt wenn er fertig ist.\\
 	\textbf{Ausgabe:} Das System verarbeitet die Anfrage und speichert den Kommentar ab. Die User Story wird den anderen Benutzern angezeigt und dem dazugehörigen Shot zugeordnet. \\
 	
-	\item \underline{\textbf{Testfall}} \linebreak
-	\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und öffnet die Web-App. Er meldet sich als Teilnehmer per TAN oder als Moderator bei der bereits erstellten Sitzung an.\\
-	\textbf{Eingabe:} Der Nutzer wählt den ''Kommentar''-Modus aus. \\
-	\textbf{Ausgabe:} Das System zeigt die ''Kommentar''-Eingabe. \\
-	\textbf{Eingabe:} Der Nutzer gibt keinen Kommentar ein und bestätigt.\\
-	\textbf{Ausgabe:} Das System gibt eine Fehlermeldung aus. Der Kommentar wird nicht gespeichert und den anderen Nutzern nicht angezeigt. \\
+%	\item \underline{\textbf{Testfall}} \linebreak
+%	\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Der Benutzer ist angemeldet\\
+%	\textbf{Eingabe:} Der Nutzer wählt den ''Kommentar''-Modus aus. \\
+%	\textbf{Ausgabe:} Das System zeigt die ''Kommentar''-Eingabe. \\
+%	\textbf{Eingabe:} Der Nutzer gibt keinen Kommentar ein und bestätigt.\\
+%	\textbf{Ausgabe:} Das System gibt eine Fehlermeldung aus. Der Kommentar wird nicht gespeichert und den anderen Nutzern nicht angezeigt. \\
 	
-	\item \underline{\textbf{Testfall}} \linebreak
-	\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und öffnet die Web-App. Er meldet sich als Teilnehmer per TAN oder als Moderator bei der bereits erstellten Sitzung an.\\
+	\item \underline{\textbf{Testfall: User-Story Schreiben}} \linebreak
+	\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Der Benutzer ist angemeldet.\\
 	\textbf{Eingabe:} Der Nutzer wählt den ''User Story''-Modus aus. \\
 	\textbf{Ausgabe:} Das System zeigt die ''User Story''-Eingabe. \\
-	\textbf{Eingabe:} Der Nutzer gibt seine User Story ein und bestätigt wenn er fertig ist.\\
+	\textbf{Eingabe:} Der Nutzer gibt ''Damit ich weiß, ob jemand unregelmäßig arbeitet,
+möchte ich als Abteilungsleiter eine visuelle Darstellung der geleisteten Stunden sehen.'' und bestätigt wenn er fertig ist.\\
 	\textbf{Ausgabe:} Das System verarbeitet die Anfrage und speichert die User Story ab. Die User Story wird den anderen Benutzern angezeigt und dem dazugehörigen Shot zugeordnet. \\
 	
-	\item \underline{\textbf{Testfall}} \linebreak
-	\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und öffnet die Web-App. Er meldet sich als Teilnehmer per TAN oder als Moderator bei der bereits erstellten Sitzung an. \\
-	\textbf{Eingabe:} Der Nutzer wählt den ''User Story''-Modus aus. \\ 
-	\textbf{Ausgabe:} Das System zeigt die ''User Story''-Eingabe. \\
-	\textbf{Eingabe:} Der Nutzer gibt eine User Story ein, die weniger als 10 Zeichen lang ist, und bestätigt wenn er fertig ist. \\
-	\textbf{Ausgabe:} Das System gibt eine Fehlermeldung aus. Die User Story wird nicht gespeichert und den anderen Nutzern nicht angezeigt. \\
+%	\item \underline{\textbf{Testfall}} \linebreak
+%	\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er meldet sich als Teilnehmer per TAN oder als Moderator bei der bereits erstellten Sitzung an. \\
+%	\textbf{Eingabe:} Der Nutzer wählt den ''User Story''-Modus aus. \\ 
+%	\textbf{Ausgabe:} Das System zeigt die ''User Story''-Eingabe. \\
+%	\textbf{Eingabe:} Der Nutzer gibt eine User Story ein, die weniger als 10 Zeichen lang ist, und bestätigt wenn er fertig ist. \\
+%	\textbf{Ausgabe:} Das System gibt eine Fehlermeldung aus. Die User Story wird nicht gespeichert und den anderen Nutzern nicht angezeigt. \\
 	
 	
-	\item \underline{\textbf{Testfall}} \linebreak
-	\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und öffnet die Web-App. Er meldet sich als Moderator an. Der Nutzer hat ein Video ausgewählt, das Video in Shots segmentiert und Annotationen eingebettet. \\
+	\item \underline{\textbf{Testfall: Moderator Fragen Erstellen}} \linebreak
+	\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Der Nutzer ist als Moderator angemeldet. Es ist ein Video auf dem Server gespeichert. Der Nutzer hat ein Video ausgewählt und das Video in Shots segmentiert. Es gibt einen weiteren Teilnehmer, der angemeldet ist.  \\
 	\textbf{Eingabe:} Der Benutzer wählt den ''Um-/Verständnisfrage''-Modus aus. \\
 	\textbf{Ausgabe:} Das System zeigt die Eingabe für Umfragen und Verständnisfragen an.\\ 
-	\textbf{Eingabe:} Der Benutzer gibt eine Frage und ein Zeitlimit ein. Zudem legt er fest ob es sich um eine Umfrage oder eine Verständnisfrage handelt und und bestätigt. Im Falle einer Verständnisfrage gibt der Nutzer auch eine richtige Antwort an.\\
+	\textbf{Eingabe:} Der Benutzer gibt die Frage ''Kann ein Moderator eine User Story verfassen?'' und ein Zeitlimit von 60 Sekunden ein. Er legt fest, dass es sich um eine Verständnisfrage handelt und gibt die Antwortmöglichtkeiten ''Ja'' und ''Nein'' an. ''Ja'' wird als richtige Antwort festgelegt.\\
 	\textbf{Ausgabe:} Das System zeigt die Frage allen Teilnehmern an.\\ 
-	\textbf{Eingabe:} Alle Benutzer antworten auf die Umfrage innerhalb des Zeitlimits.\\
-	\textbf{Ausgabe:} Das System zeigt jedem Benutzer nach Ablauf des Zeitlimits das Ergebnis an. Die Umfrage oder die Verständnisfrage wird gespeichert und dem dazugehörigen Shot zugeordnet.\\
+	\textbf{Eingabe:} Alle Benutzer antworten auf die Umfrage innerhalb des Zeitlimits von 60 Sekunden.\\
+	\textbf{Ausgabe:} Das System zeigt jedem Benutzer nach Ablauf des Zeitlimits das Ergebnis an. Die Verständnisfrage wird gespeichert und dem dazugehörigen Shot zugeordnet.\\
 	
-	\item \underline{\textbf{Testfall}} \linebreak
-	\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und öffnet die Web-App. Er meldet sich als Moderator an. Der Nutzer hat ein Video ausgewählt, das Video in Shots segmentiert und Annotationen eingebettet. \\
+	\item \underline{\textbf{Testfall: Moderator Fragen Erstellen}} \linebreak
+	\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Der Nutzer ist als Moderator angemeldet. Es ist ein Video auf dem Server gespeichert. Der Nutzer hat ein Video ausgewählt und das Video in Shots segmentiert. \\
 	\textbf{Eingabe:} Der Benutzer wählt den ''Um-/Verständnisfrage''-Modus aus. \\
 	\textbf{Ausgabe:} Das System zeigt die Eingabe für Umfragen und Verständnisfragen an.\\ 
-	\textbf{Eingabe:} Der Benutzer gibt keine Umfrage aber ein Zeitlimit ein und bestätigt.\\
+	\textbf{Eingabe:} Der Benutzer gibt keine Verständnisfrage an und bestätigt.\\
 	\textbf{Ausgabe:} Das System gibt eine Fehlermeldung aus und die Umfrage oder Verständnisfrage wird weder angezeigt noch gespeichert.
 	
-	\item \underline{\textbf{Testfall}} \linebreak
-	\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und öffnet die Web-App. Er meldet sich als Moderator an. Der Nutzer hat ein Video ausgewählt, das Video in Shots segmentiert und Annotationen eingebettet. \\
-	\textbf{Eingabe:} Der Benutzer wählt den ''Um-/Verständnisfrage''-Modus aus. \\
-	\textbf{Ausgabe:} Das System zeigt die Eingabe für Umfragen und Verständnisfragen an.\\ 
-	\textbf{Eingabe:} Der Benutzer gibt eine Verständnisfrage und ein Zeitlimit ein. Der Nutzer legt fest, dass es eine Verständnisfrage ist und gibt keine richtige Lösung an-\\
-	\textbf{Ausgabe:} Das System gibt eine Fehlermeldung aus und die Umfrage oder Verständnisfrage wird weder angezeigt noch gespeichert.
+%	\item \underline{\textbf{Testfall}} \linebreak
+%	\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er meldet sich als Moderator an. Der Nutzer hat ein Video ausgewählt, das Video in Shots segmentiert und Annotationen eingebettet. \\
+%	\textbf{Eingabe:} Der Benutzer wählt den ''Um-/Verständnisfrage''-Modus aus. \\
+%	\textbf{Ausgabe:} Das System zeigt die Eingabe für Umfragen und Verständnisfragen an.\\ 
+%	\textbf{Eingabe:} Der Benutzer gibt eine Verständnisfrage und ein Zeitlimit ein. Der Nutzer legt fest, dass es eine Verständnisfrage ist und gibt keine richtige Lösung an-\\
+%	\textbf{Ausgabe:} Das System gibt eine Fehlermeldung aus und die Umfrage oder Verständnisfrage wird weder angezeigt noch gespeichert.
 	
-	\item \underline{\textbf{Testfall}} \linebreak
-	\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und öffnet die Web-App. Er meldet sich als Moderator an. Der Nutzer hat ein Video ausgewählt, das Video in Shots segmentiert und Annotationen eingebettet. \\
+	\item \underline{\textbf{Testfall: Moderator Log-Dateien Exportieren}} \linebreak
+	\textbf{Setup:} Der Nutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Der Nutzer ist als Moderator angemeldet. Es ist ein Video auf dem Server gespeichert. Der Nutzer hat ein Video ausgewählt und das Video in Shots segmentiert. Zusätzlich ist der Kommentar ''Hello World'', eine User Story ''Damit ich weiß, ob jemand unregelmäßig arbeitet,
+möchte ich als Abteilungsleiter eine visuelle Darstellung der geleisteten Stunden sehen.'' und die Verständnisfrage ''Kann der Moderator User Stories schreiben?'' mit den Antworten ''Ja'' und ''Nein'' auf dem Server gespeichert. \\
 	\textbf{Eingabe:} Der Benutzer beendet die Session für alle Teilnehmer. \\
-	\textbf{Ausgabe:} Das System beendet die Sitzung und exportiert alle Umfragen, Verständnisfragen, Shots mit Screenshots, Annotationen, Kommentare und User Stories in eine ''.odt''-Datei und die User Stories in eine ''.csv''-Datei.\\ 
+	\textbf{Ausgabe:} Das System beendet die Sitzung und exportiert alle Umfragen, Verständnisfragen, Shots mit Screenshots, Kommentare und User Stories in eine ''.odt''-Datei und die User Stories in eine ''.csv''-Datei.\\ 
 	
 \end{enumerate}

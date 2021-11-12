@@ -4,30 +4,31 @@
 	
 	Bei diesem Projekt wird ein großer Fokus auf die Aufrechterhaltung der Softwarequalität in Bezug auf die ISO / IEC 25010-Normen gelegt. Dazu gehören Funktionalität, Effizienz, Kompatibilität, Benutzerfreundlichkeit, Zuverlässigkeit, Sicherheit, Wartbarkeit und Portabilität.
     \linebreak
-    Sicherheit und Effizienz sind zwei der wichtigsten Qualitätsziele in diesem Projekt. Da die Software private Daten von Dritten, wie beispielsweise Kunden anderer Unternehmen, verarbeiten wird, wird ein großer Fokus auf die Wahrung der Vertraulichkeit, Integrität und Authentifizierung bei allen Benutzer- und Moderatorinteraktionen gelegt.
+    Sicherheit und Effizienz sind zwei der wichtigsten Qualitätsziele in diesem Projekt. Da die Software private Daten von Dritten, wie beispielsweise Kunden anderer Unternehmen, verarbeiten wird, wird ein großer Fokus auf die Wahrung der Vertraulichkeit, Integrität und Authentifizierung bei allen Benutzer- und Moderatorinteraktionen gelegt. Aus diesen Gründen ist der Zutritt nur bestimmten Personen gestattet. Allen anderen wird der Zugriff verweigert.
     \linebreak
-    Da ViViPlayer einen Schwerpunkt auf die Live-Interaktion zwischen mehreren Benutzern legt, ist es wichtig, dass auch auf Effizienz, einschließlich Zeitverhalten, Ressourcenauslastung und Kapazität, großer Wert gelegt wird.
+    Da ViViPlayer einen Schwerpunkt auf die Live-Interaktion zwischen mehreren Benutzern legt, ist es wichtig, dass auch auf Effizienz, einschließlich Zeitverhalten, Ressourcenauslastung und Kapazität, großer Wert gelegt wird. 
     \linebreak
-    Im Hinblick auf die Benutzerfreundlichkeit ist es wichtig, dass die Software nicht nur für Moderatoren, sondern auch für Benutzer eine angemessene Benutzererfahrung bietet. Es ist wichtig, dass Moderatoren die Option für Verknüpfungen und erweiterte Funktionen haben, damit sie die Software im Laufe der Zeit effizienter nutzen können. Da die Benutzer verschiedene technische Hintergründe haben, wird ein Fokus auf die Erlernbarkeit durch ein intuitives Design und hilfreiche Dialoge gelegt.
+    Um die Portabilität, Kompatibilität und die Zuverlässigkeit sicherzustellen ist diese Anwendung als Web-App konzipiert um möglichst viele Geräte zu erreichen.
+    Im Hinblick auf die Benutzerfreundlichkeit ist es wichtig, dass die Software nicht nur für Moderatoren, sondern auch für Benutzer eine angemessene Benutzererfahrung bietet. Dies wird durch eine leicht zu erlernende und effiziente Benutzeroberfläche erreicht. Es ist wichtig, dass Moderatoren die Option für Verknüpfungen und erweiterte Funktionen haben, damit sie die Software im Laufe der Zeit effizienter nutzen können. Da die Benutzer verschiedene technische Hintergründe haben, wird ein Fokus auf die Erlernbarkeit durch ein intuitives Design und hilfreiche Dialoge gelegt.
     \linebreak
-    Auch die Wartbarkeit ist für den Kunden sehr wichtig. Da die Software in Kooperation mit der Leibniz Universität Hannover entwickelt wird, ist es wichtig, dass die Software von Studierenden und Lehrenden für zukünftige Lehrveranstaltungen weiterentwickelt werden kann.
+    Auch die Wartbarkeit ist für den Kunden sehr wichtig. Da die Software in Kooperation mit der Leibniz Universität Hannover entwickelt wird, ist es wichtig, dass die Software von Studierenden und Lehrenden für zukünftige Lehrveranstaltungen weiterentwickelt werden kann. Sichergestellt wird dieses durch die Verwendung von Design Patterns und Refactoring.
 	
 	\subsection{Qualitäts-Prioritäten des Kunden}
 		
     Nach Rücksprache mit dem Kunden wurden folgende Prioritäten für die Softwarequalität festgelegt:
 
 		\begin{itemize}
-			\item Sicherheit durch SSL bei allen interaktion von Benutzern und Moderatoren
-            \item Sichere Autorisierung durch geeignete Passwörter und TANs.
-            \item Funktionell gemäß den in Kapital 3 enthaltenen funktionalen Anforderungen.
-            \item Ein passendes Zeitverhalten für alle Meetings.
-            \item Die Möglichkeit, Meetings mit mindestens 18 Mitgliedern ohne merklichen Verlust der Systemleistung aufrechtzuerhalten.
+			\item Sicherheit 
+            \item Funktionalität gemäß den in Kapitel 3 enthaltenen funktionalen Anforderungen.
+           	\item Benutzbarkeit
+            \item Wartbarkeit
+            \item Effizienz
 
 		\end{itemize}
 
 	\subsection{Wie Qualitätsziele erreicht werden sollen}
 	
-	Die Qualität wird während der Entwicklungsphase durch wöchentliche Walkthroughs mit dem Kunden aufrechterhalten. Quality Gates werden auch verwendet, um sicherzustellen, dass alle wesentlichen funktionalen Anforderungen erfüllt sind, bevor nicht wesentliche Anforderungen.
+	Die Qualität wird während der Entwicklungsphase durch wöchentliche Walkthroughs mit dem Kunden aufrechterhalten. Quality Gates werden auch verwendet, um sicherzustellen, dass alle wesentlichen funktionalen Anforderungen erfüllt sind, bevor nicht wesentliche Anforderungen bearbeitet werden.
 	\linebreak
 	Durch die Durchführung von Loadtests wird die Effizienz aufrechterhalten. Das Ziel besteht darin, auch bei einer geringeren als erwarteten Kapazität oder einer höheren als erwarteten Ressourcenauslastung eine angemessene Benutzererfahrung zu bieten.
 	\linebreak
@@ -39,6 +40,6 @@
 	\linebreak
 	Die Sicherheit wird durch die Verwendung von SSL, sicheren Passwörtern/TANs, und Passwort-Hashing gewährleistet. Während der Entwicklung werden auch Penetrationstests durchgeführt.
 	\linebreak
-	Die Wartbarkeit wird durch die Codierungskonventionen gewährleistet, z. B. durch entsprechend kommentierten Code und einen Fokus auf die Minimierung der Codekomplexität und Lines of Code.
+	Die Wartbarkeit wird durch die Codierungskonventionen gewährleistet, z. B. durch entsprechend kommentierten Code.
 	\linebreak
 	Wenn möglich, werden gängige Software- und Hardwarekombinationen verwendet, um die Portabilität aufrechtzuerhalten.
