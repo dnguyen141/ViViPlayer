@@ -1,38 +1,36 @@
 \begin{tabularx}{\linewidth}{|l|X|}
 	\hline
-	Use Case Nr. 07			& \textbf{Moderator Fragen Erstellen} \\ \hline
-	Erläuterungen			& Fragen erstellen ist der dritte Schritt zur Vorbereitung einer 
-							  ViViPlayer-Session. \\ \hline
+	Use Case Nr. 07			& \textbf{Um-/Verstänisfragen erstellen} \\ \hline
+	Erläuterungen			& Um-/Verstänisfragen erstellen ist der dritte Schritt zur 
+							  Vorbereitung einer ViViPlayer-Session. \\ \hline
 	Systemgrenzen (Scope)	& Gesamtsystem. \\ \hline
 	Ebene					& Hauptfunktion. \\ \hline
 	Vorbedingung			& Die Web-App ist betriebsbereit. Der Benutzer hat Moderator
-							  -Rechte und schon ein ViVi ausgewählt (UC 3.2.5) und segmentiert (UC 3.2.6). \\ \hline
-	Mindestgarantie			& Im Fehlerfall wird die Fragen nicht erstellt. 
-							  Das ViVi wird nicht gelöscht. \\ \hline
+							  -Rechte und schon ein ViVi ausgewählt (UC 5) und segmentiert (UC 6). Er befindet sich auf der ViVi-Segmentieren-Seite. \\ \hline
+	Mindestgarantie			& Im Fehlerfall wird die Um-/Verstänisfragen nicht erstellt. Das ViVi 
+							  bleibt unverändert. \\ \hline
 	Erfolgsfall    			& Eine Liste von Verständnisfragen ist erfolgreich hinzugefürgt.
 							  \\ \hline
-	Stakeholder				& Systembediener - will eine produktive Session mit anderen 
-	                          Benutzer via ViViPlayer. \\
-							& Herr Jianwei Shi (Systembesitzer) - möchte, dass alle Sessions 
-							  in der Web-App erfolgreich durchgeführt werden. \\ \hline
-	Hauptakteur				& Systembediener mit Moderator-Rolle. \\ \hline
-	Auslöser				& Der Benutzer befindet sich auf der ViVi-Segmentieren-Seite und 
-							  klickt auf ``Weiter''. \\ \hline	
-	Hauptszenario			& 1. Der Benutzer befindet sich auf der ViVi-Segmentieren-Seite 
-	                          und klickt auf ``Weiter''. \\  
+	Stakeholder				& Systembediener (Moderator) - will eine produktive Session mit 
+							  anderen Benutzer via ViViPlayer. \\
+							& Systembesitzer (Herr Jianwei Shi) - möchte, dass alle Sessions 
+							  in der Web-App erfolgreich durchgeführt werden können. \\ \hline
+	Hauptakteur				& Systembediener (Moderator). \\ \hline
+	Auslöser				& Der Benutzer klickt auf das ``Weiter''-Button. \\ \hline	
+	Hauptszenario			& 1. Der Benutzer klickt auf das ``Weiter''-Button. \\  
 							& 2. Das System zeigt die Frage-Vorbereiten-Oberfläche. \\
 							& 3. Der Benutzer tippt neue Frage, die Auswahlen für die 
 							  Frage, sowie den Zeitstempel und den Typ der Frage ein und 
 							  bestätigt. \\ 
-							& 4. Das System fügt die neue Frage in der Liste hinzu. \\ 
+							& 4. Das System fügt die neue Verstänis-/Umfrage in der Liste 
+							  hinzu. \\ 
 							& 5. Der Benutzer klickt auf dem ``Weiter''-Button. \\ 
 							& 6. Das System zeigt die TAN-Oberfläche an. \\ \hline
-	Erweiterungen			& 3a. Wenn der Benutzer noch nicht fertig mit der 
-							  Fragen-Vorbereitung ist, geht er zurück zu Schritt 3. \\
-							& 3b. Wenn die Frage leer ist oder es keine Auswahl für die 
-							  Frage gibt oder der Zeitstempel nicht gültig ist, wird eine 
-							  Fehlermeldung angezeigt. Das System geht zurück zu Schritt 3.
-							  \\ \hline
+	Erweiterungen			& 4a. WENN die Frage leer ist oder es keine Auswahl für die 
+							  Frage gibt oder der Zeitstempel nicht gültig ist, DANN wird eine 
+							  Fehlermeldung angezeigt. Zurück zu Schritt 2. \\ 
+							& 5a. WENN der Benutzer noch nicht fertig mit der 
+							  Fragen-Vorbereitung ist, DANN geht er zurück zu Schritt 3. \\ \hline
 	Priorität				& mittel \\ \hline
 	Verwendungshäufigkeit	& normal \\ \hline
 \end{tabularx}

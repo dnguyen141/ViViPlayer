@@ -1,48 +1,41 @@
 \begin{tabularx}{\linewidth}{|l|X|}
 	\hline
-	Use Case Nr. 04			& \textbf{Moderator Session Vorbereiten} \\ \hline
+	Use Case Nr. 04			& \textbf{Session vorbereiten} \\ \hline
 	Erläuterungen			& Bevor ein Moderator eine Session mit den Teilnehmer anfangen 
 	                          kann, muss er zuerst vorbereiten. Das heißt: er muss das ViVi einbetten und segmentieren, Verständnisfragen vorbereiten und TAN für die Session erzeugen. \\ \hline
 	Systemgrenzen (Scope)	& Gesamtsystem. \\ \hline
 	Ebene					& Hauptfunktion. \\ \hline
 	Vorbedingung			& Die Web-App ist betriebsbereit. Der Benutzer hat 
-	                          Moderator-Rechte. \\ \hline
+	                          Moderator-Rechte. Er wählt die Option, eine neue Session zu erstellen, von der Moderator-Hauptseite. \\ \hline
 	Mindestgarantie			& Im Fehlerfall wird keine Session erstellt.\\ \hline
 	Erfolgsfall  			& Das segmentierte Vision-Video sowie eine sichere TAN sind 
 	                          bereitgestellt für eine ViViPlayer-Session. \\ \hline
-	Stakeholder				& Systembediener - will eine produktive Session mit den 
+	Stakeholder				& Systembediener (Moderator) - will eine produktive Session mit den 
 	                          Teilnehmer via ViViPlayer. \\
-							& Herr Jianwei Shi (Systembesitzer) - möchte, dass alle Sessions 
+							& Systembesitzer (Herr Jianwei Shi) - möchte, dass alle Sessions 
 							  in der Web-App erfolgreich durchgeführt werden. \\ \hline
-	Hauptakteur				& Systembediener mit Moderator-Rolle. \\ \hline
-	Auslöser				& Der Benutzer wählt die Möglichkeit, eine neue Session zu 
-	                          erstellen, von der Moderator-Hauptseite. \\ \hline	
-	Hauptszenario			& 1. Der Benutzer wählt die Möglichkeit, eine neue Session zu 
-	                          erstellen, von der Moderator-Hauptseite. \\ 
+	Hauptakteur				& Systembediener (Moderator). \\ \hline
+	Auslöser				& Der Benutzer klickt auf die "Session erstellen"-Option. \\ \hline	
+	Hauptszenario			& 1. Der Benutzer klickt auf die "Session erstellen"-Option. \\ 
 							& 2. Das System zeigt die ViVi-Auswählen-Oberfläche an. \\
-							& 3. Der Benutzer wählt ein ViVi und bestätigt. (UC 3.2.5) \\ 
+							& 3. Der Benutzer wählt ein ViVi und bestätigt. (UC 5) \\ 
 							& 4. Das System zeigt die ViVi-Segmentieren-Oberfläche. \\ 
 							& 5. Der Benutzer segmentiert das von ihm ausgewählte Video und 
-							  bestätigt. (UC 3.2.6) \\
+							  bestätigt. (UC 6) \\
 							& 6. Das System zeigt die Frage-Vorbereiten-Oberfläche. \\
-							& 7. Der Benutzer schreibt die Multiple-Choice-Fragen für die 
-							  Teilnehmer sowie den Typ der Frage und bestätigt. (UC 3.2.7) \\
-							& 8. Das System zeigt die TAN-Oberfläche. \\
-							& 9. Der Benutzer erzeugt eine neue TAN für die Session und 
-							  bestätigt. (UC 3.2.8) \\ 
-							& 10. Das System zeigt die ViVi-Überblick-Oberfläche. \\ 
-							& 11. Der Benutzer prüft noch mal alle Vorbereitungschritte und 
-							  erstellt neue Session. \\
-							& 12. Das System zeigt die ViViPlayer-Oberfläche. \\ \hline
-	Erweiterungen			& 4a. Falls das Video nicht eingebettet werden kann, wird eine 
-	                          Fehlermeldung gezeigt. Das System geht zurück zu Schritt 2. \\
-							& 6a. Falls die Segmentierung nicht gültig ist, wird eine 
-							  Fehlermeldung ausgegeben. Das System geht zurück zu Schritt 4.\\
-							& 8a. Falls es Fehler bei der Eingabe der Fragen, wird 
-							  eine Fehlermeldung ausgegeben. Das System geht zurück zu Schritt 4. \\
-							& 10a. Wenn die TAN nicht sicher genug ist, wird eine 
-							  Fehlermeldung ausgegeben. Das System geht zurück zu Schritt 8. 
-							  \\ \hline
+							& 7. Der Benutzer bereitet die Um-/Verstänisfragen vor und bestätigt.
+							  (UC 7) \\
+							& 8. Das System zeigt die ViVi-Überblick-Oberfläche. \\ 
+							& 9. Der Benutzer prüft noch mal alle Vorbereitungschritte und 
+							  klickt auf das "Erstellen"-Button. \\
+							& 10. Das System erstellt eine neue Session und eine sichere TAN. \\ 
+							  \hline
+	Erweiterungen			& 4a. WENN das Video nicht eingebettet werden kann, DANN wird eine 
+	                          Fehlermeldung gezeigt. Zurück zu Schritt 2. \\
+							& 6a. WENN die Segmentierung nicht gültig ist, DANN wird eine 
+							  Fehlermeldung ausgegeben. Zurück zu Schritt 4.\\
+							& 8a. WENN es Fehler bei der Eingabe der Fragen, DANN wird 
+							  eine Fehlermeldung ausgegeben. Zurück zu Schritt 4. \\ \hline
 	Priorität				& hoch \\ \hline
 	Verwendungshäufigkeit	& häufig \\ \hline
 \end{tabularx}

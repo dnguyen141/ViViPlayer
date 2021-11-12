@@ -1,22 +1,21 @@
 \begin{tabularx}{\linewidth}{|l|X|}
 	\hline
-	Use Case Nr. 01			& \textbf{Moderator Registrieren} \\ \hline
+	Use Case Nr. 01			& \textbf{Moderator registrieren} \\ \hline
 	Erläuterungen			& Um alle Rechte eines Moderators zu bekommen, muss ein 
 							Benutzer als Moderator registriert werden. \\ \hline
 	Systemgrenzen (Scope)	& Registrierung-System. \\ \hline
 	Ebene					& Hauptfunktion \\ \hline
 	Vorbedingung			& Die Web-App ist betriebsbereit. \\ \hline
-	Mindestgarantie			& Keine neue Moderator-Konto wird im System registriert. 
-							  Klare Fehlermeldung wird ausgegeben. \\ \hline
+	Mindestgarantie			& Im Fehlerfall wird keine neue Moderator-Konto im System 
+	                          registriert. Klare Fehlermeldung wird ausgegeben. \\ \hline
 	Erfolgsfall  			& Ein neues Moderator-Konto wurde erstellt. \\ \hline
-	Stakeholder				& Systembediener - möchte die Funktionen der Web-App so schnell 
-							  wie möglich nutzen. \\
-							& Herr Jianwei Shi (Systembesitzer) - möchte die Funktionen der 
-							  Web-App für die Benutzer mit korrektem Zugriffsrecht verfügbar sein.\\ \hline
-	Hauptakteur				& Systembediener, die als Moderator registriert werden möchten \\ 
-	                          \hline
-	Auslöser				& Der Benutzer möchte als Moderator für ViViPlayer-Web-App 
-							  registriert werden und klickt auf ``Registrieren''-Button in der Hauptseite von ViViPlayer-Web-App. \\ \hline	
+	Stakeholder				& Systembediener (Moderator) - möchte die Funktionen der Web-App so 
+							  schnell wie möglich nutzen. \\
+							& Systembesitzer (Herr Jianwei Shi) - möchte, dass die Funktionen 
+							  der Web-App für die Benutzer mit korrektem Zugriffsrecht verfügbar sind.\\ \hline
+	Hauptakteur				& Systembediener (Moderator) \\ \hline
+	Auslöser				& Der Benutzer klickt auf ``Registrieren''-Button in der 
+							  Hauptseite von ViViPlayer-Web-App. \\ \hline	
 	Hauptszenario			& 1. Der Benutzer klickt auf ``Registrieren''-Button in der 
 							  Hauptseite von ViViPlayer-Web-App. \\
 							& 2. Das System fordert den Benutzer auf, eine Email-Adresse 
@@ -29,7 +28,7 @@
 							& 5. Der Benutzer wird zurück zur Hauptseite geleitet. 
 							  \\ \hline
 	Erweiterungen			& 4a. WENN das System feststellt, dass die eingegebene Daten 
-							  (Benutzername/Email-Adresse und Passwort) nicht abgestimmt sind, DANN wird eine Fehlermeldung ausgegeben. Das System geht zurück zu Schritt 2. \\ \hline
+							  (Benutzername/Email-Adresse und Passwort) nicht abgestimmt sind, DANN wird eine Fehlermeldung ausgegeben. Zurück zu Schritt 2. \\ \hline
 	Priorität				& niedrig \\ \hline
 	Verwendungshäufigkeit	& kaum \\ \hline
 \end{tabularx}

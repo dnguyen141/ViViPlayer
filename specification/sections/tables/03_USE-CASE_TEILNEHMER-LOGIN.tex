@@ -1,37 +1,35 @@
 \begin{tabularx}{\linewidth}{|l|X|}
 	\hline
-	Use Case Nr. 03			& \textbf{Teilnehmer Einloggen} \\ \hline
+	Use Case Nr. 03			& \textbf{Teilnehmer einloggen} \\ \hline
 	Erläuterungen			& Damit ein Teilnehmer alle Funktionen der App benutzen kann, 
 							  muss er sein Zugriffsrecht via TAN bestätigen. \\ \hline
 	Systemgrenzen (Scope)	& Login-System \\ \hline
 	Ebene					& Hauptebene \\ \hline
-	Vorbedingung			& Die Web-App ist betriebsbereit. Der Benutzer befindet sich in
-							  Hauptseite der Web-App \\ \hline
-	Mindestgarantie			& Das Log-in des Benutzers wird abgesagt, falls die eingegebene
-							  TAN nicht richtig ist. Eine Fehlermeldung wird ausgegeben
-							  \\ \hline
+	Vorbedingung			& Die Web-App ist betriebsbereit. Der Benutzer befindet sich auf
+							  Hauptseite der Web-App, um mit TAN einzuloggen \\ \hline
+	Mindestgarantie			& Im Fehlerfall wird Das Einloggen vom Benutzer abgesagt, falls die 
+							  eingegebene TAN nicht richtig ist. Eine Fehlermeldung wird 
+							  ausgegeben. \\ \hline
 	Erfolgsfall 			& Der Zugriff des Benutzers wurde erfolgreich bestätigt. Der
-							  Benutzer hat sich auf der Moderator-Hauptseite befindet. \\ \hline
-	Stakeholder				& Systembediener - möchte die Funktionen der Web-App schnell 
-							  wie möglich nutzen. \\
-							& Herr Jianwei Shi (Systembesitzer) - möchte die Funktionen der 
-							  Web-App für die Benutzer mit korrektem Zugriffsrecht verfügbar sein.\\ \hline
-	Hauptakteur				& Systembediener, die Teilnehmer-Rechte haben möchten \\ \hline
-	Auslöser				& Der Benutzer möchte an einem Session des ViViPlayer
-							  teilnehmen. Er befindet sich auf der Hauptseite der Web-App,
-							  um mit TAN einzuloggen. \\ \hline	
-	Hauptszenario			& 1. Der Benutzer befindet sich auf der Hauptseite der Web-App,
-	                          um mit TAN einzuloggen. \\
-	                        & 2. Das System fordert den Benutzer auf, als Teilnehmer eine
-							  TAN einzugeben. \\
+							  Benutzer befindet sich auf der Teilnehmer-Hauptseite. \\ \hline
+	Stakeholder				& Systembediener (Moderator)- möchte die Funktionen der Web-App 
+							  schnell wie möglich nutzen. \\
+							& Systembesitzer (Herr Jianwei Shi) - möchte, dass die Funktionen   
+							  der Web-App für die Benutzer mit korrektem Zugriffsrecht verfügbar sind.\\ \hline
+	Hauptakteur				& Systembediener (Teilnehmer) \\ \hline
+	Auslöser				& Der Benutzer klickt auf die ``Einloggen als Teilnehmer''-Option.
+							  \\ \hline
+	Hauptszenario			& 1. Der Benutzer klickt auf die ``Einloggen als Teilnehmer''-Option.
+							  \\
+	                        & 2. Das System zeigt das Teilnehmer-Loginsformular an. \\
 							& 3. Der Benutzer gibt seine vom Moderator erhaltene TAN ein. \\
 							& 4. Das System validiert die vom Benutzer eingegebene
 							  TAN. \\
 							& 5. Dem Benutzer wird im System angemeldet und weiter zur
 							  Teilnehmer-Hauptseite geleitet. \\ \hline
-	Erweiterungen			& 4a. Wenn das System feststellt, dass die eingegebene TAN nicht 
-							  eine von System generierte TAN ist, wird eine Fehlermeldung 
-							  ausgegeben. Das System geht zurück zu Schritt 2. \\ \hline
+	Erweiterungen			& 4a. WENN das System feststellt, dass die eingegebene TAN nicht 
+							  eine vom System generierte TAN ist, DANN wird eine Fehlermeldung 
+							  ausgegeben. Zurück zu Schritt 2. \\ \hline
 	Priorität				& mittel \\ \hline
 	Verwendungshäufigkeit	& sehr häufig \\ \hline
 \end{tabularx}

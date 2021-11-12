@@ -1,0 +1,30 @@
+\begin{tabularx}{\linewidth}{|l|X|}
+	\hline
+	Use Case Nr. 11			& \textbf{In Session kommentieren} \\ \hline
+	Erläuterungen			& Der Benutzer möchte einen Kommentar/Satz verfassen. \\ \hline
+	Systemgrenzen (Scope)	& Kommentar-System. \\ \hline
+	Ebene					& Hauptfunktion. \\ \hline
+	Vorbedingung			& Das System ist betriebsbereit. Der Benutzer hat Moderator- oder 
+							  Teilnehmer-Rechte, der befindet sich auf der ViViPlayer-Seite der Web-App. \\ \hline
+	Mindestgarantie			& Der Benutzer erhält eine Fehlermeldung und es werden keine Daten 
+							  in der Datenbank abgespeichert. Die Daten von anderen Benutzer werden abgespeichert. \\ \hline
+	Erfolgsfall				& Der Benutzer hat eine Nachricht verfasst und der Server hat 
+							  diese abgespeichert. Die Nachricht wurde einem Segment zugeordnet.\\ \hline
+	Stakeholder				& Systembediener (Moderator/Teilnehmer) - möchte Kommentare einfach 
+							  verfassen oder Feedback geben können.\\ 
+                            & Entwickler - möchten Kommentare für ihr Projekt haben und 
+                              verfassen können. \\ \hline
+	Hauptakteur				& Systembediener (Moderator/Teilnehmer) \\ \hline
+	Auslöser				& Der Benutzer wählt den Kommentar-Modus aus. \\ \hline	
+	Hauptszenario			& 1. Der Benutzer wählt den Kommentar-Modus aus. \\
+                            & 2. Der Benutzer gibt seinen Kommentar ein und bestätigt, wenn er 
+                              fertig ist\\
+							& 3. Das System verarbeitet diese Anfrage und speichert den 
+							  Kommentar ab. Zudem wird er dem jeweiligen Segment zugeordnet. \\
+							& 4. Das System zeigt den neuen Kommentar den anderen Nutzern an.\\
+							& 5. Der Nutzer kann einen weiteren Kommentar verfassen. \\ \hline
+	Erweiterungen			& 3a. WENN ein Fehler auftritt, DANN wird der Benutzer 
+							  benachrichtigt und er kann den Kommentar nochmal eingeben. Es werden keine Daten in der Datenbank abgespeichert.\\ \hline
+	Priorität				& hoch \\ \hline
+	Verwendungshäufigkeit	& sehr häufig \\ \hline
+\end{tabularx}
