@@ -1,33 +1,32 @@
 \begin{tabularx}{\linewidth}{|l|X|}
 	\hline
-	Use Case Nr. 12			& \textbf{Log-Dateien exportieren} \\ \hline
-	Erläuterungen			& Nach der Beendigung der ViViPlayer-Session sollten einige Dateien
-							  als Ergebnissicherung exportiert werden. \\ \hline
+	Use Case Nr. 12			& \textbf{Dateien exportieren und importieren} \\ \hline
+	Erläuterungen			& Nach der Beendigung der ViViPlayer-Session sollten alle User Stories mit 
+							  ausgewählten Screenshots exportiert werden, sodass es leicht wieder nach Trello-Board importiert werden können. \\ \hline
 	Systemgrenzen (Scope)	& Gesamtsystem, lokales Dateisystem. \\ \hline
 	Ebene					& Hauptfunktion. \\ \hline
 	Vorbedingung			& Das System ist betriebsbereit. Der Benutzer befindet sich auf der 
 							  ViViPlayer-Seite der Web-App. \\ \hline
-	Mindestgarantie			& Die Log-Dateien werden mit einer Fehlermeldung exportiert. Die 
+	Mindestgarantie			& Die Dateien werden mit einer Fehlermeldung exportiert. Die 
 							  Daten von den Benutzer, die nicht Fehler haben, werden exportiert. Das Dateisystem vom Server funktioniert einwandfrei.\\ \hline
 	Erfolgsfall				& Die exportierten Dateien wurden im Server abgespeichert. Der 
 							  Benutzer konnte solche Dateien problemlos herunterladen. \\ \hline
-	Stakeholder				& Systembediener (Moderator) - möchte Log-Dateien exportieren 
-							  können.\\ 
-							& Entwickler - möchten die Log-Dateien zu Trello- oder Jira-Board 
-							  importieren können. \\ \hline
+	Stakeholder				& Systembediener (Moderator) - möchte Dateien exportieren können. \\ 
+							& Entwickler - möchten die Dateien zu Trello-Board importieren können. \\ \hline
 	Hauptakteur				& Systembediener (Moderator) \\ \hline
 	Auslöser				& Der Benutzer klickt auf den ``Session Beenden''-Button. \\ \hline	
 	Hauptszenario			& 1. Der Benutzer klickt auf den ``Session Beenden''-Button. \\
 							& 2. Das System sammelt alle User Stories und Kommentare von den 
-							  Benutzern sowie Screenshot des ViVis und speichert die im Server 
-							  ab. \\
-							& 3. Der Benutzer klickt auf den ``Exportieren''-Button. \\
-							& 4. Das System erlaubt dem Benutzer, die Dateien herunterzuladen. \\
-							& 5. Der Benutzer speichert die Dateien in seinem System ab. 
+							  Benutzern sowie Screenshot des ViVis und speichert die im Server ab. \\
+							& 3. Der Benutzer klickt auf den ``Importieren''-Button. \\
+							& 4. Das System importiert alle gespeicherte Dateien nach dem Trello-Board des 
+							  Benutzers. \\ \hline
+	Erweiterungen			& 2a. WENN ein Fehler beim Exportieren auftritt, DANN wird die Dateien mit 
+							  Fehlermeldung im Server-Dateisystem abgespeichert. \\ 
+							& 4a. WENN ein Fehler beim Importieren auftritt, DANN wird eine Fehlermeldung 
+							  ausgegeben und keine Dateien nach dem Trello-Board des Benutzers importiert. 
 							  \\ \hline
-	Erweiterungen			& 2a. WENN ein Fehler auftritt, DANN wird die Log-Dateien mit 
-							  Fehlermeldung im Server-Dateisystem abgespeichert. Der Benutzer bekommt dann keine URL zum Herunterladen. \\ \hline
-	Priorität				& sehr hoch \\ \hline
-	Verwendungshäufigkeit	& regelmäßig \\ \hline
+	Priorität				& hoch \\ \hline
+	Verwendungshäufigkeit	& häufig \\ \hline
 \end{tabularx}
 

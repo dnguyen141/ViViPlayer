@@ -106,9 +106,10 @@
 	\item \underline{\textbf{Testfall: UC 12 Dateien exportieren und importieren}} \linebreak
 	\textbf{Setup:} Der Benutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er ist als Moderator angemeldet. Der Benutzer befindet sich jetzt auf der ViViPlayer-Seite. \\
 	\textbf{Eingabe:} Der Benutzer klickt auf ``Session Beenden''.\\
-	\textbf{Ausgabe:} Session ist beendet und der Kommentar ``Hello World'', eine User Story ``Damit ich weiß, ob jemand unregelmäßig arbeitet, möchte ich als Abteilungsleiter eine visuelle Darstellung der geleisteten Stunden sehen.'' und die Verständnisfrage ``Kann der Moderator User Stories schreiben?'' mit den Antworten ``Ja'' und ``Nein'' sind auf dem Server gespeichert.\\
-	\textbf{Eingabe:} Der Benutzer klickt auf ``Exportieren''. \\
-	\textbf{Ausgabe:} Das System erlaubt dem Benutzer alle Umfragen, Verständnisfragen, Shots mit Screenshots, Kommentare und User Stories in eine ``.odt''-Datei und die User Stories in eine ``.csv''-Datei zu exportieren und herunterzuladen.\\ 
+	\textbf{Ausgabe:} Session ist beendet. Der Kommentar ``Hello World'', die Verständnisfrage ``Kann der Moderator User Stories schreiben?'' mit den Antworten ``Ja'' und ``Nein'' und die Anzahl der Teilnehmer, die ``Ja'' bzw. ``Nein'' geantwortet haben, sind auf dem Server als ``.odt''-Datei gespeichert. Die User Story ``Damit ich weiß, ob jemand unregelmäßig arbeitet, möchte ich als Abteilungsleiter eine visuelle Darstellung der geleisteten Stunden sehen.'' ist auf dem Server als ``.csv''-Datei gespeichert. Alle Screenshots sind auf dem Server als Bilddateien gespeichert.\\
+	\textbf{Eingabe:} Der Benutzer klickt auf ``Importieren''. \\
+	\textbf{Ausgabe:} Das System importiert alle User Stories von der ``.csv''-Datei nach dem Trello-Board 
+	des Benutzers.\\ 
 	
 	\item \underline{\textbf{Testfall: UC 13 An Um-/Verständnisfragen teilnehmen}} \linebreak
 	\textbf{Setup:} Der Benutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er ist als Teilnehmer angemeldet und Teil der Session. Er befindet sich jetzt auf der ViViPlayer-Seite der Web-App. Der Moderator hat eine Um-/Verständnisfrage gestellt(Testfall UC 9 Um-/Verständnisfragen in Session stellen).\\
