@@ -2,12 +2,12 @@
 	\hline
 	Use Case Nr. 03			& \textbf{Teilnehmer einloggen} \\ \hline
 	Erläuterungen			& Damit ein Teilnehmer alle Funktionen der App benutzen kann, 
-							  muss er sein Zugriffsrecht via TAN bestätigen. \\ \hline
+							  muss er sein Zugriffsrecht via TAN nachweisen. \\ \hline
 	Systemgrenzen (Scope)	& Login-System \\ \hline
 	Ebene					& Hauptebene \\ \hline
 	Vorbedingung			& Die Web-App ist betriebsbereit. Der Benutzer befindet sich auf
-							  Hauptseite der Web-App, um mit TAN einzuloggen \\ \hline
-	Mindestgarantie			& Im Fehlerfall wird Das Einloggen vom Benutzer abgesagt, falls die 
+							  Hauptseite der Web-App, um sich mit einer TAN einzuloggen \\ \hline
+	Mindestgarantie			& Im Fehlerfall wird das Einloggen des Benutzers abgebrochen, falls die
 							  eingegebene TAN nicht richtig ist. Eine Fehlermeldung wird 
 							  ausgegeben. \\ \hline
 	Erfolgsfall 			& Der Zugriff des Benutzers wurde erfolgreich bestätigt. Der
@@ -15,7 +15,7 @@
 	Stakeholder				& Systembediener (Moderator)- möchte die Funktionen der Web-App 
 							  schnell wie möglich nutzen. \\
 							& Systembesitzer (Systemadministrator) - möchte, dass die Funktionen   
-							  der Web-App für die Benutzer mit korrektem Zugriffsrecht verfügbar sind.\\ \hline
+							  der Web-App für die Benutzer mit korrekten Zugriffsrechten verfügbar sind.\\ \hline
 	Hauptakteur				& Systembediener (Teilnehmer) \\ \hline
 	Auslöser				& Der Benutzer klickt auf die ``Einloggen als Teilnehmer''-Option.
 							  \\ \hline
@@ -25,7 +25,7 @@
 							& 3. Der Benutzer gibt seine vom Moderator erhaltene TAN ein. \\
 							& 4. Das System validiert die vom Benutzer eingegebene
 							  TAN. \\
-							& 5. Dem Benutzer wird im System angemeldet und weiter zur
+							& 5. Der Benutzer wird im System angemeldet und weiter zur
 							  Teilnehmer-Hauptseite geleitet. \\ \hline
 	Erweiterungen			& 4a. WENN das System feststellt, dass die eingegebene TAN nicht 
 							  eine vom System generierte TAN ist, DANN wird eine Fehlermeldung 

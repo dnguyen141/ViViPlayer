@@ -3,9 +3,9 @@
 	\item \underline{\textbf{Testfall: UC 1 Moderator registrieren}} \linebreak
 	\textbf{Setup:} Der Benutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er befindet sich jetzt auf der Hauptseite.\linebreak
 	\textbf{Eingabe:} Der Benutzer klickt auf ``Registrieren.''.\linebreak
-	\textbf{Ausgabe:} Der Benutzer wird zu Registrierungsseite weitergeleitet.\linebreak
-	\textbf{Eingabe:} Der Benutzer gibt seine E-Mail-Adresse und ein Passwort und bestätigt dieses. Er klickt danach auf ``Registrieren''. \linebreak
-	\textbf{Ausgabe:} Die Daten sind zu einem Moderator weitergeleitet worden zum Validieren. Der Nutzer wird zum Hauptmenü weitergeleitet.
+	\textbf{Ausgabe:} Der Benutzer wird zur Registrierungsseite weitergeleitet.\linebreak
+	\textbf{Eingabe:} Der Benutzer gibt seine E-Mail-Adresse und ein Passwort ein und bestätigt dieses. Er klickt danach auf ``Registrieren''. \linebreak
+	\textbf{Ausgabe:} Die Daten sind zur Validierung zu einem Moderator weitergeleitet worden. Der Nutzer wird zum Hauptmenü weitergeleitet.
 	
 	\item \underline{\textbf{Testfall: UC 2 Moderator einloggen}} \linebreak
 	\textbf{Setup:} Der Benutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er befindet sich jetzt auf der Hauptseite. \linebreak
@@ -18,7 +18,7 @@
 	\textbf{Setup:} Der Benutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er befindet sich jetzt auf der Hauptseite. Der Benutzername ``001'' und das Passwort ``123456789'' sind im System hinterlegt. \linebreak
 	\textbf{Eingabe:} Der Benutzer klickt auf ``Einloggen als Moderator''. \linebreak
 	\textbf{Ausgabe:} Ein Moderator-Loginformular taucht auf.\linebreak
-	\textbf{Eingabe:} Der Benutzer gibt die hinterlegten Anmeldedaten und klickt auf ``Einloggen als Moderator''.\linebreak
+	\textbf{Eingabe:} Der Benutzer gibt die hinterlegten Anmeldedaten ein und klickt auf ``Einloggen als Moderator''.\linebreak
 	\textbf{Ausgabe:} Der Benutzer ist als Moderator angemeldet und wird zur Moderator-Hauptseite geleitet.
 	
 	\item \underline{\textbf{Testfall: UC 3 Teilnehmer einloggen}} \linebreak
@@ -44,7 +44,7 @@
 	\textbf{Ausgabe:} Das System zeigt die ViVi-Segmentieren-Oberfläche an. \\
 	\textbf{Eingabe:} Der Benutzer segmentiert das von ihm hochgeladene Video und bestätigt.(Testfall UC 6 ViVi Segmentieren)\\
 	\textbf{Ausgabe:} Das System zeigt die Frage-Vorbereiten-Oberfläche an.\\
-	\textbf{Eingabe:} Der Benutzer bereitet eine Um-/Verständnisfrage vor und bestätigt.(Testfall UC 7 Um-/Verständnisfragen erstellen)\\
+	\textbf{Eingabe:} Der Benutzer bereitet eine Umfrage/Verständnisfrage vor und bestätigt.(Testfall UC 7 Umfrage/Verständnisfragen erstellen)\\
 	\textbf{Ausgabe:} Das System zeigt die ViVi-Überblick-Oberfläche an.\\
 	\textbf{Eingabe:} Der Benutzer prüft noch mal alle Vorbereitungsschritte und klickt auf ``Erstellen''.\\
 	\textbf{Ausgabe:} Das System erstellt eine neue Session und eine sichere TAN.
@@ -61,14 +61,14 @@
 	\textbf{Eingabe:} Der Benutzer klickt auf den Video Slider, um einen bestimmten Shot auszuwählen. Er gibt den Titel für den Shot ein und klickt auf ``Hinzufügen''. \linebreak
 	\textbf{Ausgabe:} Ein Zeitstempel für den ausgewählten Shot wird dem Slider hinzugefügt.\linebreak
 	\textbf{Eingabe:} Der Benutzer klickt auf ``Weiter''. \linebreak
-	\textbf{Ausgabe:} Der Benutzer wird zur nächsten Seite weitergeleitet. Eine Benutzeroberfläche zum Einfügen von Um-/Verständnisfragen wird gezeigt.
+	\textbf{Ausgabe:} Der Benutzer wird zur nächsten Seite weitergeleitet. Eine Benutzeroberfläche zum Einfügen von Umfrage/Verständnisfragen wird gezeigt.
 	
 	\item \underline{\textbf{Testfall: UC 6 ViVi segmentieren}} \linebreak
 	\textbf{Setup:} Der Benutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er ist als Moderator angemeldet. Er ist im Vorgang, eine Session zu erstellen (Testfall UC 4 Session vorbereiten). Er hat ein Video ausgewählt und befindet sich jetzt auf der ViVi-Segmentieren-Oberfläche.\linebreak
 	\textbf{Eingabe:} Der Benutzer klickt auf den Video-Slider, um einen bestimmten Shot auszuwählen. Er gibt keinen Titel für den Shot ein und klickt auf ``Hinzufügen''. \linebreak
 	\textbf{Ausgabe:} Eine Fehlermeldung wird gezeigt und kein neuer Shot wird hinzugefügt.
 	
-	\item \underline{\textbf{Testfall: UC 7 Um-/Verständnisfragen erstellen}} \linebreak
+	\item \underline{\textbf{Testfall: UC 7 Umfrage/Verständnisfragen erstellen}} \linebreak
 	\textbf{Setup:} Der Benutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er ist als Moderator angemeldet. Er ist im Vorgang, eine Session zu erstellen (Testfall UC 4 Session vorbereiten). Er hat ein Video ausgewählt und das Video in Shots segmentiert und befindet sich jetzt auf der Frage-Vorbereiten-Oberfläche.\\
 	\textbf{Eingabe:} Der Benutzer klickt auf ``Weiter''. \\
 	\textbf{Ausgabe:} Das System zeigt die Frage-Vorbereiten-Oberfläche.\\ 
@@ -82,7 +82,7 @@
 	\textbf{Eingabe:} Der Benutzer bewegt den Slider an Stelle 01:40. \\
 	\textbf{Ausgabe:} Das Video spielt an der Stelle 01:40 weiter für alle Teilnehmer.\\
 	
-	\item \underline{\textbf{Testfall: UC 9 Um-/Verständnisfragen in Session stellen}} \linebreak
+	\item \underline{\textbf{Testfall: UC 9 Umfrage/Verständnisfragen in Session stellen}} \linebreak
 	\textbf{Setup:} Der Benutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er ist als Moderator angemeldet. Es ist ein Video auf dem Server gespeichert. Der Benutzer hat ein Video ausgewählt und das Video in Shots segmentiert. Es gibt einen weiteren Teilnehmer, der angemeldet und Teil der Session ist.\\
 	\textbf{Eingabe:} Der Benutzer klickt auf ``Frage'' Tab. \\
 	\textbf{Ausgabe:} Das System zeigt das Eingabefeld an.\\ 
@@ -111,9 +111,9 @@
 	\textbf{Ausgabe:} Das System importiert alle User Stories von der ``.csv''-Datei nach dem Trello-Board 
 	des Benutzers.\\ 
 	
-	\item \underline{\textbf{Testfall: UC 13 An Um-/Verständnisfragen teilnehmen}} \linebreak
-	\textbf{Setup:} Der Benutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er ist als Teilnehmer angemeldet und Teil der Session. Er befindet sich jetzt auf der ViViPlayer-Seite der Web-App. Der Moderator hat eine Um-/Verständnisfrage gestellt(Testfall UC 9 Um-/Verständnisfragen in Session stellen).\\
-	\textbf{Eingabe:} Der Benutzer klickt auf eine Antwort der Um-/Verständnisfrage und auf ``Senden''.\\
+	\item \underline{\textbf{Testfall: UC 13 An Umfrage/Verständnisfragen teilnehmen}} \linebreak
+	\textbf{Setup:} Der Benutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er ist als Teilnehmer angemeldet und Teil der Session. Er befindet sich jetzt auf der ViViPlayer-Seite der Web-App. Der Moderator hat eine Umfrage/Verständnisfrage gestellt(Testfall UC 9 Umfrage/Verständnisfragen in Session stellen).\\
+	\textbf{Eingabe:} Der Benutzer klickt auf eine Antwort der Umfrage/Verständnisfrage und auf ``Senden''.\\
 	\textbf{Ausgabe:} Das System sammelt die Antworten von allen Benutzern und nach 30 Sekunden zeigt es diese in Form eines Balkendiagramms an.
 	
 	
