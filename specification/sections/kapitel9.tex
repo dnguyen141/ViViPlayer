@@ -15,18 +15,18 @@
 	\textbf{Ausgabe:} Die Fehlermeldung ``Ungültige Anmeldedaten'' erscheint unter dem Eingabefeld.
 	
 	\item \underline{\textbf{Testfall: UC 2 Moderator einloggen}} \linebreak
-	\textbf{Setup:} Der Benutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er befindet sich jetzt auf der Hauptseite. Der Benutzername ``001'' und das Passwort ``123456789'' sind im System hinterlegt. \linebreak
+	\textbf{Setup:} Der Benutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er befindet sich jetzt auf der Hauptseite. Der Benutzername ``test-user@gmail.com'' und das Passwort ``Xo73\#\&CP'' sind im System hinterlegt. \linebreak
 	\textbf{Eingabe:} Der Benutzer klickt auf ``Einloggen als Moderator''. \linebreak
 	\textbf{Ausgabe:} Ein Moderator-Loginformular taucht auf.\linebreak
 	\textbf{Eingabe:} Der Benutzer gibt die hinterlegten Anmeldedaten ein und klickt auf ``Einloggen als Moderator''.\linebreak
 	\textbf{Ausgabe:} Der Benutzer ist als Moderator angemeldet und wird zur Moderator-Hauptseite geleitet.
 	
 	\item \underline{\textbf{Testfall: UC 3 Teilnehmer einloggen}} \linebreak
-	\textbf{Setup:} Der Benutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er befindet sich jetzt auf der Hauptseite. Eine ViViPlayer-Session ist von dem Moderator gestartet worden und im System ist die TAN 493489458 hinterlegt.
+	\textbf{Setup:} Der Benutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er befindet sich jetzt auf der Hauptseite. Eine ViViPlayer-Session ist von dem Moderator gestartet worden und im System ist die TAN ``y6X2\$R'' hinterlegt.
 	Eine ViViPlayer-Session ist aber noch nicht von dem Moderator gestartet. \linebreak
 	\textbf{Eingabe:} Der Benutzer klickt auf ``Einloggen als Teilnehmer''. \linebreak
 	\textbf{Ausgabe:} Ein Einloggen-Fenster taucht auf. \linebreak
-	\textbf{Eingabe:} Der Benutzer gibt die TAN 1112123214 ein. \linebreak
+	\textbf{Eingabe:} Der Benutzer gibt die TAN ``y6X2R\$'' ein. \linebreak
 	\textbf{Ausgabe:} Eine Fehlermeldung wird angezeigt.
 	
 	\item \underline{\textbf{Testfall: UC 3 Teilnehmer einloggen}} \linebreak
@@ -72,10 +72,10 @@
 	\textbf{Setup:} Der Benutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er ist als Moderator angemeldet. Er ist im Vorgang, eine Session zu erstellen (Testfall UC 4 Session vorbereiten). Er hat ein Video ausgewählt und das Video in Shots segmentiert und befindet sich jetzt auf der Frage-Vorbereiten-Oberfläche.\\
 	\textbf{Eingabe:} Der Benutzer klickt auf ``Weiter''. \\
 	\textbf{Ausgabe:} Das System zeigt die Frage-Vorbereiten-Oberfläche.\\ 
-	\textbf{Eingabe:} Der Benutzer gibt die Frage ``Kann ein Moderator eine User Story verfassen?'' und ein Zeitlimit von 30 Sekunden ein. Er legt fest, dass es sich um eine Verständnisfrage handelt und gibt die Antwortmöglichtkeiten ``Ja'' und ``Nein'' an. ``Ja'' wird als richtige Antwort festgelegt.\\
+	\textbf{Eingabe:} Der Benutzer gibt die Frage ``Kann ein Moderator eine User Story verfassen?'' ein. Er legt fest, dass es sich um eine Verständnisfrage handelt und gibt die Antwortmöglichtkeiten ``Ja'' und ``Nein'' an. ``Ja'' wird als richtige Antwort festgelegt.\\
 	\textbf{Ausgabe:} Das System fügt die neue Verständnis-/Umfrage in der Liste hinzu. \\
 	\textbf{Eingabe:} Der Benutzer klickt auf ``Weiter''.\\
-	\textbf{Ausgabe:} Das System zeigt die TAN-Oberfläche an(Testfall UC 4 Session vorbereiten).
+	\textbf{Ausgabe:} Das System zeigt die ViVi-Überblick-Oberfläche an(Testfall UC 4 Session vorbereiten).
 
 	\item \underline{\textbf{Testfall: UC 8 ViVi steuern}} \linebreak
 	\textbf{Setup:} Der Benutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er ist als Moderator angemeldet. Eine ViViPlayer-Session ist von dem Benutzer gestartet worden (Testfall UC 4 Session vorbereiten). Ein weiterer Benutzer ist als Teilnehmer in der Session angemeldet. \\
@@ -86,10 +86,10 @@
 	\textbf{Setup:} Der Benutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er ist als Moderator angemeldet. Es ist ein Video auf dem Server gespeichert. Der Benutzer hat ein Video ausgewählt und das Video in Shots segmentiert. Es gibt einen weiteren Teilnehmer, der angemeldet und Teil der Session ist.\\
 	\textbf{Eingabe:} Der Benutzer klickt auf ``Frage'' Tab. \\
 	\textbf{Ausgabe:} Das System zeigt das Eingabefeld an.\\ 
-	\textbf{Eingabe:} Der Benutzer gibt die Frage ``Kann ein Moderator eine User Story verfassen?'' und ein Zeitlimit von 30 Sekunden ein. Er legt fest, dass es sich um eine Verständnisfrage handelt und gibt die Antwortmöglichtkeiten ``Ja'' und ``Nein'' an. ``Ja'' wird als richtige Antwort festgelegt.\\
+	\textbf{Eingabe:} Der Benutzer gibt die Frage ``Kann ein Moderator eine User Story verfassen?''. Er legt fest, dass es sich um eine Verständnisfrage handelt und gibt die Antwortmöglichtkeiten ``Ja'' und ``Nein'' an. ``Ja'' wird als richtige Antwort festgelegt.\\
 	\textbf{Ausgabe:} Das System zeigt die Frage allen Teilnehmern an.\\ 
-	\textbf{Eingabe:} Alle Benutzer antworten auf die Umfrage innerhalb des Zeitlimits von 30 Sekunden. \\
-	\textbf{Ausgabe:} Das System zeigt jedem Benutzer nach Ablauf des Zeitlimits das Ergebnis an. Die Verständnisfrage wird gespeichert und dem dazugehörigen Shot zugeordnet. \\
+	\textbf{Eingabe:} Alle Benutzer antworten auf die Umfrage. \\
+	\textbf{Ausgabe:} Das System zeigt jedem Benutzer nach der Bestätigung des Moderators das Ergebnis an. Die Verständnisfrage wird gespeichert und dem dazugehörigen Shot zugeordnet. \\
 	
 	\item \underline{\textbf{Testfall: UC 10 User-Story schreiben}} \linebreak
 	\textbf{Setup:} Der Benutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Der Benutzer ist angemeldet und Teil der Session.\\
@@ -106,15 +106,15 @@
 	\item \underline{\textbf{Testfall: UC 12 Dateien exportieren und importieren}} \linebreak
 	\textbf{Setup:} Der Benutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er ist als Moderator angemeldet. Der Benutzer befindet sich jetzt auf der ViViPlayer-Seite. \\
 	\textbf{Eingabe:} Der Benutzer klickt auf ``Session Beenden''.\\
-	\textbf{Ausgabe:} Session ist beendet. Der Kommentar ``Hello World'', die Verständnisfrage ``Kann der Moderator User Stories schreiben?'' mit den Antworten ``Ja'' und ``Nein'' und die Anzahl der Teilnehmer, die ``Ja'' bzw. ``Nein'' geantwortet haben, sind auf dem Server als ``.odt''-Datei gespeichert. Die User Story ``Damit ich weiß, ob jemand unregelmäßig arbeitet, möchte ich als Abteilungsleiter eine visuelle Darstellung der geleisteten Stunden sehen.'' ist auf dem Server als ``.csv''-Datei gespeichert. Alle Screenshots sind auf dem Server als Bilddateien gespeichert.\\
+	\textbf{Ausgabe:} Session ist beendet. Der Kommentar ``Hello World'', die Verständnisfrage ``Kann der Moderator User Stories schreiben?'' mit den Antworten ``Ja'' und ``Nein'', die Verständnisfrage ``Möchten Sie lieber mit TAN einloggen?'' mit den Antworten ``Ja'' und ``Nein'', die Verständnisfrage ``Sollte TAN mit mindestens einem Sonderzeichen erstellt werden?'' mit den Antworten ``Ja'' und ``Nein'' und die Anzahl der Teilnehmer, die ``Ja'' bzw. ``Nein'' für jede Verständnisfrage geantwortet haben, sind auf dem Server als ``.odt''-Datei gespeichert. Die User Story ``Damit ich weiß, ob jemand unregelmäßig arbeitet, möchte ich als Abteilungsleiter eine visuelle Darstellung der geleisteten Stunden sehen.'' ist auf dem Server als ``.csv''-Datei gespeichert. Alle Screenshots sind auf dem Server als Bilddateien gespeichert.\\
 	\textbf{Eingabe:} Der Benutzer klickt auf ``Importieren''. \\
 	\textbf{Ausgabe:} Das System importiert alle User Stories von der ``.csv''-Datei nach dem Trello-Board 
 	des Benutzers.\\ 
 	
 	\item \underline{\textbf{Testfall: UC 13 An Umfrage oder Verständnisfrage teilnehmen}} \linebreak
-	\textbf{Setup:} Der Benutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er ist als Teilnehmer angemeldet und Teil der Session. Er befindet sich jetzt auf der ViViPlayer-Seite der Web-App. Der Moderator hat eine Umfrage/Verständnisfrage gestellt(Testfall UC 9 Umfrage/Verständnisfragen in Session stellen).\\
+	\textbf{Setup:} Der Benutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er ist als Teilnehmer angemeldet und Teil der Session. Er befindet sich jetzt auf der ViViPlayer-Seite der Web-App. Der Moderator hat eine Umfrage/Verständnisfrage gestellt (Testfall UC 9 Umfrage/Verständnisfragen in Session stellen).\\
 	\textbf{Eingabe:} Der Benutzer klickt auf eine Antwort der Umfrage/Verständnisfrage und auf ``Senden''.\\
-	\textbf{Ausgabe:} Das System sammelt die Antworten von allen Benutzern und nach 30 Sekunden zeigt es diese in Form eines Balkendiagramms an.
+	\textbf{Ausgabe:} Das System sammelt die Antworten von allen Benutzern und nach der Bestätigung des Moderators zeigt es diese in Form eines Balkendiagramms an.
 	
 	
 	
