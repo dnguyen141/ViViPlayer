@@ -30,7 +30,7 @@
 	\textbf{Ausgabe:} Eine Fehlermeldung wird angezeigt.
 	
 	\item \underline{\textbf{Testfall: UC 3 Teilnehmer einloggen}} \linebreak
-	\textbf{Setup:} Der Benutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er befindet sich jetzt auf der Hauptseite. Eine ViViPlayer-Session ist von dem Moderator gestartet worden und im System ist die TAN 493489458 hinterlegt. \linebreak
+	\textbf{Setup:} Der Benutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er befindet sich jetzt auf der Hauptseite. Eine ViViPlayer-Session ist von dem Moderator gestartet worden und im System ist die TAN ``5j\$M06'' hinterlegt. \linebreak
 	\textbf{Eingabe:} Der Benutzer klickt auf ``Einloggen als Teilnehmer''. \linebreak
 	\textbf{Ausgabe:} Ein Einloggen-Fenster taucht auf. \linebreak
 	\textbf{Eingabe:} Der Benutzer gibt die hinterlegte TAN ein. \linebreak
@@ -75,7 +75,7 @@
 	\textbf{Eingabe:} Der Benutzer gibt die Frage ``Kann ein Moderator eine User Story verfassen?'' ein. Er legt fest, dass es sich um eine Verständnisfrage handelt und gibt die Antwortmöglichtkeiten ``Ja'' und ``Nein'' an. ``Ja'' wird als richtige Antwort festgelegt.\\
 	\textbf{Ausgabe:} Das System fügt die neue Verständnis-/Umfrage in der Liste hinzu. \\
 	\textbf{Eingabe:} Der Benutzer klickt auf ``Weiter''.\\
-	\textbf{Ausgabe:} Das System zeigt die ViVi-Überblick-Oberfläche an(Testfall UC 4 Session vorbereiten).
+	\textbf{Ausgabe:} Das System zeigt die ViVi-Überblick-Oberfläche an (Testfall UC 4 Session vorbereiten).
 
 	\item \underline{\textbf{Testfall: UC 8 ViVi steuern}} \linebreak
 	\textbf{Setup:} Der Benutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er ist als Moderator angemeldet. Eine ViViPlayer-Session ist von dem Benutzer gestartet worden (Testfall UC 4 Session vorbereiten). Ein weiterer Benutzer ist als Teilnehmer in der Session angemeldet. \\
@@ -93,20 +93,21 @@
 	
 	\item \underline{\textbf{Testfall: UC 10 User-Story schreiben}} \linebreak
 	\textbf{Setup:} Der Benutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Der Benutzer ist angemeldet und Teil der Session.\\
-	\textbf{Eingabe:} Der Benutzer wählt den ``User Story''-Modus aus und gibt ``Damit ich weiß, ob jemand unregelmäßig arbeitet, möchte ich als Abteilungsleiter eine visuelle Darstellung der geleisteten Stunden sehen.'' und bestätigt wenn er fertig ist.\\
+	\textbf{Eingabe:} Der Benutzer wählt den ``User Story''-Modus aus und gibt ``Damit ich weiß, ob jemand unregelmäßig arbeitet, möchte ich als Abteilungsleiter eine visuelle Darstellung der geleisteten Stunden sehen.'' und bestätigt.\\
 	\textbf{Ausgabe:} Das System verarbeitet die Anfrage und speichert die User Story ab. Die User Story wird den anderen Benutzern angezeigt und dem dazugehörigen Shot zugeordnet.\linebreak \linebreak
 	
 	\item \underline{\textbf{Testfall: UC 11 In Session kommentieren}} \linebreak
 	\textbf{Setup:} Der Benutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er ist angemeldet und Teil der Session.\\
 	\textbf{Eingabe:} Der Benutzer wählt den ``Kommentar''-Modus aus. \\
 	\textbf{Ausgabe:} Das System zeigt die ``Kommentar''-Eingabe. \\
-	\textbf{Eingabe:} Der Benutzer gibt ``Hello World'' ein und bestätigt wenn er fertig ist.\\
+	\textbf{Eingabe:} Der Benutzer gibt ``Als ein Mitarbeiter möchte ich nicht, dass meine private 
+	Arbeit für alle sichtbar ist.'' ein und bestätigt.\\
 	\textbf{Ausgabe:} Das System verarbeitet die Anfrage und speichert den Kommentar ab. Die User Story wird den anderen Benutzern angezeigt und dem dazugehörigen Shot zugeordnet.
 	
 	\item \underline{\textbf{Testfall: UC 12 Dateien exportieren und importieren}} \linebreak
 	\textbf{Setup:} Der Benutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er ist als Moderator angemeldet. Der Benutzer befindet sich jetzt auf der ViViPlayer-Seite. \\
 	\textbf{Eingabe:} Der Benutzer klickt auf ``Session Beenden''.\\
-	\textbf{Ausgabe:} Session ist beendet. Der Kommentar ``Hello World'', die Verständnisfrage ``Kann der Moderator User Stories schreiben?'' mit den Antworten ``Ja'' und ``Nein'', die Verständnisfrage ``Möchten Sie lieber mit TAN einloggen?'' mit den Antworten ``Ja'' und ``Nein'', die Verständnisfrage ``Sollte TAN mit mindestens einem Sonderzeichen erstellt werden?'' mit den Antworten ``Ja'' und ``Nein'' und die Anzahl der Teilnehmer, die ``Ja'' bzw. ``Nein'' für jede Verständnisfrage geantwortet haben, sind auf dem Server als ``.odt''-Datei gespeichert. Die User Story ``Damit ich weiß, ob jemand unregelmäßig arbeitet, möchte ich als Abteilungsleiter eine visuelle Darstellung der geleisteten Stunden sehen.'' ist auf dem Server als ``.csv''-Datei gespeichert. Alle Screenshots sind auf dem Server als Bilddateien gespeichert.\\
+	\textbf{Ausgabe:} Session ist beendet. Der Kommentar ``Als ein Mitarbeiter möchte ich nicht, dass meine private Arbeit für alle sichtbar ist.'', die Verständnisfrage ``Kann der Manager neue Aufgaben für die Mitarbeiter zuweisen?'' mit den Antworten ``Ja'' und ``Nein'' und die Anzahl der Teilnehmer, die ``Ja'' bzw. ``Nein'' für jede Verständnisfrage geantwortet haben, sind auf dem Server als ``.odt''-Datei gespeichert. Die User Story ``Damit ich weiß, ob jemand unregelmäßig arbeitet, möchte ich als Abteilungsleiter eine visuelle Darstellung der geleisteten Stunden sehen.'', die User Story ``Damit wir diese Web-App gemeinsam nutzen können, möchte ich meine Kollegen einladen.'' und die User Story ``Damit ich über unsere Erfolge und Fehlschläge besser berichten kann, möchte ich als Manager die Fortschritte meiner Kollegen nachvollziehen können.'' sind auf dem Server als ``.csv''-Datei gespeichert. Alle Screenshots sind auf dem Server als Bilddateien gespeichert.\\
 	\textbf{Eingabe:} Der Benutzer klickt auf ``Importieren''. \\
 	\textbf{Ausgabe:} Das System importiert alle User Stories von der ``.csv''-Datei nach dem Trello-Board 
 	des Benutzers.\\ 
