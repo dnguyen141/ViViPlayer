@@ -1,15 +1,33 @@
+import React, { useState } from 'react';
 import Head from 'next/head';
-import { Form, Input, Button, Checkbox } from 'antd';
+import Router from 'next/router';
+import { Form, Input, Alert, Button, Checkbox, notification } from 'antd';
 
 export default function Home() {
-  const onFinish = (values) => {
-    console.log('Success:', values);
+  const [error, setError] = useState('');
+  const onFinish = async (values) => {
+    // console.log('Success:', values);
+    if (!values.username) {
+      setError('Please input your username!');
+    } else if (!values.password) {
+      setError('Please input your password!');
+    } else {
+      Router.push('/dashboard');
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
   };
-
+  const openNotification = (noti) => {
+    notification.open({
+      message: 'Notification Login',
+      description: noti,
+      onClick: () => {
+        console.log('Notification Clicked!');
+      }
+    });
+  };
   return (
     <div>
       <Head>
@@ -40,12 +58,12 @@ export default function Home() {
             className="form-login-label"
             label="Username"
             name="username"
-            rules={[
-              {
-                required: true,
-                message: 'Please input your username!'
-              }
-            ]}
+            // rules={[
+            //   {
+            //     required: true,
+            //     message: 'Please input your username!'
+            //   }
+            // ]}
           >
             <Input />
           </Form.Item>
@@ -54,16 +72,16 @@ export default function Home() {
             className="form-login-label"
             label="Password"
             name="password"
-            rules={[
-              {
-                required: true,
-                message: 'Please input your password!'
-              }
-            ]}
+            // rules={[
+            //   {
+            //     required: true,
+            //     message: 'Please input your password!'
+            //   }
+            // ]}
           >
             <Input.Password />
           </Form.Item>
-
+          {error ? openNotification(error) : ''}
           <Form.Item
             name="remember"
             valuePropName="checked"
