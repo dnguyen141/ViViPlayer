@@ -11,6 +11,10 @@ export default function Home() {
       setError('Please input your username!');
     } else if (!values.password) {
       setError('Please input your password!');
+    } else if (values.username !== 'admin') {
+      setError('Your user name is not correct');
+    } else if (values.password !== 'admin1234') {
+      setError('Your password is not correct');
     } else {
       Router.push('/dashboard');
     }
