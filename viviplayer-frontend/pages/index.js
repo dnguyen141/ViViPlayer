@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Head from 'next/head';
 import Router from 'next/router';
 import { Form, Input, Tabs, Button, Checkbox, notification } from 'antd';
@@ -6,18 +6,15 @@ import NumberOutlined from '@ant-design/icons/NumberOutlined';
 
 const { TabPane } = Tabs;
 export default function Home() {
-  const [error, setError] = useState('');
-  const [tan, setTan] = useState('');
   const onFinish = async (values) => {
-    // console.log('Success:', values);
     if (!values.username) {
-      setError('Please input your username!');
+      openNotification('Please input your username!');
     } else if (!values.password) {
-      setError('Please input your password!');
+      openNotification('Please input your password!');
     } else if (values.username !== 'admin') {
-      setError('Your user name is not correct');
+      openNotification('Your user name is not correct');
     } else if (values.password !== 'admin1234') {
-      setError('Your password is not correct');
+      openNotification('Your password is not correct');
     } else {
       Router.push('/dashboard');
     }
@@ -57,7 +54,6 @@ export default function Home() {
       <div className="bg-image"></div>
 
       <div className="bg-text">
-        {/* <h2>Viviplayer - Login</h2> */}
         <Tabs defaultActiveKey="1" onChange={callback}>
           <TabPane tab="Login with account" key="1">
             <Form
@@ -75,34 +71,13 @@ export default function Home() {
               onFinishFailed={onFinishFailed}
               autoComplete="off"
             >
-              <Form.Item
-                className="form-login-label"
-                label="Username"
-                name="username"
-                // rules={[
-                //   {
-                //     required: true,
-                //     message: 'Please input your username!'
-                //   }
-                // ]}
-              >
+              <Form.Item className="form-login-label" label="Username" name="username">
                 <Input />
               </Form.Item>
 
-              <Form.Item
-                className="form-login-label"
-                label="Password"
-                name="password"
-                // rules={[
-                //   {
-                //     required: true,
-                //     message: 'Please input your password!'
-                //   }
-                // ]}
-              >
+              <Form.Item className="form-login-label" label="Password" name="password">
                 <Input.Password />
               </Form.Item>
-              {error ? openNotification(error) : ''}
               <Form.Item
                 name="remember"
                 valuePropName="checked"
@@ -128,15 +103,7 @@ export default function Home() {
           </TabPane>
           <TabPane tab="Login with TAN" key="2" className="text-white">
             <Form name="TAN Login" onFinish={loginWithTan} autoComplete="off">
-              <Form.Item
-                style={{ marginBottom: '1em' }}
-                name="tan"
-
-                // onChange={(e) => {
-                //   console.log(e.target.value);
-                //   setTan(e.target.value);
-                // }}
-              >
+              <Form.Item style={{ marginBottom: '1em' }} name="tan">
                 <Input prefix={<NumberOutlined />} placeholder="TAN" />
               </Form.Item>
               <Button type="primary" htmlType="submit">
