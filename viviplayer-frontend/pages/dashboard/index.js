@@ -1,8 +1,12 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const Dashboard = (props) => {
-  return <div>Dashboard</div>;
+  return (
+    <div>
+      <h2 style={{ fontSize: '50px', textAlign: 'center', paddingTop: '200px' }}>LOGIN SUCCESS</h2>
+    </div>
+  );
 };
 
 Dashboard.propTypes = {};

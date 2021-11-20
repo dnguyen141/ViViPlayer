@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import Head from 'next/head';
 import Router from 'next/router';
-import { Form, Input, Alert, Button, Checkbox, notification } from 'antd';
+import { Form, Input, Tabs, Button, Checkbox, notification } from 'antd';
+import NumberOutlined from '@ant-design/icons/NumberOutlined';
 
+const { TabPane } = Tabs;
 export default function Home() {
   const [error, setError] = useState('');
+  const [tan, setTan] = useState('');
   const onFinish = async (values) => {
     // console.log('Success:', values);
     if (!values.username) {
@@ -15,6 +18,15 @@ export default function Home() {
       setError('Your user name is not correct');
     } else if (values.password !== 'admin1234') {
       setError('Your password is not correct');
+    } else {
+      Router.push('/dashboard');
+    }
+  };
+  const loginWithTan = (values) => {
+    console.log('TAN VALUES', values.tan);
+    if (values.tan !== '112021') {
+      console.log('run here');
+      openNotification('TAN is not correct!');
     } else {
       Router.push('/dashboard');
     }
@@ -32,6 +44,9 @@ export default function Home() {
       }
     });
   };
+  function callback(key) {
+    console.log(key);
+  }
   return (
     <div>
       <Head>
@@ -42,72 +57,94 @@ export default function Home() {
       <div className="bg-image"></div>
 
       <div className="bg-text">
-        <h2>Viviplayer - Login</h2>
-        <Form
-          name="basic"
-          labelCol={{
-            span: 5
-          }}
-          wrapperCol={{
-            span: 17
-          }}
-          initialValues={{
-            remember: true
-          }}
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-          autoComplete="off"
-        >
-          <Form.Item
-            className="form-login-label"
-            label="Username"
-            name="username"
-            // rules={[
-            //   {
-            //     required: true,
-            //     message: 'Please input your username!'
-            //   }
-            // ]}
-          >
-            <Input />
-          </Form.Item>
+        {/* <h2>Viviplayer - Login</h2> */}
+        <Tabs defaultActiveKey="1" onChange={callback}>
+          <TabPane tab="Login with account" key="1">
+            <Form
+              name="loginForm"
+              labelCol={{
+                span: 5
+              }}
+              wrapperCol={{
+                span: 17
+              }}
+              initialValues={{
+                remember: true
+              }}
+              onFinish={onFinish}
+              onFinishFailed={onFinishFailed}
+              autoComplete="off"
+            >
+              <Form.Item
+                className="form-login-label"
+                label="Username"
+                name="username"
+                // rules={[
+                //   {
+                //     required: true,
+                //     message: 'Please input your username!'
+                //   }
+                // ]}
+              >
+                <Input />
+              </Form.Item>
 
-          <Form.Item
-            className="form-login-label"
-            label="Password"
-            name="password"
-            // rules={[
-            //   {
-            //     required: true,
-            //     message: 'Please input your password!'
-            //   }
-            // ]}
-          >
-            <Input.Password />
-          </Form.Item>
-          {error ? openNotification(error) : ''}
-          <Form.Item
-            name="remember"
-            valuePropName="checked"
-            wrapperCol={{
-              offset: 5,
-              span: 16
-            }}
-          >
-            <Checkbox className="text-white">Remember me</Checkbox>
-          </Form.Item>
+              <Form.Item
+                className="form-login-label"
+                label="Password"
+                name="password"
+                // rules={[
+                //   {
+                //     required: true,
+                //     message: 'Please input your password!'
+                //   }
+                // ]}
+              >
+                <Input.Password />
+              </Form.Item>
+              {error ? openNotification(error) : ''}
+              <Form.Item
+                name="remember"
+                valuePropName="checked"
+                wrapperCol={{
+                  offset: 5,
+                  span: 16
+                }}
+              >
+                <Checkbox className="text-white">Remember me</Checkbox>
+              </Form.Item>
 
-          <Form.Item
-            wrapperCol={{
-              offset: 5,
-              span: 16
-            }}
-          >
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
-        </Form>
+              <Form.Item
+                wrapperCol={{
+                  offset: 5,
+                  span: 16
+                }}
+              >
+                <Button type="primary" htmlType="submit">
+                  Submit
+                </Button>
+              </Form.Item>
+            </Form>
+          </TabPane>
+          <TabPane tab="Login with TAN" key="2" className="text-white">
+            <Form name="TAN Login" onFinish={loginWithTan} autoComplete="off">
+              <Form.Item
+                style={{ marginBottom: '1em' }}
+                name="tan"
+
+                // onChange={(e) => {
+                //   console.log(e.target.value);
+                //   setTan(e.target.value);
+                // }}
+              >
+                <Input prefix={<NumberOutlined />} placeholder="TAN" />
+              </Form.Item>
+              <Button type="primary" htmlType="submit">
+                Submit
+              </Button>
+            </Form>
+          </TabPane>
+        </Tabs>
       </div>
     </div>
   );
