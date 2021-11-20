@@ -55,7 +55,17 @@ export default function Home() {
 
       <div className="bg-text">
         <Tabs defaultActiveKey="1" onChange={callback}>
-          <TabPane tab="Login with account" key="1">
+          <TabPane tab="Login with TAN" key="1" className="text-white">
+            <Form name="TAN Login" onFinish={loginWithTan} autoComplete="off">
+              <Form.Item style={{ marginBottom: '1em' }} name="tan">
+                <Input prefix={<NumberOutlined />} placeholder="TAN" />
+              </Form.Item>
+              <Button type="primary" htmlType="submit">
+                Submit
+              </Button>
+            </Form>
+          </TabPane>
+          <TabPane tab="Login as Moderator" key="2">
             <Form
               name="loginForm"
               labelCol={{
@@ -99,16 +109,6 @@ export default function Home() {
                   Submit
                 </Button>
               </Form.Item>
-            </Form>
-          </TabPane>
-          <TabPane tab="Login with TAN" key="2" className="text-white">
-            <Form name="TAN Login" onFinish={loginWithTan} autoComplete="off">
-              <Form.Item style={{ marginBottom: '1em' }} name="tan">
-                <Input prefix={<NumberOutlined />} placeholder="TAN" />
-              </Form.Item>
-              <Button type="primary" htmlType="submit">
-                Submit
-              </Button>
             </Form>
           </TabPane>
         </Tabs>
