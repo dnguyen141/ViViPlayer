@@ -1,9 +1,11 @@
 import React, { useRef, useState, useEffect } from 'react';
+import io from 'socket.io-client';
 import PropTypes from 'prop-types';
 import { Button } from 'antd';
 import Vivilayout from '../../layout/index';
-
+let socket;
 const Video = () => {
+  socket = io('http://localhost:5000');
   const videoRef = React.useRef(null);
   const [player, setPlayer] = useState(null);
   useEffect(() => {
