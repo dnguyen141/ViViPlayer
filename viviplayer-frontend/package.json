@@ -22,5 +22,16 @@
   "devDependencies": {
     "eslint": "7",
     "eslint-config-next": "12.0.4"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "**/*.{js,css}": [
+      "npm run format",
+      "git add"
+    ]
   }
 }
