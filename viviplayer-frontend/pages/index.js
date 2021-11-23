@@ -65,7 +65,7 @@ export default function Home() {
               </Button>
             </Form>
           </TabPane>
-          <TabPane tab="Login as Moderator" key="2">
+          <TabPane tab="Login as Moderator" key="2" className="text-white">
             <Form
               name="loginForm"
               labelCol={{
