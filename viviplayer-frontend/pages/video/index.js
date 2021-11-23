@@ -1,26 +1,51 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client';
-import PropTypes from 'prop-types';
+import 'videojs-markers';
+import videoJs from 'video.js';
 import { Button } from 'antd';
 import Vivilayout from '../../layout/index';
 let socket;
 const Video = () => {
   socket = io('http://localhost:5000');
   const videoRef = React.useRef(null);
+  const playerRef = React.useRef(null);
   const [player, setPlayer] = useState(null);
   useEffect(() => {
     if (videoRef.current != null) {
       setPlayer(videoRef.current);
     }
+    if (!playerRef.current && videoRef.current != null) {
+      const videoElement = videoRef.current;
+      if (!videoElement) return;
+
+      const player = (playerRef.current = videoJs(videoElement, () => {
+        console.log('player is ready');
+      }));
+      player.autoplay('muted');
+      // player.pause();
+      pauseVideo(player);
+    }
     return () => {};
   }, [videoRef]);
+  socket.on('getCommandToPlayVideo', () => {
+    // console.log("lets play");
+    if (player) {
+      player.play();
+    }
+  });
+  socket.on('getCommandToPauseVideo', () => {
+    if (player) {
+      player.pause();
+    }
+  });
   const playVideo = (video) => {
-    console.log('video play');
     video.play();
+    socket.emit('playVideo');
   };
   const pauseVideo = (video) => {
     console.log('PAUSE');
     video.pause();
+    socket.emit('pauseVideo');
   };
   return (
     <Vivilayout>
@@ -51,7 +76,5 @@ const Video = () => {
     </Vivilayout>
   );
 };
-
-Video.propTypes = {};
 
 export default Video;
