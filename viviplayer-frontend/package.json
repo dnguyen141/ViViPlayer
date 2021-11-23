@@ -21,7 +21,8 @@
     "sass": "^1.43.4",
     "socket.io": "^4.4.0",
     "socket.io-client": "^4.4.0",
-    "video.js": "^7.17.0"
+    "video.js": "^7.17.0",
+    "videojs-markers": "^1.0.1"
   },
   "devDependencies": {
     "eslint": "7",
