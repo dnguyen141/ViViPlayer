@@ -55,17 +55,22 @@ export default function Home() {
 
       <div className="bg-text">
         <Tabs defaultActiveKey="1" onChange={callback}>
-          <TabPane tab="Login with TAN" key="1" className="text-white">
+          <TabPane tab="Login mit TAN" key="1" className="text-white">
             <Form name="TAN Login" onFinish={loginWithTan} autoComplete="off">
-              <Form.Item style={{ marginBottom: '1em' }} name="tan">
+              <Form.Item style={{ marginBottom: '1em' }} name="tan"
+              rules={[
+                {required: true, message: "Bitte geben Sie Ihre TAN ein."},
+                {min: 6, message: 'TAN muss mindestens 8 Zeichen lang sein.' }
+              ]}
+              >
                 <Input prefix={<NumberOutlined />} placeholder="TAN" />
               </Form.Item>
               <Button type="primary" htmlType="submit">
-                Submit
+                Senden
               </Button>
             </Form>
           </TabPane>
-          <TabPane tab="Login as Moderator" key="2" className="text-white">
+          <TabPane tab="Login als Moderator" key="2" className="text-white">
             <Form
               name="loginForm"
               labelCol={{
@@ -81,11 +86,19 @@ export default function Home() {
               onFinishFailed={onFinishFailed}
               autoComplete="off"
             >
-              <Form.Item className="form-login-label" label="Username" name="username">
+              <Form.Item className="form-login-label" label="Benutzername" name="username"
+                rules={[
+                  {required: true, message: "Bitte geben Sie Ihren Benutzername ein."}
+                ]}
+              >
                 <Input />
               </Form.Item>
 
-              <Form.Item className="form-login-label" label="Password" name="password">
+              <Form.Item className="form-login-label" label="Passwort" name="password"
+                rules={[
+                  {required: true, message: "Bitte geben Sie Ihr Passwort ein."}
+                ]}
+              >
                 <Input.Password />
               </Form.Item>
               <Form.Item
@@ -106,7 +119,7 @@ export default function Home() {
                 }}
               >
                 <Button type="primary" htmlType="submit">
-                  Submit
+                  Senden
                 </Button>
               </Form.Item>
             </Form>
