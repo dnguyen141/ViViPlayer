@@ -7,7 +7,8 @@
     "start": "next start",
     "lint": "next lint",
     "prettier": "prettier \"pages/**/*.{js,css}\" \"styles/**/*.{js,css}\"",
-    "format": "npm run prettier -- --write"
+    "format": "npm run prettier -- --write",
+    "postinstall": "husky install"
   },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
