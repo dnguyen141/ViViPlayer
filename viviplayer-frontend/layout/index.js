@@ -10,7 +10,7 @@ const Vivilayout = ({ children }) => {
         {/* <div className="logo">Logo there</div> */}
         <Menu theme="dark" mode="horizontal">
           <Menu.Item key="1" className="text-white" onClick={() => Router.push('/dashboard')}>
-            Viviplayer3
+            VIVIPLAYER3
           </Menu.Item>
           <Menu.Item key="2" onClick={() => Router.push('/video')}>
             Video
