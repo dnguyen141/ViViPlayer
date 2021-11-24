@@ -2,7 +2,7 @@
   "name": "viviplayer-frontend",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "concurrently  \"next dev -p 192.168.2.143:3000\" \"nodemon ./backend/index.js\"",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -18,7 +18,11 @@
     "prettier": "^2.4.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "sass": "^1.43.4"
+    "sass": "^1.43.4",
+    "socket.io": "^4.4.0",
+    "socket.io-client": "^4.4.0",
+    "video.js": "^7.17.0",
+    "videojs-markers": "^1.0.1"
   },
   "devDependencies": {
     "eslint": "7",
