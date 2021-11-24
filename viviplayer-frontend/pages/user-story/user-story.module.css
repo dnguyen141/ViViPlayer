@@ -1,0 +1,56 @@
+.test-user {
+  color: red !important;
+}
+
+.card {
+  background-color: transparent;
+  width: 500px;
+  height: 300px;
+  border: 1px solid #444444;
+}
+
+.cardstyle {
+  margin: 10px;
+  width: 95%;
+  height: 90%;
+  font-size: 10pt;
+  background-color: white;
+  color: black;
+}
+
+.wrapper {
+  background-color: transparent;
+  border-radius: 2px;
+  box-sizing: border-box;
+  height: 300px;
+  left: 50%;
+  margin: -150px 0 0 -150px;
+  position: relative;
+  top: 50%;
+  width: 300px;
+}
+
+.inputuser {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  color: #555;
+  box-sizing: border-box;
+  font-family: 'Arvo';
+  font-size: 18px;
+  height: 50px;
+  left: 25%;
+  margin: -25px 0 0 -100px;
+  padding: 10px 0px;
+  position: relative;
+  top: 50%;
+  width: 250px;
+}
+
+.inputuser:focus {
+  outline: none;
+}
+
+.inputuser::-webkit-input-placeholder {
+  color: #aaa;
+}
