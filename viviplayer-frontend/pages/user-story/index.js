@@ -11,7 +11,7 @@ const tabList = [
     tab: 'User Story'
   },
   {
-    key: 'tab2',
+    key: 'tab2', //This should be used for function description for both User Story and Kommentar
     tab: 'Satz'
   },
   {
@@ -20,61 +20,60 @@ const tabList = [
   }
 ];
 
-
-
 const UserStory = (props) => {
   const [activeTabKey1, setActiveTabKey1] = useState('tab1');
   const onTab1Change = (key) => {
     setActiveTabKey1(key);
   };
-  const [ form ] = Form.useForm();
+  const [form] = Form.useForm();
 
   const onReset = () => {
     form.resetFields();
   };
-  
+
   const contentList = {
     tab1: (
-      <Card title="User Story" className={styles.card}>
-          <b>Geben Sie ihre User Story ein.</b>
-          <Form form={form} name="control-hooks" style={{padding:'10px'}}>
-            <Form.Item name="label">
-              <p>
-                Damit 
-                <Input  className={styles.inputuser} />
-              </p>
-              <p>
-                möchte ich als 
-                <Input  className={styles.inputuser} />
-              </p>
-            </Form.Item>
-            <Form.Item>
-              <Button type="primary" style={{margin:'5px', fontSize:'14px'}} htmlType="submit">
-                Posten
-              </Button>
-              <Button htmlType="button" style={{margin:'5px', fontSize:'14px'}} onClick={onReset}>
-                Zurücksetzen
-              </Button>
-            </Form.Item>
-          </Form>
+      <Card title="User Story" style={{width:'500px', height:'280px', border:'3px solid gray'}}>
+        <b>Geben Sie ihre User Story ein.</b>
+        <Form form={form} name="control-hooks" style={{ padding: '10px' }}>
+          <Form.Item name="label">
+            <p>
+              Damit
+              <Input className={styles.inputuser} />
+            </p>
+            <p>
+              möchte ich als
+              <Input className={styles.inputuser} />
+            </p>
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" style={{ margin: '5px', fontSize: '14px' }} htmlType="submit">
+              Posten
+            </Button>
+            <Button htmlType="button" style={{ margin: '5px', fontSize: '14px' }} onClick={onReset}>
+              Zurücksetzen
+            </Button>
+          </Form.Item>
+        </Form>
       </Card>
     ),
+    tab2: 'This is the Description for User Story and Kommentar.',
     tab3: (
-      <Card title="Kommentar" className={styles.card}>
+      <Card title="Kommentar" style={{width:'500px', height:'280px', border:'3px solid gray'}}>
         <b>Geben Sie ihren Kommentar ein.</b>
-          <Form form={form} name="control-hooks" style={{padding:'5px'}}>
-            <Form.Item name="label">
-              <TextArea rows ={3}/>
-            </Form.Item>
-            <Form.Item>
-              <Button type="primary" style={{margin:'5px', fontSize:'14px'}} htmlType="submit">
-                Posten
-              </Button>
-              <Button htmlType="button" style={{margin:'5px', fontSize:'14px'}} onClick={onReset}>
-                Zurücksetzen
-              </Button>
-            </Form.Item>
-          </Form>
+        <Form form={form} name="control-hooks" style={{ padding: '5px' }}>
+          <Form.Item name="label">
+            <TextArea rows={3} style={{paddingTop:'13px'}}/>
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" style={{ margin: '5px', fontSize: '14px' }} htmlType="submit">
+              Posten
+            </Button>
+            <Button htmlType="button" style={{ margin: '5px', fontSize: '14px' }} onClick={onReset}>
+              Zurücksetzen
+            </Button>
+          </Form.Item>
+        </Form>
       </Card>
     )
   };
@@ -83,11 +82,11 @@ const UserStory = (props) => {
     <Vivilayout>
       <Row>
         <Col span={12}>
+          <h1 style={{marginLeft: '250px', marginTop: '250px'}}>This is for the Video Player.</h1>
         </Col>
         <Col span={12}>
-          <body>
             <Card
-              style={{ width: '80%', paddingLeft: '150px' }}
+              style={{ width: '90%', paddingLeft: '250px' }}
               bordered={false}
               tabList={tabList}
               activeTabKey={activeTabKey1}
@@ -99,7 +98,6 @@ const UserStory = (props) => {
             </Card>
             <br />
             <br />
-          </body>
         </Col>
       </Row>
     </Vivilayout>
