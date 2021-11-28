@@ -2,7 +2,7 @@
   "name": "viviplayer-frontend",
   "private": true,
   "scripts": {
-    "dev": "concurrently  \"next dev -p 192.168.2.143:3000\" \"nodemon ./backend/index.js\"",
+    "dev": "concurrently  \"next dev\" \"nodemon ./backend/index.js\"",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
