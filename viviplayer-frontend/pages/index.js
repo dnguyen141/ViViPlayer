@@ -137,7 +137,7 @@ export default function Home() {
                       name="remember"
                       valuePropName="checked"
                     >
-                      <Checkbox className="text-white">Remember me</Checkbox>
+                      <Checkbox>Remember me</Checkbox>
                     </Form.Item>
 
                     <Form.Item {...layoutButton}>
