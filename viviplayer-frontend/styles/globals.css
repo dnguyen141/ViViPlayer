@@ -17,6 +17,9 @@ a {
 .text-red {
   color: red;
 }
+.d-flex {
+  display: flex !important;
+}
 * {
   box-sizing: border-box;
 }
