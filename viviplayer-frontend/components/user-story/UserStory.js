@@ -46,7 +46,7 @@ const UserStory = (props) => {
             </div>
           </Form.Item>
           <Form.Item>
-            <Button type="primary" style={{ margin: '5px', fontSize: '14px' }} htmlType="submit">
+            <Button type="primary" style={{ margin: '5px', fontSize: '14px', marginLeft :'0px'  }} htmlType="submit">
               Posten
             </Button>
             <Button htmlType="button" style={{ margin: '5px', fontSize: '14px' }} onClick={onReset}>
@@ -68,7 +68,7 @@ const UserStory = (props) => {
             </div>
           </Form.Item>
           <Form.Item>
-            <Button type="primary" style={{ margin: '5px', fontSize: '14px' }} htmlType="submit">
+            <Button type="primary" style={{ margin: '5px', fontSize: '14px', marginLeft :'0px'  }} htmlType="submit">
               Posten
             </Button>
             <Button htmlType="button" style={{ margin: '5px', fontSize: '14px' }} onClick={onReset}>
