@@ -63,3 +63,13 @@ a {
 .form-login-label label {
   color: white !important;
 }
+
+@media only screen and (max-width: 800px) {
+  .ant-row {
+    flex-flow: column wrap !important;
+  }
+
+  .ant-col-12 {
+    max-width: 100% !important;
+  }
+}
