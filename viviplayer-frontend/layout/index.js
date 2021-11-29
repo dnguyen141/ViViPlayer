@@ -23,7 +23,7 @@ const Vivilayout = ({ children }) => {
           {children}
         </div>
       </Layout.Content>
-      <Layout.Footer style={{ textAlign: 'center' }}>Create by Viviplayer3 team</Layout.Footer>
+      <Layout.Footer style={{ textAlign: 'center' }}>Created by Viviplayer3 team</Layout.Footer>
     </Layout>
   );
 };
