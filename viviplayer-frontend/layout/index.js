@@ -6,7 +6,7 @@ import { Layout, Menu } from 'antd';
 const Vivilayout = ({ children }) => {
   return (
     <Layout>
-      <Layout.Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
+      <Layout.Header style={{ position: 'relative', zIndex: 1, width: '100%' }}>
         {/* <div className="logo">Logo there</div> */}
         <Menu theme="dark" mode="horizontal">
           <Menu.Item key="1" className="text-white" onClick={() => Router.push('/dashboard')}>
