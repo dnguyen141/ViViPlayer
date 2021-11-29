@@ -66,12 +66,12 @@ a {
 
 /*CSS to adjust the size of the columns*/
 @media only screen and (max-width: 1024px) {
-  .ant-row {
+  .row-responsive {
     flex-flow: column wrap !important;
     flex-direction: column !important;
   }
 
-  .ant-col-12 {
+  .col-responsive {
     display: contents !important;
     justify-content: center !important;
   }

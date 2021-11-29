@@ -8,11 +8,11 @@ import { Row, Col } from 'antd';
 function index(props) {
   return (
     <Vivilayout>
-      <Row>
-        <Col span={12} style={{ padding: '25px', justifyContent: 'center' }}>
+      <Row className="row-responsive">
+        <Col className ="col-responsive" span={12} style={{ padding: '25px', justifyContent: 'center' }}>
           <Video />
         </Col>
-        <Col span={12} style={{ padding: '25px', justifyContent: 'center' }}>
+        <Col className ="col-responsive" span={12} style={{ padding: '25px', justifyContent: 'center' }}>
           <UserStory />
         </Col>
       </Row>
