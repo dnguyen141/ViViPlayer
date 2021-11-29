@@ -12,10 +12,6 @@ const tabList = [
   {
     key: 'tab2',
     tab: 'Satz'
-  },
-  {
-    key: 'tab3',
-    tab: 'Kommentar'
   }
 ];
 
@@ -50,7 +46,7 @@ const UserStory = (props) => {
             </div>
           </Form.Item>
           <Form.Item>
-            <Button type="primary" style={{ margin: '5px', fontSize: '14px' }} htmlType="submit">
+            <Button type="primary" style={{ margin: '5px', fontSize: '14px', marginLeft :'0px'  }} htmlType="submit">
               Posten
             </Button>
             <Button htmlType="button" style={{ margin: '5px', fontSize: '14px' }} onClick={onReset}>
@@ -60,10 +56,9 @@ const UserStory = (props) => {
         </Form>
       </Card>
     ),
-    tab2: 'This is the Description for User Story and Kommentar.',
-    tab3: (
-      <Card title="Kommentar" style={{ border: '3px solid gray' }}>
-        <h4>Geben Sie ihren Kommentar ein.</h4>
+    tab2: (
+      <Card title="Satz" style={{ border: '3px solid gray' }}>
+        <h4>Geben Sie ihren Satz ein.</h4>
         <Form form={form} name="control-hooks" style={{ padding: '5px' }}>
           <Form.Item name="label">
             <div>
@@ -73,7 +68,7 @@ const UserStory = (props) => {
             </div>
           </Form.Item>
           <Form.Item>
-            <Button type="primary" style={{ margin: '5px', fontSize: '14px' }} htmlType="submit">
+            <Button type="primary" style={{ margin: '5px', fontSize: '14px', marginLeft :'0px'  }} htmlType="submit">
               Posten
             </Button>
             <Button htmlType="button" style={{ margin: '5px', fontSize: '14px' }} onClick={onReset}>

@@ -3,7 +3,6 @@ import io from 'socket.io-client';
 import 'videojs-markers';
 import videoJs from 'video.js';
 import { Button } from 'antd';
-import Vivilayout from '../../layout/index';
 let socket;
 const markersDefault = [
   {
@@ -100,16 +99,15 @@ const Video = () => {
   };
   return (
     <>
-      <h3>Video</h3>
+      <h2>Video</h2>
       <video
         // onProgress={(e) => pauseSegment(e)}
         ref={videoRef}
         id="video-viviplayer"
         controls
         preload="none"
-        width="600"
-        height="400"
-        className="video-js vjs-default-skin"
+        data-setup='{"fluid":true}' //This is used so that the video player is responsive
+        className="video-js vjs-default-skin vjs-big-play-centered"
       >
         <source
           src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
@@ -117,10 +115,10 @@ const Video = () => {
         />
       </video>
       <div>
-        <Button type="primary" onClick={() => playVideo(player)}>
+        <Button type="primary" onClick={() => playVideo(player)} style={{ margin: '5px', fontSize: '14px', marginLeft :'0px' }}>
           Play video
         </Button>
-        <Button type="danger" onClick={() => pauseVideo(player)}>
+        <Button type="danger" onClick={() => pauseVideo(player)} style={{ margin: '5px', fontSize: '14px' }}>
           Pause video
         </Button>
       </div>

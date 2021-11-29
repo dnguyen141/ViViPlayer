@@ -6,7 +6,7 @@ import { Layout, Menu } from 'antd';
 const Vivilayout = ({ children }) => {
   return (
     <Layout>
-      <Layout.Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
+      <Layout.Header style={{ position: 'relative', zIndex: 1, width: '100%' }}>
         {/* <div className="logo">Logo there</div> */}
         <Menu theme="dark" mode="horizontal">
           <Menu.Item key="1" className="text-white" onClick={() => Router.push('/dashboard')}>
@@ -23,7 +23,7 @@ const Vivilayout = ({ children }) => {
           {children}
         </div>
       </Layout.Content>
-      <Layout.Footer style={{ textAlign: 'center' }}>Create by Viviplayer3 team</Layout.Footer>
+      <Layout.Footer style={{ textAlign: 'center' }}>Created by Viviplayer3 team</Layout.Footer>
     </Layout>
   );
 };

@@ -63,3 +63,16 @@ a {
 .form-login-label label {
   color: white !important;
 }
+
+/*CSS to adjust the size of the columns*/
+@media only screen and (max-width: 1024px) {
+  .row-responsive {
+    flex-flow: column wrap !important;
+    flex-direction: column !important;
+  }
+
+  .col-responsive {
+    display: contents !important;
+    justify-content: center !important;
+  }
+}
