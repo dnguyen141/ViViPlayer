@@ -9,10 +9,10 @@ function index(props) {
   return (
     <Vivilayout>
       <Row>
-        <Col span={12}>
+        <Col span={12} style={{padding:'25px'}}>
           <Video />
         </Col>
-        <Col span={12}>
+        <Col span={12} style={{padding:'25px'}}>
           <UserStory />
         </Col>
       </Row>
