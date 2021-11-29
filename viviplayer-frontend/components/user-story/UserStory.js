@@ -57,8 +57,8 @@ const UserStory = (props) => {
       </Card>
     ),
     tab2: (
-      <Card title="Kommentar" style={{ border: '3px solid gray' }}>
-        <h4>Geben Sie ihren Kommentar ein.</h4>
+      <Card title="Satz" style={{ border: '3px solid gray' }}>
+        <h4>Geben Sie ihren Satz ein.</h4>
         <Form form={form} name="control-hooks" style={{ padding: '5px' }}>
           <Form.Item name="label">
             <div>
