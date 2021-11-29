@@ -12,10 +12,6 @@ const tabList = [
   {
     key: 'tab2',
     tab: 'Satz'
-  },
-  {
-    key: 'tab3',
-    tab: 'Kommentar'
   }
 ];
 
@@ -60,8 +56,7 @@ const UserStory = (props) => {
         </Form>
       </Card>
     ),
-    tab2: 'This is the Description for User Story and Kommentar.',
-    tab3: (
+    tab2: (
       <Card title="Kommentar" style={{ border: '3px solid gray' }}>
         <h4>Geben Sie ihren Kommentar ein.</h4>
         <Form form={form} name="control-hooks" style={{ padding: '5px' }}>

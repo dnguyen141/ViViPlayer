@@ -107,9 +107,7 @@ const Video = () => {
         id="video-viviplayer"
         controls
         preload="none"
-        width="600"
-        height="400"
-        className="video-js vjs-default-skin"
+        className="video-js vjs-default-skin vjs-big-play-centered vjs-16-9"
       >
         <source
           src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"

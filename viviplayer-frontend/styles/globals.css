@@ -64,12 +64,13 @@ a {
   color: white !important;
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 1024px) {
   .ant-row {
     flex-flow: column wrap !important;
+    flex-direction: column !important;
   }
 
   .ant-col-12 {
-    max-width: 100% !important;
+    display: contents !important;
   }
 }
