@@ -68,9 +68,11 @@ a {
 .content {
   border-radius: 3px;
   background-color: #fff;
-  margin: 10px;
   border: 1px solid rgb(0, 0, 0, 0.15);
   padding: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  min-height: 350px;
 }
 
 .contentHeader {
@@ -87,14 +89,13 @@ a {
   margin-bottom: 15px;
 }
 
-
 .ant-layout-content {
   background-color: #fff !important; 
 
 }
 
 .ant-layout{
-  height:100vh;
+  height:90vh;
 }
 
 .ant-layout-header {
