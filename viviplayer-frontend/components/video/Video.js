@@ -104,7 +104,8 @@ const Video = () => {
         // onProgress={(e) => pauseSegment(e)}
         ref={videoRef}
         id="video-viviplayer"
-        preload="none" //control is not needed for Teilnehmer UI
+        controls
+        preload="none"
         data-setup='{"fluid":true}' //This is used so that the video player is responsive
         className="video-js vjs-default-skin vjs-big-play-centered"
       >
