@@ -9,10 +9,18 @@ function index(props) {
   return (
     <Vivilayout>
       <Row className="row-responsive">
-        <Col className ="col-responsive" span={12} style={{ padding: '25px', justifyContent: 'center' }}>
+        <Col
+          className="col-responsive"
+          span={12}
+          style={{ padding: '25px', justifyContent: 'center' }}
+        >
           <Video />
         </Col>
-        <Col className ="col-responsive" span={12} style={{ padding: '25px', justifyContent: 'center' }}>
+        <Col
+          className="col-responsive"
+          span={12}
+          style={{ padding: '25px', justifyContent: 'center' }}
+        >
           <UserStory />
         </Col>
       </Row>
