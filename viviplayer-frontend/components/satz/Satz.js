@@ -14,18 +14,6 @@ function Satz(props) {
       renderItem={(props) => <Comment {...props} />}
     />
   );
-  const Editor = ({ onChange, onSubmit, submitting, value }) => (
-    <>
-      <Form.Item>
-        <TextArea rows={2} onChange={onChange} value={value} />
-      </Form.Item>
-      <Form.Item>
-        <Button htmlType="submit" loading={submitting} onClick={onSubmit} type="primary">
-          Add Comment
-        </Button>
-      </Form.Item>
-    </>
-  );
 
   const handleSubmit = () => {
     if (!value) {
@@ -48,18 +36,27 @@ function Satz(props) {
       console.log(comments);
     }, 1000);
   };
+  const handleChange = (e) => {
+    console.log('run there', e);
+    e.preventDefault();
+    setValue(e.target.value);
+  };
 
   return (
     <>
       {comments != undefined && <CommentList comments={comments} />}
       <Comment
         content={
-          <Editor
-            onChange={(e) => setValue(e.target.value)}
-            onSubmit={() => handleSubmit()}
-            submitting={submitting}
-            value={value}
-          />
+          <>
+            <Form.Item>
+              <TextArea rows={2} onChange={handleChange} value={value} />
+            </Form.Item>
+            <Form.Item>
+              <Button htmlType="submit" loading={submitting} onClick={handleSubmit} type="primary">
+                Add Comment
+              </Button>
+            </Form.Item>
+          </>
         }
       />
     </>
