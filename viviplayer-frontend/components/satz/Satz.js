@@ -1,19 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Comment, Form, Button, List, Input } from 'antd';
 import moment from 'moment';
-import PropTypes from 'prop-types';
 
 function Satz(props) {
+  const [comments, setComments] = useState([]);
+  const [submitting, setSubmitting] = useState(false);
+  const [value, setValue] = useState('');
   const { TextArea } = Input;
-
   const CommentList = ({ comments }) => (
     <List
       dataSource={comments}
       itemLayout="horizontal"
-      renderItem={props => <Comment {...props} />}
+      renderItem={(props) => <Comment {...props} />}
     />
   );
-
   const Editor = ({ onChange, onSubmit, submitting, value }) => (
     <>
       <Form.Item>
@@ -26,56 +26,37 @@ function Satz(props) {
       </Form.Item>
     </>
   );
-  
 
-  React.Component.state = {
-    comments: [],
-    submitting: false,
-    value: '',
-  };
-
-  React.Component.handleSubmit = () => {
-    if (!React.Component.state.value) {
+  const handleSubmit = () => {
+    if (!value) {
+      console.log('run there');
       return;
     }
-
-    React.Component.setState({
-      submitting: true,
-    });
-
-    React.Component.setTimeout(() => {
-      React.Component.setState({
-        submitting: false,
-        value: '',
-        comments: [
-          ...React.Component.state.comments,
-          {
-            author: 'User',
-            content: <p>{React.Component.state.value}</p>,
-            datetime: moment().fromNow(),
-          },
-        ],
-      });
+    setSubmitting(true);
+    setTimeout(() => {
+      setSubmitting(false);
+      setValue('');
+      setComments([
+        ...comments,
+        {
+          author: 'Josh',
+          avatar: 'https://joeschmoe.io/api/v1/random',
+          content: <p>{value}</p>,
+          datetime: moment().fromNow()
+        }
+      ]);
+      console.log(comments);
     }, 1000);
   };
 
-  React.Component.handleChange = e => {
-    this.setState({
-      value: e.target.value,
-    });
-  };
-
-
-  const { comments, submitting, value } = React.Component.state;
-
   return (
     <>
-      {comments.length > 0 && <CommentList comments={comments} />}
+      {comments != undefined && <CommentList comments={comments} />}
       <Comment
         content={
           <Editor
-            onChange={React.Component.handleChange}
-            onSubmit={React.Component.handleSubmit}
+            onChange={(e) => setValue(e.target.value)}
+            onSubmit={() => handleSubmit()}
             submitting={submitting}
             value={value}
           />
@@ -84,7 +65,6 @@ function Satz(props) {
     </>
   );
 }
-
 
 Satz.propTypes = {};
 
