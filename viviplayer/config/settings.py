@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     "dj_rest_auth.registration",
+    "corsheaders",
     # Local
     "authentication",
 ]
@@ -58,6 +59,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -149,3 +152,14 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.TokenAuthentication",
     ],
 }
+
+# CORS Headers
+CORS_ALLOWED_ORIGIN = [
+    "http://127.0.0.1:3000/",
+    "http://localhost:3000/",
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "127.0.0.1:3000/",
+    "localhost:3000/",
+]
