@@ -9,7 +9,7 @@ charset-normalizer==2.0.7
 constantly==15.1.0
 cryptography==35.0.0
 daphne==3.0.2
-Django==3.2.8
+django==3.2.8
 django-channels==0.7.0
 djangorestframework==3.12.4
 hyperlink==21.0.0
@@ -31,3 +31,7 @@ txaio==21.2.1
 typing-extensions==3.10.0.2
 urllib3==1.26.7
 zope.interface==5.4.0
+django-allauth==0.46.0
+dj-rest-auth==2.1.11
+djangorestframework==3.12.4
+
