@@ -80,3 +80,9 @@ a {
 .vjs-default-skin.vjs-paused .vjs-big-play-button {
   display: none !important;
 }
+
+/*CSS to keep the chat display to a fixed height*/
+.scroll-bar{
+  height: 200px;
+  overflow: auto;
+}

@@ -12,6 +12,7 @@ function Satz(props) {
       dataSource={comments}
       itemLayout="horizontal"
       renderItem={(props) => <Comment {...props} />}
+      className='scroll-bar'
     />
   );
 
@@ -27,7 +28,7 @@ function Satz(props) {
       setComments([
         ...comments,
         {
-          author: 'Josh',
+          author: 'User',
           avatar: 'https://joeschmoe.io/api/v1/random',
           content: <p>{value}</p>,
           datetime: moment().fromNow()
@@ -53,7 +54,7 @@ function Satz(props) {
             </Form.Item>
             <Form.Item>
               <Button htmlType="submit" loading={submitting} onClick={handleSubmit} type="primary">
-                Add Comment
+                Kommentieren
               </Button>
             </Form.Item>
           </>

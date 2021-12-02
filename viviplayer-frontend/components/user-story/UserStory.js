@@ -59,10 +59,8 @@ const UserStory = (props) => {
       </Card>
     ),
     tab2: (
-      <Card style={{ border: '3px solid gray' }}>
-          <div id ="app">
+      <Card style={{ border: '3px solid gray', height: '400px'}}>
             <Satz />
-          </div>
       </Card>)
   };
 
