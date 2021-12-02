@@ -141,6 +141,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # Custom User Model
 AUTH_USER_MODEL = "authentication.CustomUser"
 
+# Set Database ID
 SITE_ID = 1
 
 # REST Framework
@@ -160,6 +161,6 @@ CORS_ALLOWED_ORIGIN = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    "127.0.0.1:3000/",
-    "localhost:3000/",
+    "127.0.0.1:3000",
+    "localhost:3000",
 ]
