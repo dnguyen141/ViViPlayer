@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Comment, Form, Button, List, Input } from 'antd';
 import moment from 'moment';
 
-function Satz(props) {
+const Satz = (props) => {
   const [comments, setComments] = useState([]);
   const [submitting, setSubmitting] = useState(false);
   const [value, setValue] = useState('');
@@ -12,7 +12,7 @@ function Satz(props) {
       dataSource={comments}
       itemLayout="horizontal"
       renderItem={(props) => <Comment {...props} />}
-      className='scroll-bar'
+      className="scroll-bar"
     />
   );
 
@@ -62,7 +62,7 @@ function Satz(props) {
       />
     </>
   );
-}
+};
 
 Satz.propTypes = {};
 
