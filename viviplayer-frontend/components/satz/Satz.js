@@ -37,11 +37,6 @@ const Satz = (props) => {
       console.log(comments);
     }, 1000);
   };
-  const handleChange = (e) => {
-    console.log('run there', e);
-    e.preventDefault();
-    setValue(e.target.value);
-  };
 
   return (
     <>
@@ -50,7 +45,7 @@ const Satz = (props) => {
         content={
           <>
             <Form.Item>
-              <TextArea rows={2} onChange={handleChange} value={value} />
+              <TextArea rows={2} onChange={(e) => setValue(e.target.value)} value={value} />
             </Form.Item>
             <Form.Item>
               <Button htmlType="submit" loading={submitting} onClick={handleSubmit} type="primary">
