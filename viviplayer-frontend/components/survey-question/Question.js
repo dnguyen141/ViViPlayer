@@ -19,7 +19,7 @@ function Question(props) {
 
   return (
     <Form {...layout} form={form} name="control-hooks" onFinish={onFinish}>
-      <Form.Item name="type" label="Umfragetyp" rules={[{ required: true, message: 'Wählen Sie bitte Umfragetyp aus!' }]}>
+      <Form.Item name="type" label="Umfragetyp">
         <Select
           placeholder="Bitte wählen Sie Ihren Umfragetyp hier aus"
           allowClear
