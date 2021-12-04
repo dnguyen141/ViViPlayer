@@ -9,9 +9,6 @@ const layout = {
   labelCol: { span: 4 },
   wrapperCol: { span: 16 },
 };
-const tailLayout = {
-  wrapperCol: { offset: 8, span: 16 },
-};
 
 function Question(props) {
   const [form] = Form.useForm();
@@ -20,13 +17,9 @@ function Question(props) {
     console.log(values);
   };
 
-  const onReset = () => {
-    form.resetFields();
-  };
-
-    return (
-      <Form {...layout} form={form} name="control-hooks" onFinish={onFinish}>
-      <Form.Item name="type" label="Umfragetyp">
+  return (
+    <Form {...layout} form={form} name="control-hooks" onFinish={onFinish}>
+      <Form.Item name="type" label="Umfragetyp" rules={[{ required: true, message: 'Wählen Sie bitte Umfragetyp aus!' }]}>
         <Select
           placeholder="Bitte wählen Sie Ihren Umfragetyp hier aus"
           allowClear
@@ -57,16 +50,8 @@ function Question(props) {
           ) : null
         }
       </Form.Item>
-      <Form.Item {...tailLayout}>
-        <Button type="primary" htmlType="submit">
-          Submit
-        </Button>
-        <Button htmlType="button" onClick={onReset}>
-          Reset
-        </Button>
-      </Form.Item>
     </Form>
-    )
+  )
 }
 
 Question.propTypes = {

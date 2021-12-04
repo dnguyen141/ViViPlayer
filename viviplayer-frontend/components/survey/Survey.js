@@ -17,6 +17,7 @@ const tabList = [
 
 function Survey(props) {
     const [activeTabKey1, setActiveTabKey1] = useState('tab1');
+    const [submitting, setSubmitting] = useState(false);
     const onTab1Change = (key) => {
         setActiveTabKey1(key);
     };
@@ -26,15 +27,26 @@ function Survey(props) {
         form.resetFields();
     };
 
+    const onSwitch = () => {
+        setSubmitting(true);
+        setTimeout(() => {
+            setSubmitting(false);
+            setActiveTabKey1('tab2')
+        }, 2000); //to switch to the other tab
+    }
+
     const contentList = {
         tab1: (
             <Card style={{ border: '3px solid gray' }}>
                 <Question />
+                <Button type="primary" loading={submitting} htmlType="submit" onClick={onSwitch}>
+                    Posten
+                </Button>
             </Card>
         ),
         tab2: (
             <Card style={{ border: '3px solid gray' }}>
-                <p>This is for Survey Results</p>
+                <p>Hier steht das Ergebnis.</p>
             </Card>)
     };
 
