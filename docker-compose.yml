@@ -7,7 +7,6 @@ services:
       - "6379:6379"
   django:
     build: ./viviplayer
-    command: ["/app/venv/bin/python", "manage.py", "runserver", "0.0.0.0:8000"]
     volumes:
       - ./viviplayer:/app/backend
     ports:
@@ -16,7 +15,6 @@ services:
       - redis
   frontend:
     build: ./viviplayer-frontend
-    command: ["next", "start"]
     volumes:
       - ./viviplayer-frontend:/app/frontend
     ports:
