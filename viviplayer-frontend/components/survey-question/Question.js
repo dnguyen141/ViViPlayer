@@ -45,6 +45,7 @@ function Question(props) {
               <Form.Item name="quest" label="Umfrage">
                 <Input />
               </Form.Item>
+              <Answer />
             </div>
           ) : getFieldValue('type') === 'question' ? ( //second Option, Verständnisfrage
             <div>
