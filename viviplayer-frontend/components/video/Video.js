@@ -75,7 +75,7 @@ const Video = () => {
       // player.pause();
       pauseVideo(player);
     }
-    return () => {};
+    return () => { };
   }, [videoRef]);
   socket.on('getCommandToPlayVideo', () => {
     // console.log("lets play");
@@ -114,14 +114,6 @@ const Video = () => {
           type="video/mp4"
         />
       </video>
-      <div>
-        <Button type="primary" onClick={() => playVideo(player)} style={{ margin: '5px', fontSize: '14px', marginLeft :'0px' }}>
-          Play video
-        </Button>
-        <Button type="danger" onClick={() => pauseVideo(player)} style={{ margin: '5px', fontSize: '14px' }}>
-          Pause video
-        </Button>
-      </div>
     </>
   );
 };

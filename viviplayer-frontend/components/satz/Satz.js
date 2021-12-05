@@ -45,7 +45,7 @@ const Satz = (props) => {
         content={
           <>
             <Form.Item>
-              <TextArea rows={2} onChange={(e) => setValue(e.target.value)} value={value} placeholder="Bitte geben Sie Ihren Kommentar hier ein" />
+              <TextArea rows={3} onChange={(e) => setValue(e.target.value)} value={value} placeholder="Bitte geben Sie Ihren Kommentar hier ein" />
             </Form.Item>
             <Form.Item>
               <Button htmlType="submit" loading={submitting} onClick={handleSubmit} type="primary">
