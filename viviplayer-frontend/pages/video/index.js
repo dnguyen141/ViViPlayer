@@ -4,6 +4,7 @@ import Video from '../../components/video/Video';
 import UserStory from '../../components/user-story/UserStory';
 import Vivilayout from '../../layout';
 import { Row, Col } from 'antd';
+import Ask from '../../components/ask/Ask';
 
 function index(props) {
   return (
@@ -22,6 +23,7 @@ function index(props) {
           style={{ padding: '25px', justifyContent: 'center' }}
         >
           <UserStory />
+          <Ask />
         </Col>
       </Row>
     </Vivilayout>
