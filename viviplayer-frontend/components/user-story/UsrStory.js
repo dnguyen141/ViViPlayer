@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import PropTypes from 'prop-types'
-import { Comment, Form, Button, List, Input, Card } from 'antd';
+import { Comment, Form, Button, List, Input} from 'antd';
 import moment from 'moment';
 import styles from './user-story.module.css';
 
