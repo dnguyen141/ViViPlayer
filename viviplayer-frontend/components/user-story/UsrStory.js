@@ -1,6 +1,6 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { Comment, Form, Button, List, Input} from 'antd';
+import { Comment, Form, Button, List, Input } from 'antd';
 import moment from 'moment';
 import styles from './user-story.module.css';
 
@@ -44,8 +44,8 @@ function UsrStory(props) {
     const onReset = () => {
         setValue1('');
         setValue2('');
-      };
-    
+    };
+
     return (
         <>
             {comments != undefined && <CommentList comments={comments} />}
@@ -57,13 +57,13 @@ function UsrStory(props) {
                                 <div>
                                     <div style={{ paddingTop: '0.4em' }}>Damit</div>
                                     <div>
-                                        <Input className={styles.inputuser} value={value1} onChange={(e) => setValue1(e.target.value)}/>
+                                        <Input className={styles.inputuser} value={value1} onChange={(e) => setValue1(e.target.value)} />
                                     </div>
                                 </div>
                                 <div>
                                     <div style={{ paddingTop: '0.4em' }}>möchte ich als</div>
                                     <div>
-                                        <Input className={styles.inputuser} value={value2} onChange={(e) => setValue2(e.target.value)}/>
+                                        <Input className={styles.inputuser} value={value2} onChange={(e) => setValue2(e.target.value)} />
                                     </div>
                                 </div>
                             </Form.Item>
