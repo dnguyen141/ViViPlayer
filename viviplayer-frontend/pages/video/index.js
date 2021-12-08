@@ -21,7 +21,7 @@ function index(props) {
           span={12}
           style={{ padding: '25px', justifyContent: 'center' }}
         >
-            <UserStory />
+          <UserStory />
         </Col>
       </Row>
     </Vivilayout>

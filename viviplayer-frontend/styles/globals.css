@@ -77,7 +77,7 @@ a {
   }
 }
 
-.row-custom{
+.row-custom {
   width: 100%;
 }
 
@@ -86,7 +86,7 @@ a {
 }
 
 /*CSS to keep the chat display to a fixed height*/
-.scroll-bar{
+.scroll-bar {
   height: 200px;
   overflow: auto;
 }
