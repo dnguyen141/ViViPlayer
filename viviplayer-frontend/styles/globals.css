@@ -67,7 +67,7 @@ a {
 /*CSS to adjust the size of the columns*/
 @media only screen and (max-width: 1024px) {
   .row-responsive {
-    flex-flow: column wrap !important;
+    flex-flow: column !important;
     flex-direction: column !important;
   }
 
@@ -77,12 +77,16 @@ a {
   }
 }
 
+.row-custom {
+  width: 100%;
+}
+
 .vjs-default-skin.vjs-paused .vjs-big-play-button {
   display: none !important;
 }
 
 /*CSS to keep the chat display to a fixed height*/
-.scroll-bar{
+.scroll-bar {
   height: 200px;
   overflow: auto;
 }
