@@ -3,6 +3,7 @@ import io from 'socket.io-client';
 import 'videojs-markers';
 import videoJs from 'video.js';
 import { Button } from 'antd';
+import styles from "./video.module.css"; 
 let socket;
 const markersDefault = [
   {
@@ -34,7 +35,35 @@ const Video = () => {
   socket = io('http://localhost:5000');
   const videoRef = React.useRef(null);
   const playerRef = React.useRef(null);
+  const progressRef = React.useRef(null); 
+  const playbtnRef = React.useRef(null); 
   const [player, setPlayer] = useState(null);
+
+  function togglePlayPause(){
+    if(videoRef.current.paused){
+        videoRef.current.play();
+    }else{
+        videoRef.current.pause();
+    }
+  } 
+
+  function updateProgressBar(){ //stop when you are on a marker?
+    requestAnimationFrame(() => {
+        var currentPosition = videoRef.current.currentTime / videoRef.current.duration; 
+        progressRef.current.style.width = currentPosition * 100 + "%";
+    });
+  }
+
+  function changeVideoPosition(e){
+      if(videoRef.current.readyState > 2){ //check if video is ready to be played
+        var clickX = e.nativeEvent.offsetX; // x coordinate where the user clicked within the progressbar bounds
+        var newVideoPosition = clickX/ videoRef.current.clientWidth;  //the clicked position relative to the maximum length
+        progressRef.current.style.width = newVideoPosition * 100 + "%"; 
+        videoRef.current.currentTime = newVideoPosition * videoRef.current.duration; 
+      }
+      
+  }
+
   useEffect(() => {
     if (videoRef.current != null) {
       setPlayer(videoRef.current);
@@ -100,11 +129,13 @@ const Video = () => {
   return (
     <>
       <h2>Video</h2>
+      <div className={styles.videocontainer}>
       <video
         // onProgress={(e) => pauseSegment(e)}
+        onTimeUpdate={updateProgressBar}
         ref={videoRef}
         id="video-viviplayer"
-        controls
+        //controls
         preload="none"
         data-setup='{"fluid":true}' //This is used so that the video player is responsive
         className="video-js vjs-default-skin vjs-big-play-centered"
@@ -114,23 +145,25 @@ const Video = () => {
           type="video/mp4"
         />
       </video>
-
-      <div style={{ display: 'none' }}>
-        <Button
-          type="primary"
-          onClick={() => playVideo(player)}
-          style={{ margin: '5px', fontSize: '14px', marginLeft: '0px' }}
-        >
-          Play video
-        </Button>
-        <Button
-          type="danger"
-          onClick={() => pauseVideo(player)}
-          style={{ margin: '5px', fontSize: '14px' }}
-        >
-          Pause video
-        </Button>
-      </div>
+      <div className={styles.controls}>
+                    <div className={styles.progressbarcontainer} onClick={changeVideoPosition} maxWidth="100%">
+                        <div className={styles.progressbar}  ref={progressRef}  id="progressbar" ></div>
+    	            </div>
+                        
+                    <div className={styles.buttons}>
+                        <button id="play-pause-button" ref={playbtnRef} onClick={togglePlayPause}>
+                           PLAY
+                        </button>
+                    </div>
+                    <input type="range" className="volume" min="0" max="1" step="0.01" defaultValue="1"/>
+                    
+                    <div className={styles.time}>
+                        <span className={styles.current}>0:00</span> / <span className={styles.duration}>0:00</span>
+                    </div>
+                    
+        </div>         
+      </div> 
+      
     </>
   );
 };
