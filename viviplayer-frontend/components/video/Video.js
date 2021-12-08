@@ -36,7 +36,8 @@ const Video = () => {
   const videoRef = React.useRef(null);
   const playerRef = React.useRef(null);
   const progressRef = React.useRef(null); 
-  const playbtnRef = React.useRef(null); 
+  //const playbtnRef = React.useRef(null);
+  const volumeRef  = React.useRef(null); 
   const [player, setPlayer] = useState(null);
 
   function togglePlayPause(){
@@ -56,15 +57,23 @@ const Video = () => {
 
   function changeVideoPosition(e){
       if(videoRef.current.readyState > 2){ //check if video is ready to be played
-        var clickX = e.nativeEvent.offsetX; // x coordinate where the user clicked within the progressbar bounds
-        var newVideoPosition = clickX/ videoRef.current.clientWidth;  //the clicked position relative to the maximum length
-        progressRef.current.style.width = newVideoPosition * 100 + "%"; 
-        videoRef.current.currentTime = newVideoPosition * videoRef.current.duration; 
+    
+        //calculating the relative position of the click.
+        var clickX = e.nativeEvent.offsetX; 
+        var newPosition = clickX/ videoRef.current.clientWidth;  
+
+        //setting the values for the progressbar and the videotime
+        progressRef.current.style.width = newPosition * 100 + "%"; 
+        videoRef.current.currentTime = newPosition * videoRef.current.duration; 
       }
       
   }
 
-  useEffect(() => {
+  function changeVolume(){
+      videoRef.current.volume = volumeRef.current.value;
+  }
+
+  /*useEffect(() => {
     if (videoRef.current != null) {
       setPlayer(videoRef.current);
     }
@@ -100,12 +109,12 @@ const Video = () => {
         },
         markers: markersDefault
       });
-      player.autoplay('muted');
+      //player.autoplay('muted');
       // player.pause();
       pauseVideo(player);
     }
     return () => {};
-  }, [videoRef]);
+  }, [videoRef]);*/
   socket.on('getCommandToPlayVideo', () => {
     // console.log("lets play");
     if (player) {
@@ -146,16 +155,25 @@ const Video = () => {
         />
       </video>
       <div className={styles.controls}>
-                    <div className={styles.progressbarcontainer} onClick={changeVideoPosition} maxWidth="100%">
+                    <div className={styles.progressbarcontainer} onMouseDown={changeVideoPosition} maxWidth="100%">
                         <div className={styles.progressbar}  ref={progressRef}  id="progressbar" ></div>
     	            </div>
                         
                     <div className={styles.buttons}>
-                        <button id="play-pause-button" ref={playbtnRef} onClick={togglePlayPause}>
+                        <button id="play-pause-button" onClick={togglePlayPause}>
                            PLAY
                         </button>
                     </div>
-                    <input type="range" className="volume" min="0" max="1" step="0.01" defaultValue="1"/>
+                    <input 
+                        type="range" 
+                        className="volume"
+                        min="0" 
+                        max="1" 
+                        step="0.01" 
+                        defaultValue="0.5" 
+                        onChange={changeVolume}
+                        ref={volumeRef}
+                    />
                     
                     <div className={styles.time}>
                         <span className={styles.current}>0:00</span> / <span className={styles.duration}>0:00</span>
