@@ -33,7 +33,7 @@ function UsrStory(props) {
                 {
                     author: 'User',
                     avatar: 'https://joeschmoe.io/api/v1/random',
-                    content: <p>Damit ich {value1}, möchte ich als {value2}</p>,
+                    content: <p>[N-th Shot] [Titel des Shots] : Damit ich {value1}, möchte ich als {value2}</p>,
                     datetime: moment().fromNow()
                 }
             ]);
