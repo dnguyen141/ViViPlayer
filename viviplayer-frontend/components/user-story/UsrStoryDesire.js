@@ -32,9 +32,11 @@ function UsrStoryDesire(props) {
       setComments([
         ...comments,
         {
+          author: 'User',
           content: (
+            
             <p>
-              <b>[User Story]</b> Damit {value1}, möchte ich als {value2}, {value3}.
+              Damit {value1}, möchte ich als {value2}, {value3}.
             </p>
           ),
         }

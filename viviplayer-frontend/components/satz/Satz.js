@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Comment, Form, Button, List, Input } from 'antd';
-import moment from 'moment';
 
 const Satz = (props) => {
   const [comments, setComments] = useState([]);
@@ -29,9 +28,7 @@ const Satz = (props) => {
         ...comments,
         {
           author: 'User',
-          avatar: 'https://joeschmoe.io/api/v1/random',
           content: <p>{value}</p>,
-          datetime: moment().fromNow()
         }
       ]);
       console.log(comments);
