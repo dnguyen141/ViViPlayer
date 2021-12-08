@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Card, Input} from 'antd';
+import { Card, Input } from 'antd';
 import PropTypes from 'prop-types';
 import Satz from '../satz/Satz';
-import UsrStory from './UsrStory';
+import UsrStoryDesire from './UsrStoryDesire';
 
 const tabList = [
   {
@@ -24,13 +24,14 @@ const UserStory = (props) => {
   const contentList = {
     tab1: (
       <Card style={{ border: '3px solid gray' }}>
-        <UsrStory />
+        <UsrStoryDesire />
       </Card>
     ),
     tab2: (
       <Card style={{ border: '3px solid gray' }}>
         <Satz />
-      </Card>)
+      </Card>
+    )
   };
 
   return (

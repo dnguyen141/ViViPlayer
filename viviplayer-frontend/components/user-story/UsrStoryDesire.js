@@ -4,7 +4,7 @@ import { Comment, Form, Button, List, Input } from 'antd';
 import moment from 'moment';
 import styles from './user-story.module.css';
 
-function UsrStory(props) {
+function UsrStoryDesire(props) {
   const [comments, setComments] = useState([]);
   const [submitting, setSubmitting] = useState(false);
   const [value1, setValue1] = useState(''); //value1 for the first text box
@@ -105,6 +105,6 @@ function UsrStory(props) {
   );
 }
 
-UsrStory.propTypes = {};
+UsrStoryDesire.propTypes = {};
 
-export default UsrStory;
+export default UsrStoryDesire;
