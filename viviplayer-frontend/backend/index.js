@@ -7,7 +7,7 @@ const io = require('socket.io')(httpServer, {
   }
 });
 
-io.listen(5000);
+io.listen(5001);
 
 io.on('connection', (socket) => {
   console.log('MAKE CONNECT TO SOCKER', socket.id);
@@ -18,4 +18,4 @@ io.on('connection', (socket) => {
     io.emit('getCommandToPauseVideo');
   });
 });
-console.log('Running 5000');
+console.log('Socket server 5001');

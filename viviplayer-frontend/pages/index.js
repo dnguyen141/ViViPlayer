@@ -1,24 +1,22 @@
-import React from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Head from 'next/head';
 import Router from 'next/router';
 import { Form, Input, Tabs, Button, Checkbox, notification } from 'antd';
 import NumberOutlined from '@ant-design/icons/NumberOutlined';
+import { login, loadUser } from '../actions/auth.actions';
+import User from './_app';
 
 const { TabPane } = Tabs;
-export default function Home() {
-  
-  const onFinish = async (values) => {
-    if (!values.username) {
-      openNotification('Please input your username!');
-    } else if (!values.password) {
-      openNotification('Please input your password!');
-    } else if (values.username !== 'admin') {
-      openNotification('Your user name is not correct');
-    } else if (values.password !== 'admin1234') {
-      openNotification('Your password is not correct');
-    } else {
-      Router.push('/dashboard');
-    }
+export default function Home({ user }) {
+  // const userExist = localStorage.getItem('user');
+  // console.log(typeof JSON.parse(userExist));
+  // useEffect(() => {
+  //   loadUser();
+  // }, []);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  console.log(user);
+  const onFinish = ({ username, password }) => {
+    login(username.trim(), password.trim());
   };
   const loginWithTan = (values) => {
     console.log('TAN VALUES', values.tan);
