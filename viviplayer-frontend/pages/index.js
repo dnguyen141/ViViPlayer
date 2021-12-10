@@ -6,6 +6,7 @@ import NumberOutlined from '@ant-design/icons/NumberOutlined';
 
 const { TabPane } = Tabs;
 export default function Home() {
+  
   const onFinish = async (values) => {
     if (!values.username) {
       openNotification('Please input your username!');
