@@ -1,0 +1,4 @@
+{
+  "mongoURI": "mongodb+srv://viviplayer03:viviplayer03@viviplayer03.qm6np.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+  "jwtSecret": "secret"
+}
