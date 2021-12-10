@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "dev": "concurrently  \"next dev\" \"nodemon ./backend/index.js\"",
-    "server":"nodemon ./backend/server.js",
+    "server": "nodemon ./backend/server.js",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -17,6 +17,7 @@
     "bcryptjs": "^2.4.3",
     "concurrently": "^6.4.0",
     "config": "^3.3.6",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-validator": "^6.13.0",
     "husky": "^7.0.4",
