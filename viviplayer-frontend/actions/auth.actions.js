@@ -14,7 +14,9 @@ export const loadUser = async () => {
   try {
     const res = await api.get('/auth');
     console.log(res.data);
+    console.log(api.defaults.headers.common['x-auth-token']);
     localStorage.setItem('user', JSON.stringify(res.data));
+    return res.data;
   } catch (err) {
     console.log(err);
   }
@@ -22,13 +24,12 @@ export const loadUser = async () => {
 
 // Login User
 export const login = async (email, password) => {
-  console.log(email, '--', password);
   const body = { email, password };
-
   try {
     const res = await api.post('/auth', body);
     setAuthToken(res.data.token);
     loadUser();
+    return true;
   } catch (err) {
     const errors = err.response.data.errors;
     errors.forEach((error) => openNotification('Login Notification', error.msg));

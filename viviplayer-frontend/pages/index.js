@@ -1,22 +1,23 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Router from 'next/router';
-import { Form, Input, Tabs, Button, Checkbox, notification } from 'antd';
+import { Form, Input, Tabs, Button, Checkbox } from 'antd';
 import NumberOutlined from '@ant-design/icons/NumberOutlined';
 import { login, loadUser } from '../actions/auth.actions';
-import User from './_app';
 
 const { TabPane } = Tabs;
-export default function Home({ user }) {
-  // const userExist = localStorage.getItem('user');
-  // console.log(typeof JSON.parse(userExist));
-  // useEffect(() => {
-  //   loadUser();
-  // }, []);
+export default function Home() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  console.log(user);
-  const onFinish = ({ username, password }) => {
-    login(username.trim(), password.trim());
+  useEffect(async () => {
+    if (localStorage.getItem('user') !== null) {
+      setIsAuthenticated(true);
+    }
+  }, []);
+  const onFinish = async ({ username, password }) => {
+    let a = await login(username.trim(), password.trim());
+    if (a === true) {
+      setIsAuthenticated(true);
+    }
   };
   const loginWithTan = (values) => {
     console.log('TAN VALUES', values.tan);
@@ -27,18 +28,12 @@ export default function Home({ user }) {
       Router.push('/dashboard');
     }
   };
+  if (isAuthenticated) {
+    Router.push('/dashboard');
+  }
 
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
-  };
-  const openNotification = (noti) => {
-    notification.open({
-      message: 'Notification Login',
-      description: noti,
-      onClick: () => {
-        console.log('Notification Clicked!');
-      }
-    });
   };
   function callback(key) {
     console.log(key);
