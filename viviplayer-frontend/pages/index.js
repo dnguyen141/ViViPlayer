@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Router from 'next/router';
 import { Form, Input, Tabs, Button, Checkbox } from 'antd';
 import NumberOutlined from '@ant-design/icons/NumberOutlined';
-import { login, loadUser } from '../actions/auth.actions';
+import { login } from '../actions/auth.actions';
 
 const { TabPane } = Tabs;
 export default function Home() {
@@ -14,8 +14,8 @@ export default function Home() {
     }
   }, []);
   const onFinish = async ({ username, password }) => {
-    let a = await login(username.trim(), password.trim());
-    if (a === true) {
+    let result = await login(username.trim(), password.trim());
+    if (result === true) {
       setIsAuthenticated(true);
     }
   };

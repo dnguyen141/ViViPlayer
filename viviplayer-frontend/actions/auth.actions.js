@@ -13,8 +13,6 @@ import { openNotification } from '../utils/Noti';
 export const loadUser = async () => {
   try {
     const res = await api.get('/auth');
-    console.log(res.data);
-    console.log(api.defaults.headers.common['x-auth-token']);
     localStorage.setItem('user', JSON.stringify(res.data));
     return res.data;
   } catch (err) {
