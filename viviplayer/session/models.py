@@ -45,7 +45,8 @@ class Shot(models.Model):
 @receiver(post_save, sender=Shot)
 def get_screenshot(sender, instance, created, *args, **kwargs):
     vid = ViViSession.objects.get(session_shot = instance)
-    imageextractor.extract(vid.video_path.path, vid.name, [instance.time])
+    imageextractor.extract(vid.video_path.path, vid.id, [instance.time])
+    instance.image = 'screenshots/' + str(instance.id) + str(instance.time)
 
 
 class UserStory(models.Model):
