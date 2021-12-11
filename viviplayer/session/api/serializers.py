@@ -26,3 +26,17 @@ class ShotSerializer(serializers.ModelSerializer):
 
         return ret
 
+
+class CreateShotSerializer(serializers.ModelSerializer):
+
+    session = serializers.ReadOnlyField()
+
+
+    class Meta:
+        model = Shot
+        fields = ['session', 'title', 'time']
+
+
+
+
+
