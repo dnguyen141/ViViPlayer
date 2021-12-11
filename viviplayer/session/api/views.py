@@ -15,6 +15,16 @@ class ListSessions(generics.ListAPIView):
     permission_classes = [IsAdminUser, IsAuthenticated]
 
 
+class DetailSession(generics.RetrieveAPIView):
+    serializer_class = SessionSerializer
+    queryset = ViViSession.objects.all()
+    permission_classes = [IsAdminUser, IsAuthenticated]
+
+    def get_queryset(self):
+        ses = self.kwargs['pk']
+        return ViViSession.objects.filter(id=ses)
+
+
 class CreateSession(generics.CreateAPIView):
     serializer_class = SessionSerializer
     queryset = ViViSession.objects.all()
@@ -22,7 +32,6 @@ class CreateSession(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
-
 
 
 class ListShots(generics.ListAPIView):
