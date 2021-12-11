@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'channels',
     # Local
     "authentication",
-    'syncplay',
+    "syncplay",
+    "session",
 ]
 
 MIDDLEWARE = [
