@@ -15,6 +15,9 @@ class ViViSession(models.Model):
     video_path = models.URLField(max_length=200)
     is_opened = models.BooleanField(default=False)
 
+    class Meta:
+        verbose_name = "ViViPlayer Session"
+
 
 class Shot(models.Model):
     session = models.ForeignKey(ViViSession, on_delete=models.CASCADE, related_name="shots")
@@ -31,6 +34,7 @@ class UserStory(models.Model):
 
 class Sentence(models.Model):
     session = models.ForeignKey(ViViSession, on_delete=models.CASCADE, related_name="sentence")
+    shot = models.ForeignKey(Shot, on_delete=models.CASCADE, related_name="sentence")
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="sentence")
     text = models.CharField(max_length=500, null=False, blank=False)
 
@@ -42,6 +46,7 @@ class MultipleChoiceQuestion(models.Model):
     )
 
     session = models.ForeignKey(ViViSession, on_delete=models.CASCADE, related_name="questions")
+    shot = models.ForeignKey(Shot, on_delete=models.CASCADE, related_name="questions")
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="questions")
     desc = models.CharField(max_length=500, null=False, blank=False)
     type = models.CharField(max_length=8, choices=MCQ_TYPE)
@@ -50,5 +55,5 @@ class MultipleChoiceQuestion(models.Model):
 class Answer(models.Model):
     question = models.ForeignKey(MultipleChoiceQuestion, on_delete=models.CASCADE, related_name="answers")
     text = models.CharField(max_length=100)
-    votes = models.IntegerField(max_length=2)
+    votes = models.IntegerField()
 
