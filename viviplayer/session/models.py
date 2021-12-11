@@ -11,7 +11,7 @@ class ViViSession(models.Model):
     name = models.CharField(max_length=255, null=False, blank=False, unique=True)
     owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="owner_session")
     current_users = models.ManyToManyField(CustomUser, related_name="current_users", blank=True)
-    tan = models.CharField(max_length=20, null=True, blank=False)
+    tan = models.CharField(max_length=20, blank=False)
     video_path = models.URLField(max_length=200)
     is_opened = models.BooleanField(default=False)
 
