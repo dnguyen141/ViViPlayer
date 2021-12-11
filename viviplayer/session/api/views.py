@@ -3,7 +3,7 @@ from rest_framework import generics, permissions
 from session.models import ViViSession, Shot
 from django.http import Http404
 from rest_framework.response import Response
-from session.api.serializers import SessionSerializer, ShotSerializer
+from session.api.serializers import SessionSerializer, ShotSerializer, CreateShotSerializer
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework import status
 
@@ -42,3 +42,12 @@ class ListShots(generics.ListAPIView):
     def get_queryset(self):
         ses = self.kwargs['pk']
         return Shot.objects.filter(session_id=ses)
+
+class CreateShot(generics.CreateAPIView):
+    serializer_class = CreateShotSerializer
+    queryset = Shot.objects.all()
+    permission_classes = [IsAdminUser]
+
+    def perform_create(self, serializer):
+        ses = ViViSession.objects.get(id = self.kwargs['pk'])
+        serializer.save(session=ses)

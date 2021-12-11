@@ -1,5 +1,8 @@
 from django.db import models
 from authentication.models import CustomUser
+from session import autosegment, imageextractor
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 class ViViSessionManager(models.Manager):
@@ -12,17 +15,37 @@ class ViViSession(models.Model):
     owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="sessions")
     current_users = models.ManyToManyField(CustomUser, related_name="current_users", blank=True)
     tan = models.CharField(max_length=20, blank=False)
-    video_path = models.URLField(max_length=200)
+    video_path = models.FileField(max_length=200)
     is_opened = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = "ViViPlayer Session"
 
 
+# Segment video and create Shots
+@receiver(post_save, sender=ViViSession)
+def segment_video(sender, instance, created, *args, **kwargs):
+    if created:
+        time_stamps = autosegment.find_scenes(instance.video_path.path, instance.name)
+        for t in time_stamps:
+            s = Shot(session=instance, title='No title', time=t)
+            s.save()
+        instance.segmented = True
+        instance.save()
+
+
 class Shot(models.Model):
     session = models.ForeignKey(ViViSession, on_delete=models.CASCADE, related_name="shots")
     time = models.FloatField()
     title = models.CharField(max_length=15, null=False, blank=False)
+    image = models.URLField(max_length=200, null=True)
+
+
+# Create Screenshot when a Shot is created
+@receiver(post_save, sender=Shot)
+def get_screenshot(sender, instance, created, *args, **kwargs):
+    vid = ViViSession.objects.get(session_shot = instance)
+    imageextractor.extract(vid.video_path.path, vid.name, [instance.time])
 
 
 class UserStory(models.Model):
