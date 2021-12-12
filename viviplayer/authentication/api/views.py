@@ -91,7 +91,7 @@ class CustomUserRetrieveUpdateAPI(
         IsAuthenticated,
         IsModerator,
     )
-    queryset = get_user_model().objects.all()
+    queryset = get_user_model().objects.filter(is_staff=False)
     serializer_class = CustomUserSerializer
     lookup_fields = ("pk", "username")
 
