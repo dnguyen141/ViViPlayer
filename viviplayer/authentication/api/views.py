@@ -76,11 +76,15 @@ class CustomUserListAPI(generics.ListAPIView):
 # @access   Only authenticated users
 class CustomUserAPI(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
-    queryset = get_user_model().objects.filter(is_staff=False)
+    queryset = get_user_model().objects.all()
     serializer_class = CustomUserSerializer
 
     def get_queryset(self):
-        return super().get_queryset().filter(id=getattr(self.request.user, "id", None))
+        return (
+            super()
+            .get_queryset()
+            .filter(is_staff=False, id=getattr(self.request.user, "id", None))
+        )
 
 
 # Listing and Updating user's details API
