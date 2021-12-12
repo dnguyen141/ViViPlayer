@@ -2,12 +2,12 @@ from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 
 from rest_framework import generics
+from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from authentication.permissions import IsModerator
 from dj_rest_auth.registration.views import RegisterView
 from dj_rest_auth.views import LoginView, PasswordChangeView, LogoutView
 
-from authentication.models import CustomUser
 from authentication.api.serializers import (
     CustomLoginSerializer,
     CustomUserSerializer,
@@ -74,17 +74,18 @@ class CustomUserListAPI(generics.ListAPIView):
 # @route    GET api/auth/user/
 # @desc     Output a list of current user and his credentials in system
 # @access   Only authenticated users
-class CustomUserAPI(generics.ListAPIView):
+class CustomUserAPI(generics.GenericAPIView):
     permission_classes = (IsAuthenticated,)
     queryset = get_user_model().objects.all()
     serializer_class = CustomUserSerializer
 
-    def get_queryset(self):
-        return (
-            super()
-            .get_queryset()
-            .filter(is_staff=False, id=getattr(self.request.user, "id", None))
-        )
+    def get(self, request, *args, **kwargs):
+        data = {
+            "id": self.request.user.id,
+            "username": self.request.user.username,
+            "is_mod": self.request.user.is_mod,
+        }
+        return Response(data)
 
 
 # Listing and Updating user's details API
@@ -135,5 +136,5 @@ class CustomLogoutAPI(LogoutView):
     def post(self, request, *args, **kwargs):
         user = getattr(request, "user", None)
         if not getattr(user, "is_mod", True):
-            CustomUser.objects.filter(id=getattr(user, "id", None)).delete()
+            get_user_model().objects.filter(id=getattr(user, "id", None)).delete()
         return self.logout(request)
