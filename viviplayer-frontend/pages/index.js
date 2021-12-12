@@ -1,20 +1,24 @@
 import React from 'react';
 import Head from 'next/head';
 import Router from 'next/router';
-import { Form, Input, Tabs, Button, Checkbox, notification } from 'antd';
+import { Form, Input, Tabs, Button, Checkbox } from 'antd';
 import NumberOutlined from '@ant-design/icons/NumberOutlined';
+import { Notification } from '../utils/notification';
+import { connect } from 'react-redux';
 
 const { TabPane } = Tabs;
-export default function Home() {
+const Home = ({ isAuthenticated, theanh }) => {
+  console.log(isAuthenticated);
+  console.log('theanh', theanh);
   const onFinish = async (values) => {
     if (!values.username) {
-      openNotification('Please input your username!');
+      Notification('Login', 'Please input your username!');
     } else if (!values.password) {
-      openNotification('Please input your password!');
+      Notification('Login', 'Please input your password!');
     } else if (values.username !== 'admin') {
-      openNotification('Your user name is not correct');
+      Notification('Login', 'Your user name is not correct');
     } else if (values.password !== 'admin1234') {
-      openNotification('Your password is not correct');
+      Notification('Login', 'Your password is not correct');
     } else {
       Router.push('/dashboard');
     }
@@ -23,7 +27,7 @@ export default function Home() {
     console.log('TAN VALUES', values.tan);
     if (values.tan !== '112021') {
       console.log('run here');
-      openNotification('TAN is not correct!');
+      Notification('Login', 'TAN is not correct!');
     } else {
       Router.push('/dashboard');
     }
@@ -31,15 +35,6 @@ export default function Home() {
 
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
-  };
-  const openNotification = (noti) => {
-    notification.open({
-      message: 'Notification Login',
-      description: noti,
-      onClick: () => {
-        console.log('Notification Clicked!');
-      }
-    });
   };
   function callback(key) {
     console.log(key);
@@ -115,4 +110,10 @@ export default function Home() {
       </div>
     </div>
   );
-}
+};
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+  theanh: state.auth.theanh
+});
+
+export default connect(mapStateToProps, {})(Home);
