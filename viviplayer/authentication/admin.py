@@ -3,7 +3,12 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.sites.models import Site
 
-from allauth.socialaccount.models import SocialToken, SocialAccount, SocialApp, EmailAddress
+from allauth.socialaccount.models import (
+    SocialToken,
+    SocialAccount,
+    SocialApp,
+    EmailAddress,
+)
 
 from .forms import CustomUserCreationForm
 from .models import CustomUser
@@ -11,14 +16,25 @@ from .models import CustomUser
 
 # Custom Admin Model
 class CustomUserAdmin(UserAdmin):
-    list_display = ('username', 'is_staff')
+    list_display = ("username", "is_staff")
     fieldsets = (
-        (None, {'fields': ('username', 'password')}),
-        (_('Permissions'), {
-            'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions'),
-        }),
-        (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
+        (None, {"fields": ("username", "password")}),
+        (
+            _("Permissions"),
+            {
+                "fields": (
+                    "is_active",
+                    "is_mod",
+                    "is_staff",
+                    "is_superuser",
+                    "groups",
+                    "user_permissions",
+                ),
+            },
+        ),
+        (_("Important dates"), {"fields": ("last_login", "date_joined")}),
     )
+    list_filter = ("is_mod", "is_active", "groups")
     add_form = CustomUserCreationForm
     model = CustomUser
 
