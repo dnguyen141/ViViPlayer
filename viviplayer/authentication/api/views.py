@@ -70,6 +70,19 @@ class CustomUserListAPI(generics.ListAPIView):
     serializer_class = CustomUserSerializer
 
 
+# Listing user's details for all users API
+# @route    GET api/auth/user/
+# @desc     Output a list of current user and his credentials in system
+# @access   Only authenticated users
+class CustomUserAPI(generics.ListAPIView):
+    permission_classes = (IsAuthenticated,)
+    queryset = get_user_model().objects.filter(is_staff=False)
+    serializer_class = CustomUserSerializer
+
+    def get_queryset(self):
+        return super().get_queryset().filter(id=getattr(self.request.user, "id", None))
+
+
 # Listing and Updating user's details API
 # @route    GET api/auth/users/<int:pk>
 # @desc     Get user's credentials using pk
@@ -95,6 +108,9 @@ class CustomUserRetrieveUpdateAPI(
     serializer_class = CustomUserSerializer
     lookup_fields = ("pk", "username")
 
+    def get_queryset(self):
+        return super().get_queryset().filter(id=getattr(self.request.user, "id", None))
+
 
 # Change Password API
 # @route    POST api/auth/change_password/
@@ -118,5 +134,5 @@ class CustomLogoutAPI(LogoutView):
     def post(self, request, *args, **kwargs):
         user = getattr(request, "user", None)
         if not getattr(user, "is_mod", True):
-            CustomUser.objects.filter(id=getattr(user, "id", None)).delete()
+            get_user_model().objects.filter(id=getattr(user, "id", None)).delete()
         return self.logout(request)
