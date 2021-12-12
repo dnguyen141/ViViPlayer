@@ -3,9 +3,12 @@ import Head from 'next/head';
 import Router from 'next/router';
 import { Form, Input, Tabs, Button, Checkbox, notification } from 'antd';
 import NumberOutlined from '@ant-design/icons/NumberOutlined';
+import { connect } from 'react-redux';
 
 const { TabPane } = Tabs;
-export default function Home() {
+const Home = ({ isAuthenticated, theanh }) => {
+  console.log(isAuthenticated);
+  console.log('theanh', theanh);
   const onFinish = async (values) => {
     if (!values.username) {
       openNotification('Please input your username!');
@@ -115,4 +118,10 @@ export default function Home() {
       </div>
     </div>
   );
-}
+};
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+  theanh: state.auth.theanh
+});
+
+export default connect(mapStateToProps, {})(Home);
