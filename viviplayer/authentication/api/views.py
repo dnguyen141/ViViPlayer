@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 
 from rest_framework import generics
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from authentication.permissions import IsModerator
@@ -74,7 +75,7 @@ class CustomUserListAPI(generics.ListAPIView):
 # @route    GET api/auth/user/
 # @desc     Output a list of current user and his credentials in system
 # @access   Only authenticated users
-class CustomUserAPI(generics.GenericAPIView):
+class CustomUserAPI(APIView):
     permission_classes = (IsAuthenticated,)
     queryset = get_user_model().objects.all()
     serializer_class = CustomUserSerializer
