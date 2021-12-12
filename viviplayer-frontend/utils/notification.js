@@ -1,6 +1,6 @@
 import { notification } from 'antd';
 
-export const openNotification = (mess, noti) => {
+export const Notification = (mess, noti) => {
   notification.open({
     message: mess,
     description: noti,
