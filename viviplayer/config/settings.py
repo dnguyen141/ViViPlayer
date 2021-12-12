@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     # Local
     "authentication",
     'syncplay',
+    'session',
 ]
 
 MIDDLEWARE = [
