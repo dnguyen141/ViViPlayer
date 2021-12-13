@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client';
 import 'videojs-markers';
 import videoJs from 'video.js';
-import { Button } from 'antd';
+import { Button, List } from 'antd';
 let socket;
 const markersDefault = [
   {
@@ -131,6 +131,16 @@ const Video = () => {
           Pause video
         </Button>
       </div>
+
+      <List
+        size="small"
+        bordered
+        style={{marginTop: '10px', border: '3px solid gray'}}
+        dataSource={markersDefault}
+        renderItem={markersDefault => <List.Item><Button style={{border:'none'}}>{markersDefault.text} - Titel</Button></List.Item>}
+        onClick={() => pauseVideo(player)}
+        className="scroll-bar"
+        />
     </>
   );
 };
