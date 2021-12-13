@@ -16,7 +16,27 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+# Swagger API UI
+from rest_framework import permissions
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+
+# Swagger API UI Info
+schema_view = get_schema_view(
+   openapi.Info(
+      title="ViViPlayer3 API",
+      default_version='v1',
+      description="",
+      terms_of_service="",
+      contact=openapi.Contact(email=""),
+      license=openapi.License(name=""),
+   ),
+   public=True,
+   permission_classes=(permissions.AllowAny,),
+)
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path("api/auth/", include("authentication.api.urls")),
+   path('api/docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+   path('admin/', admin.site.urls),
+   path("api/auth/", include("authentication.api.urls")),
 ]
