@@ -1,11 +1,9 @@
-
 from rest_framework import generics, permissions
-from session.models import ViViSession, Shot
-from django.http import Http404
-from rest_framework.response import Response
+from session.models import ViViSession, Shot, UserStory, Sentence, MultipleChoiceQuestion
 from session.api.serializers import SessionSerializer, ShotSerializer, CreateShotSerializer
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
-from rest_framework import status
+from rest_framework import viewsets
+from .serializers import UserStorySerializer, SentenceSerializer, QuestionSerializer
 
 
 # Create your views here.
@@ -43,11 +41,27 @@ class ListShots(generics.ListAPIView):
         ses = self.kwargs['pk']
         return Shot.objects.filter(session_id=ses)
 
+
 class CreateShot(generics.CreateAPIView):
     serializer_class = CreateShotSerializer
     queryset = Shot.objects.all()
     permission_classes = [IsAdminUser]
 
     def perform_create(self, serializer):
-        ses = ViViSession.objects.get(id = self.kwargs['pk'])
+        ses = ViViSession.objects.get(id=self.kwargs['pk'])
         serializer.save(session=ses)
+
+
+class UserStoryViewSet(viewsets.ModelViewSet):
+    serializer_class = UserStorySerializer
+    queryset = UserStory.objects.all()
+
+
+class SentenceViewSet(viewsets.ModelViewSet):
+    serializer_class = SentenceSerializer
+    queryset = Sentence.objects.all()
+
+
+class QuestionViewSet(viewsets.ModelViewSet):
+    serializer_class = QuestionSerializer
+    queryset = MultipleChoiceQuestion.objects.all()

@@ -44,7 +44,7 @@ class Shot(models.Model):
 # Create Screenshot when a Shot is created
 @receiver(post_save, sender=Shot)
 def get_screenshot(sender, instance, created, *args, **kwargs):
-    vid = ViViSession.objects.get(session_shot = instance)
+    vid = ViViSession.objects.get(session_shot=instance)
     imageextractor.extract(vid.video_path.path, vid.id, [instance.time])
     instance.image = 'screenshots/' + str(instance.id) + str(instance.time)
 
@@ -80,4 +80,3 @@ class Answer(models.Model):
     question = models.ForeignKey(MultipleChoiceQuestion, on_delete=models.CASCADE, related_name="answers")
     text = models.CharField(max_length=100)
     votes = models.IntegerField()
-
