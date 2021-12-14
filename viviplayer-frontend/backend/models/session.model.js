@@ -61,7 +61,7 @@ const SessionSchema = new mongoose.Schema({
       }
     }
   ],
-  is_open: {
+  isOpen: {
     type: Boolean,
     default: false
   },
