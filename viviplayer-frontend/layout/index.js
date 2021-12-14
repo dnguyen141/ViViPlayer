@@ -16,6 +16,9 @@ const Vivilayout = ({ children }) => {
             Video
           </Menu.Item>
           <Menu.Item key="3">Session</Menu.Item>
+          <Menu.Item key="4" style={{marginLeft:'auto'}}>
+            Log Out
+          </Menu.Item>
         </Menu>
       </Layout.Header>
       <Layout.Content className="site-layout" style={{ padding: '0 50px', marginTop: 64 }}>
