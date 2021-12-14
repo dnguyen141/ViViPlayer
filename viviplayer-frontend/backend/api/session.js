@@ -20,15 +20,14 @@ router.post('/create-session', auth, async (req, res) => {
     let newSession = new Session({
       tan: faker.finance.bitcoinAddress(),
       owner: req.user.id,
-      videoPath: videoPath
-        ? videoPath
-        : 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4'
+      videoPath:
+        'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4'
     });
 
     await newSession.save();
     return res.json(newSession);
   } catch (error) {
-    console.error(err.message);
+    console.error(error.message);
     res.status(500).send('Server error');
   }
 });
