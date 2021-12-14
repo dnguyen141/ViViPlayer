@@ -10,16 +10,6 @@ import { loadUser } from '../../actions/auth.action';
 import { connect } from 'react-redux';
 
 function Session({ isAuthenticated, loadUser }) {
-  useEffect(() => {
-    if (localStorage.token) {
-      // if there is a token set axios headers for all requests
-      setAuthToken(localStorage.token);
-    }
-    loadUser();
-    if (isAuthenticated == false) {
-      Router.push('/');
-    }
-  }, []);
   return (
     <Vivilayout>
       <Row className="row-responsive">

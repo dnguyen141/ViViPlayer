@@ -42,7 +42,7 @@ router.put('/change-tan', auth, async (req, res) => {
   try {
     const { newTan } = req.body;
     if (newTan.length < 6) {
-      return res.status(200).json({ msg: 'TAN must have at least 6 digits' });
+      return res.status(400).json({ msg: 'TAN must have at least 6 digits' });
     }
     await Session.findOneAndUpdate(
       { owner: req.user.id },
@@ -62,4 +62,31 @@ router.put('/change-tan', auth, async (req, res) => {
   }
 });
 
+// @route    POST api/session/join-session
+// @desc     User uses TAN to join session
+// @access   public
+router.post('/join-session', async (req, res) => {
+  const { tan } = req.body;
+  if (!tan) {
+    return res.status(400).json({ msg: 'you must enter TAN to enter the room' });
+  }
+  const session = await Session.findOne({ tan: tan });
+  if (!session) {
+    return res.status(400).json({ msg: 'Session not found' });
+  }
+
+  try {
+    let user = new User({
+      name: faker.internet.userName(),
+      email: faker.internet.email(),
+      password: faker.internet.password()
+    });
+    await user.save();
+    let userLoggedViaTAN = await User.findOne({ email: user.email });
+    return res.json(userLoggedViaTAN);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server error');
+  }
+});
 module.exports = router;
