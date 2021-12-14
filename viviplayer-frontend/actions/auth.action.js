@@ -1,5 +1,6 @@
 import api from '../utils/api';
-import { Notificaiton } from '../utils/notification';
+import { Notification } from '../utils/notification';
+import setAuthToken from '../utils/setAuthToken';
 import { USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT } from './types';
 
 /*
@@ -13,7 +14,7 @@ import { USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT } from './ty
 export const loadUser = () => async (dispatch) => {
   try {
     const res = await api.get('/auth');
-
+    console.log(res.data);
     dispatch({
       type: USER_LOADED,
       payload: res.data
@@ -50,22 +51,25 @@ export const loadUser = () => async (dispatch) => {
 
 // Login User
 export const login = (email, password) => async (dispatch) => {
+  console.log(email, password);
   const body = { email, password };
 
   try {
     const res = await api.post('/auth', body);
 
-    dispatch({
+    await dispatch({
       type: LOGIN_SUCCESS,
       payload: res.data
     });
-
-    dispatch(loadUser());
+    setAuthToken(res.data.token);
+    // api.defaults.headers.common['x-auth-token'] = res.data.token;
+    // localStorage.setItem('token', res.data.token);
+    await dispatch(loadUser());
   } catch (err) {
     const errors = err.response.data.errors;
-
+    console.log(err);
     if (errors) {
-      errors.forEach((error) => dispatch(Notificaiton('Login Notification', error.msg)));
+      errors.forEach((error) => Notification('Login Notification', error.msg));
     }
 
     dispatch({

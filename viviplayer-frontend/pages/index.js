@@ -1,28 +1,38 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Head from 'next/head';
 import Router from 'next/router';
 import { Form, Input, Tabs, Button, Checkbox } from 'antd';
 import NumberOutlined from '@ant-design/icons/NumberOutlined';
 import { Notification } from '../utils/notification';
 import { connect } from 'react-redux';
+import { login, loadUser } from '../actions/auth.action';
+import setAuthToken from '../utils/setAuthToken';
 
 const { TabPane } = Tabs;
-const Home = ({ isAuthenticated, theanh }) => {
-  console.log(isAuthenticated);
-  console.log('theanh', theanh);
-  const onFinish = async (values) => {
-    if (!values.username) {
-      Notification('Login', 'Please input your username!');
-    } else if (!values.password) {
-      Notification('Login', 'Please input your password!');
-    } else if (values.username !== 'admin') {
-      Notification('Login', 'Your user name is not correct');
-    } else if (values.password !== 'admin1234') {
-      Notification('Login', 'Your password is not correct');
-    } else {
-      Router.push('/dashboard');
+const Home = ({ isAuthenticated, login, loadUser }) => {
+  useEffect(() => {
+    // check for token in LS when app first runs
+    if (localStorage.token) {
+      // if there is a token set axios headers for all requests
+      setAuthToken(localStorage.token);
     }
+    // try to fetch a user, if no token or invalid token we
+    // will get a 401 response from our API
+    loadUser();
+
+    // log user out from all tabs if they log out in one tab
+    // window.addEventListener('storage', () => {
+    //   if (!localStorage.token) {
+    //     type: LOGOUT;
+    //   }
+    // });
+  }, []);
+  // Login API
+  const onFinish = async ({ username, password }) => {
+    console.log('Login VIEW', username, password);
+    login(username.trim(), password.trim());
   };
+
   const loginWithTan = (values) => {
     console.log('TAN VALUES', values.tan);
     if (values.tan !== '112021') {
@@ -38,6 +48,9 @@ const Home = ({ isAuthenticated, theanh }) => {
   };
   function callback(key) {
     console.log(key);
+  }
+  if (isAuthenticated) {
+    Router.push('/dashboard');
   }
   return (
     <div>
@@ -112,8 +125,7 @@ const Home = ({ isAuthenticated, theanh }) => {
   );
 };
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated,
-  theanh: state.auth.theanh
+  isAuthenticated: state.auth.isAuthenticated
 });
 
-export default connect(mapStateToProps, {})(Home);
+export default connect(mapStateToProps, { login, loadUser })(Home);
