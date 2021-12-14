@@ -3,7 +3,6 @@ import Vivilayout from '../../layout/index';
 import { connect } from 'react-redux';
 import { loadUser } from '../../actions/auth.action';
 import Router from 'next/router';
-import api from '../../utils/api';
 import setAuthToken from '../../utils/setAuthToken';
 
 const Dashboard = ({ isAuthenticated, loadUser }) => {
@@ -35,7 +34,6 @@ const Dashboard = ({ isAuthenticated, loadUser }) => {
       Router.push('/');
     }
   }, []);
-  console.log(isAuthenticated);
 
   return (
     <Vivilayout>

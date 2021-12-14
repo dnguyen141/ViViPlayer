@@ -62,8 +62,6 @@ export const login = (email, password) => async (dispatch) => {
       payload: res.data
     });
     setAuthToken(res.data.token);
-    // api.defaults.headers.common['x-auth-token'] = res.data.token;
-    // localStorage.setItem('token', res.data.token);
     await dispatch(loadUser());
   } catch (err) {
     const errors = err.response.data.errors;
