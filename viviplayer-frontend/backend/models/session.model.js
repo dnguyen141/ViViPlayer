@@ -14,7 +14,7 @@ const SessionSchema = new mongoose.Schema({
     default: ''
   },
   videoPath: {
-    type: String,
+    type: String
   },
   userLists: [
     {
@@ -30,6 +30,10 @@ const SessionSchema = new mongoose.Schema({
       },
       content: {
         type: String
+      },
+      date: {
+        type: Date,
+        default: Date.now
       }
     }
   ],
