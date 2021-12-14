@@ -31,7 +31,7 @@ const markersDefault = [
   }
 ];
 const Video = () => {
-  socket = io('http://localhost:5000');
+  socket = io('http://localhost:5001');
   const videoRef = React.useRef(null);
   const playerRef = React.useRef(null);
   const [player, setPlayer] = useState(null);
@@ -135,12 +135,16 @@ const Video = () => {
       <List
         size="small"
         bordered
-        style={{marginTop: '10px', border: '3px solid gray'}}
+        style={{ marginTop: '10px', border: '3px solid gray' }}
         dataSource={markersDefault}
-        renderItem={markersDefault => <List.Item><Button style={{border:'none'}}>{markersDefault.text} - Titel</Button></List.Item>}
+        renderItem={(markersDefault) => (
+          <List.Item>
+            <Button style={{ border: 'none' }}>{markersDefault.text} - Titel</Button>
+          </List.Item>
+        )}
         onClick={() => pauseVideo(player)}
         className="scroll-bar"
-        />
+      />
     </>
   );
 };
