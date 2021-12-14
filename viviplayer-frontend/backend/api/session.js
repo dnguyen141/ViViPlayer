@@ -30,6 +30,21 @@ router.post('/create-session', auth, async (req, res) => {
   }
 });
 
+// @route    GET api/session/
+// @desc     get session
+// @access   private
+router.get('/', auth, async (req, res) => {
+  const session = await Session.findOne({ owner: req.user.id });
+  if (!session) {
+    return res.status(400).json({ errors: [{ msg: 'Session not found' }] });
+  }
+  try {
+    return res.status(200).json(session);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server error');
+  }
+});
 // @route    POST api/session/change-tan
 // @desc     change-tan,only moderator can change the tan in session
 // @access   private
@@ -111,6 +126,17 @@ router.post('/join-session', async (req, res) => {
     });
     await user.save();
     let userLoggedViaTAN = await User.findOne({ email: user.email });
+    await Session.findOneAndUpdate(
+      { tan: tan },
+      {
+        $push: {
+          userLists: { user: userLoggedViaTAN._id }
+        }
+      },
+      {
+        useFindAndModify: false
+      }
+    );
     return res.json(userLoggedViaTAN);
   } catch (error) {
     console.error(error.message);
