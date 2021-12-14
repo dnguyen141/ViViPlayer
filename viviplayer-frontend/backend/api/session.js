@@ -11,9 +11,7 @@ var faker = require('faker');
 router.post('/create-session', auth, async (req, res) => {
   const user = await User.findById(req.user.id).select('-password');
   if (user.is_staff == true) {
-    return res
-      .status(400)
-      .json({ errors: [{ msg: 'You do not have permission to create session' }] });
+    return res.status(400).json({ errors: [{ msg: 'You do not have permission' }] });
   }
 
   try {
@@ -26,6 +24,38 @@ router.post('/create-session', auth, async (req, res) => {
 
     await newSession.save();
     return res.json(newSession);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server error');
+  }
+});
+
+// @route    POST api/session/change-tan
+// @desc     change-tan,only moderator can change the tan in session
+// @access   private
+router.put('/change-tan', auth, async (req, res) => {
+  const session = await Session.findOne({ owner: req.user.id });
+  if (!session) {
+    return res.status(400).json({ errors: [{ msg: 'Session not found' }] });
+  }
+
+  try {
+    const { newTan } = req.body;
+    if (newTan.length < 6) {
+      return res.status(200).json({ msg: 'TAN must have at least 6 digits' });
+    }
+    await Session.findOneAndUpdate(
+      { owner: req.user.id },
+      {
+        $set: {
+          tan: newTan
+        }
+      },
+      {
+        useFindAndModify: false
+      }
+    );
+    return res.status(200).json({ msg: 'you have successfully changed Tan' });
   } catch (error) {
     console.error(error.message);
     res.status(500).send('Server error');
