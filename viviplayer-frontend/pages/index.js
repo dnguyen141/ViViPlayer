@@ -49,8 +49,8 @@ const Home = ({ isAuthenticated, theanh }) => {
       <div className="bg-image"></div>
 
       <div className="bg-text">
-        <Tabs defaultActiveKey="1" onChange={callback}>
-          <TabPane tab="Login with TAN" key="1" className="text-white">
+        <Tabs defaultActiveKey="1" onChange={callback} className='text-white'>
+          <TabPane tab="TAN Einloggen" key="1">
             <Form name="TAN Login" onFinish={loginWithTan} autoComplete="off">
               <Form.Item style={{ marginBottom: '1em' }} name="tan">
                 <Input prefix={<NumberOutlined />} placeholder="TAN" />
@@ -60,7 +60,7 @@ const Home = ({ isAuthenticated, theanh }) => {
               </Button>
             </Form>
           </TabPane>
-          <TabPane tab="Login as Moderator" key="2" className="text-white">
+          <TabPane tab="Als Moderator Einloggen" key="2">
             <Form
               name="loginForm"
               labelCol={{
@@ -103,8 +103,71 @@ const Home = ({ isAuthenticated, theanh }) => {
                 <Button type="primary" htmlType="submit">
                   Submit
                 </Button>
-                <Button type="link" style={{border:'none', marginLeft:'10px', color:'white'}} onClick={() => Router.push('/register')}>
-                  <u>Als Moderator Registrieren</u>
+              </Form.Item>
+            </Form>
+          </TabPane>
+          <TabPane tab="Als Moderator Registrieren" key="3">
+            <Form
+              name="registerForm"
+              labelCol={{
+                span: 5
+              }}
+              wrapperCol={{
+                span: 17
+              }}
+              onFinish={onFinish}
+              onFinishFailed={onFinishFailed}
+              autoComplete="off"
+            >
+              <Form.Item className="form-login-label" label="Benutzername" name="username">
+                <Input />
+              </Form.Item>
+
+              <Form.Item
+                className="form-login-label"  
+                name="password"
+                label="Kennwort"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Bitte geben Sie Ihr Kennwort ein.',
+                  },
+                ]}
+                hasFeedback
+              >
+                <Input.Password />
+              </Form.Item>
+              <Form.Item
+                className="form-login-label"
+                name="confirm"
+                label="Kennwort bestätigen"
+                dependencies={['password']}
+                hasFeedback
+                rules={[
+                  {
+                    required: true,
+                    message: 'Bitte bestätigen Sie Ihr Kennwort!',
+                  },
+                  ({ getFieldValue }) => ({
+                    validator(_, value) {
+                      if (!value || getFieldValue('password') === value) {
+                        return Promise.resolve();
+                      }
+                      return Promise.reject(new Error('Die Kennwörter übereinstimmen nicht!'));
+                    },
+                  }),
+                ]}
+              >
+                <Input.Password />
+              </Form.Item>
+              <Form.Item
+                wrapperCol={{
+                  offset: 5,
+                  span: 16
+                }}
+              >
+                <Button type="primary" htmlType="submit">
+                  Registrieren
                 </Button>
               </Form.Item>
             </Form>
