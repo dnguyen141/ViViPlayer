@@ -4,7 +4,7 @@ from session.api.serializers import SessionSerializer, ShotSerializer, CreateSho
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework import viewsets
 from .serializers import UserStorySerializer, SentenceSerializer, QuestionSerializer
-
+from rest_framework.parsers import FormParser,MultiPartParser
 
 # Create your views here.
 class ListSessions(generics.ListAPIView):
@@ -24,12 +24,10 @@ class DetailSession(generics.RetrieveAPIView):
 
 
 class CreateSession(generics.CreateAPIView):
+    parser_classes = (MultiPartParser, FormParser)
     serializer_class = SessionSerializer
     queryset = ViViSession.objects.all()
     permission_classes = [IsAdminUser]
-
-    def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
 
 
 class ListShots(generics.ListAPIView):
