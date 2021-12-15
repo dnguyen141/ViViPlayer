@@ -5,7 +5,8 @@ import videoJs from 'video.js';
 import { Button } from 'antd';
 import styles from "./video.module.css"; 
 let socket;
-const markersDefault = [
+var messages = ""; 
+var markerListDefault = [
   {
     time: 4,
     text: 'Chapter 1'
@@ -15,7 +16,7 @@ const markersDefault = [
     text: 'Chapter 2'
   },
   {
-    time: 23.6,
+    time: 23,
     text: 'Chapter 3'
   },
   {
@@ -35,13 +36,25 @@ const Video = () => {
   socket = io('http://localhost:5000');
   const videoRef = React.useRef(null);
   const playerRef = React.useRef(null);
-  const progressRef = React.useRef(null); 
+  //const progressRef = React.useRef(null); 
   //const playbtnRef = React.useRef(null);
   const volumeRef  = React.useRef(null); 
   const [player, setPlayer] = useState(null);
+  const [progressBarWidth, setProgressBarWidth] = useState("100%");
+  const [markerList, setMarkerList] = useState(markerListDefault);
+  //const [currentVolume, setCurrentVolume] = useState(1);
+    //setMarkerList(markerListDefault);
 
+   // messages = markerList.map(marker=> <div title={marker.text} className={styles.markers} style={{left: marker.time}}/>);
+
+   
+
+    function calculateVideoPosition(timestamp){
+        console.log(timestamp);
+        return  timestamp / videoRef.current.duration * 100 + "%";
+    }
   function togglePlayPause(){
-    if(videoRef.current.paused){
+    if(videoRef.current.paused){ 
         videoRef.current.play();
     }else{
         videoRef.current.pause();
@@ -51,7 +64,7 @@ const Video = () => {
   function updateProgressBar(){ //stop when you are on a marker?
     requestAnimationFrame(() => {
         var currentPosition = videoRef.current.currentTime / videoRef.current.duration; 
-        progressRef.current.style.width = currentPosition * 100 + "%";
+        setProgressBarWidth(currentPosition * 100 + "%");
     });
   }
 
@@ -63,17 +76,18 @@ const Video = () => {
         var newPosition = clickX/ videoRef.current.clientWidth;  
 
         //setting the values for the progressbar and the videotime
-        progressRef.current.style.width = newPosition * 100 + "%"; 
+        setProgressBarWidth(newPosition * 100 + "%"); 
         videoRef.current.currentTime = newPosition * videoRef.current.duration; 
       }
       
   }
 
-  function changeVolume(){
-      videoRef.current.volume = volumeRef.current.value;
-  }
+ function changeVolume(e){ 
+      videoRef.current.volume = e.target.value; 
+  } 
 
-  /*useEffect(() => {
+  useEffect(() => {
+
     if (videoRef.current != null) {
       setPlayer(videoRef.current);
     }
@@ -84,6 +98,8 @@ const Video = () => {
       const player = (playerRef.current = videoJs(videoElement, () => {
         console.log('player is ready');
       }));
+
+      messages = markerList.map(marker=> <div title={marker.text} className={styles.markers} style={{left: marker.time}}/>);
       // add markers
       player.markers({
         markerStyle: {
@@ -107,14 +123,14 @@ const Video = () => {
           console.log(marker);
           // player.pause();
         },
-        markers: markersDefault
+        markers: markerListDefault
       });
       //player.autoplay('muted');
       // player.pause();
       pauseVideo(player);
     }
     return () => {};
-  }, [videoRef]);*/
+  }, [videoRef]);
   socket.on('getCommandToPlayVideo', () => {
     // console.log("lets play");
     if (player) {
@@ -135,6 +151,7 @@ const Video = () => {
     video.pause();
     socket.emit('pauseVideo');
   };
+  
   return (
     <>
       <h2>Video</h2>
@@ -156,7 +173,8 @@ const Video = () => {
       </video>
       <div className={styles.controls}>
                     <div className={styles.progressbarcontainer} onMouseDown={changeVideoPosition} maxWidth="100%">
-                        <div className={styles.progressbar}  ref={progressRef}  id="progressbar" ></div>
+                        <div className={styles.progressbar}  id="progressbar" style={{width: progressBarWidth}} ></div>
+                        {messages}
     	            </div>
                         
                     <div className={styles.buttons}>
