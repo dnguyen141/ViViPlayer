@@ -6,12 +6,14 @@ import {
   LOGIN_SUCCESS,
   //LOGIN_FAIL,
   LOGOUT,
-  ACCOUNT_DELETED
+  ACCOUNT_DELETED,
+  LOGIN_SUCCESS_WITH_TAN
 } from '../actions/types';
 
 const initialState = {
   token: '',
   isAuthenticated: false,
+  isAuthenticatedWithTan: false,
   loading: true,
   user: null
 };
@@ -24,6 +26,14 @@ function authReducer(state = initialState, action) {
       return {
         ...state,
         isAuthenticated: true,
+        loading: false,
+        user: payload
+      };
+    case LOGIN_SUCCESS_WITH_TAN:
+      return {
+        ...state,
+        isAuthenticated: false,
+        isAuthenticatedWithTan: true,
         loading: false,
         user: payload
       };
@@ -40,6 +50,7 @@ function authReducer(state = initialState, action) {
         ...state,
         token: null,
         isAuthenticated: false,
+        isAuthenticatedWithTan: false,
         loading: false,
         user: null
       };

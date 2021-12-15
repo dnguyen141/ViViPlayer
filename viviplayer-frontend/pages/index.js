@@ -5,11 +5,11 @@ import { Form, Input, Tabs, Button, Checkbox } from 'antd';
 import NumberOutlined from '@ant-design/icons/NumberOutlined';
 import { Notification } from '../utils/notification';
 import { connect } from 'react-redux';
-import { login, loadUser } from '../actions/auth.action';
+import { login, loadUser, loginWithTan } from '../actions/auth.action';
 import setAuthToken from '../utils/setAuthToken';
 
 const { TabPane } = Tabs;
-const Home = ({ isAuthenticated, login, loadUser }) => {
+const Home = ({ isAuthenticated, login, loadUser, loginWithTan, isAuthenticatedWithTan }) => {
   useEffect(() => {
     // check for token in LS when app first runs
     if (localStorage.token) {
@@ -33,8 +33,9 @@ const Home = ({ isAuthenticated, login, loadUser }) => {
     login(username.trim(), password.trim());
   };
 
-  const loginWithTan = (values) => {
-    console.log('TAN VALUES', values.tan);
+  const loginWithTanFunc = ({ tan }) => {
+    // console.log('TAN VALUES', values.tan);
+    loginWithTan(tan.trim());
     // if (values.tan !== '112021') {
     //   console.log('run here');
     //   Notification('Login', 'TAN is not correct!');
@@ -52,6 +53,9 @@ const Home = ({ isAuthenticated, login, loadUser }) => {
   if (isAuthenticated) {
     Router.push('/dashboard');
   }
+  if (isAuthenticatedWithTan) {
+    Router.push('/video');
+  }
   return (
     <div>
       <Head>
@@ -64,7 +68,7 @@ const Home = ({ isAuthenticated, login, loadUser }) => {
       <div className="bg-text">
         <Tabs defaultActiveKey="1" onChange={callback}>
           <TabPane tab="Login with TAN" key="1" className="text-white">
-            <Form name="TAN Login" onFinish={loginWithTan} autoComplete="off">
+            <Form name="TAN Login" onFinish={loginWithTanFunc} autoComplete="off">
               <Form.Item style={{ marginBottom: '1em' }} name="tan">
                 <Input prefix={<NumberOutlined />} placeholder="TAN" />
               </Form.Item>
@@ -125,7 +129,8 @@ const Home = ({ isAuthenticated, login, loadUser }) => {
   );
 };
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated
+  isAuthenticated: state.auth.isAuthenticated,
+  isAuthenticatedWithTan: state.auth.isAuthenticatedWithTan
 });
 
-export default connect(mapStateToProps, { login, loadUser })(Home);
+export default connect(mapStateToProps, { login, loadUser, loginWithTan })(Home);

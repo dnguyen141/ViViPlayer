@@ -1,7 +1,15 @@
 import api from '../utils/api';
 import { Notification } from '../utils/notification';
 import setAuthToken from '../utils/setAuthToken';
-import { USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT } from './types';
+import Router from 'next/router';
+import {
+  USER_LOADED,
+  AUTH_ERROR,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
+  LOGOUT,
+  LOGIN_SUCCESS_WITH_TAN
+} from './types';
 
 /*
   NOTE: we don't need a config object for axios as the
@@ -51,7 +59,6 @@ export const loadUser = () => async (dispatch) => {
 
 // Login User
 export const login = (email, password) => async (dispatch) => {
-  console.log(email, password);
   const body = { email, password };
 
   try {
@@ -73,6 +80,21 @@ export const login = (email, password) => async (dispatch) => {
     dispatch({
       type: LOGIN_FAIL
     });
+  }
+};
+
+// Login with TAn
+
+export const loginWithTan = (tan) => async (dispatch) => {
+  const body = { tan };
+  try {
+    const res = await api.post('/session/join-session', body);
+    await dispatch({
+      type: LOGIN_SUCCESS_WITH_TAN,
+      payload: res.data
+    });
+  } catch (error) {
+    console.log(error);
   }
 };
 
