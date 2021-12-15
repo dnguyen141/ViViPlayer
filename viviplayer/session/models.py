@@ -44,9 +44,11 @@ class Shot(models.Model):
 # Create Screenshot when a Shot is created
 @receiver(post_save, sender=Shot)
 def get_screenshot(sender, instance, created, *args, **kwargs):
-    vid = ViViSession.objects.get(shots=instance)
-    imageextractor.extract(vid.video_path.path, vid.id, [instance.time])
-    instance.image = 'screenshots/' + str(instance.id) + str(instance.time)
+    if created:
+        vid = ViViSession.objects.get(shots=instance)
+        imageextractor.extract(vid.video_path.path, vid.id, [instance.time])
+        instance.image = 'screenshots/' + str(instance.id) + str(instance.time) + '.jpg'
+        instance.save()
 
 
 class UserStory(models.Model):
