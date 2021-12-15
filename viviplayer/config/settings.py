@@ -159,6 +159,7 @@ SITE_ID = 1
 
 # REST Framework
 REST_FRAMEWORK = {
+    "UNAUTHENTICATED_USER": "authentication.models.CustomAnonymousUser",
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
     ],
