@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 
 from rest_framework import generics
-from rest_framework.views import APIView, exception_handler
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from authentication.permissions import IsModerator
@@ -16,25 +16,6 @@ from authentication.api.serializers import (
     CustomMemRegisterSerializer,
     CustomUserChangePasswordSerializer,
 )
-
-
-def custom_exception_handler(exc, context):
-    # Call REST framework's default exception handler first,
-    # to get the standard error response.
-    response = exception_handler(exc, context)
-
-    # Update the structure of the response data.
-    if response is not None:
-        customized_response = dict()
-        customized_response['errors'] = []
-
-        for key, value in response.data.items():
-            error = {'field': key, 'message': value[0]}
-            customized_response['errors'].append(error)
-
-        response.data = customized_response
-
-    return response
 
 
 # This class comes direct from Django Rest Framework Documentation
