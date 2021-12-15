@@ -103,6 +103,9 @@ const Home = ({ isAuthenticated, theanh }) => {
                 <Button type="primary" htmlType="submit">
                   Submit
                 </Button>
+                <Button type="link" style={{border:'none', marginLeft:'10px', color:'white'}} onClick={() => Router.push('/register')}>
+                  <u>Als Moderator Registrieren</u>
+                </Button>
               </Form.Item>
             </Form>
           </TabPane>
