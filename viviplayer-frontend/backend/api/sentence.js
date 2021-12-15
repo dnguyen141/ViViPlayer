@@ -6,9 +6,10 @@ const Session = require('../models/session.model');
 
 // @route    GET api/sentence
 // @desc     Get all sentences
-// @access   Private
-router.get('/', auth, async (req, res) => {
-  const sentenceLists = await Session.findOne({ owner: req.user.id });
+// @access   Public
+router.get('/', async (req, res) => {
+  const { sessionId } = req.body;
+  const sentenceLists = await Session.findOne({ _id: sessionId });
   if (!sentenceLists) {
     return res.status(400).json({ errors: [{ msg: 'sentence not found' }] });
   }
