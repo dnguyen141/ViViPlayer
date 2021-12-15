@@ -36,22 +36,21 @@ const Video = () => {
   socket = io('http://localhost:5000');
   const videoRef = React.useRef(null);
   const playerRef = React.useRef(null);
-  //const progressRef = React.useRef(null); 
-  //const playbtnRef = React.useRef(null);
-  const volumeRef  = React.useRef(null); 
   const [player, setPlayer] = useState(null);
   const [progressBarWidth, setProgressBarWidth] = useState("100%");
   const [markerList, setMarkerList] = useState(markerListDefault);
-  //const [currentVolume, setCurrentVolume] = useState(1);
-    //setMarkerList(markerListDefault);
+  const [currentTime, setCurrentTime] = useState("0:00");
+  const [duration, setDuration] = useState("0:00");
 
-   // messages = markerList.map(marker=> <div title={marker.text} className={styles.markers} style={{left: marker.time}}/>);
 
-   
 
-    function calculateVideoPosition(timestamp){
-        console.log(timestamp);
-        return  timestamp / videoRef.current.duration * 100 + "%";
+    function calculateMarkerPosition(){
+        if(videoRef.current.readyState < 1){
+            setTimeout(calculateMarkerPosition, 500); 
+ 
+        }
+        messages = markerList.map(marker=> <div title={marker.text} className={styles.markers} style={{left: marker.time / videoRef.current.duration * 100 + "%"}}/>);
+    
     }
   function togglePlayPause(){
     if(videoRef.current.paused){ 
@@ -61,10 +60,26 @@ const Video = () => {
     }
   } 
 
-  function updateProgressBar(){ //stop when you are on a marker?
+  function updatePlayer(){ //stop when you are on a marker?
     requestAnimationFrame(() => {
+        if(videoRef.current.readyState < 2){
+            setTimeout(updatePlayer, 500);
+        }
         var currentPosition = videoRef.current.currentTime / videoRef.current.duration; 
         setProgressBarWidth(currentPosition * 100 + "%");
+
+        var currentMinutes = Math.floor(videoRef.current.currentTime / 60);
+        var currentSeconds = Math.floor(videoRef.current.currentTime - currentMinutes * 60);
+        if(currentSeconds < 10){
+            currentSeconds = "0" + currentSeconds; 
+        }
+        setCurrentTime(currentMinutes + ":" + currentSeconds);
+
+        var durationMinutes = Math.floor(videoRef.current.duration / 60);
+        var durationSeconds = Math.floor(videoRef.current.duration - durationMinutes * 60);
+
+        setDuration(durationMinutes + ":" + durationSeconds);
+        
     });
   }
 
@@ -81,10 +96,17 @@ const Video = () => {
       }
       
   }
+  //run only one time after the first render.
+    useEffect(() => {
+        calculateMarkerPosition();
+        updatePlayer();
+     }, [])
+ 
 
- function changeVolume(e){ 
-      videoRef.current.volume = e.target.value; 
-  } 
+    //replaces the old markers with the new markers if the list changes
+    useEffect(() => {
+        calculateMarkerPosition(videoRef.current)
+    }, [markerList]) 
 
   useEffect(() => {
 
@@ -99,7 +121,7 @@ const Video = () => {
         console.log('player is ready');
       }));
 
-      messages = markerList.map(marker=> <div title={marker.text} className={styles.markers} style={{left: marker.time}}/>);
+      
       // add markers
       player.markers({
         markerStyle: {
@@ -158,13 +180,14 @@ const Video = () => {
       <div className={styles.videocontainer}>
       <video
         // onProgress={(e) => pauseSegment(e)}
-        onTimeUpdate={updateProgressBar}
+        onTimeUpdate={updatePlayer}
         ref={videoRef}
         id="video-viviplayer"
         //controls
-        preload="none"
+        preload='metadata'
         data-setup='{"fluid":true}' //This is used so that the video player is responsive
         className="video-js vjs-default-skin vjs-big-play-centered"
+        onClick={togglePlayPause}
       >
         <source
           src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
@@ -172,7 +195,7 @@ const Video = () => {
         />
       </video>
       <div className={styles.controls}>
-                    <div className={styles.progressbarcontainer} onMouseDown={changeVideoPosition} maxWidth="100%">
+                    <div className={styles.progressbarcontainer} onMouseDown={changeVideoPosition}>
                         <div className={styles.progressbar}  id="progressbar" style={{width: progressBarWidth}} ></div>
                         {messages}
     	            </div>
@@ -184,17 +207,16 @@ const Video = () => {
                     </div>
                     <input 
                         type="range" 
-                        className="volume"
+                        className={styles.volumeslider}
                         min="0" 
                         max="1" 
                         step="0.01" 
                         defaultValue="0.5" 
-                        onChange={changeVolume}
-                        ref={volumeRef}
+                        onChange={(e) =>videoRef.current.volume = e.target.value}
                     />
                     
                     <div className={styles.time}>
-                        <span className={styles.current}>0:00</span> / <span className={styles.duration}>0:00</span>
+                        <span>{currentTime}</span> / <span>{duration}</span>
                     </div>
                     
         </div>         

@@ -59,27 +59,16 @@
     
 }
 
-.markers{
+.markers{ 
     height: 5px;
     width: 5px;
     background-color: red;
     position: absolute; 
     top: 0; 
-    /*left: 40px;*/
+    
     
 }
-/*
-.markers:hover .info{
-    display: block; 
-}
 
-.info{
-    position: relative;
-    display: none;
-    color: white; 
-    background-color: black;
-    top: "1000px"; 
-}*/
 .time{
     right: 0; 
     position: absolute;
@@ -87,6 +76,12 @@
     transform: translateY(50%);
     color: white; 
 }
+
+
+
+
+
+
 
 
 
