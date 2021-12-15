@@ -160,7 +160,7 @@ SITE_ID = 1
 # REST Framework
 REST_FRAMEWORK = {
     "UNAUTHENTICATED_USER": "authentication.models.CustomAnonymousUser",
-    "EXCEPTION_HANDLER": "config.utils.exception_handler.custom_exception_handler",
+    "EXCEPTION_HANDLER": "authentication.api.views.custom_exception_handler",
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
     ],
