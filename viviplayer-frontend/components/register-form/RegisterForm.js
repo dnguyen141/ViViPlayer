@@ -5,11 +5,11 @@ import { Form, Input, Button } from 'antd';
 const formItemLayout = {
     labelCol: {
       xs: { span: 24 },
-      sm: { span: 2 },
+      sm: { span: 3 },
     },
     wrapperCol: {
-      xs: { span: 16 },
-      sm: { span: 4 },
+      xs: { span: 24 },
+      sm: { span: 6 },
     },
   };
   const tailFormItemLayout = {
@@ -20,7 +20,7 @@ const formItemLayout = {
       },
       sm: {
         span: 16,
-        offset: 2,
+        offset: 3,
       },
     },
   };
@@ -39,14 +39,15 @@ function RegisterForm(props) {
             name="register"
             onFinish={onFinish}
             scrollToFirstError
+            labelAlign='left'
         >
             <Form.Item
                 name="email"
-                label="Name"
+                label="Benutzername"
                 rules={[
                     {
                         required: true,
-                        message: 'Bitte geben Sie Ihren Namen ein.',
+                        message: 'Bitte geben Sie Ihren Benutzernamen ein.',
                     },
                 ]}
             >
