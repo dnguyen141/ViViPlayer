@@ -82,7 +82,7 @@ function UsrStoryDesire(props) {
                   </div>
                 </div>
                 <div>
-                  <div style={{ paddingTop: '0.4em' }}>Geben Sie bitte Ihren Wunsch hier ein:</div>
+                  <div style={{ paddingTop: '0.4em' }} />
                   <div>
                     <Input
                       className={styles.inputuser}

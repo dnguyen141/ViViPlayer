@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Comment, Form, Button, List, Input } from 'antd';
+import EdiText from 'react-editext';
 
 const Satz = (props) => {
   const [comments, setComments] = useState([]);
@@ -15,6 +16,10 @@ const Satz = (props) => {
     />
   );
 
+  const onSave = (val) => {
+    console.log('Edited Value -> ', val)
+  }
+
   const handleSubmit = () => {
     if (!value) {
       console.log('run there');
@@ -28,7 +33,15 @@ const Satz = (props) => {
         ...comments,
         {
           author: 'User',
-          content: <p>{value}</p>,
+          content: <EdiText 
+          showButtonsOnHover 
+          editButtonContent="Edit" 
+          type='text' 
+          value={value} 
+          onSave={onSave} 
+          saveButtonContent="Bestätigen" 
+          cancelButtonContent={<strong>Abbrechen</strong>} 
+          hideIcons={true} />,
         }
       ]);
       console.log(comments);
