@@ -51,7 +51,8 @@ INSTALLED_APPS = [
     'drf_yasg',
     # Local
     "authentication",
-    'syncplay',
+    "syncplay",
+    "session",
 ]
 
 MIDDLEWARE = [
