@@ -40,7 +40,7 @@ def extract(video_path, session_id, timestamps):
 
         # Generate images for scenes
         scenedetect.scene_manager.save_images(scene_list, video_manager, image_name_template='$SCENE_NUMBER',
-                                              output_dir='/screenshots/' + str(session_id))
+                                              output_dir='screenshots/' + str(session_id))
 
         # Rename images to required format
         data = []
@@ -48,7 +48,7 @@ def extract(video_path, session_id, timestamps):
             time_secs = scenedetect.FrameTimecode(timecode=scene[0].get_timecode(),
                                                   fps=video_manager.get_framerate()).get_seconds()
             # Rename file and replace if exists
-            os.replace('/screenshots/' + str(session_id) + '/' + str(i + 1).zfill(3) + '.jpg','/screenshots/' +  str(session_id) + '/' + str(timestamps[i])
+            os.replace('screenshots/' + str(session_id) + '/' + str(i + 1).zfill(3) + '.jpg','screenshots/' +  str(session_id) + '/' + str(timestamps[i])
                        + '.jpg')
 
             # returns the actual times stamps used by pySceneDetect. May slightly deviate.
