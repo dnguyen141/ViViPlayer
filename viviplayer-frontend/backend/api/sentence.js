@@ -95,4 +95,37 @@ router.put('/edit-sentence', async (req, res) => {
   }
 });
 
+// @route    delete api/delete-sentence
+// @desc     delete sentence
+// @access   Public
+router.delete('/delete-sentence', async (req, res) => {
+  const { owner, sessionId, sentenceId } = req.body;
+  const Owner = await User.findOne({ _id: owner });
+  if (!Owner) {
+    return res.status(400).json({ errors: [{ msg: 'You do not have permission' }] });
+  }
+  const sessionRef = await Session.findOne({ _id: sessionId });
+  if (!sessionRef) {
+    return res.status(400).json({ errors: [{ msg: 'Session not found' }] });
+  }
+  try {
+    // Pull out sentence
+    const findSentence = sessionRef.sentenceLists.find((sen) => sen.id === sentenceId);
+    // Make sure sentence exists
+    if (!findSentence) {
+      return res.status(404).json({ msg: 'sentence does not exist' });
+    }
+
+    // delete sentence
+    const removeIndex = sessionRef.sentenceLists.findIndex((item) => item._id === sentenceId);
+    sessionRef.sentenceLists.splice(removeIndex, 1);
+
+    await sessionRef.save();
+    return res.json(sessionRef);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server error');
+  }
+});
+
 module.exports = router;
