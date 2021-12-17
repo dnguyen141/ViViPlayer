@@ -3,7 +3,8 @@ from session.models import ViViSession, Shot, UserStory, Sentence, MultipleChoic
 
 
 class SessionSerializer(serializers.ModelSerializer):
-    owner = serializers.ReadOnlyField(source='owner.username')
+    video_path = serializers.FileField()
+    owner = serializers.CharField(default=serializers.CurrentUserDefault())
 
     class Meta:
         model = ViViSession
