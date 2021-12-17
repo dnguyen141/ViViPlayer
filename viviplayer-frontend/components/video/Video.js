@@ -134,12 +134,15 @@ const Video = () => {
 
       <List
         size="small"
-        bordered
-        style={{marginTop: '10px', border: '3px solid gray'}}
+        className="list-h"
         dataSource={markersDefault}
-        renderItem={markersDefault => <List.Item><Button style={{border:'none'}}>{markersDefault.text} - Titel</Button></List.Item>}
+        renderItem={markersDefault => 
+          <List.Item className='menu-item' style={{display:'inline-flex'}}>
+            <Button style={{border:'none', backgroundColor:'transparent', color:'white'}}>
+              {markersDefault.text} - Titel
+              </Button>
+          </List.Item>}
         onClick={() => pauseVideo(player)}
-        className="scroll-bar"
         />
     </>
   );

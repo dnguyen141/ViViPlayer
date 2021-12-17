@@ -90,3 +90,20 @@ a {
   height: 200px;
   overflow: auto;
 }
+
+.list-h{
+  margin-top: 10px !important;
+  border: 3px solid gray; 
+  white-space: nowrap;
+  overflow: auto;
+  max-height: 110px;
+}
+
+.menu-item{
+  background-color: #333;
+  box-shadow: none;
+}
+
+.menu-item:hover{
+  background-color:#777;
+}
