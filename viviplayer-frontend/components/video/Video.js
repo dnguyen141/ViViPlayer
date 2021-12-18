@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client';
 import 'videojs-markers';
 import videoJs from 'video.js';
-import { Button } from 'antd';
+import { Button} from 'antd';
+import { CaretRightOutlined, PauseOutlined} from '@ant-design/icons'
 import styles from "./video.module.css"; 
 let socket;
-var messages = ""; 
-var markerListDefault = [
+var markers = ""; 
+var markerListDefault = [ // !!! markers need to be an Integer
   {
     time: 4,
     text: 'Chapter 1'
@@ -41,35 +42,95 @@ const Video = () => {
   const [markerList, setMarkerList] = useState(markerListDefault);
   const [currentTime, setCurrentTime] = useState("0:00");
   const [duration, setDuration] = useState("0:00");
+  const [playPauseIcon, setPlayPauseIcon] = useState(<CaretRightOutlined  style={{ fontSize: '150%'}}/>);
+  const [autoStop, setAutoStop] = useState(false);
+  const [chapterText, setChapterText] = useState("");
+  const [lastTime, setLastTime] = useState(0); 
+  const [visibleChapterText, setVisibleChapterText] = useState("translateY(-100%)"); // -100% = disappear, 0 = appear
 
 
-
+    //maps the markers of the markersList to individual <div> elements that then get drawn on the progressbar. every change of the markerList should also rerender the 
+    // markers. if not markers has to be an state too.
     function calculateMarkerPosition(){
         if(videoRef.current.readyState < 1){
             setTimeout(calculateMarkerPosition, 500); 
  
         }
-        messages = markerList.map(marker=> <div title={marker.text} className={styles.markers} style={{left: marker.time / videoRef.current.duration * 100 + "%"}}/>);
+        markers = markerList.map(marker=> <div title={marker.text} className={styles.markers}  style={{left: marker.time / videoRef.current.duration * 100 + "%"}}/>);
     
     }
+
+    //plays and pauses the video and switches between the right icons for the state of the player.
   function togglePlayPause(){
     if(videoRef.current.paused){ 
         videoRef.current.play();
+        setPlayPauseIcon(<PauseOutlined  style={{ fontSize: '150%'}}/>);
     }else{
         videoRef.current.pause();
+        setPlayPauseIcon(<CaretRightOutlined  style={{ fontSize: '150%'}}/>);
     }
   } 
+    
+    //switches the AutoStop value to the opposite.
+    function toggleautoStop(){
+        setAutoStop(!autoStop);
+    }
+    
 
-  function updatePlayer(){ //stop when you are on a marker?
+    //The function updates the all visual elements of the player. It stops the the player when the autostop mode is selected when a shot is reached
+    // and displays the current chapter title. It also manages the current time and the progressbar.
+    function updatePlayer(){ 
+        
+
+        // if it finds a marker at that spot it will pause the video and display the chapter text. the bigger time gap is necessary because  
+        // the execution time isnt predictable and it will cause the player to skip the marker.
+        var temp = markerList.find(x => videoRef.current.currentTime >= x.time && videoRef.current.currentTime <= x.time + 1);
+        
+        if(temp != null){
+            setVisibleChapterText("translateY(0%)");
+            console.log(lastTime);
+            setLastTime(temp.time); //last marker that was found.
+            setChapterText(temp.text);
+            if(autoStop){
+                
+                //when the player didnt already stop at this marker the player gets paused. this prevents multiple pauses at one marker and it doesnt get stuck
+                if(videoRef.current.currentTime >= lastTime + 1){ 
+                    videoRef.current.pause(); 
+                }    
+            }
+        
+        }else if(lastTime != 0){   
+            setLastTime(-1); //resets the last chapter so that it can be played again.
+        }
+        
     requestAnimationFrame(() => {
+
+        //checks whether the chapter title should still be shown
+        if(lastTime == -1 || videoRef.current.currentTime > lastTime + 5){
+            setVisibleChapterText("translateY(-100%)");
+        }
+
+        //checks if the site has loaded all necessary data and if not rerun the function after 500ms.
         if(videoRef.current.readyState < 2){
             setTimeout(updatePlayer, 500);
         }
+
+        //toggles between the play and pause icons based on the current state of the player.
+        if(videoRef.current.paused){ 
+            setPlayPauseIcon(<CaretRightOutlined  style={{ fontSize: '150%'}}/>);
+        }else{
+            setPlayPauseIcon(<PauseOutlined  style={{ fontSize: '150%'}}/>);
+
+        }
+        
+        //the progressbar's position gets set based on the percentage the video has completed.
         var currentPosition = videoRef.current.currentTime / videoRef.current.duration; 
         setProgressBarWidth(currentPosition * 100 + "%");
 
+        //calculates the current time and the duration of the video in minutes and seconds and then brings in the right format.
         var currentMinutes = Math.floor(videoRef.current.currentTime / 60);
         var currentSeconds = Math.floor(videoRef.current.currentTime - currentMinutes * 60);
+
         if(currentSeconds < 10){
             currentSeconds = "0" + currentSeconds; 
         }
@@ -78,6 +139,9 @@ const Video = () => {
         var durationMinutes = Math.floor(videoRef.current.duration / 60);
         var durationSeconds = Math.floor(videoRef.current.duration - durationMinutes * 60);
 
+        if(durationSeconds < 10){
+            durationSeconds = "0" + durationSeconds; 
+        }
         setDuration(durationMinutes + ":" + durationSeconds);
         
     });
@@ -85,10 +149,11 @@ const Video = () => {
 
   function changeVideoPosition(e){
       if(videoRef.current.readyState > 2){ //check if video is ready to be played
-    
+        
         //calculating the relative position of the click.
-        var clickX = e.nativeEvent.offsetX; 
-        var newPosition = clickX/ videoRef.current.clientWidth;  
+        var rect = e.currentTarget.getBoundingClientRect();
+        var offsetX = e.clientX - rect.left;
+        var newPosition = offsetX/ e.currentTarget.clientWidth;  
 
         //setting the values for the progressbar and the videotime
         setProgressBarWidth(newPosition * 100 + "%"); 
@@ -96,7 +161,7 @@ const Video = () => {
       }
       
   }
-  //run only one time after the first render.
+    //run only one time after the first render.
     useEffect(() => {
         calculateMarkerPosition();
         updatePlayer();
@@ -105,10 +170,11 @@ const Video = () => {
 
     //replaces the old markers with the new markers if the list changes
     useEffect(() => {
-        calculateMarkerPosition(videoRef.current)
+        calculateMarkerPosition(videoRef.current);
     }, [markerList]) 
 
-  useEffect(() => {
+
+    useEffect(() => {
 
     if (videoRef.current != null) {
       setPlayer(videoRef.current);
@@ -121,9 +187,11 @@ const Video = () => {
         console.log('player is ready');
       }));
 
+     
       
-      // add markers
-      player.markers({
+      // DEPRECATED: new implementation of markers and autoStop in calculateMarkerPostition and updatePlayer
+
+     /* player.markers({
         markerStyle: {
           width: '8px',
           'background-color': 'red'
@@ -135,21 +203,20 @@ const Video = () => {
           }
         },
         breakOverlay: {
-          display: true,
+          display: false,
           displayTime: 3,
           text: function (marker) {
             return marker.text;
           }
         },
         onMarkerReached: function (marker) {
-          console.log(marker);
-          // player.pause();
+          console.log(marker);  
         },
         markers: markerListDefault
       });
       //player.autoplay('muted');
       // player.pause();
-      pauseVideo(player);
+      pauseVideo(player);*/
     }
     return () => {};
   }, [videoRef]);
@@ -194,15 +261,18 @@ const Video = () => {
           type="video/mp4"
         />
       </video>
+      <div className={styles.chapterinfocontainer} style={{transform: visibleChapterText}}>
+          <p className={styles.chapterinfo}> {chapterText}</p>
+      </div>
       <div className={styles.controls}>
-                    <div className={styles.progressbarcontainer} onMouseDown={changeVideoPosition}>
+                    <div className={styles.progressbarcontainer} onClick={changeVideoPosition.bind(this)}>
                         <div className={styles.progressbar}  id="progressbar" style={{width: progressBarWidth}} ></div>
-                        {messages}
+                        {markers}
     	            </div>
                         
                     <div className={styles.buttons}>
                         <button id="play-pause-button" onClick={togglePlayPause}>
-                           PLAY
+                           {playPauseIcon}
                         </button>
                     </div>
                     <input 
@@ -214,10 +284,15 @@ const Video = () => {
                         defaultValue="0.5" 
                         onChange={(e) =>videoRef.current.volume = e.target.value}
                     />
+                    <input type="checkbox" className={styles.checkbox} checked={autoStop} onChange={toggleautoStop}/>
+                    <span className={styles.autostoptext}>Autostop</span>
+                
+
                     
                     <div className={styles.time}>
                         <span>{currentTime}</span> / <span>{duration}</span>
                     </div>
+                    
                     
         </div>         
       </div> 
