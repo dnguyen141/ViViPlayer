@@ -9,12 +9,21 @@ function SessionForm(props) {
         wrapperCol: { span: 12 },
     };
 
+    const onFinish = (values) => {
+        console.log('Success:', values);
+      };
+    
+    const onFinishFailed = (errorInfo) => {
+    console.log('Failed:', errorInfo);
+    };
+
     const propss = {
         action: '//jsonplaceholder.typicode.com/posts/',
         listType: 'picture',
         previewFile(file) {
             console.log('Your upload file:', file);
             // Your process logic. Here we just mock to the same file
+            // change later to match the backend
             return fetch('https://next.json-generator.com/api/json/get/4ytyBoLK8', {
                 method: 'POST',
                 body: file,
@@ -29,7 +38,7 @@ function SessionForm(props) {
             <Col span={11}>
                 <h1>Session Erstellen</h1>
                 <Divider />
-                <Form {...layout} name="basic" labelAlign='left'>
+                <Form {...layout} name="basic" labelAlign='left' onFinish={onFinish} onFinishFailed={onFinishFailed}>
                     <Form.Item
                         label="Video Pfad"
                         name="video"
@@ -49,12 +58,12 @@ function SessionForm(props) {
                     <Form.Item
                         label="TAN"
                         name="tan"
-                        rules={[{ required: true, message: 'Geben Sie bitte Ihre TAN ein!'}]}
+                        rules={[{ required: true, message: 'Geben Sie bitte Ihre TAN ein!' }]}
                     >
                         <Input maxLength={20} placeholder='Geben Sie hier 20-stellige TAN ein.' />
                     </Form.Item>
                     <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                        <Button type="primary" htmlType="submit" style={{marginTop:'10px'}}>
+                        <Button type="primary" htmlType="submit" style={{ marginTop: '10px' }}>
                             Session erstellen
                         </Button>
                     </Form.Item>
