@@ -48,7 +48,7 @@ a {
 
 .bg-text {
   background-color: rgb(0, 0, 0); /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.4); /* Black w/opacity/see-through */
+  background-color: rgba(0, 0, 0, 0.7); /* Black w/opacity/see-through */
   color: white;
   font-weight: bold;
   border: 3px solid #f1f1f1;
@@ -89,4 +89,21 @@ a {
 .scroll-bar {
   height: 200px;
   overflow: auto;
+}
+
+.list-h{
+  margin-top: 10px !important;
+  border: 3px solid gray; 
+  white-space: nowrap;
+  overflow: auto;
+  max-height: 110px;
+}
+
+.menu-item{
+  background-color: #333;
+  box-shadow: none;
+}
+
+.menu-item:hover{
+  background-color:#777;
 }

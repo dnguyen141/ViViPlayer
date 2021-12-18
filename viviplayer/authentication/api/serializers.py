@@ -7,13 +7,19 @@ from dj_rest_auth.serializers import LoginSerializer, PasswordChangeSerializer
 from dj_rest_auth.registration.serializers import RegisterSerializer
 
 
-MOD_USERNAME_REGEX = RegexValidator(regex=r"^(?!member)[a-zA-Z0-9@#$%^&-_+=()]{8,20}$",
-                                    message="Invalid username for moderator!")
-MEM_USERNAME_REGEX = RegexValidator(regex=r"^member_[a-zA-Z0-9@#$%^&-+=()]{8}$",
-                                    message="Invalid username for member!. It should begin with \"member\".")
-PASSWORD_REGEX = RegexValidator(regex=r"^(?=.{8,20}$)(?!.*\s)(?=.*[a-zA-Z0-9])(?=.*\W).*$",
-                                message="Password must contains at least 8 and at most 20 characters, "
-                                        "with at least one special characters and no white space characters.")
+MOD_USERNAME_REGEX = RegexValidator(
+    regex=r"^(?!member)[a-zA-Z0-9@#$%^&-_+=()]{8,20}$",
+    message="Invalid username for moderator!",
+)
+MEM_USERNAME_REGEX = RegexValidator(
+    regex=r"^member_[a-zA-Z0-9@#$%^&-+=()]{8}$",
+    message='Invalid username for member!. It should begin with "member".',
+)
+PASSWORD_REGEX = RegexValidator(
+    regex=r"^(?=.{8,20}$)(?!.*\s)(?=.*[a-zA-Z0-9])(?=.*\W).*$",
+    message="Password must contains at least 8 and at most 20 characters, "
+    "with at least one special characters and no white space characters.",
+)
 
 
 # Serializer for Login API
@@ -31,14 +37,10 @@ class CustomModRegisterSerializer(RegisterSerializer):
     )
     email = None
     password1 = serializers.CharField(
-        style={'input_type': 'password'},
-        write_only=True,
-        validators=[PASSWORD_REGEX]
+        style={"input_type": "password"}, write_only=True, validators=[PASSWORD_REGEX]
     )
     password2 = serializers.CharField(
-        style={'input_type': 'password'},
-        write_only=True,
-        validators=[PASSWORD_REGEX]
+        style={"input_type": "password"}, write_only=True, validators=[PASSWORD_REGEX]
     )
 
     def validate_email(self, email):
@@ -51,9 +53,9 @@ class CustomMemRegisterSerializer(RegisterSerializer):
     password1 = serializers.CharField(
         min_length=8,
         max_length=20,
-        style={'input_type': 'password'},
+        style={"input_type": "password"},
         write_only=True,
-        validators=[PASSWORD_REGEX]
+        validators=[PASSWORD_REGEX],
     )
 
     def validate_username(self, username):
@@ -67,9 +69,8 @@ class CustomMemRegisterSerializer(RegisterSerializer):
 
     def get_cleaned_data(self):
         return {
-            'username': f"member_{uuid.uuid4().hex[:8]}",
-            'password1': self.validated_data.get('password1', ''),
-            'email': self.validated_data.get('email', ''),
+            "username": f"member_{uuid.uuid4().hex[:8]}",
+            "password1": self.validated_data.get("password1", ""),
         }
 
 
@@ -77,7 +78,11 @@ class CustomMemRegisterSerializer(RegisterSerializer):
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
-        fields = ('id', 'username', 'is_staff', )
+        fields = (
+            "id",
+            "username",
+            "is_mod",
+        )
 
 
 # Serializer for changing password
@@ -85,14 +90,14 @@ class CustomUserChangePasswordSerializer(PasswordChangeSerializer):
     new_password1 = serializers.CharField(
         min_length=8,
         max_length=20,
-        style={'input_type': 'password'},
+        style={"input_type": "password"},
         write_only=True,
-        validators=[PASSWORD_REGEX]
+        validators=[PASSWORD_REGEX],
     )
     new_password2 = serializers.CharField(
         min_length=8,
         max_length=20,
-        style={'input_type': 'password'},
+        style={"input_type": "password"},
         write_only=True,
-        validators=[PASSWORD_REGEX]
+        validators=[PASSWORD_REGEX],
     )

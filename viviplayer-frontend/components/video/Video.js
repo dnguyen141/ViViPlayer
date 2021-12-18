@@ -295,8 +295,20 @@ const Video = () => {
                     
                     
         </div>         
-      </div> 
-      
+      </div>
+
+      <List
+        size="small"
+        className="list-h"
+        dataSource={markersList}
+        renderItem={markersList => 
+          <List.Item className='menu-item' style={{display:'inline-flex'}}>
+            <Button style={{border:'none', backgroundColor:'transparent', color:'white'}}>
+              {markersList.text} - Titel
+              </Button>
+          </List.Item>}
+        onClick={() => pauseVideo(player)}
+        />
     </>
   );
 };

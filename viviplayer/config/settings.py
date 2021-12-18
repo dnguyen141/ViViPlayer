@@ -48,9 +48,11 @@ INSTALLED_APPS = [
     "dj_rest_auth.registration",
     "corsheaders",
     'channels',
+    'drf_yasg',
     # Local
     "authentication",
-    'syncplay',
+    "syncplay",
+    "session",
 ]
 
 MIDDLEWARE = [
@@ -157,6 +159,8 @@ SITE_ID = 1
 
 # REST Framework
 REST_FRAMEWORK = {
+    "UNAUTHENTICATED_USER": "authentication.models.CustomAnonymousUser",
+    "EXCEPTION_HANDLER": "authentication.api.views.custom_exception_handler",
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
     ],
@@ -175,3 +179,15 @@ CSRF_TRUSTED_ORIGINS = [
     "127.0.0.1:3000",
     "localhost:3000",
 ]
+
+# Swagger API UI Settings
+SWAGGER_SETTINGS = {
+    'USE_SESSION_AUTH': False,
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+        }
+    }
+}

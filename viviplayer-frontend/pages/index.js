@@ -1,20 +1,24 @@
 import React from 'react';
 import Head from 'next/head';
 import Router from 'next/router';
-import { Form, Input, Tabs, Button, Checkbox, notification } from 'antd';
+import { Form, Input, Tabs, Button, Checkbox } from 'antd';
 import NumberOutlined from '@ant-design/icons/NumberOutlined';
+import { Notification } from '../utils/notification';
+import { connect } from 'react-redux';
 
 const { TabPane } = Tabs;
-export default function Home() {
+const Home = ({ isAuthenticated, theanh }) => {
+  console.log(isAuthenticated);
+  console.log('theanh', theanh);
   const onFinish = async (values) => {
     if (!values.username) {
-      openNotification('Please input your username!');
+      Notification('Login', 'Please input your username!');
     } else if (!values.password) {
-      openNotification('Please input your password!');
+      Notification('Login', 'Please input your password!');
     } else if (values.username !== 'admin') {
-      openNotification('Your user name is not correct');
+      Notification('Login', 'Your user name is not correct');
     } else if (values.password !== 'admin1234') {
-      openNotification('Your password is not correct');
+      Notification('Login', 'Your password is not correct');
     } else {
       Router.push('/dashboard');
     }
@@ -23,7 +27,7 @@ export default function Home() {
     console.log('TAN VALUES', values.tan);
     if (values.tan !== '112021') {
       console.log('run here');
-      openNotification('TAN is not correct!');
+      Notification('Login', 'TAN is not correct!');
     } else {
       Router.push('/dashboard');
     }
@@ -31,15 +35,6 @@ export default function Home() {
 
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
-  };
-  const openNotification = (noti) => {
-    notification.open({
-      message: 'Notification Login',
-      description: noti,
-      onClick: () => {
-        console.log('Notification Clicked!');
-      }
-    });
   };
   function callback(key) {
     console.log(key);
@@ -54,8 +49,8 @@ export default function Home() {
       <div className="bg-image"></div>
 
       <div className="bg-text">
-        <Tabs defaultActiveKey="1" onChange={callback}>
-          <TabPane tab="Login with TAN" key="1" className="text-white">
+        <Tabs defaultActiveKey="1" onChange={callback} className='text-white'>
+          <TabPane tab="TAN Einloggen" key="1">
             <Form name="TAN Login" onFinish={loginWithTan} autoComplete="off">
               <Form.Item style={{ marginBottom: '1em' }} name="tan">
                 <Input prefix={<NumberOutlined />} placeholder="TAN" />
@@ -65,7 +60,7 @@ export default function Home() {
               </Button>
             </Form>
           </TabPane>
-          <TabPane tab="Login as Moderator" key="2" className="text-white">
+          <TabPane tab="Als Moderator Einloggen" key="2">
             <Form
               name="loginForm"
               labelCol={{
@@ -111,8 +106,80 @@ export default function Home() {
               </Form.Item>
             </Form>
           </TabPane>
+          <TabPane tab="Als Moderator Registrieren" key="3">
+            <Form
+              name="registerForm"
+              labelCol={{
+                span: 5
+              }}
+              wrapperCol={{
+                span: 17
+              }}
+              onFinish={onFinish}
+              onFinishFailed={onFinishFailed}
+              autoComplete="off"
+            >
+              <Form.Item className="form-login-label" label="Benutzername" name="username">
+                <Input />
+              </Form.Item>
+
+              <Form.Item
+                className="form-login-label"  
+                name="password"
+                label="Kennwort"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Bitte geben Sie Ihr Kennwort ein.',
+                  },
+                ]}
+                hasFeedback
+              >
+                <Input.Password />
+              </Form.Item>
+              <Form.Item
+                className="form-login-label"
+                name="confirm"
+                label="Kennwort bestätigen"
+                dependencies={['password']}
+                hasFeedback
+                rules={[
+                  {
+                    required: true,
+                    message: 'Bitte bestätigen Sie Ihr Kennwort!',
+                  },
+                  ({ getFieldValue }) => ({
+                    validator(_, value) {
+                      if (!value || getFieldValue('password') === value) {
+                        return Promise.resolve();
+                      }
+                      return Promise.reject(new Error('Die Kennwörter übereinstimmen nicht!'));
+                    },
+                  }),
+                ]}
+              >
+                <Input.Password />
+              </Form.Item>
+              <Form.Item
+                wrapperCol={{
+                  offset: 5,
+                  span: 16
+                }}
+              >
+                <Button type="primary" htmlType="submit">
+                  Registrieren
+                </Button>
+              </Form.Item>
+            </Form>
+          </TabPane>
         </Tabs>
       </div>
     </div>
   );
-}
+};
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+  theanh: state.auth.theanh
+});
+
+export default connect(mapStateToProps, {})(Home);

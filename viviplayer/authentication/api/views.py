@@ -2,16 +2,39 @@ from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 
 from rest_framework import generics
-from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from rest_framework.views import APIView, exception_handler
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from authentication.permissions import IsModerator
 from dj_rest_auth.registration.views import RegisterView
 from dj_rest_auth.views import LoginView, PasswordChangeView, LogoutView
 
-from authentication.models import CustomUser
-from authentication.api.serializers import CustomLoginSerializer, \
-    CustomUserSerializer, \
-    CustomModRegisterSerializer, \
-    CustomMemRegisterSerializer, \
-    CustomUserChangePasswordSerializer
+from authentication.api.serializers import (
+    CustomLoginSerializer,
+    CustomUserSerializer,
+    CustomModRegisterSerializer,
+    CustomMemRegisterSerializer,
+    CustomUserChangePasswordSerializer,
+)
+
+
+def custom_exception_handler(exc, context):
+    # Call REST framework's default exception handler first,
+    # to get the standard error response.
+    response = exception_handler(exc, context)
+
+    # Update the structure of the response data.
+    if response is not None:
+        customized_response = dict()
+        customized_response['errors'] = []
+
+        for key, value in response.data.items():
+            error = {'field': key, 'message': value[0]}
+            customized_response['errors'].append(error)
+
+        response.data = customized_response
+
+    return response
 
 
 # This class comes direct from Django Rest Framework Documentation
@@ -19,11 +42,11 @@ from authentication.api.serializers import CustomLoginSerializer, \
 # based on a `lookup_fields` attribute, instead of the default single field filtering.
 class MultipleFieldLookupMixin(object):
     def get_object(self):
-        queryset = self.get_queryset()             # Get the base queryset
+        queryset = self.get_queryset()  # Get the base queryset
         queryset = self.filter_queryset(queryset)  # Apply any filter backends
         filter = {}
         for field in self.lookup_fields:
-            try:                                  # Get the result with one or more fields.
+            try:  # Get the result with one or more fields.
                 filter[field] = self.kwargs[field]
             except Exception:
                 pass
@@ -59,9 +82,30 @@ class CustomMemRegisterAPI(RegisterView):
 # @desc     Output a list of all users and their credentials in system
 # @access   Only authenticated users
 class CustomUserListAPI(generics.ListAPIView):
-    permission_classes = (IsAdminUser,)
+    permission_classes = (
+        IsAuthenticated,
+        IsModerator,
+    )
+    queryset = get_user_model().objects.filter(is_staff=False)
+    serializer_class = CustomUserSerializer
+
+
+# Listing user's details for all users API
+# @route    GET api/auth/user/
+# @desc     Output a list of current user and his credentials in system
+# @access   Only authenticated users
+class CustomUserAPI(APIView):
+    permission_classes = (IsAuthenticated,)
     queryset = get_user_model().objects.all()
     serializer_class = CustomUserSerializer
+
+    def get(self, request, *args, **kwargs):
+        data = {
+            "id": self.request.user.id,
+            "username": self.request.user.username,
+            "is_mod": self.request.user.is_mod,
+        }
+        return Response(data)
 
 
 # Listing and Updating user's details API
@@ -78,11 +122,16 @@ class CustomUserListAPI(generics.ListAPIView):
 # @route    PATCH api/auth/users/<str:username>
 # @desc     Update specific user's credential using username
 # @access   Only authenticated users
-class CustomUserRetrieveUpdateAPI(MultipleFieldLookupMixin, generics.RetrieveUpdateAPIView):
-    permission_classes = (IsAdminUser,)
-    queryset = get_user_model().objects.all()
+class CustomUserRetrieveUpdateAPI(
+    MultipleFieldLookupMixin, generics.RetrieveUpdateAPIView
+):
+    permission_classes = (
+        IsAuthenticated,
+        IsModerator,
+    )
+    queryset = get_user_model().objects.filter(is_staff=False)
     serializer_class = CustomUserSerializer
-    lookup_fields = ('pk', 'username')
+    lookup_fields = ("pk", "username")
 
 
 # Change Password API
@@ -90,7 +139,10 @@ class CustomUserRetrieveUpdateAPI(MultipleFieldLookupMixin, generics.RetrieveUpd
 # @desc     Change password of current user
 # @access   Only authenticated users
 class CustomModChangePasswordAPI(PasswordChangeView):
-    permission_classes = (IsAdminUser,)
+    permission_classes = (
+        IsAuthenticated,
+        IsModerator,
+    )
     serializer_class = CustomUserChangePasswordSerializer
 
 
@@ -102,9 +154,7 @@ class CustomLogoutAPI(LogoutView):
     permission_classes = (IsAuthenticated,)
 
     def post(self, request, *args, **kwargs):
-        user = getattr(request, 'user', None)
-        if not getattr(user, 'is_authenticated', True):
-            return self.logout(request)
-        if not getattr(user, 'is_staff', True):
-            CustomUser.objects.filter(id=getattr(user, 'id', None)).delete()
+        user = getattr(request, "user", None)
+        if not getattr(user, "is_mod", True):
+            get_user_model().objects.filter(id=getattr(user, "id", None)).delete()
         return self.logout(request)
