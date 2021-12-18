@@ -145,6 +145,28 @@ const Video = () => {
         setDuration(durationMinutes + ":" + durationSeconds);
         
     });
+  } 
+  
+
+  //gets called when a button in the list gets pressed. it changes the video position to the time specified in the marker.
+  function handleListClick(e){
+      if(videoRef.current.readyState > 2){ //check if video is ready to be played
+        var text = e.target.innerHTML.toString(); 
+        console.log(text); 
+        if(text != null){
+          var currentMarker = markerList.find(x => x.text === text);
+          if(currentMarker != null){
+            var newPosition = currentMarker.time / videoRef.current.duration;
+            setProgressBarWidth(newPosition * 100 + "%"); 
+            videoRef.current.currentTime = currentMarker.time; 
+            videoRef.current.pause(); 
+          }
+         
+      }
+        
+      }
+      
+      
   }
 
   function changeVideoPosition(e){
@@ -251,7 +273,7 @@ const Video = () => {
         ref={videoRef}
         id="video-viviplayer"
         //controls
-        preload='metadata'
+        preload='auto'
         data-setup='{"fluid":true}' //This is used so that the video player is responsive
         className="video-js vjs-default-skin vjs-big-play-centered"
         onClick={togglePlayPause}
@@ -303,11 +325,10 @@ const Video = () => {
         dataSource={markerList}
         renderItem={markerList => 
           <List.Item className='menu-item' style={{display:'inline-flex'}}>
-            <Button style={{border:'none', backgroundColor:'transparent', color:'white'}}>
-              {markerList.text} - Titel
+            <Button type="default" style={{backgroundColor:'transparent', color:'white'}} onClick={handleListClick.bind(this)}> 
+              {markerList.text}
               </Button>
           </List.Item>}
-        onClick={() => pauseVideo(player)}
         />
     </>
   );
