@@ -19,14 +19,6 @@ function authReducer(state = initialState, action) {
         loading: false,
         user: payload
       };
-    case LOGIN_SUCCESS_WITH_TAN:
-      return {
-        ...state,
-        isAuthenticated: false,
-        isAuthenticatedWithTan: true,
-        loading: false,
-        user: payload
-      };
     case LOGIN_SUCCESS:
       return {
         ...state,
