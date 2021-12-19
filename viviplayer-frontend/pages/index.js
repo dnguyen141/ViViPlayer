@@ -49,7 +49,7 @@ const Home = ({ isAuthenticated, theanh }) => {
       <div className="bg-image"></div>
 
       <div className="bg-text">
-        <Tabs defaultActiveKey="1" onChange={callback} className='text-white'>
+        <Tabs defaultActiveKey="1" onChange={callback} className="text-white">
           <TabPane tab="TAN Einloggen" key="1">
             <Form name="TAN Login" onFinish={loginWithTan} autoComplete="off">
               <Form.Item style={{ marginBottom: '1em' }} name="tan">
@@ -124,14 +124,14 @@ const Home = ({ isAuthenticated, theanh }) => {
               </Form.Item>
 
               <Form.Item
-                className="form-login-label"  
+                className="form-login-label"
                 name="password"
                 label="Kennwort"
                 rules={[
                   {
                     required: true,
-                    message: 'Bitte geben Sie Ihr Kennwort ein.',
-                  },
+                    message: 'Bitte geben Sie Ihr Kennwort ein.'
+                  }
                 ]}
                 hasFeedback
               >
@@ -146,7 +146,7 @@ const Home = ({ isAuthenticated, theanh }) => {
                 rules={[
                   {
                     required: true,
-                    message: 'Bitte bestätigen Sie Ihr Kennwort!',
+                    message: 'Bitte bestätigen Sie Ihr Kennwort!'
                   },
                   ({ getFieldValue }) => ({
                     validator(_, value) {
@@ -154,8 +154,8 @@ const Home = ({ isAuthenticated, theanh }) => {
                         return Promise.resolve();
                       }
                       return Promise.reject(new Error('Die Kennwörter übereinstimmen nicht!'));
-                    },
-                  }),
+                    }
+                  })
                 ]}
               >
                 <Input.Password />
