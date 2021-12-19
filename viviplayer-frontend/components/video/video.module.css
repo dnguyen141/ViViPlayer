@@ -1,0 +1,117 @@
+.controls{
+    display: flex;
+    position: absolute;
+    bottom: 0; 
+    width: 100%; 
+    flex-wrap: wrap;
+    background: rgba(128, 128, 128, 0.705); 
+    transform: translateY(100%) translateY(-5px);
+    transition: 0.2s; 
+}
+
+.videocontainer:hover .controls{
+    transform: translateY(0);
+}
+
+.videocontainer{
+    position: relative;
+    overflow: hidden;
+}
+
+.buttons button{
+    background: none;
+    border: 0;
+    outline: 0; 
+    cursor: pointer;
+    color: white;
+    size: 10px;
+    
+}
+
+.buttons {
+    margin: 5px;
+    margin-bottom: 3px;
+    bottom: 25%; 
+    
+}
+
+.progressbarcontainer{
+    height: 5px; 
+    top: 0;
+    left: 0; 
+    width: 100%;
+    background-color: #001529;
+    position: relative;
+    
+}
+
+.progressbar{
+    height: 5px; 
+    top: 0; 
+    background-color: #1890FF;
+    position: relative; 
+    
+}
+
+.markers{ 
+    height: 5px;
+    width: 5px;
+    background-color: red;
+    position: absolute; 
+    top: 0; 
+    
+    
+}
+
+.checkbox{
+    color: white; 
+    bottom: 0;
+    margin-left: 10px;
+    transform: translateY(50%) translateY(4px);
+}
+
+.volume{
+    color: white; 
+    bottom: 0;
+    margin-left: 10px;
+    transform: translateY(50%);
+}
+
+.autostoptext{
+    color: white; 
+    bottom: 0;
+    margin-left: 10px;
+    transform: translateY(5px);
+}
+.time{
+    right: 0; 
+    position: absolute;
+    margin-right: 10px;
+    transform: translateY(50%);
+    color: white; 
+}
+
+.chapterinfocontainer{
+    position: absolute;
+    background-color: rgba(128, 128, 128, 0.705);
+    width: 100%;
+    height: 10%; 
+    top: 0; 
+    transition: 0.2s;
+    
+}
+
+.chapterinfo{
+    text-align: center;
+    padding-bottom: 5px;
+    color: white;
+}
+
+
+
+
+
+
+
+
+
