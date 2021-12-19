@@ -3,12 +3,12 @@ import Head from 'next/head';
 import Router from 'next/router';
 import { Form, Input, Tabs, Button, Checkbox } from 'antd';
 import NumberOutlined from '@ant-design/icons/NumberOutlined';
-import { login, loadUser } from '../actions/auth.action';
+import { login, loadUser, register } from '../actions/auth.action';
 import { connect } from 'react-redux';
 import { setAuthToken } from '../utils/setAuthToken';
 
 const { TabPane } = Tabs;
-const Home = ({ isAuthenticated, login, loadUser, user }) => {
+const Home = ({ isAuthenticated, login, loadUser, user, register }) => {
   useEffect(() => {
     // check for token in LS when app first runs
     if (localStorage.token) {
@@ -33,6 +33,10 @@ const Home = ({ isAuthenticated, login, loadUser, user }) => {
       Router.push('/video');
     }
   }
+
+  const registerMod = async ({ username, password1, password2 }) => {
+    register(username.trim(), password1.trim(), password2.trim());
+  };
 
   const onFinish = async ({ username, password }) => {
     await login(username.trim(), password.trim());
@@ -130,7 +134,7 @@ const Home = ({ isAuthenticated, login, loadUser, user }) => {
               wrapperCol={{
                 span: 17
               }}
-              onFinish={onFinish}
+              onFinish={registerMod}
               onFinishFailed={onFinishFailed}
               autoComplete="off"
             >
@@ -140,7 +144,7 @@ const Home = ({ isAuthenticated, login, loadUser, user }) => {
 
               <Form.Item
                 className="form-login-label"
-                name="password"
+                name="password1"
                 label="Kennwort"
                 rules={[
                   {
@@ -154,9 +158,9 @@ const Home = ({ isAuthenticated, login, loadUser, user }) => {
               </Form.Item>
               <Form.Item
                 className="form-login-label"
-                name="confirm"
+                name="password2"
                 label="Kennwort bestätigen"
-                dependencies={['password']}
+                dependencies={['password1']}
                 hasFeedback
                 rules={[
                   {
@@ -165,7 +169,7 @@ const Home = ({ isAuthenticated, login, loadUser, user }) => {
                   },
                   ({ getFieldValue }) => ({
                     validator(_, value) {
-                      if (!value || getFieldValue('password') === value) {
+                      if (!value || getFieldValue('password1') === value) {
                         return Promise.resolve();
                       }
                       return Promise.reject(new Error('Die Kennwörter übereinstimmen nicht!'));
@@ -197,4 +201,4 @@ const mapStateToProps = (state) => ({
   user: state.auth.user
 });
 
-export default connect(mapStateToProps, { login, loadUser })(Home);
+export default connect(mapStateToProps, { login, loadUser, register })(Home);

@@ -1,4 +1,4 @@
-import { USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, LOGOUT } from '../actions/types';
+import { USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, LOGOUT, REGISTER_SUCCESS } from '../actions/types';
 
 const initialState = {
   token: '',
