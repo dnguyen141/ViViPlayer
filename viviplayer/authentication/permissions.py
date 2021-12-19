@@ -7,4 +7,4 @@ class IsModerator(BasePermission):
     """
 
     def has_permission(self, request, view):
-        return bool(request.user and request.user.is_mod)
+        return bool(request.user and request.user.is_authenticated and request.user.is_mod)

@@ -60,8 +60,8 @@ class UserStory(models.Model):
 
 class Sentence(models.Model):
     session = models.ForeignKey(ViViSession, on_delete=models.CASCADE, related_name="sentence")
-    shot = models.ForeignKey(Shot, on_delete=models.CASCADE, related_name="sentence")
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="sentence")
+    shot = models.ForeignKey(Shot, on_delete=models.CASCADE, related_name="sentence")
     text = models.CharField(max_length=500, null=False, blank=False)
 
 

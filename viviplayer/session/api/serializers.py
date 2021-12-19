@@ -1,10 +1,14 @@
 from rest_framework import serializers
 from session.models import ViViSession, Shot, UserStory, Sentence, MultipleChoiceQuestion
+from django.core.validators import FileExtensionValidator
+
+VID_VALIDATOR = FileExtensionValidator(allowed_extensions=['mp4', 'mov', 'wmv', 'flv', 'avi', 'avchd', 'webm', 'mkv'])
+IMG_VALIDATOR = FileExtensionValidator(allowed_extensions=['png', 'jpg', 'jpeg', 'bmp', 'gif'])
 
 
 class SessionSerializer(serializers.ModelSerializer):
-    video_path = serializers.FileField()
-    owner = serializers.CharField(default=serializers.CurrentUserDefault())
+    video_path = serializers.FileField(validators=[VID_VALIDATOR])
+    owner = serializers.ReadOnlyField(source='owner.username')
 
     class Meta:
         model = ViViSession
@@ -34,12 +38,18 @@ class CreateShotSerializer(serializers.ModelSerializer):
 
 
 class UserStorySerializer(serializers.ModelSerializer):
+    session = serializers.ReadOnlyField(source='session.id')
+    author = serializers.ReadOnlyField(source='author.username')
+
     class Meta:
         model = UserStory
         fields = '__all__'
 
 
 class SentenceSerializer(serializers.ModelSerializer):
+    session = serializers.ReadOnlyField(source='session.id')
+    author = serializers.ReadOnlyField(source='author.username')
+
     class Meta:
         model = Sentence
         fields = '__all__'
