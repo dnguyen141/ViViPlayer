@@ -1,7 +1,15 @@
 import api from '../utils/api';
 import { Notification } from '../utils/notification';
 import { setAuthToken } from '../utils/setAuthToken';
-import { USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT } from './types';
+import {
+  USER_LOADED,
+  AUTH_ERROR,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
+  LOGOUT,
+  REGISTER_SUCCESS,
+  REGISTER_FAIL
+} from './types';
 
 /*
   NOTE: we don't need a config object for axios as the
@@ -26,27 +34,28 @@ export const loadUser = () => async (dispatch) => {
 };
 
 // Register User
-// export const register = (formData) => async (dispatch) => {
-//   try {
-//     const res = await api.post('/users', formData);
+export const register = (username, password1, password2) => async (dispatch) => {
+  const body = { username, password1, password2 };
+  try {
+    const res = await api.post('/auth/register/mod/', body);
+    console.log(res);
+    dispatch({
+      type: REGISTER_SUCCESS,
+      payload: res.data
+    });
+    Notification('Register Notification', 'Register Success', 'success');
+  } catch (err) {
+    const errors = err.response.data.errors;
+    console.log(err.response);
+    if (errors) {
+      errors.forEach((error) => Notification('Login Notification', error.message, 'warning'));
+    }
 
-//     dispatch({
-//       type: REGISTER_SUCCESS,
-//       payload: res.data
-//     });
-//     dispatch(loadUser());
-//   } catch (err) {
-//     const errors = err.response.data.errors;
-
-//     if (errors) {
-//       errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
-//     }
-
-//     dispatch({
-//       type: REGISTER_FAIL
-//     });
-//   }
-// };
+    dispatch({
+      type: REGISTER_FAIL
+    });
+  }
+};
 
 // Login User
 export const login = (username, password) => async (dispatch) => {
