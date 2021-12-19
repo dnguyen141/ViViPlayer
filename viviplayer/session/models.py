@@ -47,7 +47,7 @@ def get_screenshot(sender, instance, created, *args, **kwargs):
     if created:
         vid = ViViSession.objects.get(shots=instance)
         imageextractor.extract(vid.video_path.path, vid.id, [instance.time])
-        instance.image = 'media/screenshots/' + str(instance.id) + str(instance.time) + '.jpg'
+        instance.image = 'media/screenshots/' + str(vid.id) + '/' + str(instance.time) + '.jpg'
         instance.save()
 
 

@@ -4,12 +4,13 @@ from session.api.views import ListSessions, ListShots, CreateSession, DetailSess
 from django.urls import path, include
 from rest_framework import routers
 
-from .views import UserStoryViewSet, SentenceViewSet, QuestionViewSet
+from .views import UserStoryViewSet, SentenceViewSet, QuestionViewSet, ShotViewSet
 
 router = routers.DefaultRouter()
 router.register(r'userstory', UserStoryViewSet, basename='rest_userstory')
 router.register(r'sentence', SentenceViewSet, basename='rest_sentence')
 router.register(r'question', SentenceViewSet, basename='rest_question')
+router.register(r'shot', ShotViewSet, basename='rest_shot')
 
 # URLs for all authentication views
 urlpatterns = [
