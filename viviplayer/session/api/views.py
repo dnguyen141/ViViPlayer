@@ -78,13 +78,6 @@ class UserStoryViewSet(viewsets.ModelViewSet):
     queryset = UserStory.objects.all()
     permission_classes = [IsAuthorOrReadOnly]
 
-    def get_permissions(self):
-        if self.action == 'list' or self.action == 'retrieve':
-            permission_classes = [IsAuthenticated]
-        else:
-            permission_classes = []
-        return [permission() for permission in permission_classes]
-
     def perform_create(self, serializer):
         serializer.save(author=self.request.user, session=ViViSession.objects.first())
 
