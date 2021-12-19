@@ -2,10 +2,10 @@ from rest_framework import generics, permissions
 from session.models import ViViSession, Shot, UserStory, Sentence, MultipleChoiceQuestion
 from session.api.serializers import SessionSerializer, ShotSerializer, CreateShotSerializer
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
-from rest_framework import viewsets
+from rest_framework import viewsets, mixins
 from authentication.permissions import IsModerator
 from .serializers import UserStorySerializer, SentenceSerializer, QuestionSerializer
-from rest_framework.parsers import FormParser,MultiPartParser
+from rest_framework.parsers import FormParser, MultiPartParser
 
 
 # Create your views here.
@@ -50,6 +50,14 @@ class CreateShot(generics.CreateAPIView):
     def perform_create(self, serializer):
         ses = ViViSession.objects.get(id=self.kwargs['pk'])
         serializer.save(session=ses)
+
+
+# Update and Destroy Shots
+class ShotViewSet(mixins.UpdateModelMixin, mixins.DestroyModelMixin, viewsets.GenericViewSet):
+    serializer_class = ShotSerializer
+    queryset = Shot.objects.all()
+    permission_classes = [IsModerator]
+    http_method_names = ['patch', 'delete']
 
 
 class UserStoryViewSet(viewsets.ModelViewSet):
