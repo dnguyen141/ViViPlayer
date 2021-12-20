@@ -1,41 +1,64 @@
-import React from 'react';
-import { Form, Input, Row, Col, Button, Upload, Divider } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
-import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
+import { Form, Input, Row, Col, Button, Divider, Typography } from 'antd';
+import api from '../../utils/api';
 
 function SessionForm(props) {
+  const [videoInfo, setVideoInfo] = useState(null);
+  const [file, setFile] = useState();
   const layout = {
     labelCol: { span: 5 },
-    wrapperCol: { span: 12 }
+    wrapperCol: { span: 14 }
   };
-
-  const onFinish = (values) => {
-    console.log('Success:', values);
+  const inputRef = React.useRef();
+  const handleFileChange = async (event) => {
+    let fileVideo = event.target.files[0];
+    setFile(fileVideo);
+  };
+  const onFinish = async (values) => {
+    const formData = new FormData();
+    formData.append('video_path', file);
+    formData.append('name', values.name);
+    formData.append('tan', values.tan);
+    const res = await api.post('/session/create', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+    setVideoInfo(res.data);
   };
 
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
   };
 
-  // const propss = {
-  //     action: '//jsonplaceholder.typicode.com/posts/',
-  //     listType: 'picture',
-  //     previewFile(file) {
-  //         console.log('Your upload file:', file);
-  //         // Your process logic. Here we just mock to the same file
-  //         // change later to match the backend
-  //         return fetch('https://next.json-generator.com/api/json/get/4ytyBoLK8', {
-  //             method: 'POST',
-  //             body: file,
-  //         })
-  //             .then(res => res.json())
-  //             .then(({ thumbnail }) => thumbnail);
-  //     },
-  // };
+  const { Paragraph } = Typography;
+
+  const videoBuild = (videoInfoPara) => {
+    console.log(videoInfoPara);
+    return (
+      <div>
+        <h3>
+          <b>Name of session:</b> {videoInfoPara.name}
+        </h3>
+        <h3>
+          <Paragraph copyable>
+            <b>TAN:</b> {videoInfoPara.tan}
+          </Paragraph>
+        </h3>
+        <Divider />
+        <video controls width="600px" height="350px">
+          <source src={videoInfoPara.video_path} type="video/mp4" />
+        </video>
+        <Button type="primary" style={{ marginLeft: '197px' }}>
+          Weiter zu Videobearbeitung
+        </Button>
+      </div>
+    );
+  };
   return (
     <Row>
       <Col span={7} />
-      <Col span={11}>
+      <Col span={10}>
         <h1>Session Erstellen</h1>
         <Divider />
         <Form
@@ -50,13 +73,17 @@ function SessionForm(props) {
             name="video"
             rules={[{ required: true, message: 'Laden Sie bitte ein Video hoch!' }]}
           >
-            <Upload>
-              <Button icon={<UploadOutlined />}>Hochladen</Button>
-            </Upload>
+            <input
+              ref={inputRef}
+              className="VideoInput_input"
+              type="file"
+              onChange={handleFileChange}
+              accept=".mov,.mp4"
+            />
           </Form.Item>
           <Form.Item
             label="Session Name"
-            name="sessionname"
+            name="name"
             rules={[{ required: true, message: 'Name der Session kann nicht Leer sein!' }]}
           >
             <Input placeholder="Geben Sie hier Namen Ihrer Session ein." />
@@ -68,14 +95,15 @@ function SessionForm(props) {
           >
             <Input maxLength={20} placeholder="Geben Sie hier 20-stellige TAN ein." />
           </Form.Item>
-          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+          <Form.Item wrapperCol={{ offset: 9, span: 16 }}>
             <Button type="primary" htmlType="submit" style={{ marginTop: '10px' }}>
               Session erstellen
             </Button>
           </Form.Item>
+          {videoInfo !== null ? videoBuild(videoInfo) : ''}
         </Form>
       </Col>
-      <Col span={6} />
+      <Col span={7} />
     </Row>
   );
 }
