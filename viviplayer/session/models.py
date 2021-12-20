@@ -27,8 +27,8 @@ class ViViSession(models.Model):
 def segment_video(sender, instance, created, *args, **kwargs):
     if created:
         time_stamps = autosegment.find_scenes(instance.video_path.path, instance.name)
-        for t in time_stamps:
-            s = Shot(session=instance, title='No title', time=t)
+        for i, t in enumerate(time_stamps):
+            s = Shot(session=instance, title='Shot ' + str(i+1), time=t)
             s.save()
         instance.segmented = True
         instance.save()
