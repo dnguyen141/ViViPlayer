@@ -40,6 +40,9 @@ class Shot(models.Model):
     title = models.CharField(max_length=15, null=False, blank=False)
     image = models.URLField(max_length=200, null=True)
 
+    def __str__(self):
+        return self.title
+
 
 # Create Screenshot when a Shot is created
 @receiver(post_save, sender=Shot)

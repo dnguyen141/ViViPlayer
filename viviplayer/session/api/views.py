@@ -16,6 +16,7 @@ from session.permissions import IsAuthorOrReadOnly
 class SessionViewSet(viewsets.ModelViewSet):
     serializer_class = SessionSerializer
     queryset = ViViSession.objects.all()
+    parser_classes = [FormParser, MultiPartParser]
 
     def get_permissions(self):
         if self.action == 'list' or self.action == 'retrieve':
@@ -37,46 +38,50 @@ class SessionViewSet(viewsets.ModelViewSet):
                 ]
             }
             return Response(error, status=status.HTTP_403_FORBIDDEN, headers={})
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-
-    # def update(self, request, *args, **kwargs):
+        return super().create(request, *args, **kwargs)
 
 
-class ListShots(generics.ListAPIView):
-    serializer_class = ShotSerializer
-    queryset = Shot.objects.all()
-    permission_classes = [IsAuthenticated]
-
-    def get_queryset(self):
-        ses = self.kwargs['pk']
-        return Shot.objects.filter(session_id=ses)
-
-
-class CreateShot(generics.CreateAPIView):
-    serializer_class = CreateShotSerializer
-    queryset = Shot.objects.all()
-    permission_classes = [IsModerator]
-
-    def perform_create(self, serializer):
-        ses = ViViSession.objects.get(id=self.kwargs['pk'])
-        serializer.save(session=ses)
+# class ListShots(generics.ListAPIView):
+#     serializer_class = ShotSerializer
+#     queryset = Shot.objects.all()
+#     permission_classes = [IsAuthenticated]
+#
+#     # def get_queryset(self):
+#     #     ses = self.kwargs['pk']
+#     #     return Shot.objects.filter(session_id=ses)
+#
+#
+# class CreateShot(generics.CreateAPIView):
+#     serializer_class = CreateShotSerializer
+#     queryset = Shot.objects.all()
+#     permission_classes = [IsModerator]
+#
+#     def perform_create(self, serializer):
+#         ses = ViViSession.objects.get(id=self.kwargs['pk'])
+#         serializer.save(session=ses)
 
 
 # Update and Destroy Shots
-class ShotViewSet(viewsets.GenericViewSet, mixins.UpdateModelMixin, mixins.DestroyModelMixin):
+class ShotViewSet(viewsets.ModelViewSet):
     serializer_class = ShotSerializer
     queryset = Shot.objects.all()
-    http_method_names = ['patch', 'delete']
+
+    class Meta:
+        model = Shot
+        fields = '__all__'
+
+    def get_permissions(self):
+        if self.action == 'list' or self.action == 'retrieve':
+            permission_classes = [IsAuthenticated]
+        else:
+            permission_classes = [IsModerator]
+        return [permission() for permission in permission_classes]
 
 
 class UserStoryViewSet(viewsets.ModelViewSet):
     serializer_class = UserStorySerializer
     queryset = UserStory.objects.all()
-    permission_classes = [IsAuthorOrReadOnly]
+    permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user, session=ViViSession.objects.first())
@@ -85,7 +90,7 @@ class UserStoryViewSet(viewsets.ModelViewSet):
 class SentenceViewSet(viewsets.ModelViewSet):
     serializer_class = SentenceSerializer
     queryset = Sentence.objects.all()
-    permission_classes = [IsAuthorOrReadOnly]
+    permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user, session=ViViSession.objects.first())
