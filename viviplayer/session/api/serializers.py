@@ -33,7 +33,7 @@ class ShotSerializer(serializers.ModelSerializer):
 
 
 class CreateShotSerializer(serializers.ModelSerializer):
-    session = serializers.ReadOnlyField()
+    session = serializers.ReadOnlyField(source='session.session_id')
 
     class Meta:
         model = Shot
@@ -41,7 +41,7 @@ class CreateShotSerializer(serializers.ModelSerializer):
 
 
 class UserStorySerializer(serializers.ModelSerializer):
-    session = serializers.ReadOnlyField(source='session.session_id')
+    session = serializers.ReadOnlyField(source='session.id')
     author = serializers.ReadOnlyField(source='author.username')
     desc = serializers.CharField(min_length=10, max_length=500, validators=[US_VALIDATOR])
     shot = serializers.PrimaryKeyRelatedField(queryset=Shot.objects.all())
@@ -50,9 +50,12 @@ class UserStorySerializer(serializers.ModelSerializer):
         model = UserStory
         fields = '__all__'
 
+    def create(self, validated_data):
+        return UserStory.objects.create(**validated_data)
+
 
 class SentenceSerializer(serializers.ModelSerializer):
-    session = serializers.ReadOnlyField(source='session.session_id')
+    session = serializers.ReadOnlyField(source='session.id')
     author = serializers.ReadOnlyField(source='author.username')
     text = serializers.CharField(min_length=10, max_length=500)
     shot = serializers.PrimaryKeyRelatedField(queryset=Shot.objects.all())
