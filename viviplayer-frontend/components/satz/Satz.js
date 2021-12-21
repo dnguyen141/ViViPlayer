@@ -1,8 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Comment, Form, Button, List, Input } from 'antd';
 import api from '../../utils/api';
+import { Notification } from '../../utils/notification';
+import Router from 'next/router';
+import { loadUser } from '../../actions/auth.action';
+import { setAuthToken } from '../../utils/setAuthToken';
+import { connect } from 'react-redux';
 
-const Satz = (props) => {
+const Satz = ({ loadUser }) => {
+  const [sentences, setSentences] = useState([])
+  const [loading, setLoading] = useState(false)
   const [comments, setComments] = useState([]);
   const [submitting, setSubmitting] = useState(false);
   const [value, setValue] = useState('');
@@ -17,17 +24,49 @@ const Satz = (props) => {
       className="scroll-bar"
     />
   );
+  useEffect(() => {
+    // check for token in LS when app first runs
+    if (localStorage.token) {
+      // if there is a token set axios headers for all requests
+      setAuthToken(localStorage.token);
+    } else {
+      Router.push('/');
+    }
+    // try to fetch a user, if no token or invalid token we
+    // will get a 401 response from our API
+    loadUser();
 
-  // async function getSentence() {
-  //   const req = await api.get('/session/sentences/');
-  //   console.log(req.data);
-  //   setTimeout(getSentence, 1000);
-  // }
+    // log user out from all tabs if they log out in one tab
+    // window.addEventListener('storage', () => {
+    //   if (!localStorage.token) {
+    //     type: LOGOUT;
+    //   }
+    // });
+  }, []);
+
+  useEffect(() => {
+    getSentence()
+  }, [onFinish, loading])
+
+  const getSentence = async () => {
+    const req = await api.get('/session/sentences/');
+    setSentences(req.data);
+    setLoading(!loading);
+  }
 
   const onFinish = async (values, shotref) => {
-    const body = { text: values, shot: shotref }
-    const res = await api.post('/session/sentences/', body);
-    console.log(res.data);
+    try {
+      const body = { text: values, shot: 20 }
+      const res = await api.post('/session/sentences/', body);
+      console.log(res.data);
+      Notification('Sentences Notification', 'Sentence success wroted', 'success');
+    } catch (err) {
+      const errors = err.response.data.errors;
+      console.log(err.response);
+      if (errors) {
+        errors.forEach((error) => Notification('Sentence Notification', error.message, 'warning'));
+      }
+    }
   }
 
   const getShotRef = async () => {
@@ -77,10 +116,23 @@ const Satz = (props) => {
           </>
         }
       />
+      <List
+        dataSource={sentences}
+        itemLayout="horizontal"
+        renderItem={(user) => {
+          return (<div>{user.author}-{user.text} <br></br> </div>)
+        }}
+        className="scroll-bar"
+      />
     </>
   );
 };
 
 Satz.propTypes = {};
 
-export default Satz;
+const mapStateToProps = (state) => ({
+  user: state.auth.user
+});
+
+export default connect(mapStateToProps, { loadUser })(Satz);
+
