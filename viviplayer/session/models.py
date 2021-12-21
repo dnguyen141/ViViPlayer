@@ -37,7 +37,7 @@ def segment_video(sender, instance, created, *args, **kwargs):
 class Shot(models.Model):
     session = models.ForeignKey(ViViSession, on_delete=models.CASCADE, related_name="shots")
     time = models.FloatField()
-    title = models.CharField(max_length=15, null=False, blank=False)
+    title = models.CharField(max_length=50, null=False, blank=False)
     image = models.URLField(max_length=200, null=True)
 
     def __str__(self):
