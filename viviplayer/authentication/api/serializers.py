@@ -71,7 +71,7 @@ class CustomMemRegisterSerializer(RegisterSerializer):
             raise serializers.ValidationError(_("Something is wrong with sessions! Please try again later!"))
         if session_queryset.count() < 1 or (session_queryset.count() == 1 and not session_queryset.first().is_opened):
             raise serializers.ValidationError(_("There are no session online yet! Please try again later!"))
-        if session_queryset.first().tan != password:
+        if session_queryset.first().is_opened and session_queryset.first().tan != password:
             raise serializers.ValidationError(_("TAN is not correct! Please try again!"))
         return password
 
