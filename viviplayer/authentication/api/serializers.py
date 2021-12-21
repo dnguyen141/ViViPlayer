@@ -5,6 +5,7 @@ import uuid
 from rest_framework import serializers
 from dj_rest_auth.serializers import LoginSerializer, PasswordChangeSerializer
 from dj_rest_auth.registration.serializers import RegisterSerializer
+from session.models import ViViSession
 
 
 MOD_USERNAME_REGEX = RegexValidator(
@@ -63,6 +64,16 @@ class CustomMemRegisterSerializer(RegisterSerializer):
 
     def validate_email(self, email):
         pass
+
+    def validate_password1(self, password):
+        session_queryset = ViViSession.objects.filter(is_opened=True)
+        if session_queryset.count() < 1:
+            raise serializers.ValidationError(_("There are no session online yet! Please try again later!"))
+        if session_queryset.count() > 1:
+            raise serializers.ValidationError(_("Something is wrong with sessions! Please try again later!"))
+        if session_queryset.first().tan != password:
+            raise serializers.ValidationError(_("TAN is not correct! Please try again!"))
+        return password
 
     def validate(self, data):
         return data
