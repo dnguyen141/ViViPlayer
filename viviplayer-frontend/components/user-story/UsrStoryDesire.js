@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Comment, Form, Button, List, Input } from 'antd';
 import styles from './user-story.module.css';
+import api from '../../utils/api';
 
 function UsrStoryDesire(props) {
   const [comments, setComments] = useState([]);
@@ -17,6 +18,12 @@ function UsrStoryDesire(props) {
       className="scroll-bar"
     />
   );
+
+  const onFinish = async (values) => {
+    const body = { desc: values, shot: 20 }
+    const res = await api.post('/session/userstories/', body);
+    console.log(res.data);
+  }
 
   const handleSubmit = () => {
     if (!value1 || !value2 || !value3) {
@@ -34,7 +41,6 @@ function UsrStoryDesire(props) {
         {
           author: 'User',
           content: (
-            
             <p>
               Damit {value1}, möchte ich als {value2}, {value3}.
             </p>
@@ -42,6 +48,7 @@ function UsrStoryDesire(props) {
         }
       ]);
       console.log(comments);
+      onFinish("Damit " + `${value1}` + ", möchte ich als " + `${value2}` + ", " + `${value3}` + ".");
     }, 1000);
   };
 

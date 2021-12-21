@@ -6,8 +6,9 @@ const Satz = (props) => {
   const [comments, setComments] = useState([]);
   const [submitting, setSubmitting] = useState(false);
   const [value, setValue] = useState('');
+  const [shotRef, setShotRef] = useState();
   const { TextArea } = Input;
-  getSentence();
+  // getSentence();
   const CommentList = ({ comments }) => (
     <List
       dataSource={comments}
@@ -17,22 +18,22 @@ const Satz = (props) => {
     />
   );
 
-  async function getSentence (){
-      const req = await api.get('/session/sentences/');
-      console.log(req.data);
-      setTimeout(getSentence, 1000);
+  // async function getSentence() {
+  //   const req = await api.get('/session/sentences/');
+  //   console.log(req.data);
+  //   setTimeout(getSentence, 1000);
+  // }
+
+  const onFinish = async (values, shotref) => {
+    const body = { text: values, shot: shotref }
+    const res = await api.post('/session/sentences/', body);
+    console.log(res.data);
   }
 
-  const onFinish = async (values) => {
-    const formData = new FormData();
-    formData.append('text', values.sentence);
-    formData.append('shot', 1);
-    const res = await api.post('/session/sentences/', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    });
-    console.log(res.data);
+  const getShotRef = async () => {
+    const req = await api.get('/session/shots/');
+    console.log(req.data);
+    setShotRef(req.data.body);
   }
 
   const handleSubmit = () => {
@@ -40,7 +41,7 @@ const Satz = (props) => {
       console.log('run there');
       return;
     }
-    
+    getShotRef();
     setSubmitting(true);
     setTimeout(() => {
       setSubmitting(false);
@@ -53,16 +54,16 @@ const Satz = (props) => {
         }
       ]);
       console.log(comments);
+      onFinish(value, shotRef)
     }, 1000);
 
-    
+
   };
 
   return (
     <>
       {comments != undefined && <CommentList comments={comments} />}
       <Comment
-        onFinish={onFinish}
         content={
           <>
             <Form.Item name="sentence">
