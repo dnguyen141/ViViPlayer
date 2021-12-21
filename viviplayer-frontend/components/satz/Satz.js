@@ -35,7 +35,7 @@ const Satz = (props) => {
     console.log(res.data);
   }
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     if (!value) {
       console.log('run there');
       return;
