@@ -9,6 +9,7 @@ import styles from './video.module.css';
 import { getInfoSession } from '../../actions/session.action';
 import { loadUser } from '../../actions/auth.action';
 import { setAuthToken } from '../../utils/setAuthToken';
+import api from '../../utils/api';
 let socket;
 var markers = '';
 var markerListDefault = [
@@ -39,8 +40,14 @@ var markerListDefault = [
   }
 ];
 const Video = ({ sessionInfo, getInfoSession, loadUser, loading }) => {
-  const [session, setSession] = useState(null);
-  useEffect(() => {
+  const [session, setSession] = useState({
+    name: 'dummy',
+    tan: 'dummytan',
+    video_path:
+      'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4'
+  });
+  // const [session, setSession] = useState(null);
+  useEffect(async () => {
     // check for token in LS when app first runs
     if (localStorage.token) {
       // if there is a token set axios headers for all requests
@@ -51,29 +58,32 @@ const Video = ({ sessionInfo, getInfoSession, loadUser, loading }) => {
     // try to fetch a user, if no token or invalid token we
     // will get a 401 response from our API
     loadUser();
-
+    const res = await api.get('/session/');
+    // console.log(res.data[0]);
+    setSession(res.data[0]);
     // log user out from all tabs if they log out in one tab
     // window.addEventListener('storage', () => {
     //   if (!localStorage.token) {
     //     type: LOGOUT;
     //   }
     // });
-  }, []);
+    view(session);
+  }, [loading]);
 
   // console.log(sessionInfo);
-  console.log(session != null ? session.name : 'CHECK');
+  // console.log(session);
 
   // if (sessionInfo != null) {
   //   setSession(sessionInfo);
   // }
-  console.log(sessionInfo);
-  useEffect(async () => {
-    await getInfoSession();
-    // setSession(sessionInfo);
-    if (sessionInfo != null) {
-      setSession(sessionInfo);
-    }
-  }, [loading]);
+  // console.log(sessionInfo);
+  // useEffect(async () => {
+  //   await getInfoSession();
+  //   // setSession(sessionInfo);
+  //   if (sessionInfo != null) {
+  //     setSession(sessionInfo);
+  //   }
+  // }, [loading]);
   // socket = io('http://localhost:5001');
   const videoRef = React.useRef(null);
   const playerRef = React.useRef(null);
@@ -292,40 +302,79 @@ const Video = ({ sessionInfo, getInfoSession, loadUser, loading }) => {
   //   video.pause();
   //   socket.emit('pauseVideo');
   // };
-  // const View = (
-  //   <div>
-  //     <h2>Session : {session != null ? session.name : 'video'}</h2>
-  //     <div className={styles.videocontainer}>
-  //       <video
-  //         // onProgress={(e) => pauseSegment(e)}
-  //         onTimeUpdate={updatePlayer}
-  //         ref={videoRef}
-  //         id="video-viviplayer"
-  //         //controls
-  //         preload="auto"
-  //         data-setup='{"fluid":true}' //This is used so that the video player is responsive
-  //         className="video-js vjs-default-skin vjs-big-play-centered"
-  //         onClick={togglePlayPause}
-  //       >
-  //         <source
-  //           src={
-  //             session != null
-  //               ? `${session.video_path}`
-  //               : 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4'
-  //           }
-  //           type="video/mp4"
-  //         />
-  //       </video>
-  //     </div>
-  //   </div>
-  // );
+  const view = (sessionParameters) => (
+    <div>
+      <h2>Session : {session != null ? session.name : 'video'}</h2>
+      <h2>tan : {session != null ? session.tan : 'video'}</h2>
+      <div className={styles.videocontainer}>
+        <video
+          // onProgress={(e) => pauseSegment(e)}
+          onTimeUpdate={updatePlayer}
+          ref={videoRef}
+          id="video-viviplayer"
+          //controls
+          preload="auto"
+          data-setup='{"fluid":true}' //This is used so that the video player is responsive
+          className="video-js vjs-default-skin vjs-big-play-centered"
+          onClick={togglePlayPause}
+        >
+          <source
+            src={
+              sessionParameters != null
+                ? sessionParameters.video_path
+                : 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4'
+            }
+            type="video/mp4"
+          />
+        </video>
+      </div>
+    </div>
+  );
 
   return (
     <>
       <div className={styles.videocontainer}>
-        <h2>Session : {session != null ? session.name : 'video'}</h2>
-        <h2>Session : {session != null ? session.video_path : 'video_path'}</h2>
-        {session != null ? (
+        <div className={styles.videocontainer}>
+          {session.name !== 'dummy' ? (
+            <div key={session.tan}>
+              <h2> {session.name} </h2>
+              <video
+                // controls
+                // onProgress={(e) => pauseSegment(e)}
+                onTimeUpdate={updatePlayer}
+                ref={videoRef}
+                id="video-viviplayer"
+                //controls
+                preload="auto"
+                data-setup='{"fluid":true}' //This is used so that the video player is responsive
+                className="video-js vjs-default-skin vjs-big-play-centered"
+                onClick={togglePlayPause}
+              >
+                <source src={session.video_path} type="video/mp4" />
+              </video>
+            </div>
+          ) : (
+            <div key={session.tan}>
+              <video
+                // onProgress={(e) => pauseSegment(e)}
+                onTimeUpdate={updatePlayer}
+                ref={videoRef}
+                id="video-viviplayer"
+                //controls
+                preload="auto"
+                data-setup='{"fluid":true}' //This is used so that the video player is responsive
+                className="video-js vjs-default-skin vjs-big-play-centered"
+                onClick={togglePlayPause}
+              >
+                <source src={session.video_path} type="video/mp4" />
+              </video>
+            </div>
+          )}
+        </div>
+        {/* <h2>Session : {session != null ? session.name : 'video'}</h2>
+        <h2>Session : {session != null ? session.video_path : 'video_path'}</h2> */}
+        {/* {view(session)} */}
+        {/* {session.name !== 'dummy' ? (
           <video
             // onProgress={(e) => pauseSegment(e)}
             onTimeUpdate={updatePlayer}
@@ -356,7 +405,7 @@ const Video = ({ sessionInfo, getInfoSession, loadUser, loading }) => {
               type="video/mp4"
             />
           </video>
-        )}
+        )} */}
 
         <div className={styles.chapterinfocontainer} style={{ transform: visibleChapterText }}>
           <p className={styles.chapterinfo}> {chapterText}</p>
@@ -415,28 +464,6 @@ const Video = ({ sessionInfo, getInfoSession, loadUser, loading }) => {
           </List.Item>
         )}
       />
-      <div>
-        {session != null ? (
-          <div>
-            <h2> {session.name} </h2>
-            <video
-              controls
-              width="600px"
-              height="350px"
-              // onTimeUpdate={updatePlayer}
-              // ref={videoRef}
-              preload="auto"
-              data-setup='{"fluid":true}' //This is used so that the video player is responsive
-              className="video-js vjs-default-skin vjs-big-play-centered"
-              // onClick={togglePlayPause}
-            >
-              <source src={session.video_path} type="video/mp4" />
-            </video>
-          </div>
-        ) : (
-          'None info'
-        )}
-      </div>
     </>
   );
 };
