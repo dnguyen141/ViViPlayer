@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Form, Input, Row, Col, Button, Divider, Typography } from 'antd';
-import api from '../../utils/api';
+import { createSession } from '../../actions/session.action';
+import { connect } from 'react-redux';
 
-function SessionForm(props) {
+function SessionForm({ createSession, sessionInfo }) {
+  console.log(sessionInfo);
   const [videoInfo, setVideoInfo] = useState(null);
   const [file, setFile] = useState();
   const layout = {
@@ -19,18 +21,14 @@ function SessionForm(props) {
     formData.append('video_path', file);
     formData.append('name', values.name);
     formData.append('tan', values.tan);
-    const res = await api.post('/session/create', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    });
-    setVideoInfo(res.data);
+    let getInfo = await createSession(formData);
+    setVideoInfo(getInfo);
   };
 
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
   };
-
+  // 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4'
   const { Paragraph } = Typography;
 
   const videoBuild = (videoInfoPara) => {
@@ -110,4 +108,8 @@ function SessionForm(props) {
 
 SessionForm.propTypes = {};
 
-export default SessionForm;
+const mapStateToProps = (state) => ({
+  sessionInfo: state.session.sessionInfo
+});
+
+export default connect(mapStateToProps, { createSession })(SessionForm);
