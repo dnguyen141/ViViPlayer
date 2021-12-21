@@ -67,7 +67,6 @@ const Video = ({ loadUser, loading }) => {
     //     type: LOGOUT;
     //   }
     // });
-    view(session);
   }, [loading]);
 
   // socket = io('http://localhost:5001');
