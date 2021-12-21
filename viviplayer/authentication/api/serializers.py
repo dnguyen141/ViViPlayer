@@ -67,10 +67,10 @@ class CustomMemRegisterSerializer(RegisterSerializer):
 
     def validate_password1(self, password):
         session_queryset = ViViSession.objects.filter(is_opened=True)
-        if session_queryset.count() < 1:
-            raise serializers.ValidationError(_("There are no session online yet! Please try again later!"))
         if session_queryset.count() > 1:
             raise serializers.ValidationError(_("Something is wrong with sessions! Please try again later!"))
+        if session_queryset.count() < 1 or (session_queryset.count() == 1 and not session_queryset.first().is_opened):
+            raise serializers.ValidationError(_("There are no session online yet! Please try again later!"))
         if session_queryset.first().tan != password:
             raise serializers.ValidationError(_("TAN is not correct! Please try again!"))
         return password
