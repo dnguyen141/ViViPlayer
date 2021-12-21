@@ -370,7 +370,7 @@ const Video = ({ sessionInfo, getInfoSession, loadUser, loading }) => {
               </video>
             </div>
           )}
-        </div>
+        
         {/* <h2>Session : {session != null ? session.name : 'video'}</h2>
         <h2>Session : {session != null ? session.video_path : 'video_path'}</h2> */}
         {/* {view(session)} */}
@@ -445,6 +445,7 @@ const Video = ({ sessionInfo, getInfoSession, loadUser, loading }) => {
           <div className={styles.time}>
             <span>{currentTime}</span> / <span>{duration}</span>
           </div>
+        </div>
         </div>
       </div>
 
