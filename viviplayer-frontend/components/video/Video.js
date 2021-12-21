@@ -39,7 +39,7 @@ var markerListDefault = [
     text: 'Chapter 6'
   }
 ];
-const Video = ({ sessionInfo, getInfoSession, loadUser, loading }) => {
+const Video = ({ loadUser, loading }) => {
   const [session, setSession] = useState({
     name: 'dummy',
     tan: 'dummytan',
@@ -70,20 +70,6 @@ const Video = ({ sessionInfo, getInfoSession, loadUser, loading }) => {
     view(session);
   }, [loading]);
 
-  // console.log(sessionInfo);
-  // console.log(session);
-
-  // if (sessionInfo != null) {
-  //   setSession(sessionInfo);
-  // }
-  // console.log(sessionInfo);
-  // useEffect(async () => {
-  //   await getInfoSession();
-  //   // setSession(sessionInfo);
-  //   if (sessionInfo != null) {
-  //     setSession(sessionInfo);
-  //   }
-  // }, [loading]);
   // socket = io('http://localhost:5001');
   const videoRef = React.useRef(null);
   const playerRef = React.useRef(null);
@@ -302,35 +288,6 @@ const Video = ({ sessionInfo, getInfoSession, loadUser, loading }) => {
   //   video.pause();
   //   socket.emit('pauseVideo');
   // };
-  const view = (sessionParameters) => (
-    <div>
-      <h2>Session : {session != null ? session.name : 'video'}</h2>
-      <h2>tan : {session != null ? session.tan : 'video'}</h2>
-      <div className={styles.videocontainer}>
-        <video
-          // onProgress={(e) => pauseSegment(e)}
-          onTimeUpdate={updatePlayer}
-          ref={videoRef}
-          id="video-viviplayer"
-          //controls
-          preload="auto"
-          data-setup='{"fluid":true}' //This is used so that the video player is responsive
-          className="video-js vjs-default-skin vjs-big-play-centered"
-          onClick={togglePlayPause}
-        >
-          <source
-            src={
-              sessionParameters != null
-                ? sessionParameters.video_path
-                : 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4'
-            }
-            type="video/mp4"
-          />
-        </video>
-      </div>
-    </div>
-  );
-
   return (
     <>
       <div className={styles.videocontainer}>
@@ -370,82 +327,45 @@ const Video = ({ sessionInfo, getInfoSession, loadUser, loading }) => {
               </video>
             </div>
           )}
-        
-        {/* <h2>Session : {session != null ? session.name : 'video'}</h2>
-        <h2>Session : {session != null ? session.video_path : 'video_path'}</h2> */}
-        {/* {view(session)} */}
-        {/* {session.name !== 'dummy' ? (
-          <video
-            // onProgress={(e) => pauseSegment(e)}
-            onTimeUpdate={updatePlayer}
-            ref={videoRef}
-            id="video-viviplayer"
-            //controls
-            preload="auto"
-            data-setup='{"fluid":true}' //This is used so that the video player is responsive
-            className="video-js vjs-default-skin vjs-big-play-centered"
-            onClick={togglePlayPause}
-          >
-            <source src={session.video_path} type="video/mp4" />
-          </video>
-        ) : (
-          <video
-            // onProgress={(e) => pauseSegment(e)}
-            onTimeUpdate={updatePlayer}
-            ref={videoRef}
-            id="video-viviplayer"
-            //controls
-            preload="auto"
-            data-setup='{"fluid":true}' //This is used so that the video player is responsive
-            className="video-js vjs-default-skin vjs-big-play-centered"
-            onClick={togglePlayPause}
-          >
-            <source
-              src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
-              type="video/mp4"
+          <div className={styles.chapterinfocontainer} style={{ transform: visibleChapterText }}>
+            <p className={styles.chapterinfo}> {chapterText}</p>
+          </div>
+          <div className={styles.controls}>
+            <div className={styles.progressbarcontainer} onClick={changeVideoPosition.bind(this)}>
+              <div
+                className={styles.progressbar}
+                id="progressbar"
+                style={{ width: progressBarWidth }}
+              ></div>
+              {markers}
+            </div>
+
+            <div className={styles.buttons}>
+              <button id="play-pause-button" onClick={togglePlayPause}>
+                {playPauseIcon}
+              </button>
+            </div>
+            <input
+              type="range"
+              className={styles.volumeslider}
+              min="0"
+              max="1"
+              step="0.01"
+              defaultValue="0.5"
+              onChange={(e) => (videoRef.current.volume = e.target.value)}
             />
-          </video>
-        )} */}
+            <input
+              type="checkbox"
+              className={styles.checkbox}
+              checked={autoStop}
+              onChange={toggleautoStop}
+            />
+            <span className={styles.autostoptext}>Autostop</span>
 
-        <div className={styles.chapterinfocontainer} style={{ transform: visibleChapterText }}>
-          <p className={styles.chapterinfo}> {chapterText}</p>
-        </div>
-        <div className={styles.controls}>
-          <div className={styles.progressbarcontainer} onClick={changeVideoPosition.bind(this)}>
-            <div
-              className={styles.progressbar}
-              id="progressbar"
-              style={{ width: progressBarWidth }}
-            ></div>
-            {markers}
+            <div className={styles.time}>
+              <span>{currentTime}</span> / <span>{duration}</span>
+            </div>
           </div>
-
-          <div className={styles.buttons}>
-            <button id="play-pause-button" onClick={togglePlayPause}>
-              {playPauseIcon}
-            </button>
-          </div>
-          <input
-            type="range"
-            className={styles.volumeslider}
-            min="0"
-            max="1"
-            step="0.01"
-            defaultValue="0.5"
-            onChange={(e) => (videoRef.current.volume = e.target.value)}
-          />
-          <input
-            type="checkbox"
-            className={styles.checkbox}
-            checked={autoStop}
-            onChange={toggleautoStop}
-          />
-          <span className={styles.autostoptext}>Autostop</span>
-
-          <div className={styles.time}>
-            <span>{currentTime}</span> / <span>{duration}</span>
-          </div>
-        </div>
         </div>
       </div>
 
