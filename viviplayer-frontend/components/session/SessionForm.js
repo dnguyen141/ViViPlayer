@@ -19,7 +19,7 @@ function SessionForm(props) {
     formData.append('video_path', file);
     formData.append('name', values.name);
     formData.append('tan', values.tan);
-    const res = await api.post('/session/create', formData, {
+    const res = await api.post('/session/', formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
