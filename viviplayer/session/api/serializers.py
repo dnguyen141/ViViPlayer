@@ -24,7 +24,7 @@ class ShotSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Shot
-        fields = ['id', 'session', 'title', 'time']
+        fields = '__all__'
 
     def to_representation(self, obj):
         ret = super(ShotSerializer, self).to_representation(obj)
