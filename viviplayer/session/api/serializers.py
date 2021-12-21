@@ -33,7 +33,7 @@ class ShotSerializer(serializers.ModelSerializer):
 
 
 class CreateShotSerializer(serializers.ModelSerializer):
-    session = serializers.ReadOnlyField(source='session.session_id')
+    session = serializers.ReadOnlyField(source='session.id')
 
     class Meta:
         model = Shot
