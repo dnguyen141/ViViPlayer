@@ -16,14 +16,14 @@ const Satz = ({ loadUser }) => {
   const [shotRef, setShotRef] = useState();
   const { TextArea } = Input;
   // getSentence();
-  const CommentList = ({ comments }) => (
+  /*const CommentList = ({ comments }) => (
     <List
       dataSource={comments}
       itemLayout="horizontal"
       renderItem={(props) => <Comment {...props} />}
       className="scroll-bar"
     />
-  );
+  );*/
   useEffect(() => {
     // check for token in LS when app first runs
     if (localStorage.token) {
@@ -60,6 +60,7 @@ const Satz = ({ loadUser }) => {
       const res = await api.post('/session/sentences/', body);
       console.log(res.data);
       Notification('Sentences Notification', 'Sentence success wroted', 'success');
+      setValue('');
     } catch (err) {
       const errors = err.response.data.errors;
       console.log(err.response);
@@ -85,13 +86,13 @@ const Satz = ({ loadUser }) => {
     setTimeout(() => {
       setSubmitting(false);
       setValue('');
-      setComments([
+      /*setComments([
         ...comments,
         {
           author: 'User',
           content: <p>{value}</p>,
         }
-      ]);
+      ]);*/
       console.log(comments);
       onFinish(value, shotRef)
     }, 1000);
@@ -99,13 +100,21 @@ const Satz = ({ loadUser }) => {
 
   };
 
+  /*{comments != undefined && <CommentList comments={comments} />}*/
   return (
     <>
-      {comments != undefined && <CommentList comments={comments} />}
+      <List
+        dataSource={sentences}
+        itemLayout="horizontal"
+        renderItem={(user) => {
+          return (<div><b>{user.author}</b> - Shot {user.shot}: {user.text} <br /> </div>)
+        }}
+        className="scroll-bar"
+      />
       <Comment
         content={
           <>
-            <Form.Item name="sentence">
+            <Form.Item>
               <TextArea rows={3} onChange={(e) => setValue(e.target.value)} value={value} placeholder="Bitte geben Sie Ihren Kommentar hier ein" />
             </Form.Item>
             <Form.Item>
@@ -115,14 +124,6 @@ const Satz = ({ loadUser }) => {
             </Form.Item>
           </>
         }
-      />
-      <List
-        dataSource={sentences}
-        itemLayout="horizontal"
-        renderItem={(user) => {
-          return (<div>{user.author}-{user.text} <br></br> </div>)
-        }}
-        className="scroll-bar"
       />
     </>
   );
