@@ -23,7 +23,7 @@ const Vivilayout = ({ children, logout }) => {
           {/* <Menu.Item key="3">Session</Menu.Item> */}
           <Menu.Item
             key="4"
-            style={{ marginLeft: 'auto' }}
+            style={{ display: 'flex' }}
             onClick={() => {
               logout();
               Router.push('/');
