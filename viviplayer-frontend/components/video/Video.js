@@ -373,10 +373,10 @@ const Video = ({ loadUser, loading }) => {
         className="list-h"
         dataSource={markerList}
         renderItem={(markerList) => (
-          <List.Item className="menu-item" style={{ display: 'inline-flex' }}>
+          <List.Item className="menu-item">
             <Button
               type="default"
-              style={{ backgroundColor: 'transparent', color: 'white' }}
+              style={{ backgroundColor: 'transparent', color: 'white', paddingLeft: '25px', paddingRight: '25px' }}
               onClick={handleListClick.bind(this)}
             >
               {markerList.text}
