@@ -81,3 +81,10 @@ export const login = (username, password) => async (dispatch) => {
     });
   }
 };
+
+// Logout
+export const logout = () => async (dispatch) => {
+  delete api.defaults.headers.common['Authorization'];
+  localStorage.removeItem('token');
+  dispatch({ type: LOGOUT });
+};
