@@ -13,6 +13,7 @@ US_VALIDATOR = RegexValidator(
 class SessionSerializer(serializers.ModelSerializer):
     video_path = serializers.FileField(validators=[VID_VALIDATOR])
     owner = serializers.ReadOnlyField(source='owner.username')
+    tan = serializers.ReadOnlyField()
 
     class Meta:
         model = ViViSession
