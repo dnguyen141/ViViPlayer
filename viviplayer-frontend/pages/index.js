@@ -25,7 +25,7 @@ const Home = ({ isAuthenticated, login, loadUser, user, register }) => {
     //     type: LOGOUT;
     //   }
     // });
-  }, [login]);
+  }, [login, user]);
   if (user) {
     if (user.is_mod == true) {
       Router.push('/dashboard');
