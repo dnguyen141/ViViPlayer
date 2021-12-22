@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Form, Input, Row, Col, Button, Divider, Typography } from 'antd';
+import { Form, Input, Row, Col, Button, Divider, Typography, Spin } from 'antd';
 import { createSession } from '../../actions/session.action';
 import { connect } from 'react-redux';
 
 function SessionForm({ createSession, sessionInfo }) {
-  console.log(sessionInfo);
   const [videoInfo, setVideoInfo] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [file, setFile] = useState();
   const layout = {
     labelCol: { span: 5 },
@@ -21,7 +21,13 @@ function SessionForm({ createSession, sessionInfo }) {
     formData.append('video_path', file);
     formData.append('name', values.name);
     formData.append('tan', values.tan);
+    setLoading(true);
     let getInfo = await createSession(formData);
+    if (getInfo === undefined) {
+      setLoading(false);
+      return;
+    }
+    setLoading(false);
     setVideoInfo(getInfo);
   };
 
@@ -32,7 +38,6 @@ function SessionForm({ createSession, sessionInfo }) {
   const { Paragraph } = Typography;
 
   const videoBuild = (videoInfoPara) => {
-    console.log(videoInfoPara);
     return (
       <div>
         <h3>
@@ -98,6 +103,13 @@ function SessionForm({ createSession, sessionInfo }) {
               Session erstellen
             </Button>
           </Form.Item>
+          {loading ? (
+            <div>
+              <span>Das Hochladen von Videos kann einige Zeit dauern </span> <Spin />
+            </div>
+          ) : (
+            ''
+          )}
           {videoInfo !== null ? videoBuild(videoInfo) : ''}
         </Form>
       </Col>
