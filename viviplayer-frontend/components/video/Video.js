@@ -39,7 +39,8 @@ var markerListDefault = [
     text: 'Chapter 6'
   }
 ];
-const Video = ({ loadUser, loading }) => {
+const Video = ({ loadUser, loading, user }) => {
+  const [userState, setUserState] = useState(null);
   const [session, setSession] = useState({
     name: 'dummy',
     tan: 'dummytan',
@@ -68,6 +69,11 @@ const Video = ({ loadUser, loading }) => {
     //   }
     // });
   }, [loading]);
+  useEffect(() => {
+    if (user) {
+      setUserState(user);
+    }
+  }, []);
 
   // socket = io('http://localhost:5001');
   const videoRef = React.useRef(null);
@@ -329,67 +335,80 @@ const Video = ({ loadUser, loading }) => {
           <div className={styles.chapterinfocontainer} style={{ transform: visibleChapterText }}>
             <p className={styles.chapterinfo}> {chapterText}</p>
           </div>
-          <div className={styles.controls}>
-            <div className={styles.progressbarcontainer} onClick={changeVideoPosition.bind(this)}>
-              <div
-                className={styles.progressbar}
-                id="progressbar"
-                style={{ width: progressBarWidth }}
-              ></div>
-              {markers}
-            </div>
+          {user != null && user.is_mod == true ? (
+            <div className={styles.controls}>
+              <div className={styles.progressbarcontainer} onClick={changeVideoPosition.bind(this)}>
+                <div
+                  className={styles.progressbar}
+                  id="progressbar"
+                  style={{ width: progressBarWidth }}
+                ></div>
+                {markers}
+              </div>
 
-            <div className={styles.buttons}>
-              <button id="play-pause-button" onClick={togglePlayPause}>
-                {playPauseIcon}
-              </button>
-            </div>
-            <input
-              type="range"
-              className={styles.volumeslider}
-              min="0"
-              max="1"
-              step="0.01"
-              defaultValue="0.5"
-              onChange={(e) => (videoRef.current.volume = e.target.value)}
-            />
-            <input
-              type="checkbox"
-              className={styles.checkbox}
-              checked={autoStop}
-              onChange={toggleautoStop}
-            />
-            <span className={styles.autostoptext}>Autostop</span>
+              <div className={styles.buttons}>
+                <button id="play-pause-button" onClick={togglePlayPause}>
+                  {playPauseIcon}
+                </button>
+              </div>
+              <input
+                type="range"
+                className={styles.volumeslider}
+                min="0"
+                max="1"
+                step="0.01"
+                defaultValue="0.5"
+                onChange={(e) => (videoRef.current.volume = e.target.value)}
+              />
+              <input
+                type="checkbox"
+                className={styles.checkbox}
+                checked={autoStop}
+                onChange={toggleautoStop}
+              />
+              <span className={styles.autostoptext}>Autostop</span>
 
-            <div className={styles.time}>
-              <span>{currentTime}</span> / <span>{duration}</span>
+              <div className={styles.time}>
+                <span>{currentTime}</span> / <span>{duration}</span>
+              </div>
             </div>
-          </div>
+          ) : (
+            ''
+          )}
         </div>
       </div>
-
-      <List
-        size="small"
-        className="list-h"
-        dataSource={markerList}
-        renderItem={(markerList) => (
-          <List.Item className="menu-item">
-            <Button
-              type="default"
-              style={{ backgroundColor: 'transparent', color: 'white', paddingLeft: '25px', paddingRight: '25px' }}
-              onClick={handleListClick.bind(this)}
-            >
-              {markerList.text}
-            </Button>
-          </List.Item>
-        )}
-      />
+      {user != null && user.is_mod == true ? (
+        <List
+          size="small"
+          className="list-h"
+          dataSource={markerList}
+          renderItem={(markerList) => (
+            <List.Item className="menu-item">
+              <Button
+                type="default"
+                style={{
+                  backgroundColor: 'transparent',
+                  color: 'white',
+                  paddingLeft: '25px',
+                  paddingRight: '25px'
+                }}
+                onClick={handleListClick.bind(this)}
+              >
+                {markerList.text}
+              </Button>
+            </List.Item>
+          )}
+        />
+      ) : (
+        ''
+      )}
     </>
   );
 };
 
 const mapStateToProps = (state) => ({
   sessionInfo: state.session.sessionInfo,
+  user: state.auth.user,
   loading: state.session.loading
 });
 
