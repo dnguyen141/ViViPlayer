@@ -1,4 +1,3 @@
-from rest_framework import generics, permissions
 from session.models import ViViSession, Shot, UserStory, Sentence, MultipleChoiceQuestion
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets
@@ -7,6 +6,18 @@ from .serializers import SessionSerializer, UserStorySerializer, SentenceSeriali
 from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework import status
 from rest_framework.response import Response
+import random
+import string
+
+
+def tan_generator():
+    pwd_chars = [random.choice(string.ascii_lowercase + string.ascii_uppercase) for _ in range(random.randint(5, 6))]
+    pwd_digits = [random.choice(string.digits) for _ in range(random.randint(0, 2))]
+    special_chars = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
+    pwd_special_chars = [random.choice(special_chars) for _ in range(random.randint(1, 2))]
+    pwd_list = pwd_chars + pwd_digits + pwd_special_chars
+    random.shuffle(pwd_list)
+    return "".join(pwd_list)
 
 
 # Create your views here.
@@ -23,7 +34,7 @@ class SessionViewSet(viewsets.ModelViewSet):
         return [permission() for permission in permission_classes]
 
     def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
+        serializer.save(owner=self.request.user, tan=tan_generator())
 
     def create(self, request, *args, **kwargs):
         if ViViSession.objects.count() > 0:
@@ -38,7 +49,6 @@ class SessionViewSet(viewsets.ModelViewSet):
         return super().create(request, *args, **kwargs)
 
 
-# Update and Destroy Shots
 class ShotViewSet(viewsets.ModelViewSet):
     serializer_class = ShotSerializer
     queryset = Shot.objects.all()
@@ -76,3 +86,4 @@ class SentenceViewSet(viewsets.ModelViewSet):
 class QuestionViewSet(viewsets.ModelViewSet):
     serializer_class = QuestionSerializer
     queryset = MultipleChoiceQuestion.objects.all()
+
