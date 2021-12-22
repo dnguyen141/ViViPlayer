@@ -7,6 +7,7 @@ RUN npm install
 ENV PATH /app/node_modules/.bin:$PATH
 WORKDIR /app/frontend
 COPY ./ .
+RUN rm -r .next
 RUN next build
 
 FROM node
