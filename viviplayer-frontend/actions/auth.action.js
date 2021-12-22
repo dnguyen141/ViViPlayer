@@ -43,7 +43,11 @@ export const register = (username, password1, password2) => async (dispatch) => 
       type: REGISTER_SUCCESS,
       payload: res.data
     });
-    Notification('Register Notification', 'Register Success', 'success');
+    Notification(
+      'Register Notification',
+      'Your account has been submitted for review. Currently you can only log in as a regular account',
+      'success'
+    );
   } catch (err) {
     const errors = err.response.data.errors;
     console.log(err.response);

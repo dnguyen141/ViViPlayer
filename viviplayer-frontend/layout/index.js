@@ -5,7 +5,8 @@ import { Layout, Menu } from 'antd';
 import { logout } from '../actions/auth.action';
 import { connect } from 'react-redux';
 
-const Vivilayout = ({ children, logout }) => {
+const Vivilayout = ({ children, logout, user }) => {
+  console.log(user);
   return (
     <Layout>
       <Layout.Header style={{ position: 'relative', zIndex: 1, width: '100%' }}>
@@ -15,12 +16,14 @@ const Vivilayout = ({ children, logout }) => {
             VIVIPLAYER3
           </Menu.Item>
           <Menu.Item key="2" onClick={() => Router.push('/video')}>
-            Video
+            Session
           </Menu.Item>
-          <Menu.Item key="3">Session</Menu.Item>
+          <Menu.Item key="3" style={{ marginLeft: 'auto' }} onClick={() => Router.push('/video')}>
+            {user != null ? <span className="text-white">Hello {user.username}</span> : 'hello'}
+          </Menu.Item>
           <Menu.Item
             key="4"
-            style={{ marginLeft: 'auto' }}
+            style={{ display: 'flex' }}
             onClick={() => {
               logout();
               Router.push('/');
@@ -41,6 +44,8 @@ const Vivilayout = ({ children, logout }) => {
 };
 
 Vivilayout.propTypes = {};
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+  user: state.auth.user
+});
 
 export default connect(mapStateToProps, { logout })(Vivilayout);
