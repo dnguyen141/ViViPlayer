@@ -7,7 +7,7 @@ const io = require('socket.io')(httpServer, {
   }
 });
 
-io.listen(5000);
+io.listen(5001);
 
 io.on('connection', (socket) => {
   console.log('MAKE CONNECT TO SOCKER', socket.id);

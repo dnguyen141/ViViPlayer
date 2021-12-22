@@ -6,7 +6,7 @@ import { loadUser } from '../../actions/auth.action';
 import { setAuthToken } from '../../utils/setAuthToken';
 import { connect } from 'react-redux';
 
-const Dashboard = ({ user }) => {
+const Dashboard = ({ user, loadUser }) => {
   useEffect(() => {
     // check for token in LS when app first runs
     if (localStorage.token) {

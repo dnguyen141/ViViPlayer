@@ -2,8 +2,10 @@ import React from 'react';
 import Router from 'next/router';
 import PropTypes from 'prop-types';
 import { Layout, Menu } from 'antd';
+import { logout } from '../actions/auth.action';
+import { connect } from 'react-redux';
 
-const Vivilayout = ({ children }) => {
+const Vivilayout = ({ children, logout }) => {
   return (
     <Layout>
       <Layout.Header style={{ position: 'relative', zIndex: 1, width: '100%' }}>
@@ -16,7 +18,16 @@ const Vivilayout = ({ children }) => {
             Video
           </Menu.Item>
           <Menu.Item key="3">Session</Menu.Item>
-          <Menu.Item key="4" style={{marginLeft: 'auto'}}>Log Out</Menu.Item>
+          <Menu.Item
+            key="4"
+            style={{ marginLeft: 'auto' }}
+            onClick={() => {
+              logout();
+              Router.push('/');
+            }}
+          >
+            Log Out
+          </Menu.Item>
         </Menu>
       </Layout.Header>
       <Layout.Content className="site-layout" style={{ padding: '0 50px', marginTop: 64 }}>
@@ -30,5 +41,6 @@ const Vivilayout = ({ children }) => {
 };
 
 Vivilayout.propTypes = {};
+const mapStateToProps = (state) => ({});
 
-export default Vivilayout;
+export default connect(mapStateToProps, { logout })(Vivilayout);

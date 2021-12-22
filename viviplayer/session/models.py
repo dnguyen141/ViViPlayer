@@ -27,9 +27,9 @@ class ViViSession(models.Model):
 def segment_video(sender, instance, created, *args, **kwargs):
     if created:
         time_stamps = autosegment.find_scenes(instance.video_path.path, instance.name)
-        for t in time_stamps:
-            s = Shot(session=instance, title='No title', time=t)
-            s.save()
+        for i, time in enumerate(time_stamps):
+            shot = Shot(session=instance, title=f'Unbenannter Shot {i + 1}', time=time)
+            shot.save()
         instance.segmented = True
         instance.save()
 
@@ -37,7 +37,7 @@ def segment_video(sender, instance, created, *args, **kwargs):
 class Shot(models.Model):
     session = models.ForeignKey(ViViSession, on_delete=models.CASCADE, related_name="shots")
     time = models.FloatField()
-    title = models.CharField(max_length=15, null=False, blank=False)
+    title = models.CharField(max_length=50, null=False, blank=False)
     image = models.URLField(max_length=200, null=True)
 
     def __str__(self):

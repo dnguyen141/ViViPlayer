@@ -93,17 +93,25 @@ a {
 
 .list-h {
   margin-top: 10px !important;
-  border: 3px solid gray;
   white-space: nowrap;
-  overflow: auto;
+  border: 3px solid gray;
   max-height: 110px;
+  overflow: auto !important;
+  background-color: #333;
 }
 
 .menu-item {
+  display: inline-flex !important;
   background-color: #333;
   box-shadow: none;
+  padding: 0px 15px;
 }
 
 .menu-item:hover {
   background-color: #777;
+}
+
+.video-js {
+  width: 100% !important;
+  height:100% !important;
 }

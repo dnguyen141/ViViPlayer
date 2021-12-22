@@ -20,24 +20,16 @@ class SessionSerializer(serializers.ModelSerializer):
 
 
 class ShotSerializer(serializers.ModelSerializer):
-    session = SessionSerializer()
+    session = serializers.ReadOnlyField(source='session.id')
 
     class Meta:
         model = Shot
-        fields = ['id', 'session', 'title', 'time']
+        fields = '__all__'
 
     def to_representation(self, obj):
         ret = super(ShotSerializer, self).to_representation(obj)
         ret.pop('session')
         return ret
-
-
-class CreateShotSerializer(serializers.ModelSerializer):
-    session = serializers.ReadOnlyField(source='session.session_id')
-
-    class Meta:
-        model = Shot
-        fields = ['session', 'title', 'time']
 
 
 class UserStorySerializer(serializers.ModelSerializer):

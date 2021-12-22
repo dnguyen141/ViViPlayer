@@ -8,6 +8,7 @@ from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework import status
 from rest_framework.response import Response
 
+
 # Create your views here.
 class SessionViewSet(viewsets.ModelViewSet):
     serializer_class = SessionSerializer
