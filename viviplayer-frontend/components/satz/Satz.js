@@ -15,9 +15,7 @@ const Satz = ({ loadUser }) => {
   const [submitting, setSubmitting] = useState(false);
   const [value, setValue] = useState('');
   const [shotRef, setShotRef] = useState();
-  const [sentenceId, setSentenceId] = useState();
   const { TextArea } = Input;
-  let counter = 0;
   // getSentence();
   /*const CommentList = ({ comments }) => (
     <List
@@ -62,7 +60,7 @@ const Satz = ({ loadUser }) => {
       const body = { text: values, shot: shotref }
       const res = await api.post('/session/sentences/', body);
       console.log(res.data);
-      Notification('Sentences Notification', 'Sentence success wroted', 'success');
+      Notification('Sentences Notification', 'Sentence successfully written', 'success');
       setValue('');
     } catch (err) {
       const errors = err.response.data.errors;
@@ -84,7 +82,6 @@ const Satz = ({ loadUser }) => {
       console.log('run there');
       return;
     }
-    
     getShotRef();
     setSubmitting(true);
     setTimeout(() => {
@@ -104,16 +101,15 @@ const Satz = ({ loadUser }) => {
   };
   
   const handleSave = async (val) => {
-    console.log('Edited Value -> ', val);
-    const req = await api.get('/session/sentences/');
-    console.log(req.data[counter]["id"]);
-    let idNum = req.data[counter]["id"];
+    const req = await api.get('/session/sentences/'); //get all the comments
+    let idNum = req.data[req.data.length - 1]["id"]; //take only the newest comment
+    console.log(idNum);
     const body = { text: val, shot: shotRef };
-    const patch = await api.patch('/session/sentences/' + `${idNum}` + '/', body);
+    const patch = await api.patch('/session/sentences/' + `${idNum}` + '/', body); //change the newest comment
     console.log(patch.data);
     getSentence();
   };
-
+  
   /*{comments != undefined && <CommentList comments={comments} />}*/
   return (
     <>
