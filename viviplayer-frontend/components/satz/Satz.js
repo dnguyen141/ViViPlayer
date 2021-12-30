@@ -6,6 +6,7 @@ import Router from 'next/router';
 import { loadUser } from '../../actions/auth.action';
 import { setAuthToken } from '../../utils/setAuthToken';
 import { connect } from 'react-redux';
+import EdiText from 'react-editext';
 
 const Satz = ({ loadUser }) => {
   const [sentences, setSentences] = useState([])
@@ -99,6 +100,16 @@ const Satz = ({ loadUser }) => {
     
   };
   
+  const handleSave = async (val) => {
+    const req = await api.get('/session/sentences/'); //get all the comments
+    let idNum = req.data[req.data.length - 1]["id"]; //take only the newest comment
+    console.log(idNum);
+    const body = { text: val, shot: shotRef };
+    const patch = await api.patch('/session/sentences/' + `${idNum}` + '/', body); //change the newest comment
+    console.log(patch.data);
+    getSentence();
+  };
+  
   /*{comments != undefined && <CommentList comments={comments} />}*/
   return (
     <>
@@ -106,7 +117,7 @@ const Satz = ({ loadUser }) => {
         dataSource={sentences}
         itemLayout="horizontal"
         renderItem={(user) => {
-          return (<div><b>{user.author}</b> - Shot {user.shot}: {user.text} <br /> </div>)
+          return (<div><b>{user.author}</b> - Shot {user.shot}: <EdiText type="text" value={user.text} onSave={handleSave} /> <br /> </div>)
         }}
         className="scroll-bar"
       />
