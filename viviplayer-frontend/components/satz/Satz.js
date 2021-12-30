@@ -6,15 +6,18 @@ import Router from 'next/router';
 import { loadUser } from '../../actions/auth.action';
 import { setAuthToken } from '../../utils/setAuthToken';
 import { connect } from 'react-redux';
+import EdiText from 'react-editext';
 
 const Satz = ({ loadUser }) => {
   const [sentences, setSentences] = useState([])
   const [loading, setLoading] = useState(false)
-  const [comments, setComments] = useState([]);
+  //const [comments, setComments] = useState([]);
   const [submitting, setSubmitting] = useState(false);
   const [value, setValue] = useState('');
   const [shotRef, setShotRef] = useState();
+  const [sentenceId, setSentenceId] = useState();
   const { TextArea } = Input;
+  let counter = 0;
   // getSentence();
   /*const CommentList = ({ comments }) => (
     <List
@@ -56,7 +59,7 @@ const Satz = ({ loadUser }) => {
 
   const onFinish = async (values, shotref) => {
     try {
-      const body = { text: values, shot: 20 }
+      const body = { text: values, shot: shotref }
       const res = await api.post('/session/sentences/', body);
       console.log(res.data);
       Notification('Sentences Notification', 'Sentence success wroted', 'success');
@@ -69,11 +72,11 @@ const Satz = ({ loadUser }) => {
       }
     }
   }
-
+  
   const getShotRef = async () => {
     const req = await api.get('/session/shots/');
     console.log(req.data);
-    setShotRef(req.data.body);
+    setShotRef(req.data[0]["id"]);
   }
 
   const handleSubmit = () => {
@@ -81,6 +84,7 @@ const Satz = ({ loadUser }) => {
       console.log('run there');
       return;
     }
+    
     getShotRef();
     setSubmitting(true);
     setTimeout(() => {
@@ -93,11 +97,21 @@ const Satz = ({ loadUser }) => {
           content: <p>{value}</p>,
         }
       ]);*/
-      console.log(comments);
-      onFinish(value, shotRef)
+      onFinish(value, shotRef);
     }, 1000);
-
-
+    
+    
+  };
+  
+  const handleSave = async (val) => {
+    console.log('Edited Value -> ', val);
+    const req = await api.get('/session/sentences/');
+    console.log(req.data[counter]["id"]);
+    let idNum = req.data[counter]["id"];
+    const body = { text: val, shot: shotRef };
+    const patch = await api.patch('/session/sentences/' + `${idNum}` + '/', body);
+    console.log(patch.data);
+    getSentence();
   };
 
   /*{comments != undefined && <CommentList comments={comments} />}*/
@@ -107,7 +121,7 @@ const Satz = ({ loadUser }) => {
         dataSource={sentences}
         itemLayout="horizontal"
         renderItem={(user) => {
-          return (<div><b>{user.author}</b> - Shot {user.shot}: {user.text} <br /> </div>)
+          return (<div><b>{user.author}</b> - Shot {user.shot}: <EdiText type="text" value={user.text} onSave={handleSave} /> <br /> </div>)
         }}
         className="scroll-bar"
       />
