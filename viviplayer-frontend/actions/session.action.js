@@ -3,7 +3,9 @@ import {
   CREATE_SESSION_SUCCESS,
   CREATE_SESSION_FAIL,
   GET_SESSION_SUCCESS,
-  GET_SESSION_FAIL
+  GET_SESSION_FAIL,
+  GET_SENTENCES_SUCCESS,
+  GET_SENTENCES_FAIL
 } from './types';
 import { Notification } from '../utils/notification';
 
@@ -52,6 +54,26 @@ export const createSession = (formData) => async (dispatch) => {
 
     dispatch({
       type: CREATE_SESSION_FAIL
+    });
+  }
+};
+
+// get Sessions
+export const getSessions = () => async (dispatch) => {
+  try {
+    const res = await api.get('/sessions/sentences');
+    dispatch({
+      type: GET_SESSION_SUCCESS
+    });
+    console.log(res);
+  } catch (error) {
+    const errors = err.response.data.errors;
+    console.log(err.response.data.errors);
+    if (errors) {
+      errors.forEach((error) => Notification('Session Notification', error.message, 'warning'));
+    }
+    dispatch({
+      type: GET_SENTENCES_FAIL
     });
   }
 };
