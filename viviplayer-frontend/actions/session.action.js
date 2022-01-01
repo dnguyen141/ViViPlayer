@@ -5,7 +5,9 @@ import {
   GET_SESSION_SUCCESS,
   GET_SESSION_FAIL,
   GET_SENTENCES_SUCCESS,
-  GET_SENTENCES_FAIL
+  GET_SENTENCES_FAIL,
+  GET_SENTENCE_BY_ID,
+  GET_SETTENCE_BY_ID_FAIL
 } from './types';
 import { Notification } from '../utils/notification';
 
@@ -73,6 +75,26 @@ export const getSentences = () => async (dispatch) => {
     }
     dispatch({
       type: GET_SENTENCES_FAIL
+    });
+  }
+};
+
+// get sentences by ids
+export const getSentenceById = (id) => async (dispatch) => {
+  try {
+    const res = await api.get(`/session/sentences/${id}/`);
+
+    return res.data;
+    dispatch({
+      type: GET_SENTENCE_BY_ID
+    });
+  } catch (err) {
+    const errors = err.response.data.errors;
+    if (errors) {
+      errors.forEach((error) => Notification('Session Notification', error.message, 'warning'));
+    }
+    dispatch({
+      type: GET_SETTENCE_BY_ID_FAIL
     });
   }
 };
