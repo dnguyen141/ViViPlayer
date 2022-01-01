@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import api from '../../utils/api';
 import {
   Comment,
   Form,
@@ -11,16 +12,18 @@ import {
   Space,
   Popconfirm
 } from 'antd';
-import { getSentences } from '../../actions/session.action';
+import { getSentences, updateSentenceById } from '../../actions/session.action';
 import { connect } from 'react-redux';
-const Satz = ({ getSentences, sentences }) => {
+import EditSentence from './EditSentence';
+
+const Satz = ({ getSentences, sentences, updateSentenceById }) => {
   const [comments, setComments] = useState([]);
-  const [isModalVisible, setIsModalVisible] = useState(false);
   const [updateTable, setupdateTable] = useState(false);
   const [sentencesList, setSentencesList] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const [value, setValue] = useState('');
   const { TextArea } = Input;
+
   const CommentList = ({ comments }) => (
     <List
       dataSource={comments}
@@ -29,9 +32,19 @@ const Satz = ({ getSentences, sentences }) => {
       className="scroll-bar"
     />
   );
+
+  const updateState = () => {
+    console.log('UPDATE TABLE');
+    setupdateTable(!updateTable);
+  };
   useEffect(() => {
-    getSentences();
-    setSentencesList(sentences);
+    console.log('reupdate table');
+    async function fetchSentenc() {
+      const res = await api.get('/session/sentences/');
+      setSentencesList(res.data);
+    }
+    fetchSentenc();
+    console.log('REUP', sentences);
   }, [updateTable]);
 
   const columns = [
@@ -48,33 +61,19 @@ const Satz = ({ getSentences, sentences }) => {
     {
       title: 'Action',
       dataIndex: 'id',
-      render: (id) => (
+      render: (id, record) => (
         <Space size="middle">
-          <Button
-            type="primary"
-            onClick={() => {
-              setIsModalVisible(true);
-              console.log('click', isModalVisible);
-            }}
-          >
-            Edit
-          </Button>
+          <EditSentence id={id} context={record} updateFunc={updateState} />
           <Popconfirm
             title="Sicher zu löschen kann nicht rückgängig machen?"
-            onConfirm={() => removeGood(_id)}
+            onConfirm={() => {
+              console.log(id);
+            }}
           >
             <Button type="primary" danger>
               Delete
             </Button>
           </Popconfirm>
-          <Modal
-            title="Edit Text"
-            visible={isModalVisible}
-            onOk={() => setIsModalVisible(false)}
-            onCancel={() => setIsModalVisible(false)}
-          >
-            {id}
-          </Modal>
         </Space>
       )
     }
@@ -123,13 +122,6 @@ const Satz = ({ getSentences, sentences }) => {
       <Table
         className="number-table"
         pagination={{ pageSize: 5 }}
-        // onRow={(record, rowIndex) => {
-        //   return {
-        //     onClick: (event) => {
-        //       fetchGoodById(goods.data[rowIndex]._id);
-        //     },
-        //   };
-        // }}
         columns={columns}
         dataSource={sentencesList}
       />
@@ -142,4 +134,4 @@ Satz.propTypes = {};
 const mapStateToProps = (state) => ({
   sentences: state.session.sentences
 });
-export default connect(mapStateToProps, { getSentences })(Satz);
+export default connect(mapStateToProps, { getSentences, updateSentenceById })(Satz);
