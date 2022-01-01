@@ -61,14 +61,13 @@ export const createSession = (formData) => async (dispatch) => {
 // get Sentences
 export const getSentences = () => async (dispatch) => {
   try {
-    const res = await api.get('/sessions/sentences');
+    const res = await api.get('/session/sentences/');
     dispatch({
-      type: GET_SESSION_SUCCESS
+      type: GET_SENTENCES_SUCCESS,
+      payload: res.data
     });
-    console.log(res);
-  } catch (error) {
+  } catch (err) {
     const errors = err.response.data.errors;
-    console.log(err.response.data.errors);
     if (errors) {
       errors.forEach((error) => Notification('Session Notification', error.message, 'warning'));
     }

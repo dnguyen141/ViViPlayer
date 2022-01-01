@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Comment, Form, Button, List, Input } from 'antd';
-
-const Satz = (props) => {
+import { getSentences } from '../../actions/session.action';
+import { connect } from 'react-redux';
+const Satz = ({ getSentences, sentences }) => {
   const [comments, setComments] = useState([]);
+  const [sentencesList, setSentencesList] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const [value, setValue] = useState('');
   const { TextArea } = Input;
@@ -14,10 +16,13 @@ const Satz = (props) => {
       className="scroll-bar"
     />
   );
-
+  useEffect(() => {
+    getSentences();
+    setSentencesList(sentences);
+  }, []);
+  console.log('GET ALL SENTENCES', sentences);
   const handleSubmit = () => {
     if (!value) {
-      console.log('run there');
       return;
     }
     setSubmitting(true);
@@ -28,7 +33,7 @@ const Satz = (props) => {
         ...comments,
         {
           author: 'User',
-          content: <p>{value}</p>,
+          content: <p>{value}</p>
         }
       ]);
       console.log(comments);
@@ -42,7 +47,12 @@ const Satz = (props) => {
         content={
           <>
             <Form.Item>
-              <TextArea rows={3} onChange={(e) => setValue(e.target.value)} value={value} placeholder="Bitte geben Sie Ihren Kommentar hier ein" />
+              <TextArea
+                rows={3}
+                onChange={(e) => setValue(e.target.value)}
+                value={value}
+                placeholder="Bitte geben Sie Ihren Kommentar hier ein"
+              />
             </Form.Item>
             <Form.Item>
               <Button htmlType="submit" loading={submitting} onClick={handleSubmit} type="primary">
@@ -58,4 +68,7 @@ const Satz = (props) => {
 
 Satz.propTypes = {};
 
-export default Satz;
+const mapStateToProps = (state) => ({
+  sentences: state.session.sentences
+});
+export default connect(mapStateToProps, { getSentences })(Satz);
