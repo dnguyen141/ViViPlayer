@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../utils/api';
-import { Button, List, Input, Table, Space, Popconfirm } from 'antd';
-import { getSentences, deleteSentenceById } from '../../actions/session.action';
+import { Button, List, Input, Table, Space, Popconfirm, Form } from 'antd';
+import { getSentences, deleteSentenceById, createSentence } from '../../actions/session.action';
 import { connect } from 'react-redux';
 import EditSentence from './EditSentence';
 
-const Satz = ({ sentences, deleteSentenceById }) => {
+const { TextArea } = Input;
+const Satz = ({ sentences, deleteSentenceById, createSentence }) => {
   const [updateTable, setupdateTable] = useState(false);
   const [sentencesList, setSentencesList] = useState(null);
 
@@ -47,7 +48,10 @@ const Satz = ({ sentences, deleteSentenceById }) => {
       )
     }
   ];
-
+  const createSentenceFunc = ({ text, shot }) => {
+    createSentence(text, shot);
+    setupdateTable(!updateTable);
+  };
   return (
     <>
       <Table
@@ -56,6 +60,17 @@ const Satz = ({ sentences, deleteSentenceById }) => {
         columns={columns}
         dataSource={sentencesList}
       />
+      <Form name="Write sentence" onFinish={createSentenceFunc} autoComplete="off">
+        <Form.Item style={{ marginBottom: '1em' }} name="text">
+          <TextArea rows={4} placeholder="Write the new sentence" />
+        </Form.Item>
+        <Form.Item style={{ marginBottom: '1em' }} name="shot">
+          <Input placeholder="Enter the shot" />
+        </Form.Item>
+        <Button type="primary" htmlType="submit">
+          Submit
+        </Button>
+      </Form>
     </>
   );
 };
@@ -65,4 +80,4 @@ Satz.propTypes = {};
 const mapStateToProps = (state) => ({
   sentences: state.session.sentences
 });
-export default connect(mapStateToProps, { getSentences, deleteSentenceById })(Satz);
+export default connect(mapStateToProps, { getSentences, deleteSentenceById, createSentence })(Satz);
