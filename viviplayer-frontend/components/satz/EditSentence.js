@@ -24,9 +24,9 @@ const EditSentence = ({ id, context, updateFunc, updateSentenceById }) => {
       >
         <div>
           <i>
-            Old Sentence:
+            Old Sentence: 
             <b>
-              {context.text} - {context.shot}
+               {context.text} - {context.shot}
             </b>
           </i>
           <br />

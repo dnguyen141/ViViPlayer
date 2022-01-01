@@ -9,7 +9,7 @@ const { TextArea } = Input;
 const Satz = ({ sentences, deleteSentenceById, createSentence }) => {
   const [updateTable, setupdateTable] = useState(false);
   const [sentencesList, setSentencesList] = useState(null);
-
+  const [form] = Form.useForm();
   const updateState = () => {
     setupdateTable(!updateTable);
   };
@@ -25,7 +25,14 @@ const Satz = ({ sentences, deleteSentenceById, createSentence }) => {
     {
       title: 'Inhalt',
       dataIndex: 'text',
+      width: '65%',
       render: (text) => <p>{text}</p>
+    },
+    {
+      title: 'Shot',
+      dataIndex: 'shot',
+      width: '10%',
+      render: (shot) => <p>{shot}</p>
     },
     {
       title: 'Aktionen',
@@ -34,7 +41,7 @@ const Satz = ({ sentences, deleteSentenceById, createSentence }) => {
         <Space size="middle">
           <EditSentence id={id} context={record} updateFunc={updateState} />
           <Popconfirm
-            title="Sicher zu löschen kann nicht rückgängig machen?"
+            title="Löschen dieses Satzes ist nicht rückgängig zu machen. Weiter?"
             onConfirm={() => {
               deleteSentenceById(id);
               setupdateTable(!updateTable);
@@ -51,24 +58,26 @@ const Satz = ({ sentences, deleteSentenceById, createSentence }) => {
   const createSentenceFunc = ({ text, shot }) => {
     createSentence(text, shot);
     setupdateTable(!updateTable);
+    form.resetFields();
   };
   return (
     <>
       <Table
         className="number-table"
-        pagination={{ pageSize: 5 }}
         columns={columns}
+        pagination ={false}
         dataSource={sentencesList}
+        scroll={{y: 200}}
       />
-      <Form name="Write sentence" onFinish={createSentenceFunc} autoComplete="off">
+      <Form form={form} name="Write sentence" onFinish={createSentenceFunc} autoComplete="off">
         <Form.Item style={{ marginBottom: '1em' }} name="text">
-          <TextArea rows={4} placeholder="Write the new sentence" />
+          <TextArea rows={4} placeholder="Geben Sie hier ihren Satz ein." />
         </Form.Item>
         <Form.Item style={{ marginBottom: '1em' }} name="shot">
-          <Input placeholder="Enter the shot" />
+          <Input placeholder="Geben Sie Shot-Nummer ein." />
         </Form.Item>
         <Button type="primary" htmlType="submit">
-          Submit
+          Posten
         </Button>
       </Form>
     </>
