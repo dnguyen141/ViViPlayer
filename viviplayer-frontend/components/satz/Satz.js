@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../utils/api';
 import { Button, List, Input, Table, Space, Popconfirm } from 'antd';
-import { getSentences, updateSentenceById } from '../../actions/session.action';
+import { getSentences, deleteSentenceById } from '../../actions/session.action';
 import { connect } from 'react-redux';
 import EditSentence from './EditSentence';
 
-const Satz = ({ sentences }) => {
+const Satz = ({ sentences, deleteSentenceById }) => {
   const [updateTable, setupdateTable] = useState(false);
   const [sentencesList, setSentencesList] = useState(null);
 
@@ -13,7 +13,6 @@ const Satz = ({ sentences }) => {
     setupdateTable(!updateTable);
   };
   useEffect(() => {
-    console.log('reupdate table');
     async function fetchSentenc() {
       const res = await api.get('/session/sentences/');
       setSentencesList(res.data);
@@ -36,7 +35,8 @@ const Satz = ({ sentences }) => {
           <Popconfirm
             title="Sicher zu löschen kann nicht rückgängig machen?"
             onConfirm={() => {
-              console.log(id);
+              deleteSentenceById(id);
+              setupdateTable(!updateTable);
             }}
           >
             <Button type="primary" danger>
@@ -65,4 +65,4 @@ Satz.propTypes = {};
 const mapStateToProps = (state) => ({
   sentences: state.session.sentences
 });
-export default connect(mapStateToProps, { getSentences, updateSentenceById })(Satz);
+export default connect(mapStateToProps, { getSentences, deleteSentenceById })(Satz);
