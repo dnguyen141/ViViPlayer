@@ -7,8 +7,6 @@ import {
   List,
   Input,
   Table,
-  InputNumber,
-  Modal,
   Space,
   Popconfirm
 } from 'antd';
