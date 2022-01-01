@@ -1,38 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../utils/api';
-import {
-  Comment,
-  Form,
-  Button,
-  List,
-  Input,
-  Table,
-  Space,
-  Popconfirm
-} from 'antd';
+import { Button, List, Input, Table, Space, Popconfirm } from 'antd';
 import { getSentences, updateSentenceById } from '../../actions/session.action';
 import { connect } from 'react-redux';
 import EditSentence from './EditSentence';
 
-const Satz = ({ getSentences, sentences, updateSentenceById }) => {
-  const [comments, setComments] = useState([]);
+const Satz = ({ sentences }) => {
   const [updateTable, setupdateTable] = useState(false);
   const [sentencesList, setSentencesList] = useState(null);
-  const [submitting, setSubmitting] = useState(false);
-  const [value, setValue] = useState('');
-  const { TextArea } = Input;
-
-  const CommentList = ({ comments }) => (
-    <List
-      dataSource={comments}
-      itemLayout="horizontal"
-      renderItem={(props) => <Comment {...props} />}
-      className="scroll-bar"
-    />
-  );
 
   const updateState = () => {
-    console.log('UPDATE TABLE');
     setupdateTable(!updateTable);
   };
   useEffect(() => {
@@ -42,22 +19,16 @@ const Satz = ({ getSentences, sentences, updateSentenceById }) => {
       setSentencesList(res.data);
     }
     fetchSentenc();
-    console.log('REUP', sentences);
   }, [updateTable]);
 
   const columns = [
-    {
-      title: 'ID',
-      dataIndex: 'id',
-      render: (id) => <p>{id}</p>
-    },
     {
       title: 'Inhalt',
       dataIndex: 'text',
       render: (text) => <p>{text}</p>
     },
     {
-      title: 'Action',
+      title: 'Aktionen',
       dataIndex: 'id',
       render: (id, record) => (
         <Space size="middle">
@@ -76,47 +47,9 @@ const Satz = ({ getSentences, sentences, updateSentenceById }) => {
       )
     }
   ];
-  const handleSubmit = () => {
-    if (!value) {
-      return;
-    }
-    setSubmitting(true);
-    setTimeout(() => {
-      setSubmitting(false);
-      setValue('');
-      setComments([
-        ...comments,
-        {
-          author: 'User',
-          content: <p>{value}</p>
-        }
-      ]);
-      console.log(comments);
-    }, 1000);
-  };
 
   return (
     <>
-      {comments != undefined && <CommentList comments={comments} />}
-      <Comment
-        content={
-          <>
-            <Form.Item>
-              <TextArea
-                rows={3}
-                onChange={(e) => setValue(e.target.value)}
-                value={value}
-                placeholder="Bitte geben Sie Ihren Kommentar hier ein"
-              />
-            </Form.Item>
-            <Form.Item>
-              <Button htmlType="submit" loading={submitting} onClick={handleSubmit} type="primary">
-                Kommentieren
-              </Button>
-            </Form.Item>
-          </>
-        }
-      />
       <Table
         className="number-table"
         pagination={{ pageSize: 5 }}
