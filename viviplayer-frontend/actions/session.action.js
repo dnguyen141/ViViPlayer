@@ -58,8 +58,8 @@ export const createSession = (formData) => async (dispatch) => {
   }
 };
 
-// get Sessions
-export const getSessions = () => async (dispatch) => {
+// get Sentences
+export const getSentences = () => async (dispatch) => {
   try {
     const res = await api.get('/sessions/sentences');
     dispatch({
