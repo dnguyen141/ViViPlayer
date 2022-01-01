@@ -9,7 +9,9 @@ import {
   GET_SENTENCE_BY_ID,
   GET_SETTENCE_BY_ID_FAIL,
   UPDATE_SENTENCE_BY_ID,
-  UPDATE_SENTENCE_BY_ID_FAIL
+  UPDATE_SENTENCE_BY_ID_FAIL,
+  DELETE_SENTENCE_SUCCESS,
+  DELETE_SENTENCE_SUCCESS_FAIL
 } from './types';
 import { Notification } from '../utils/notification';
 
@@ -117,6 +119,25 @@ export const updateSentenceById = (text, shot, id) => async (dispatch) => {
     }
     dispatch({
       type: UPDATE_SENTENCE_BY_ID_FAIL
+    });
+  }
+};
+
+// get sentences by ids
+export const deleteSentenceById = (id) => async (dispatch) => {
+  try {
+    const res = await api.delete(`/session/sentences/${id}/`);
+    dispatch({
+      type: DELETE_SENTENCE_SUCCESS
+    });
+    Notification('Sentences Notification', 'the sentence has been deleted', 'success');
+  } catch (err) {
+    const errors = err.response.data.errors;
+    if (errors) {
+      errors.forEach((error) => Notification('Session Notification', error.message, 'warning'));
+    }
+    dispatch({
+      type: DELETE_SENTENCE_SUCCESS_FAIL
     });
   }
 };
