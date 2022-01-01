@@ -11,7 +11,9 @@ import {
   UPDATE_SENTENCE_BY_ID,
   UPDATE_SENTENCE_BY_ID_FAIL,
   DELETE_SENTENCE_SUCCESS,
-  DELETE_SENTENCE_SUCCESS_FAIL
+  DELETE_SENTENCE_SUCCESS_FAIL,
+  CREATE_SENTENCES_SUCCESS,
+  CREATE_SENTENCES_FAIL
 } from './types';
 import { Notification } from '../utils/notification';
 
@@ -138,6 +140,26 @@ export const deleteSentenceById = (id) => async (dispatch) => {
     }
     dispatch({
       type: DELETE_SENTENCE_SUCCESS_FAIL
+    });
+  }
+};
+
+// create new sentence
+export const createSentence = (text, shot) => async (dispatch) => {
+  const body = { text, shot };
+  try {
+    const res = await api.post(`/session/sentences/`, body);
+    dispatch({
+      type: CREATE_SENTENCES_SUCCESS
+    });
+    Notification('Sentences Notification', 'the sentence has been created', 'success');
+  } catch (err) {
+    const errors = err.response.data.errors;
+    if (errors) {
+      errors.forEach((error) => Notification('Session Notification', error.message, 'warning'));
+    }
+    dispatch({
+      type: CREATE_SENTENCES_FAIL
     });
   }
 };
