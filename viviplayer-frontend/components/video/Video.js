@@ -75,7 +75,7 @@ const Video = ({ loadUser, loading, user }) => {
     }
   }, []);
 
-  // socket = io('http://localhost:5001');
+  socket = io('http://localhost:5001');
   const videoRef = React.useRef(null);
   const playerRef = React.useRef(null);
   const [player, setPlayer] = useState(null);
