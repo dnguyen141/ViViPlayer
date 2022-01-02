@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import EditSentence from './EditSentence';
 
 const { TextArea } = Input;
-const Satz = ({ sentences, deleteSentenceById, createSentence }) => {
+const Satz = ({ deleteSentenceById, createSentence, user }) => {
   const [updateTable, setupdateTable] = useState(false);
   const [sentencesList, setSentencesList] = useState(null);
   const [form] = Form.useForm();
@@ -20,12 +20,17 @@ const Satz = ({ sentences, deleteSentenceById, createSentence }) => {
     }
     fetchSentenc();
   }, [updateTable]);
-
+  console.log(user);
   const columns = [
+    {
+      title: 'user',
+      width: '15%',
+      render: () => <p>{user.username && <p>{user.username}</p>}</p>
+    },
     {
       title: 'Inhalt',
       dataIndex: 'text',
-      width: '65%',
+      width: '50%',
       render: (text) => <p>{text}</p>
     },
     {
@@ -65,9 +70,9 @@ const Satz = ({ sentences, deleteSentenceById, createSentence }) => {
       <Table
         className="number-table"
         columns={columns}
-        pagination ={false}
+        pagination={false}
         dataSource={sentencesList}
-        scroll={{y: 200}}
+        scroll={{ y: 200 }}
       />
       <Form form={form} name="Write sentence" onFinish={createSentenceFunc} autoComplete="off">
         <Form.Item style={{ marginBottom: '1em' }} name="text">
@@ -87,6 +92,7 @@ const Satz = ({ sentences, deleteSentenceById, createSentence }) => {
 Satz.propTypes = {};
 
 const mapStateToProps = (state) => ({
-  sentences: state.session.sentences
+  sentences: state.session.sentences,
+  user: state.auth.user
 });
 export default connect(mapStateToProps, { getSentences, deleteSentenceById, createSentence })(Satz);
