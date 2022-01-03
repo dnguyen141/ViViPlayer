@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../utils/api';
-import { Button, List, Input, Table, Space, Popconfirm, Form } from 'antd';
+import { Button, Input, Table, Space, Popconfirm, Form } from 'antd';
 import { getSentences, deleteSentenceById, createSentence } from '../../actions/session.action';
 import { connect } from 'react-redux';
 import EditSentence from './EditSentence';
@@ -20,7 +20,6 @@ const Satz = ({ deleteSentenceById, createSentence, user }) => {
     }
     fetchSentenc();
   }, [updateTable]);
-  console.log(user);
   const columns = [
     {
       title: 'user',
