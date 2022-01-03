@@ -3,11 +3,9 @@ import PropTypes from 'prop-types';
 import api from '../../utils/api';
 import { connect } from 'react-redux';
 import { Button, Input, Table, Space, Popconfirm, Form } from 'antd';
+import EditUserStory from './EditUserStory';
 import { createUserStory } from '../../actions/session.action';
 const UsrStoryDesire = ({ createUserStory, user }) => {
-  const [damit, setDamit] = useState(''); //value1 for the first text box
-  const [moechteichals1, setMoechteichals1] = useState(''); //value2 for the second text box
-  const [moechteichals2, setMoechteichals2] = useState(''); ///value3 for the third text box
   const [updateTable, setupdateTable] = useState(false);
   const [userStories, setUserStories] = useState(null);
   const [form] = Form.useForm();
@@ -18,6 +16,9 @@ const UsrStoryDesire = ({ createUserStory, user }) => {
     }
     fetchUserStories();
   }, [updateTable]);
+  const updateState = () => {
+    setupdateTable(!updateTable);
+  };
   // create table
   const columns = [
     {
@@ -31,7 +32,8 @@ const UsrStoryDesire = ({ createUserStory, user }) => {
       width: '50%',
       render: (id, record) => (
         <p>
-          Damit {record.damit},möchte ich als {record.moechteichals1},{record.moechteichals2}
+          <b> Damit </b> {record.damit}, <b>möchte ich als </b> {record.moechteichals1},
+          {record.moechteichals2}
         </p>
       )
     },
@@ -46,7 +48,7 @@ const UsrStoryDesire = ({ createUserStory, user }) => {
       dataIndex: 'id',
       render: (id, record) => (
         <Space size="middle">
-          {/* <EditSentence id={id} context={record} updateFunc={updateState} /> */}
+          <EditUserStory id={id} context={record} updateFunc={updateState} />
           <Popconfirm title="Löschen dieses Satzes ist nicht rückgängig zu machen. Weiter?">
             <Button type="primary" danger>
               Delete
@@ -77,7 +79,7 @@ const UsrStoryDesire = ({ createUserStory, user }) => {
         </Form.Item>
         möchte ich als:
         <Form.Item style={{ marginBottom: '1em' }} name="moechteichals1">
-          <Input rows={4} placeholder="z.B Abteulungsleiter" />
+          <Input rows={4} placeholder="z.B Abteilungsleiter" />
         </Form.Item>
         <Form.Item style={{ marginBottom: '1em' }} name="moechteichals2">
           <Input
