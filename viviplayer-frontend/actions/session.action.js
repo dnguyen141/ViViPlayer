@@ -17,7 +17,11 @@ import {
   GET_ALL_USERSTORIRES_SUCCESS,
   GET_ALL_USERSTORIRES_FAILS,
   CREATE_USERSTORY_SUCCESS,
-  CREATE_USERSTORY_FAIL
+  CREATE_USERSTORY_FAIL,
+  UPDATE_USERSTORY_SUCCESS,
+  UPDATE_USERSTORY_FAIL,
+  GET_USERSTORY_BY_ID_SUCCESS,
+  GET_USERSTORY_BY_ID_FAIL
 } from './types';
 import { Notification } from '../utils/notification';
 
@@ -210,3 +214,44 @@ export const createUserStory =
       });
     }
   };
+
+// update user story by id
+export const updateUserStoryById =
+  (damit, moechteichals1, moechteichals2, shot, id) => async (dispatch) => {
+    const body = { damit, moechteichals1, moechteichals2, shot };
+    try {
+      const res = await api.put(`/session/userstories/${id}/`, body);
+      dispatch({
+        type: UPDATE_USERSTORY_SUCCESS
+      });
+      Notification('UserStory Notification', 'the user story has been updated', 'success');
+      return;
+    } catch (err) {
+      const errors = err.response.data.errors;
+      if (errors) {
+        errors.forEach((error) => Notification('Session Notification', error.message, 'warning'));
+      }
+      dispatch({
+        type: UPDATE_USERSTORY_FAIL
+      });
+    }
+  };
+
+// get user story by ids
+export const getUserStoryById = (id) => async (dispatch) => {
+  try {
+    const res = await api.get(`/session/userstories/${id}/`);
+    dispatch({
+      type: GET_USERSTORY_BY_ID_SUCCESS
+    });
+    return res.data;
+  } catch (err) {
+    const errors = err.response.data.errors;
+    if (errors) {
+      errors.forEach((error) => Notification('Session Notification', error.message, 'warning'));
+    }
+    dispatch({
+      type: GET_USERSTORY_BY_ID_FAIL
+    });
+  }
+};
