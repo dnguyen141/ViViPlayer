@@ -4,8 +4,8 @@ import api from '../../utils/api';
 import { connect } from 'react-redux';
 import { Button, Input, Table, Space, Popconfirm, Form } from 'antd';
 import EditUserStory from './EditUserStory';
-import { createUserStory } from '../../actions/session.action';
-const UsrStoryDesire = ({ createUserStory, user }) => {
+import { createUserStory, deleteUserStoryById } from '../../actions/session.action';
+const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById }) => {
   const [updateTable, setupdateTable] = useState(false);
   const [userStories, setUserStories] = useState(null);
   const [form] = Form.useForm();
@@ -49,7 +49,13 @@ const UsrStoryDesire = ({ createUserStory, user }) => {
       render: (id, record) => (
         <Space size="middle">
           <EditUserStory id={id} context={record} updateFunc={updateState} />
-          <Popconfirm title="Löschen dieses Satzes ist nicht rückgängig zu machen. Weiter?">
+          <Popconfirm
+            title="Löschen dieses Satzes ist nicht rückgängig zu machen. Weiter?"
+            onConfirm={() => {
+              deleteUserStoryById(id);
+              setupdateTable(!updateTable);
+            }}
+          >
             <Button type="primary" danger>
               Delete
             </Button>
@@ -103,4 +109,4 @@ UsrStoryDesire.propTypes = {};
 const mapStateToProps = (state) => ({
   user: state.auth.user
 });
-export default connect(mapStateToProps, { createUserStory })(UsrStoryDesire);
+export default connect(mapStateToProps, { createUserStory, deleteUserStoryById })(UsrStoryDesire);
