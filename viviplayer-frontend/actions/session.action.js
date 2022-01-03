@@ -13,7 +13,9 @@ import {
   DELETE_SENTENCE_SUCCESS,
   DELETE_SENTENCE_SUCCESS_FAIL,
   CREATE_SENTENCES_SUCCESS,
-  CREATE_SENTENCES_FAIL
+  CREATE_SENTENCES_FAIL,
+  GET_ALL_USERSTORIRES_SUCCESS,
+  GET_ALL_USERSTORIRES_FAILS
 } from './types';
 import { Notification } from '../utils/notification';
 
@@ -160,6 +162,25 @@ export const createSentence = (text, shot) => async (dispatch) => {
     }
     dispatch({
       type: CREATE_SENTENCES_FAIL
+    });
+  }
+};
+
+// get all user stories from server
+export const getAllUserStories = () => async (dispatch) => {
+  try {
+    const res = await api.get('/session/userstories/');
+    dispatch({
+      type: GET_ALL_USERSTORIRES_SUCCESS,
+      payload: res.data
+    });
+  } catch (err) {
+    const errors = err.response.data.errors;
+    if (errors) {
+      errors.forEach((error) => Notification('Session Notification', error.message, 'warning'));
+    }
+    dispatch({
+      type: GET_ALL_USERSTORIRES_FAILS
     });
   }
 };
