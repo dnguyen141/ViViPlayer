@@ -15,7 +15,9 @@ import {
   CREATE_SENTENCES_SUCCESS,
   CREATE_SENTENCES_FAIL,
   GET_ALL_USERSTORIRES_SUCCESS,
-  GET_ALL_USERSTORIRES_FAILS
+  GET_ALL_USERSTORIRES_FAILS,
+  CREATE_USERSTORY_SUCCESS,
+  CREATE_USERSTORY_FAIL
 } from './types';
 import { Notification } from '../utils/notification';
 
@@ -112,7 +114,9 @@ export const updateSentenceById = (text, shot, id) => async (dispatch) => {
   const body = { text, shot };
   try {
     const res = await api.put(`/session/sentences/${id}/`, body);
-    console.log(res);
+    dispatch({
+      type: UPDATE_SENTENCE_BY_ID
+    });
     getSentences();
     Notification('Sentences Notification', 'sentence has been updated', 'success');
     return;
@@ -184,3 +188,25 @@ export const getAllUserStories = () => async (dispatch) => {
     });
   }
 };
+
+// create new user story
+export const createUserStory =
+  (damit, moechteichals1, moechteichals2, shot) => async (dispatch) => {
+    const body = { damit, moechteichals1, moechteichals2, shot };
+    try {
+      const res = await api.post('/session/userstories/', body);
+      dispatch({
+        type: CREATE_USERSTORY_SUCCESS
+      });
+      Notification('UserStory Notification', 'the user story has been created', 'success');
+      return;
+    } catch (err) {
+      const errors = err.response.data.errors;
+      if (errors) {
+        errors.forEach((error) => Notification('Session Notification', error.message, 'warning'));
+      }
+      dispatch({
+        type: CREATE_USERSTORY_FAIL
+      });
+    }
+  };
