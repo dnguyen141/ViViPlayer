@@ -15,6 +15,4 @@ router.register(r'', SessionViewSet, basename='rest_session')
 # URLs for all authentication views
 urlpatterns = [
     path('', include(router.urls)),
-    # path('shots/<pk>', ListShots.as_view(), name="rest_shots"),
-    # path('create_shot/<pk>', CreateShot.as_view(), name="rest_create_shot"),
 ]
