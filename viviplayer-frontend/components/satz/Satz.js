@@ -20,7 +20,6 @@ const Satz = ({ deleteSentenceById, createSentence, user }) => {
     }
     fetchSentenc();
   }, [updateTable]);
-  console.log(user);
   const columns = [
     {
       title: 'user',
