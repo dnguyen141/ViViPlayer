@@ -4,7 +4,6 @@ import api from '../../utils/api';
 import { connect } from 'react-redux';
 import { Button, Input, Table, Space, Popconfirm, Form } from 'antd';
 import { createUserStory } from '../../actions/session.action';
-const { TextArea } = Input;
 const UsrStoryDesire = ({ createUserStory, user }) => {
   const [damit, setDamit] = useState(''); //value1 for the first text box
   const [moechteichals1, setMoechteichals1] = useState(''); //value2 for the second text box
