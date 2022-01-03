@@ -1,13 +1,13 @@
+import uuid
+
+from dj_rest_auth.registration.serializers import RegisterSerializer
+from dj_rest_auth.serializers import LoginSerializer, PasswordChangeSerializer
 from django.contrib.auth import get_user_model
 from django.core.validators import RegexValidator
 from django.utils.translation import gettext_lazy as _
-
-import uuid
 from rest_framework import serializers
-from dj_rest_auth.serializers import LoginSerializer, PasswordChangeSerializer
-from dj_rest_auth.registration.serializers import RegisterSerializer
-from session.models import ViViSession
 
+from session.models import ViViSession
 
 MOD_USERNAME_REGEX = RegexValidator(
     regex=r"^(?!member)[a-zA-Z0-9@#$%^&-_+=()]{8,20}$",
@@ -18,9 +18,13 @@ MEM_USERNAME_REGEX = RegexValidator(
     message='Invalid username for member!. It should begin with "member".',
 )
 PASSWORD_REGEX = RegexValidator(
-    regex=r"^(?=.{8,20}$)(?!.*\s)(?=.*[a-zA-Z0-9])(?=.*\W).*$",
+    regex=r"^(?=.{8,50}$)(?!.*\s)(?=.*[a-zA-Z0-9])(?=.*\W).*$",
     message="Password must contains at least 8 and at most 20 characters, "
-    "with at least one special characters and no white space characters.",
+            "with at least one special characters and no white space characters.",
+)
+TAN_REGEX = RegexValidator(
+    regex=r"^(?=.{6,50}$)(?!.*\s)(?=.*[a-zA-Z0-9])(?=.*\W).*$",
+    message="TAN is not correct! Please try again!",
 )
 
 
@@ -33,16 +37,20 @@ class CustomLoginSerializer(LoginSerializer):
 class CustomModRegisterSerializer(RegisterSerializer):
     username = serializers.CharField(
         min_length=8,
-        max_length=20,
+        max_length=100,
         required=True,
         validators=[MOD_USERNAME_REGEX],
     )
     email = None
     password1 = serializers.CharField(
-        style={"input_type": "password"}, write_only=True, validators=[PASSWORD_REGEX]
+        style={"input_type": "password"},
+        write_only=True,
+        validators=[PASSWORD_REGEX]
     )
     password2 = serializers.CharField(
-        style={"input_type": "password"}, write_only=True, validators=[PASSWORD_REGEX]
+        style={"input_type": "password"},
+        write_only=True,
+        validators=[PASSWORD_REGEX]
     )
 
     def validate_email(self, email):
@@ -53,11 +61,9 @@ class CustomModRegisterSerializer(RegisterSerializer):
 class CustomMemRegisterSerializer(RegisterSerializer):
     username = email = password2 = None
     password1 = serializers.CharField(
-        min_length=8,
-        max_length=20,
         style={"input_type": "password"},
         write_only=True,
-        validators=[PASSWORD_REGEX],
+        validators=[TAN_REGEX]
     )
 
     def validate_username(self, username):
