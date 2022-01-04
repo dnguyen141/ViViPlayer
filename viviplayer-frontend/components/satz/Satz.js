@@ -22,9 +22,9 @@ const Satz = ({ deleteSentenceById, createSentence, user }) => {
   }, [updateTable]);
   const columns = [
     {
-      title: 'user',
+      title: 'User',
       width: '15%',
-      render: () => <p>{user.username && <p>{user.username}</p>}</p>
+      render: () => <p><b>{user.username && <p>{user.username}</p>}</b></p>
     },
     {
       title: 'Inhalt',
