@@ -4,6 +4,7 @@ import api from '../../utils/api';
 import { connect } from 'react-redux';
 import { Button, Input, Table, Space, Popconfirm, Form } from 'antd';
 import EditUserStory from './EditUserStory';
+import styles from './user-story.module.css';
 import { createUserStory, deleteUserStoryById } from '../../actions/session.action';
 const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById }) => {
   const [updateTable, setupdateTable] = useState(false);
@@ -22,9 +23,9 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById }) => {
   // create table
   const columns = [
     {
-      title: 'user',
+      title: 'User',
       width: '15%',
-      render: () => <p>{user.username && <p>{user.username}</p>}</p>
+      render: () => <p><b>{user.username && <p>{user.username}</p>}</b></p>
     },
     {
       title: 'Inhalt',
@@ -32,8 +33,7 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById }) => {
       width: '50%',
       render: (id, record) => (
         <p>
-          <b> Damit </b> {record.damit}, <b>möchte ich als </b> {record.moechteichals1},
-          {record.moechteichals2}
+          <b> Damit </b> {record.damit}, <b>möchte ich als </b> {record.moechteichals1}, {record.moechteichals2}
         </p>
       )
     },
@@ -68,6 +68,7 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById }) => {
   const createUserStoryFunc = ({ damit, moechteichals1, moechteichals2, shot }) => {
     createUserStory(damit, moechteichals1, moechteichals2, shot);
     setupdateTable(!updateTable);
+    form.resetFields();
   };
   return (
     <>
@@ -80,16 +81,17 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById }) => {
       />
       <Form form={form} name="Write sentence" onFinish={createUserStoryFunc} autoComplete="off">
         Damit :
-        <Form.Item style={{ marginBottom: '1em' }} name="damit">
-          <Input rows={4} placeholder="z.B ich weiss,ob jemand unregelmäßig arbeitet" />
+        <Form.Item style={{ marginBottom: '0.5em' }} name="damit">
+          <Input className={styles.inputuser} rows={4} placeholder="z.B ich weiss,ob jemand unregelmäßig arbeitet" />
         </Form.Item>
         möchte ich als:
-        <Form.Item style={{ marginBottom: '1em' }} name="moechteichals1">
-          <Input rows={4} placeholder="z.B Abteilungsleiter" />
+        <Form.Item style={{ marginBottom: '0.2em' }} name="moechteichals1">
+          <Input className={styles.inputuser} rows={4} placeholder="z.B Abteilungsleiter" />
         </Form.Item>
         <Form.Item style={{ marginBottom: '1em' }} name="moechteichals2">
           <Input
             rows={4}
+            className={styles.inputuser}
             placeholder="z.B eine visuelle Darstellung der geleisteten Stunden sehen"
           />
         </Form.Item>
