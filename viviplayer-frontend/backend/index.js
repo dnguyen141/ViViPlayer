@@ -2,7 +2,7 @@ const { httpServer } = require('socket.io');
 
 const io = require('socket.io')(httpServer, {
   cors: {
-    origin: ['http://localhost:3000'],
+    origin: 'http://localhost:3000',
     methods: ['GET', 'POST']
   }
 });
@@ -16,5 +16,8 @@ io.on('connection', (socket) => {
   });
   socket.on('pauseVideo', () => {
     io.emit('getCommandToPauseVideo');
+  });
+  socket.on('sentenceChange', () => {
+    io.emit('updateSentencesTable');
   });
 });
