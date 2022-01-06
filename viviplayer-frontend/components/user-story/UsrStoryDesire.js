@@ -25,42 +25,47 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById }) => {
     {
       title: 'User',
       width: '15%',
-      render: () => <p><b>{user.username && <p>{user.username}</p>}</b></p>
+      render: () => <div>{user.username && <b>{user.username}</b>}</div>
     },
     {
       title: 'Inhalt',
       dataIndex: 'id',
-      width: '50%',
+      width: '55%',
       render: (id, record) => (
-        <p>
-          <b> Damit </b> {record.damit}, <b>möchte ich als </b> {record.moechteichals1}, {record.moechteichals2}
-        </p>
+        <div>
+          <b> Damit </b> {record.damit}, <b>möchte ich als </b> {record.moechteichals1},{' '}
+          {record.moechteichals2}
+        </div>
       )
     },
     {
       title: 'Shot',
       dataIndex: 'shot',
-      width: '10%',
-      render: (shot) => <p>{shot}</p>
+      width: '15%',
+      render: (shot) => (
+        <div>
+          Shot:<b>{shot}</b>
+        </div>
+      )
     },
     {
       title: 'Aktionen',
       dataIndex: 'id',
       render: (id, record) => (
-        <Space size="middle">
-          <EditUserStory id={id} context={record} updateFunc={updateState} />
-          <Popconfirm
-            title="Löschen dieses Satzes ist nicht rückgängig zu machen. Weiter?"
-            onConfirm={() => {
-              deleteUserStoryById(id);
-              setupdateTable(!updateTable);
-            }}
-          >
-            <Button type="primary" danger>
-              Delete
-            </Button>
-          </Popconfirm>
-        </Space>
+        <div>
+          <Space size="middle">
+            <EditUserStory id={id} context={record} updateFunc={updateState} />
+            <Popconfirm
+              title="Löschen dieses Satzes ist nicht rückgängig zu machen. Weiter?"
+              onConfirm={() => {
+                deleteUserStoryById(id);
+                setupdateTable(!updateTable);
+              }}
+            >
+              <a style={{ color: 'red' }}>Delete</a>
+            </Popconfirm>
+          </Space>
+        </div>
       )
     }
   ];
@@ -78,11 +83,16 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById }) => {
         pagination={false}
         dataSource={userStories}
         scroll={{ y: 200 }}
+        style={{ minHeight: '250px' }}
       />
       <Form form={form} name="Write sentence" onFinish={createUserStoryFunc} autoComplete="off">
         Damit :
         <Form.Item style={{ marginBottom: '0.5em' }} name="damit">
-          <Input className={styles.inputuser} rows={4} placeholder="z.B ich weiss,ob jemand unregelmäßig arbeitet" />
+          <Input
+            className={styles.inputuser}
+            rows={4}
+            placeholder="z.B ich weiss,ob jemand unregelmäßig arbeitet"
+          />
         </Form.Item>
         möchte ich als:
         <Form.Item style={{ marginBottom: '0.2em' }} name="moechteichals1">

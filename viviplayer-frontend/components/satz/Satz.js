@@ -45,46 +45,48 @@ const Satz = ({ deleteSentenceById, createSentence, user }) => {
     {
       title: 'User',
       width: '15%',
-      render: () => (
-        <p>
-          <b>{user.username && <p>{user.username}</p>}</b>
-        </p>
-      )
+      render: () => <div className="test">{user.username && <b>{user.username}</b>}</div>
     },
     {
       title: 'Inhalt',
       dataIndex: 'text',
-      width: '50%',
-      render: (text) => <p>{text}</p>
+      width: '55%',
+      render: (text) => (
+        <div className="test">
+          <span> {text}</span>
+        </div>
+      )
     },
     {
       title: 'Shot',
       dataIndex: 'shot',
-      width: '10%',
-      render: (shot) => <p>{shot}</p>
+      width: '15%',
+      render: (shot) => (
+        <div>
+          Shot: <b>{shot}</b>
+        </div>
+      )
     },
     {
       title: 'Aktionen',
       dataIndex: 'id',
       render: (id, record) => (
-        <Space size='middle'>
-          <EditSentence id={id} context={record} updateFunc={updateState} />
-          <Popconfirm
-            title='Löschen dieses Satzes ist nicht rückgängig zu machen. Weiter?'
-            onConfirm={() => {
-              deleteSentenceById(id);
-              setupdateTable(!updateTable);
-              socket.send(JSON.stringify({
-                'action': 'sentenceChange',
-                'time': 0
-              }));
-            }}
-          >
-            <Button type='primary' danger>
-              Delete
-            </Button>
-          </Popconfirm>
-        </Space>
+        <div>
+          <Space size="middle">
+            <div>
+              <EditSentence id={id} context={record} updateFunc={updateState} />
+              <Popconfirm
+                title="Löschen dieses Satzes ist nicht rückgängig zu machen. Weiter?"
+                onConfirm={() => {
+                  deleteSentenceById(id);
+                  setupdateTable(!updateTable);
+                }}
+              >
+                <a style={{ color: 'red' }}>Delete</a>
+              </Popconfirm>
+            </div>
+          </Space>
+        </div>
       )
     }
   ];
@@ -105,6 +107,7 @@ const Satz = ({ deleteSentenceById, createSentence, user }) => {
         pagination={false}
         dataSource={sentencesList}
         scroll={{ y: 200 }}
+        style={{ minHeight: '250px' }}
       />
       <Form form={form} name='Write sentence' onFinish={createSentenceFunc} autoComplete='off'>
         <Form.Item style={{ marginBottom: '1em' }} name='text'>
