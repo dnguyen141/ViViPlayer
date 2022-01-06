@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../utils/api';
-import io from 'socket.io-client';
 import { Button, Input, Table, Space, Popconfirm, Form } from 'antd';
 import { getSentences, deleteSentenceById, createSentence } from '../../actions/session.action';
 import { connect } from 'react-redux';
 import EditSentence from './EditSentence';
+import { WS_BACKEND } from '../../constants/constants';
+
 let socket;
 
 const { TextArea } = Input;
@@ -14,20 +15,29 @@ const Satz = ({ deleteSentenceById, createSentence, user }) => {
   const [form] = Form.useForm();
   // connect to socket and update sentence table
   useEffect(() => {
-    socket = io('http://localhost:5001');
-    socket.on('updateSentencesTable', () => {
-      fetchSentenc();
-    });
+    const url = WS_BACKEND + '/ws/player/sessionid12345/';
+    socket = new WebSocket(url);
+    socket.onmessage = (e) => {
+      const data = JSON.parse(e.data);
+      if (data.action === 'sentenceChange') {
+        fetchSentenc();
+      }
+    };
   }, []);
 
   const updateState = () => {
-    socket.emit('sentenceChange');
+    socket.send(JSON.stringify({
+      'action': 'sentenceChange',
+      'time': 0
+    }));
     setupdateTable(!updateTable);
   };
+
   async function fetchSentenc() {
     const res = await api.get('/session/sentences/');
     setSentencesList(res.data);
   }
+
   useEffect(() => {
     fetchSentenc();
   }, [updateTable]);
@@ -83,27 +93,30 @@ const Satz = ({ deleteSentenceById, createSentence, user }) => {
   const createSentenceFunc = ({ text, shot }) => {
     createSentence(text, shot);
     setupdateTable(!updateTable);
-    socket.emit('sentenceChange');
+    socket.send(JSON.stringify({
+      'action': 'sentenceChange',
+      'time': 0
+    }));
     form.resetFields();
   };
   return (
     <>
       <Table
-        className="number-table"
+        className='number-table'
         columns={columns}
         pagination={false}
         dataSource={sentencesList}
         scroll={{ y: 200 }}
         style={{ minHeight: '250px' }}
       />
-      <Form form={form} name="Write sentence" onFinish={createSentenceFunc} autoComplete="off">
-        <Form.Item style={{ marginBottom: '1em' }} name="text">
-          <TextArea rows={4} placeholder="Geben Sie hier ihren Satz ein." />
+      <Form form={form} name='Write sentence' onFinish={createSentenceFunc} autoComplete='off'>
+        <Form.Item style={{ marginBottom: '1em' }} name='text'>
+          <TextArea rows={4} placeholder='Geben Sie hier ihren Satz ein.' />
         </Form.Item>
-        <Form.Item style={{ marginBottom: '1em' }} name="shot">
-          <Input placeholder="Geben Sie Shot-Nummer ein." />
+        <Form.Item style={{ marginBottom: '1em' }} name='shot'>
+          <Input placeholder='Geben Sie Shot-Nummer ein.' />
         </Form.Item>
-        <Button type="primary" htmlType="submit">
+        <Button type='primary' htmlType='submit'>
           Posten
         </Button>
       </Form>
