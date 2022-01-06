@@ -16,8 +16,9 @@ services:
   frontend:
     build: ./viviplayer-frontend
     volumes:
+      - next_cache:/app/frontend/.next
       - ./viviplayer-frontend:/app/frontend
-      - /app/frontend/.next
     ports:
       - "3000:3000"
-
+volumes:
+  next_cache:

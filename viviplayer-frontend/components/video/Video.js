@@ -45,7 +45,7 @@ const Video = ({ loadUser, loading, user }) => {
     name: 'dummy',
     tan: 'dummytan',
     video_path:
-      'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4'
+      ''
   });
   // const [session, setSession] = useState(null);
   useEffect(async () => {
@@ -243,7 +243,7 @@ const Video = ({ loadUser, loading, user }) => {
   }, [markerList]);
 
   useEffect(() => {
-    const url = WS_BACKEND + '/ws/player/sessionid12345/';
+    const url = (WS_BACKEND || 'ws://' + window.location.host) + '/ws/player/sessionid12345/';
     socketRef.current = new WebSocket(url);
     const socket = socketRef.current;
 
