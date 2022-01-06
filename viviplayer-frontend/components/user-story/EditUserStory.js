@@ -13,9 +13,9 @@ const EditUserStory = ({ id, context, updateFunc, updateUserStoryById }) => {
   };
   return (
     <>
-      <Button type="primary" onClick={() => setIsModalVisible(true)}>
+      <a onClick={() => setIsModalVisible(true)}>
         Edit
-      </Button>
+      </a>
       <Modal
         title="Edit Sentences"
         visible={isModalVisible}

@@ -4,6 +4,7 @@ import { Button, Input, Table, Space, Popconfirm, Form } from 'antd';
 import { getSentences, deleteSentenceById, createSentence } from '../../actions/session.action';
 import { connect } from 'react-redux';
 import EditSentence from './EditSentence';
+import { Header } from 'antd/lib/layout/layout';
 
 const { TextArea } = Input;
 const Satz = ({ deleteSentenceById, createSentence, user }) => {
@@ -29,14 +30,14 @@ const Satz = ({ deleteSentenceById, createSentence, user }) => {
     {
       title: 'Inhalt',
       dataIndex: 'text',
-      width: '50%',
+      width: '55%',
       render: (text) => <p>{text}</p>
     },
     {
       title: 'Shot',
       dataIndex: 'shot',
       width: '10%',
-      render: (shot) => <p>{shot}</p>
+      render: (shot) => <p>Shot:<b><p>{shot}</p></b></p>
     },
     {
       title: 'Aktionen',
@@ -51,9 +52,9 @@ const Satz = ({ deleteSentenceById, createSentence, user }) => {
               setupdateTable(!updateTable);
             }}
           >
-            <Button type="primary" danger>
+            <a style={{color:'red'}}>
               Delete
-            </Button>
+            </a>
           </Popconfirm>
         </Space>
       )
@@ -72,13 +73,14 @@ const Satz = ({ deleteSentenceById, createSentence, user }) => {
         pagination={false}
         dataSource={sentencesList}
         scroll={{ y: 200 }}
+        style={{minHeight:'250px'}}
       />
       <Form form={form} name="Write sentence" onFinish={createSentenceFunc} autoComplete="off">
         <Form.Item style={{ marginBottom: '1em' }} name="text">
           <TextArea rows={4} placeholder="Geben Sie hier ihren Satz ein." />
         </Form.Item>
         <Form.Item style={{ marginBottom: '1em' }} name="shot">
-          <Input placeholder="Geben Sie Shot-Nummer ein." />
+          <Input placeholder="Geben Sie Shot-Nummer ein."/>
         </Form.Item>
         <Button type="primary" htmlType="submit">
           Posten

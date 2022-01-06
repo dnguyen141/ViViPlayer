@@ -87,7 +87,7 @@ a {
 
 /*CSS to keep the chat display to a fixed height*/
 .scroll-bar {
-  height: 200px;
+  max-height: 200px;
   overflow: auto;
 }
 
@@ -114,4 +114,12 @@ a {
 .video-js {
   width: 100% !important;
   height: 100% !important;
+}
+
+.ant-table-thead > tr > th {
+  display: none !important;
+}
+
+.ant-table-body {
+  overflow-y: auto !important;
 }

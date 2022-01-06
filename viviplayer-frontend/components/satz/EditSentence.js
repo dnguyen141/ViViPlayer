@@ -12,9 +12,9 @@ const EditSentence = ({ id, context, updateFunc, updateSentenceById }) => {
   };
   return (
     <>
-      <Button type="primary" onClick={() => setIsModalVisible(true)}>
+      <a onClick={() => setIsModalVisible(true)}>
         Edit
-      </Button>
+      </a>
       <Modal
         title="Edit Sentences"
         visible={isModalVisible}

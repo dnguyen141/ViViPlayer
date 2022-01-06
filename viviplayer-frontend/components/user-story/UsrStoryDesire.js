@@ -30,7 +30,7 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById }) => {
     {
       title: 'Inhalt',
       dataIndex: 'id',
-      width: '50%',
+      width: '55%',
       render: (id, record) => (
         <p>
           <b> Damit </b> {record.damit}, <b>möchte ich als </b> {record.moechteichals1}, {record.moechteichals2}
@@ -41,7 +41,7 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById }) => {
       title: 'Shot',
       dataIndex: 'shot',
       width: '10%',
-      render: (shot) => <p>{shot}</p>
+      render: (shot) => <p>Shot:<b><p>{shot}</p></b></p>
     },
     {
       title: 'Aktionen',
@@ -56,9 +56,9 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById }) => {
               setupdateTable(!updateTable);
             }}
           >
-            <Button type="primary" danger>
+            <a style={{color:'red'}}>
               Delete
-            </Button>
+            </a>
           </Popconfirm>
         </Space>
       )
@@ -78,6 +78,7 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById }) => {
         pagination={false}
         dataSource={userStories}
         scroll={{ y: 200 }}
+        style={{minHeight:'250px'}}
       />
       <Form form={form} name="Write sentence" onFinish={createUserStoryFunc} autoComplete="off">
         Damit :
