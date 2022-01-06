@@ -25,38 +25,40 @@ const Satz = ({ deleteSentenceById, createSentence, user }) => {
     {
       title: 'User',
       width: '15%',
-      render: () => <p><b>{user.username && <p>{user.username}</p>}</b></p>
+      render: () => <div style={{ marginTop: '-25px' }}><b>{user.username && <p>{user.username}</p>}</b></div>
     },
     {
       title: 'Inhalt',
       dataIndex: 'text',
       width: '55%',
-      render: (text) => <p>{text}</p>
+      render: (text) => <div style={{ marginTop: '-15px' }}>{text}</div>
     },
     {
       title: 'Shot',
       dataIndex: 'shot',
       width: '10%',
-      render: (shot) => <p>Shot:<b><p>{shot}</p></b></p>
+      render: (shot) => <div style={{ textAlign: "center", marginTop: '0px' }}>Shot:<p><b>{shot}</b></p></div>
     },
     {
       title: 'Aktionen',
       dataIndex: 'id',
       render: (id, record) => (
-        <Space size="middle">
-          <EditSentence id={id} context={record} updateFunc={updateState} />
-          <Popconfirm
-            title="Löschen dieses Satzes ist nicht rückgängig zu machen. Weiter?"
-            onConfirm={() => {
-              deleteSentenceById(id);
-              setupdateTable(!updateTable);
-            }}
-          >
-            <a style={{color:'red'}}>
-              Delete
-            </a>
-          </Popconfirm>
-        </Space>
+        <div style={{ marginTop: '-28px' }}>
+          <Space size="middle">
+            <EditSentence id={id} context={record} updateFunc={updateState} />
+            <Popconfirm
+              title="Löschen dieses Satzes ist nicht rückgängig zu machen. Weiter?"
+              onConfirm={() => {
+                deleteSentenceById(id);
+                setupdateTable(!updateTable);
+              }}
+            >
+              <a style={{ color: 'red' }}>
+                Delete
+              </a>
+            </Popconfirm>
+          </Space>
+        </div>
       )
     }
   ];
@@ -73,14 +75,14 @@ const Satz = ({ deleteSentenceById, createSentence, user }) => {
         pagination={false}
         dataSource={sentencesList}
         scroll={{ y: 200 }}
-        style={{minHeight:'250px'}}
+        style={{ minHeight: '250px' }}
       />
       <Form form={form} name="Write sentence" onFinish={createSentenceFunc} autoComplete="off">
         <Form.Item style={{ marginBottom: '1em' }} name="text">
           <TextArea rows={4} placeholder="Geben Sie hier ihren Satz ein." />
         </Form.Item>
         <Form.Item style={{ marginBottom: '1em' }} name="shot">
-          <Input placeholder="Geben Sie Shot-Nummer ein."/>
+          <Input placeholder="Geben Sie Shot-Nummer ein." />
         </Form.Item>
         <Button type="primary" htmlType="submit">
           Posten

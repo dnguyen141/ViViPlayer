@@ -25,28 +25,27 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById }) => {
     {
       title: 'User',
       width: '15%',
-      render: () => <p><b>{user.username && <p>{user.username}</p>}</b></p>
+      render: () => <div style={{ marginTop: '-25px' }}><b>{user.username && <p>{user.username}</p>}</b></div>
     },
     {
       title: 'Inhalt',
       dataIndex: 'id',
       width: '55%',
       render: (id, record) => (
-        <p>
-          <b> Damit </b> {record.damit}, <b>möchte ich als </b> {record.moechteichals1}, {record.moechteichals2}
-        </p>
+          <div style={{ marginTop: '-15px' }}><b> Damit </b> {record.damit}, <b>möchte ich als </b> {record.moechteichals1}, {record.moechteichals2}</div>
       )
     },
     {
       title: 'Shot',
       dataIndex: 'shot',
       width: '10%',
-      render: (shot) => <p>Shot:<b><p>{shot}</p></b></p>
+      render: (shot) => <div style={{ textAlign: "center", marginTop: '0px' }}>Shot:<p><b>{shot}</b></p></div>
     },
     {
       title: 'Aktionen',
       dataIndex: 'id',
       render: (id, record) => (
+        <div style={{ marginTop: '-28px' }}>
         <Space size="middle">
           <EditUserStory id={id} context={record} updateFunc={updateState} />
           <Popconfirm
@@ -61,6 +60,7 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById }) => {
             </a>
           </Popconfirm>
         </Space>
+        </div>
       )
     }
   ];
