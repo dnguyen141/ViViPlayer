@@ -35,38 +35,46 @@ const Satz = ({ deleteSentenceById, createSentence, user }) => {
     {
       title: 'User',
       width: '15%',
-      render: () => <div style={{ marginTop: '-25px' }}><b>{user.username && <p>{user.username}</p>}</b></div>
+      render: () => <div className="test">{user.username && <b>{user.username}</b>}</div>
     },
     {
       title: 'Inhalt',
       dataIndex: 'text',
       width: '55%',
-      render: (text) => <div style={{ marginTop: '-15px' }}>{text}</div>
+      render: (text) => (
+        <div className="test">
+          <span> {text}</span>
+        </div>
+      )
     },
     {
       title: 'Shot',
       dataIndex: 'shot',
-      width: '10%',
-      render: (shot) => <div style={{ textAlign: "center", marginTop: '0px' }}>Shot:<p><b>{shot}</b></p></div>
+      width: '15%',
+      render: (shot) => (
+        <div>
+          Shot: <b>{shot}</b>
+        </div>
+      )
     },
     {
       title: 'Aktionen',
       dataIndex: 'id',
       render: (id, record) => (
-        <div style={{ marginTop: '-28px' }}>
+        <div>
           <Space size="middle">
-            <EditSentence id={id} context={record} updateFunc={updateState} />
-            <Popconfirm
-              title="Löschen dieses Satzes ist nicht rückgängig zu machen. Weiter?"
-              onConfirm={() => {
-                deleteSentenceById(id);
-                setupdateTable(!updateTable);
-              }}
-            >
-              <a style={{ color: 'red' }}>
-                Delete
-              </a>
-            </Popconfirm>
+            <div>
+              <EditSentence id={id} context={record} updateFunc={updateState} />
+              <Popconfirm
+                title="Löschen dieses Satzes ist nicht rückgängig zu machen. Weiter?"
+                onConfirm={() => {
+                  deleteSentenceById(id);
+                  setupdateTable(!updateTable);
+                }}
+              >
+                <a style={{ color: 'red' }}>Delete</a>
+              </Popconfirm>
+            </div>
           </Space>
         </div>
       )

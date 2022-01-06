@@ -12,7 +12,7 @@ const EditSentence = ({ id, context, updateFunc, updateSentenceById }) => {
   };
   return (
     <>
-      <a onClick={() => setIsModalVisible(true)}>
+      <a onClick={() => setIsModalVisible(true)} style={{ marginRight: '1em' }}>
         Edit
       </a>
       <Modal
