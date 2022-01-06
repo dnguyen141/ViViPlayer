@@ -1,31 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../utils/api';
+import io from 'socket.io-client';
 import { Button, Input, Table, Space, Popconfirm, Form } from 'antd';
 import { getSentences, deleteSentenceById, createSentence } from '../../actions/session.action';
 import { connect } from 'react-redux';
 import EditSentence from './EditSentence';
-import { Header } from 'antd/lib/layout/layout';
+let socket;
 
 const { TextArea } = Input;
 const Satz = ({ deleteSentenceById, createSentence, user }) => {
   const [updateTable, setupdateTable] = useState(false);
   const [sentencesList, setSentencesList] = useState(null);
   const [form] = Form.useForm();
+  // connect to socket and update sentence table
+  useEffect(() => {
+    socket = io('http://localhost:5001');
+    socket.on('updateSentencesTable', () => {
+      fetchSentenc();
+    });
+  }, []);
+
   const updateState = () => {
+    socket.emit('sentenceChange');
     setupdateTable(!updateTable);
   };
+  async function fetchSentenc() {
+    const res = await api.get('/session/sentences/');
+    setSentencesList(res.data);
+  }
   useEffect(() => {
-    async function fetchSentenc() {
-      const res = await api.get('/session/sentences/');
-      setSentencesList(res.data);
-    }
     fetchSentenc();
   }, [updateTable]);
   const columns = [
     {
       title: 'User',
       width: '15%',
-      render: () => <p><b>{user.username && <p>{user.username}</p>}</b></p>
+      render: () => (
+        <p>
+          <b>{user.username && <p>{user.username}</p>}</b>
+        </p>
+      )
     },
     {
       title: 'Inhalt',
@@ -50,6 +64,7 @@ const Satz = ({ deleteSentenceById, createSentence, user }) => {
             onConfirm={() => {
               deleteSentenceById(id);
               setupdateTable(!updateTable);
+              socket.emit('sentenceChange');
             }}
           >
             <a style={{color:'red'}}>
@@ -63,6 +78,7 @@ const Satz = ({ deleteSentenceById, createSentence, user }) => {
   const createSentenceFunc = ({ text, shot }) => {
     createSentence(text, shot);
     setupdateTable(!updateTable);
+    socket.emit('sentenceChange');
     form.resetFields();
   };
   return (
