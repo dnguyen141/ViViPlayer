@@ -85,12 +85,6 @@ a {
   display: none !important;
 }
 
-/*CSS to keep the chat display to a fixed height*/
-.scroll-bar {
-  max-height: 200px;
-  overflow: auto;
-}
-
 .list-h {
   margin-top: 10px !important;
   white-space: nowrap;
