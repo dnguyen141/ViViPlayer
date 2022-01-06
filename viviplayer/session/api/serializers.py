@@ -17,7 +17,7 @@ IMG_VALIDATOR = FileExtensionValidator(
 
 
 class SessionSerializer(serializers.ModelSerializer):
-    video_path = serializers.FileField(validators=[VID_VALIDATOR])
+    video_path = serializers.FileField(validators=[VID_VALIDATOR], use_url=False)
     owner = serializers.ReadOnlyField(source="owner.username")
     tan = serializers.ReadOnlyField()
 
