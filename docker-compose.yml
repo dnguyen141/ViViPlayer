@@ -17,6 +17,7 @@ services:
     build: ./viviplayer-frontend
     volumes:
       - ./viviplayer-frontend:/app/frontend
+      - /app/frontend/.next
     ports:
       - "3000:3000"
 
