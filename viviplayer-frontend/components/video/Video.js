@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import io from 'socket.io-client';
 import 'videojs-markers';
 import videoJs from 'video.js';
 import { Button, List } from 'antd';
@@ -10,7 +9,8 @@ import { getInfoSession } from '../../actions/session.action';
 import { loadUser } from '../../actions/auth.action';
 import { setAuthToken } from '../../utils/setAuthToken';
 import api from '../../utils/api';
-let socket;
+import { WS_BACKEND } from '../../constants/constants';
+
 var markers = '';
 var markerListDefault = [
   // !!! markers need to be an Integer
@@ -75,13 +75,10 @@ const Video = ({ loadUser, loading, user }) => {
       setUserState(user);
     }
   }, []);
-  // connect to socket io
-  useEffect(() => {
-    socket = io('http://localhost:5001');
-  }, []);
 
   const videoRef = React.useRef(null);
   const playerRef = React.useRef(null);
+  const socketRef = React.useRef(null);
   const [player, setPlayer] = useState(null);
   const [progressBarWidth, setProgressBarWidth] = useState('100%');
   const [markerList, setMarkerList] = useState(markerListDefault);
@@ -115,9 +112,19 @@ const Video = ({ loadUser, loading, user }) => {
     if (videoRef.current.paused) {
       videoRef.current.play();
       setPlayPauseIcon(<PauseOutlined style={{ fontSize: '150%' }} />);
+
+      socketRef.current.send(JSON.stringify({
+        'action': 'play',
+        'time': videoRef.current.currentTime
+      }));
     } else {
       videoRef.current.pause();
       setPlayPauseIcon(<CaretRightOutlined style={{ fontSize: '150%' }} />);
+
+      socketRef.current.send(JSON.stringify({
+        'action': 'pause',
+        'time': videoRef.current.currentTime
+      }));
     }
   }
 
@@ -146,13 +153,13 @@ const Video = ({ loadUser, loading, user }) => {
           videoRef.current.pause();
         }
       }
-    } else if (lastTime != 0) {
+    } else if (lastTime !== 0) {
       setLastTime(-1); //resets the last chapter so that it can be played again.
     }
 
     requestAnimationFrame(() => {
       //checks whether the chapter title should still be shown
-      if (lastTime == -1 || videoRef.current.currentTime > lastTime + 5) {
+      if (lastTime === -1 || videoRef.current.currentTime > lastTime + 5) {
         setVisibleChapterText('translateY(-100%)');
       }
 
@@ -223,6 +230,7 @@ const Video = ({ loadUser, loading, user }) => {
       videoRef.current.currentTime = newPosition * videoRef.current.duration;
     }
   }
+
   //run only one time after the first render.
   useEffect(() => {
     calculateMarkerPosition();
@@ -233,6 +241,32 @@ const Video = ({ loadUser, loading, user }) => {
   useEffect(() => {
     calculateMarkerPosition(videoRef.current);
   }, [markerList]);
+
+  useEffect(() => {
+    const url = WS_BACKEND + '/ws/player/sessionid12345/';
+    socketRef.current = new WebSocket(url);
+    const socket = socketRef.current;
+
+    socket.onmessage = function (e) {
+      const data = JSON.parse(e.data);
+      if (data.action === 'play') {
+        if (videoRef.current) {
+          videoRef.current.play();
+          videoRef.current.currentTime = data.time + '';
+        }
+      } else if (data.action === 'pause') {
+        if (videoRef.current) {
+          videoRef.current.pause();
+          videoRef.current.currentTime = data.time + '';
+          console.log(data.time + '');
+        }
+      }
+    };
+
+    return () => {
+      socket.close();
+    };
+  }, [socketRef, videoRef]);
 
   useEffect(() => {
     if (videoRef.current != null) {
@@ -267,7 +301,7 @@ const Video = ({ loadUser, loading, user }) => {
           }
         },
         onMarkerReached: function (marker) {
-          console.log(marker);  
+          console.log(marker);
         },
         markers: markerListDefault
       });
@@ -277,26 +311,7 @@ const Video = ({ loadUser, loading, user }) => {
     }
     return () => {};
   }, [videoRef]);
-  // socket.on('getCommandToPlayVideo', () => {
-  //   // console.log("lets play");
-  //   if (player) {
-  //     player.play();
-  //   }
-  // });
-  // socket.on('getCommandToPauseVideo', () => {
-  //   if (player) {
-  //     player.pause();
-  //   }
-  // });
-  // const playVideo = (video) => {
-  //   video.play();
-  //   socket.emit('playVideo');
-  // };
-  // const pauseVideo = (video) => {
-  //   console.log('PAUSE');
-  //   video.pause();
-  //   socket.emit('pauseVideo');
-  // };
+
   return (
     <>
       <div className={styles.videocontainer}>

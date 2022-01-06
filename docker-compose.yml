@@ -3,15 +3,15 @@ version: '3'
 services:
   redis:
     image: redis:5
-    ports:
-      - "6379:6379"
+    expose:
+      - "6379"
   django:
     build: ./viviplayer
     volumes:
       - ./viviplayer:/app/backend
     ports:
       - "8000:8000"
-    depends_on:
+    links:
       - redis
   frontend:
     build: ./viviplayer-frontend
