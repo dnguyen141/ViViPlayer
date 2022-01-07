@@ -5,19 +5,41 @@ import { connect } from 'react-redux';
 import { Button, Input, Table, Space, Popconfirm, Form } from 'antd';
 import EditUserStory from './EditUserStory';
 import styles from './user-story.module.css';
+import { WS_BACKEND } from '../../constants/constants';
+let socket;
 import { createUserStory, deleteUserStoryById } from '../../actions/session.action';
 const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById }) => {
   const [updateTable, setupdateTable] = useState(false);
   const [userStories, setUserStories] = useState(null);
   const [form] = Form.useForm();
+
+  async function fetchUserStories() {
+    const res = await api.get('/session/userstories/');
+    setUserStories(res.data);
+  }
+
   useEffect(() => {
-    async function fetchUserStories() {
-      const res = await api.get('/session/userstories/');
-      setUserStories(res.data);
-    }
     fetchUserStories();
   }, [updateTable]);
+  // connect to socket and update sentence table
+  useEffect(() => {
+    const url = (WS_BACKEND || 'ws://' + window.location.host) + '/ws/player/sessionid12345/';
+    socket = new WebSocket(url);
+    socket.onmessage = (e) => {
+      const data = JSON.parse(e.data);
+      if (data.action === 'userStoryChange') {
+        console.log('CHANGE UER STORY');
+        fetchUserStories();
+      }
+    };
+  }, []);
   const updateState = () => {
+    socket.send(
+      JSON.stringify({
+        action: 'userStoryChange',
+        time: 0
+      })
+    );
     setupdateTable(!updateTable);
   };
   // create table
@@ -59,7 +81,7 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById }) => {
               title="Löschen dieses Satzes ist nicht rückgängig zu machen. Weiter?"
               onConfirm={() => {
                 deleteUserStoryById(id);
-                setupdateTable(!updateTable);
+                updateState();
               }}
             >
               <a style={{ color: 'red' }}>Delete</a>
@@ -72,7 +94,7 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById }) => {
 
   const createUserStoryFunc = ({ damit, moechteichals1, moechteichals2, shot }) => {
     createUserStory(damit, moechteichals1, moechteichals2, shot);
-    setupdateTable(!updateTable);
+    updateState();
     form.resetFields();
   };
   return (
