@@ -23,7 +23,9 @@ import {
   GET_USERSTORY_BY_ID_SUCCESS,
   GET_USERSTORY_BY_ID_FAIL,
   DELETE_USERSTORY_BY_ID_SUCCESS,
-  DELETE_USERSTORY_SUCCESS_FAIL
+  DELETE_USERSTORY_SUCCESS_FAIL,
+  UPDATE_SESSION_SUCCESS,
+  UPDATE_SESSION_FAIL
 } from './types';
 import { Notification } from '../utils/notification';
 
@@ -36,6 +38,7 @@ export const getInfoSession = () => async (dispatch) => {
       payload: res.data[0]
     });
     console.log(res.data[0]);
+    return res;
   } catch (err) {
     const errors = err.response.data.errors;
     console.log(err.response.data.errors);
@@ -76,6 +79,33 @@ export const createSession = (formData) => async (dispatch) => {
   }
 };
 
+// update session
+export const updateSession = (formData, id) => async (dispatch) => {
+  console.log('ID THERE', id);
+  try {
+    const res = await api.put(`/session/${id}/`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+    dispatch({
+      type: UPDATE_SESSION_SUCCESS,
+      payload: res.data
+    });
+    Notification('Session Notification', 'update session success', 'success');
+    return res.data;
+  } catch (err) {
+    const errors = err.response.data.errors;
+    console.log(err.response.data.errors);
+    if (errors) {
+      errors.forEach((error) => Notification('Session Notification', error.message, 'warning'));
+    }
+
+    dispatch({
+      type: UPDATE_SESSION_FAIL
+    });
+  }
+};
 // get Sentences
 export const getSentences = () => async (dispatch) => {
   try {
@@ -209,9 +239,7 @@ export const createUserStory =
     } catch (err) {
       const errors = err.response.data.errors;
       if (errors) {
-        errors.forEach((error) =>
-          Notification('UserStory notification', error.message, 'warning')
-        );
+        errors.forEach((error) => Notification('UserStory notification', error.message, 'warning'));
       }
       dispatch({
         type: CREATE_USERSTORY_FAIL
@@ -233,9 +261,7 @@ export const updateUserStoryById =
     } catch (err) {
       const errors = err.response.data.errors;
       if (errors) {
-        errors.forEach((error) =>
-          Notification('UserStory notification', error.message, 'warning')
-        );
+        errors.forEach((error) => Notification('UserStory notification', error.message, 'warning'));
       }
       dispatch({
         type: UPDATE_USERSTORY_FAIL
