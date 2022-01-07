@@ -66,6 +66,7 @@ export const login = (username, password) => async (dispatch) => {
   const body = { username, password };
 
   try {
+    await logout();
     const res = await api.post('/auth/login/', body);
 
     await dispatch({
