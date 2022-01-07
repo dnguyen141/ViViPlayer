@@ -28,7 +28,6 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById }) => {
     socket.onmessage = (e) => {
       const data = JSON.parse(e.data);
       if (data.action === 'userStoryChange') {
-        console.log('CHANGE UER STORY');
         fetchUserStories();
       }
     };
