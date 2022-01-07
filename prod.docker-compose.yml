@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  redis:
+    image: redis:5
+    expose:
+      - "6379"
+  django:
+    build: ./viviplayer
+    volumes:
+      - ./viviplayer:/app/backend
+      - ./media:/app/backend/media
+    expose:
+      - "8000"
+    links:
+      - redis
+  frontend:
+    build:
+      context: ./viviplayer-frontend/
+      dockerfile: prod.Dockerfile
+    volumes:
+      - ./media:/usr/share/nginx/media
+    ports:
+      - "8080:3000"
+    links:
+      - django

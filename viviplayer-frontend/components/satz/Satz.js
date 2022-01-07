@@ -15,7 +15,7 @@ const Satz = ({ deleteSentenceById, createSentence, user }) => {
   const [form] = Form.useForm();
   // connect to socket and update sentence table
   useEffect(() => {
-    const url = WS_BACKEND + '/ws/player/sessionid12345/';
+    const url = (WS_BACKEND || 'ws://' + window.location.host) + '/ws/player/sessionid12345/';
     socket = new WebSocket(url);
     socket.onmessage = (e) => {
       const data = JSON.parse(e.data);

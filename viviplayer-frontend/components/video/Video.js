@@ -45,7 +45,7 @@ const Video = ({ loadUser, loading, user }) => {
     name: 'dummy',
     tan: 'dummytan',
     video_path:
-      'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4'
+      ''
   });
   // const [session, setSession] = useState(null);
   useEffect(async () => {
@@ -243,11 +243,11 @@ const Video = ({ loadUser, loading, user }) => {
   }, [markerList]);
 
   useEffect(() => {
-    const url = WS_BACKEND + '/ws/player/sessionid12345/';
+    const url = (WS_BACKEND || 'ws://' + window.location.host) + '/ws/player/sessionid12345/';
     socketRef.current = new WebSocket(url);
     const socket = socketRef.current;
 
-    socket.onmessage = function (e) {
+    socket.onmessage = function(e) {
       const data = JSON.parse(e.data);
       if (data.action === 'play') {
         if (videoRef.current) {
@@ -324,14 +324,14 @@ const Video = ({ loadUser, loading, user }) => {
                 // onProgress={(e) => pauseSegment(e)}
                 onTimeUpdate={updatePlayer}
                 ref={videoRef}
-                id="video-viviplayer"
+                id='video-viviplayer'
                 //controls
-                preload="auto"
+                preload='auto'
                 data-setup='{"fluid":true}' //This is used so that the video player is responsive
-                className="video-js vjs-default-skin vjs-big-play-centered"
+                className='video-js vjs-default-skin vjs-big-play-centered'
                 onClick={togglePlayPause}
               >
-                <source src={session.video_path} type="video/mp4" />
+                <source src={'/media/' + session.video_path} type='video/mp4' />
               </video>
             </div>
           ) : (
@@ -340,14 +340,14 @@ const Video = ({ loadUser, loading, user }) => {
                 // onProgress={(e) => pauseSegment(e)}
                 onTimeUpdate={updatePlayer}
                 ref={videoRef}
-                id="video-viviplayer"
+                id='video-viviplayer'
                 //controls
-                preload="auto"
+                preload='auto'
                 data-setup='{"fluid":true}' //This is used so that the video player is responsive
-                className="video-js vjs-default-skin vjs-big-play-centered"
+                className='video-js vjs-default-skin vjs-big-play-centered'
                 onClick={togglePlayPause}
               >
-                <source src={session.video_path} type="video/mp4" />
+                <source src={'/media/' + session.video_path} type='video/mp4' />
               </video>
             </div>
           )}
@@ -359,28 +359,28 @@ const Video = ({ loadUser, loading, user }) => {
               <div className={styles.progressbarcontainer} onClick={changeVideoPosition.bind(this)}>
                 <div
                   className={styles.progressbar}
-                  id="progressbar"
+                  id='progressbar'
                   style={{ width: progressBarWidth }}
                 ></div>
                 {markers}
               </div>
 
               <div className={styles.buttons}>
-                <button id="play-pause-button" onClick={togglePlayPause}>
+                <button id='play-pause-button' onClick={togglePlayPause}>
                   {playPauseIcon}
                 </button>
               </div>
               <input
-                type="range"
+                type='range'
                 className={styles.volumeslider}
-                min="0"
-                max="1"
-                step="0.01"
-                defaultValue="0.5"
+                min='0'
+                max='1'
+                step='0.01'
+                defaultValue='0.5'
                 onChange={(e) => (videoRef.current.volume = e.target.value)}
               />
               <input
-                type="checkbox"
+                type='checkbox'
                 className={styles.checkbox}
                 checked={autoStop}
                 onChange={toggleautoStop}
@@ -398,13 +398,13 @@ const Video = ({ loadUser, loading, user }) => {
       </div>
       {user != null && user.is_mod == true ? (
         <List
-          size="small"
-          className="list-h"
+          size='small'
+          className='list-h'
           dataSource={markerList}
           renderItem={(markerList) => (
-            <List.Item className="menu-item">
+            <List.Item className='menu-item'>
               <Button
-                type="default"
+                type='default'
                 style={{
                   backgroundColor: 'transparent',
                   color: 'white',
