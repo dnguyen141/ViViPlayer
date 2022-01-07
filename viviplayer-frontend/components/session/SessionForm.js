@@ -20,7 +20,6 @@ function SessionForm({ createSession, sessionInfo }) {
     const formData = new FormData();
     formData.append('video_path', file);
     formData.append('name', values.name);
-    formData.append('tan', values.tan);
     setLoading(true);
     let getInfo = await createSession(formData);
     if (getInfo === undefined) {
@@ -90,13 +89,6 @@ function SessionForm({ createSession, sessionInfo }) {
             rules={[{ required: true, message: 'Name der Session kann nicht Leer sein!' }]}
           >
             <Input placeholder="Geben Sie hier Namen Ihrer Session ein." />
-          </Form.Item>
-          <Form.Item
-            label="TAN"
-            name="tan"
-            rules={[{ required: true, message: 'Geben Sie bitte Ihre TAN ein!' }]}
-          >
-            <Input maxLength={20} placeholder="Geben Sie hier 20-stellige TAN ein." />
           </Form.Item>
           <Form.Item wrapperCol={{ offset: 9, span: 16 }}>
             <Button type="primary" htmlType="submit" style={{ marginTop: '10px' }}>
