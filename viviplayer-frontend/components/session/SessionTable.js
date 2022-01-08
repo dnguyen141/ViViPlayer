@@ -54,7 +54,6 @@ const SessionTable = ({ deleteSessionById, updateLayout, updateLayoutState, load
   }
   useEffect(() => {
     fetchSession();
-    console.log('run in this components');
   }, [updateTable, loading]);
   const updateState = () => {
     fetchSession();
