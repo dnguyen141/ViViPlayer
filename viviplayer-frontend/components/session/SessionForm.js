@@ -1,12 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Input, Row, Col, Button, Divider, Typography, Spin } from 'antd';
 import { createSession } from '../../actions/session.action';
 import { connect } from 'react-redux';
-
-function SessionForm({ createSession, sessionInfo }) {
+import { WS_BACKEND } from '../../constants/constants';
+let socket;
+function SessionForm({ createSession, sessionInfo, updateLayoutState, updateLayout }) {
   const [videoInfo, setVideoInfo] = useState(null);
   const [loading, setLoading] = useState(false);
   const [file, setFile] = useState();
+  // connect to socket and update sentence table
+  useEffect(() => {
+    const url = (WS_BACKEND || 'ws://' + window.location.host) + '/ws/player/sessionid12345/';
+    socket = new WebSocket(url);
+  }, []);
   const layout = {
     labelCol: { span: 5 },
     wrapperCol: { span: 14 }
@@ -28,6 +34,13 @@ function SessionForm({ createSession, sessionInfo }) {
     }
     setLoading(false);
     setVideoInfo(getInfo);
+    updateLayout(!updateLayoutState);
+    socket.send(
+      JSON.stringify({
+        action: 'updateSession',
+        time: 0
+      })
+    );
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -58,55 +71,51 @@ function SessionForm({ createSession, sessionInfo }) {
     );
   };
   return (
-    <Row>
-      <Col span={7} />
-      <Col span={10}>
-        <h1>Session Erstellen</h1>
-        <Divider />
-        <Form
-          {...layout}
-          name="basic"
-          labelAlign="left"
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
+    <div>
+      <h3>Session Erstellen</h3>
+      <Divider />
+      <Form
+        {...layout}
+        name="basic"
+        labelAlign="left"
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+      >
+        <Form.Item
+          label="Video Pfad"
+          name="video"
+          rules={[{ required: true, message: 'Laden Sie bitte ein Video hoch!' }]}
         >
-          <Form.Item
-            label="Video Pfad"
-            name="video"
-            rules={[{ required: true, message: 'Laden Sie bitte ein Video hoch!' }]}
-          >
-            <input
-              ref={inputRef}
-              className="VideoInput_input"
-              type="file"
-              onChange={handleFileChange}
-              accept=".mov,.mp4"
-            />
-          </Form.Item>
-          <Form.Item
-            label="Session Name"
-            name="name"
-            rules={[{ required: true, message: 'Name der Session kann nicht Leer sein!' }]}
-          >
-            <Input placeholder="Geben Sie hier Namen Ihrer Session ein." />
-          </Form.Item>
-          <Form.Item wrapperCol={{ offset: 9, span: 16 }}>
-            <Button type="primary" htmlType="submit" style={{ marginTop: '10px' }}>
-              Session erstellen
-            </Button>
-          </Form.Item>
-          {loading ? (
-            <div>
-              <span>Das Hochladen von Videos kann einige Zeit dauern </span> <Spin />
-            </div>
-          ) : (
-            ''
-          )}
-          {videoInfo !== null ? videoBuild(videoInfo) : ''}
-        </Form>
-      </Col>
-      <Col span={7} />
-    </Row>
+          <input
+            ref={inputRef}
+            className="VideoInput_input"
+            type="file"
+            onChange={handleFileChange}
+            accept=".mov,.mp4"
+          />
+        </Form.Item>
+        <Form.Item
+          label="Session Name"
+          name="name"
+          rules={[{ required: true, message: 'Name der Session kann nicht Leer sein!' }]}
+        >
+          <Input placeholder="Geben Sie hier Namen Ihrer Session ein." />
+        </Form.Item>
+        <Form.Item wrapperCol={{ offset: 9, span: 16 }}>
+          <Button type="primary" htmlType="submit" style={{ marginTop: '10px' }}>
+            Session erstellen
+          </Button>
+        </Form.Item>
+        {loading ? (
+          <div>
+            <span>Das Hochladen von Videos kann einige Zeit dauern </span> <Spin />
+          </div>
+        ) : (
+          ''
+        )}
+        {videoInfo !== null ? videoBuild(videoInfo) : ''}
+      </Form>
+    </div>
   );
 }
 
