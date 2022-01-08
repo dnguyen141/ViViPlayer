@@ -3,7 +3,10 @@ import {
   CREATE_SESSION_FAIL,
   GET_SESSION_SUCCESS,
   GET_SESSION_FAIL,
-  GET_SENTENCES_SUCCESS
+  GET_SENTENCES_SUCCESS,
+  DELETE_SESSION_SUCCESS,
+  DELETE_SESSION_FAIL,
+  UPDATE_SESSION_SUCCESS
 } from '../actions/types';
 
 const initialState = {
@@ -33,6 +36,9 @@ function sessionReducer(state = initialState, action) {
         sentences: payload,
         loading: true
       };
+    case DELETE_SESSION_SUCCESS:
+    case UPDATE_SESSION_SUCCESS:
+      return { ...state, loading: true };
     default:
       return state;
   }

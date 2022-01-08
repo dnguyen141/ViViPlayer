@@ -25,7 +25,9 @@ import {
   DELETE_USERSTORY_BY_ID_SUCCESS,
   DELETE_USERSTORY_SUCCESS_FAIL,
   UPDATE_SESSION_SUCCESS,
-  UPDATE_SESSION_FAIL
+  UPDATE_SESSION_FAIL,
+  DELETE_SESSION_SUCCESS,
+  DELETE_SESSION_FAIL
 } from './types';
 import { Notification } from '../utils/notification';
 
@@ -37,11 +39,9 @@ export const getInfoSession = () => async (dispatch) => {
       type: GET_SESSION_SUCCESS,
       payload: res.data[0]
     });
-    console.log(res.data[0]);
     return res;
   } catch (err) {
     const errors = err.response.data.errors;
-    console.log(err.response.data.errors);
     if (errors) {
       errors.forEach((error) => Notification('Session Notification', error.message, 'warning'));
     }
@@ -68,7 +68,6 @@ export const createSession = (formData) => async (dispatch) => {
     return res.data;
   } catch (err) {
     const errors = err.response.data.errors;
-    console.log(err.response.data.errors);
     if (errors) {
       errors.forEach((error) => Notification('Session Notification', error.message, 'warning'));
     }
@@ -81,7 +80,6 @@ export const createSession = (formData) => async (dispatch) => {
 
 // update session
 export const updateSession = (formData, id) => async (dispatch) => {
-  console.log('ID THERE', id);
   try {
     const res = await api.put(`/session/${id}/`, formData, {
       headers: {
@@ -96,7 +94,6 @@ export const updateSession = (formData, id) => async (dispatch) => {
     return res.data;
   } catch (err) {
     const errors = err.response.data.errors;
-    console.log(err.response.data.errors);
     if (errors) {
       errors.forEach((error) => Notification('Session Notification', error.message, 'warning'));
     }
@@ -114,7 +111,6 @@ export const getSentences = () => async (dispatch) => {
       type: GET_SENTENCES_SUCCESS,
       payload: res.data
     });
-    console.log(res.data);
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
@@ -122,6 +118,25 @@ export const getSentences = () => async (dispatch) => {
     }
     dispatch({
       type: GET_SENTENCES_FAIL
+    });
+  }
+};
+
+// delete session
+export const deleteSessionById = (id) => async (dispatch) => {
+  try {
+    const res = await api.delete(`/session/${id}/`);
+    dispatch({
+      type: DELETE_SESSION_SUCCESS
+    });
+    Notification('Session Notification', 'the session has been deleted', 'success');
+  } catch (err) {
+    const errors = err.response.data.errors;
+    if (errors) {
+      errors.forEach((error) => Notification('Sentences Notification', error.message, 'warning'));
+    }
+    dispatch({
+      type: DELETE_SESSION_FAIL
     });
   }
 };
