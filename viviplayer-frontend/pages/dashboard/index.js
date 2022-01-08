@@ -37,13 +37,11 @@ const Dashboard = ({ user, loadUser, loading }) => {
   }
   async function fetchSession() {
     const res = await api.get('/session/');
-    console.log(res.data);
     setSessionData(res.data);
   }
 
   useEffect(() => {
     fetchSession();
-    console.log('run there');
   }, [updateTable, loading]);
   return (
     <Vivilayout>
