@@ -43,7 +43,6 @@ const Home = ({ isAuthenticated, login, loadUser, user, register }) => {
   };
 
   const loginWithTan = (values) => {
-    console.log('TAN VALUES', values.tan);
     // if (values.tan !== '112021') {
     //   console.log('run here');
     //   Notification('Login', 'TAN is not correct!');

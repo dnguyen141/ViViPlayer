@@ -38,7 +38,6 @@ export const register = (username, password1, password2) => async (dispatch) => 
   const body = { username, password1, password2 };
   try {
     const res = await api.post('/auth/register/mod/', body);
-    console.log(res);
     dispatch({
       type: REGISTER_SUCCESS,
       payload: res.data

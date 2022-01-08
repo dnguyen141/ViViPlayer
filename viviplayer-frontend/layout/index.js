@@ -6,7 +6,6 @@ import { logout } from '../actions/auth.action';
 import { connect } from 'react-redux';
 
 const Vivilayout = ({ children, logout, user }) => {
-  console.log(user);
   return (
     <Layout>
       <Layout.Header style={{ position: 'relative', zIndex: 1, width: '100%' }}>
