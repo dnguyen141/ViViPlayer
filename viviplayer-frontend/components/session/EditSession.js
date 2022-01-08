@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Form, Button, Input, Modal, Spin, Paragraph } from 'antd';
+import { Form, Button, Input, Modal, Spin, Paragraph, Divider } from 'antd';
 import { connect } from 'react-redux';
 import { updateSession } from '../../actions/session.action';
 function EditSession({ id, updateSession, updateFunc }) {
@@ -24,9 +24,11 @@ function EditSession({ id, updateSession, updateFunc }) {
       return;
     }
     setLoading(false);
-    setVideoInfo(getInfo);
+    // if (getInfo) {
+    //   setVideoInfo(getInfo);
+    // }
     updateFunc();
-    // setIsModalVisible(false);
+    setIsModalVisible(false);
   };
   const videoBuild = (videoInfoPara) => {
     return (
@@ -97,7 +99,6 @@ function EditSession({ id, updateSession, updateFunc }) {
         ) : (
           ''
         )}
-        {videoInfo !== null ? videoBuild(videoInfo) : ''}
       </Modal>
     </div>
   );
