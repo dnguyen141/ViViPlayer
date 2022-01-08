@@ -4,8 +4,8 @@
 	\textbf{Setup:} Der Benutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er befindet sich jetzt auf der Hauptseite.\linebreak
 	\textbf{Eingabe:} Der Benutzer klickt auf ``Registrieren.''.\linebreak
 	\textbf{Ausgabe:} Der Benutzer wird zur Registrierungsseite weitergeleitet.\linebreak
-	\textbf{Eingabe:} Der Benutzer gibt seine E-Mail-Adresse und ein Passwort ein und bestätigt dieses. Er klickt danach auf ``Registrieren''. \linebreak
-	\textbf{Ausgabe:} Die Daten sind zur Validierung zu einem Moderator weitergeleitet worden. Der Nutzer wird zum Hauptmenü weitergeleitet.
+	\textbf{Eingabe:} Der Benutzer gibt seinen erwünschten Namen ``jianwei.shi'' und Passwort ``Xo73\#\&CP'' ein und bestätigt dieses. Er klickt danach auf ``Registrieren''. \linebreak
+	\textbf{Ausgabe:} Die Daten sind zur Validierung zu einem Moderator weitergeleitet worden. Der Nutzer wird zur Hauptseite weitergeleitet und da kann er ein Meldung sehen, dass die Registrierung erfolgreich abgeschlossen ist.
 	
 	\item \underline{\textbf{Testfall: UC 2 Moderator einloggen}} \linebreak
 	\textbf{Setup:} Der Benutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er befindet sich jetzt auf der Hauptseite. \linebreak
@@ -15,7 +15,7 @@
 	\textbf{Ausgabe:} Die Fehlermeldung ``Ungültige Anmeldedaten'' erscheint unter dem Eingabefeld.
 	
 	\item \underline{\textbf{Testfall: UC 2 Moderator einloggen}} \linebreak
-	\textbf{Setup:} Der Benutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er befindet sich jetzt auf der Hauptseite. Die Email-Adresse ``jianwei.shi@inf.uni-hannover.de'' und das Passwort ``Xo73\#\&CP'' sind im System hinterlegt. \linebreak
+	\textbf{Setup:} Der Benutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er befindet sich jetzt auf der Hauptseite. Der Benutzername ``jianwei.shi'' und das Passwort ``Xo73\#\&CP'' sind im System hinterlegt. \linebreak
 	\textbf{Eingabe:} Der Benutzer klickt auf ``Einloggen als Moderator''. \linebreak
 	\textbf{Ausgabe:} Ein Moderator-Loginformular taucht auf.\linebreak
 	\textbf{Eingabe:} Der Benutzer gibt die hinterlegten Anmeldedaten ein und klickt auf ``Einloggen als Moderator''.\linebreak
@@ -37,20 +37,20 @@
 	\textbf{Ausgabe:} Der Benutzer bekommt eine Bestätigungsnachricht und er wird zu der ViViPlayer-Session weitergeleitet als Teilnehmer.
 
 	\item \underline{\textbf{Testfall: UC 4 Session vorbereiten}} \linebreak
-	\textbf{Setup:} Der Benutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er ist als Moderator angemeldet und befindet sich jetzt auf der Moderator-Hauptseite(Testfall UC 2 Moderator einloggen).\linebreak
+	\textbf{Setup:} Der Benutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er ist als Moderator angemeldet und befindet sich jetzt auf der Moderator-Hauptseite (Testfall UC 2 Moderator einloggen).\linebreak
 	\textbf{Eingabe:} Der Benutzer klickt auf ``Session erstellen''.\linebreak
 	\textbf{Ausgabe:} Das System zeigt die ViVi-Auswählen-Oberfläche an. \\
 	\textbf{Eingabe:} Der Benutzer wählt ein ViVi und bestätigt (Testfall UC 5 ViVi auswählen).\\
 	\textbf{Ausgabe:} Das System zeigt die ViVi-Segmentieren-Oberfläche an. \\
-	\textbf{Eingabe:} Der Benutzer segmentiert das von ihm hochgeladene Video und bestätigt.(Testfall UC 6 ViVi Segmentieren)\\
+	\textbf{Eingabe:} Der Benutzer segmentiert das von ihm hochgeladene Video und bestätigt. (Testfall UC 6 ViVi Segmentieren)\\
 	\textbf{Ausgabe:} Das System zeigt die Frage-Vorbereiten-Oberfläche an.\\
-	\textbf{Eingabe:} Der Benutzer bereitet eine Umfrage/Verständnisfrage vor und bestätigt.(Testfall UC 7 Umfrage/Verständnisfragen erstellen)\\
+	\textbf{Eingabe:} Der Benutzer bereitet eine Umfrage/Verständnisfrage vor und bestätigt. (Testfall UC 7 Umfrage/Verständnisfragen erstellen)\\
 	\textbf{Ausgabe:} Das System zeigt die ViVi-Überblick-Oberfläche an.\\
 	\textbf{Eingabe:} Der Benutzer prüft noch mal alle Vorbereitungsschritte und klickt auf ``Erstellen''.\\
 	\textbf{Ausgabe:} Das System erstellt eine neue Session und eine sichere TAN.
 	
 	\item \underline{\textbf{Testfall: UC 5 ViVi auswählen}} \linebreak
-	\textbf{Setup:} Der Benutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er ist als Moderator angemeldet. Er ist im Vorgang, eine Session zu erstellen(Testfall UC 4 Session vorbereiten). Er hat ein Vision-Video in seinem Dateisystem gespeichert. \linebreak
+	\textbf{Setup:} Der Benutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er ist als Moderator angemeldet. Er ist im Vorgang, eine Session zu erstellen (Testfall UC 4 Session vorbereiten). Er hat ein Vision-Video in seinem Dateisystem gespeichert. \linebreak
 	\textbf{Eingabe:} Der Benutzer klickt auf ``Hochladen''. \linebreak
 	\textbf{Ausgabe:} Das System zeigt ein Fenster zum Hochladen des ViVis an.\\
 	\textbf{Eingabe:} Der Benutzer wählt ein ViVi von seinem Dateisystem aus und bestätigt.\\
@@ -104,19 +104,18 @@
 	Arbeit für alle sichtbar ist.'' ein und bestätigt.\\
 	\textbf{Ausgabe:} Das System verarbeitet die Anfrage und speichert den Kommentar ab. Die User Story wird den anderen Benutzern angezeigt und dem dazugehörigen Shot zugeordnet.
 	
-	\item \underline{\textbf{Testfall: UC 12 Dateien exportieren und importieren}} \linebreak
+	\item \underline{\textbf{Testfall: UC 12 Dateien exportieren}} \linebreak
 	\textbf{Setup:} Der Benutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er ist als Moderator angemeldet. Der Benutzer befindet sich jetzt auf der ViViPlayer-Seite. \\
 	\textbf{Eingabe:} Der Benutzer klickt auf ``Session Beenden''.\\
 	\textbf{Ausgabe:} Session ist beendet. Der Kommentar ``Als ein Mitarbeiter möchte ich nicht, dass meine private Arbeit für alle sichtbar ist.'', die Verständnisfrage ``Kann der Manager neue Aufgaben für die Mitarbeiter zuweisen?'' mit den Antworten ``Ja'' und ``Nein'' und die Anzahl der Teilnehmer, die ``Ja'' bzw. ``Nein'' für jede Verständnisfrage geantwortet haben, sind auf dem Server als ``.odt''-Datei gespeichert. Die User Story ``Damit ich weiß, ob jemand unregelmäßig arbeitet, möchte ich als Abteilungsleiter eine visuelle Darstellung der geleisteten Stunden sehen.'', die User Story ``Damit wir diese Web-App gemeinsam nutzen können, möchte ich meine Kollegen einladen.'' und die User Story ``Damit ich über unsere Erfolge und Fehlschläge besser berichten kann, möchte ich als Manager die Fortschritte meiner Kollegen nachvollziehen können.'' sind auf dem Server als ``.csv''-Datei gespeichert. Alle Screenshots sind auf dem Server als Bilddateien gespeichert.\\
-	\textbf{Eingabe:} Der Benutzer klickt auf ``Importieren''. \\
-	\textbf{Ausgabe:} Das System importiert alle User Stories von der ``.csv''-Datei nach dem Trello-Board 
-	des Benutzers.\\ 
+	\textbf{Eingabe:} Der Benutzer klickt auf ``Exportieren''. \\
+	\textbf{Ausgabe:} Das System zeigt ein Pop-Up-Fenster, wo der Benutzer die Speicherort der exportierten Dateien in seinem Dateisystem auswählen und bestätigen kann.\\
+	\textbf{Eingabe:} Der Benutzer wählt die gewünschte Speicherort und bestätigt. \\
+	\textbf{Ausgabe:} Das System lädt die exportierten Dateien unter uns speichert in dem Benutzers Dateisystem. \\ 
 	
 	\item \underline{\textbf{Testfall: UC 13 An Umfrage oder Verständnisfrage teilnehmen}} \linebreak
 	\textbf{Setup:} Der Benutzer ist mit dem Internet verbunden und die Web-App ist geöffnet. Er ist als Teilnehmer angemeldet und Teil der Session. Er befindet sich jetzt auf der ViViPlayer-Seite der Web-App. Der Moderator hat eine Umfrage/Verständnisfrage gestellt (Testfall UC 9 Umfrage/Verständnisfragen in Session stellen).\\
 	\textbf{Eingabe:} Der Benutzer klickt auf eine Antwort der Umfrage/Verständnisfrage und auf ``Senden''.\\
 	\textbf{Ausgabe:} Das System sammelt die Antworten von allen Benutzern und nach der Bestätigung des Moderators zeigt es diese in Form eines Balkendiagramms an.
-	
-	
 	
 \end{enumerate}
