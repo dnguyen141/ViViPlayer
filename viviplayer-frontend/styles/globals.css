@@ -110,9 +110,9 @@ a {
   height: 100% !important;
 }
 
-.ant-table-thead > tr > th {
+/* .ant-table-thead > tr > th {
   display: none !important;
-}
+} */
 
 .ant-table-body {
   overflow-y: auto !important;
