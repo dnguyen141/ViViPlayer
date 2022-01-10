@@ -9,7 +9,7 @@ import { getInfoSession } from '../../actions/session.action';
 import { loadUser } from '../../actions/auth.action';
 import { setAuthToken } from '../../utils/setAuthToken';
 import api from '../../utils/api';
-import { WS_BACKEND } from '../../constants/constants';
+import { WS_BACKEND, VIDEO_PREFIX } from '../../constants/constants';
 
 var markers = '';
 var markerListDefault = [
@@ -331,7 +331,7 @@ const Video = ({ loadUser, loading, user }) => {
                 className='video-js vjs-default-skin vjs-big-play-centered'
                 onClick={togglePlayPause}
               >
-                <source src={'/media/' + session.video_path} type='video/mp4' />
+                <source src={VIDEO_PREFIX + session.video_path} type='video/mp4' />
               </video>
             </div>
           ) : (
@@ -347,7 +347,7 @@ const Video = ({ loadUser, loading, user }) => {
                 className='video-js vjs-default-skin vjs-big-play-centered'
                 onClick={togglePlayPause}
               >
-                <source src={'/media/' + session.video_path} type='video/mp4' />
+                <source src={VIDEO_PREFIX + session.video_path} type='video/mp4' />
               </video>
             </div>
           )}
