@@ -117,3 +117,7 @@ a {
 .ant-table-body {
   overflow-y: auto !important;
 }
+
+.ant-table-placeholder {
+  display: none !important;
+}

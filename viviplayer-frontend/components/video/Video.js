@@ -11,34 +11,8 @@ import { setAuthToken } from '../../utils/setAuthToken';
 import api from '../../utils/api';
 import { WS_BACKEND, VIDEO_PREFIX } from '../../constants/constants';
 
-var markers = '';
-var markerListDefault = [
-  // !!! markers need to be an Integer
-  {
-    time: 4,
-    text: 'Chapter 1'
-  },
-  {
-    time: 10,
-    text: 'Chapter 2'
-  },
-  {
-    time: 23,
-    text: 'Chapter 3'
-  },
-  {
-    time: 50,
-    text: 'Chapter 4'
-  },
-  {
-    time: 136,
-    text: 'Chapter 5'
-  },
-  {
-    time: 226,
-    text: 'Chapter 6'
-  }
-];
+
+// !!! markers need to be an Integer
 const Video = ({ loadUser, loading, user }) => {
   const [userState, setUserState] = useState(null);
   const [session, setSession] = useState({
@@ -47,6 +21,7 @@ const Video = ({ loadUser, loading, user }) => {
     video_path:
       ''
   });
+
   // const [session, setSession] = useState(null);
   useEffect(async () => {
     // check for token in LS when app first runs
@@ -76,12 +51,14 @@ const Video = ({ loadUser, loading, user }) => {
     }
   }, []);
 
+  var markerListTemp = [];
   const videoRef = React.useRef(null);
   const playerRef = React.useRef(null);
   const socketRef = React.useRef(null);
   const [player, setPlayer] = useState(null);
   const [progressBarWidth, setProgressBarWidth] = useState('100%');
-  const [markerList, setMarkerList] = useState(markerListDefault);
+  const [markerList, setMarkerList] = useState([]);
+  const [markers, setMarkers] = useState(null);
   const [currentTime, setCurrentTime] = useState('0:00');
   const [duration, setDuration] = useState('0:00');
   const [playPauseIcon, setPlayPauseIcon] = useState(
@@ -92,19 +69,37 @@ const Video = ({ loadUser, loading, user }) => {
   const [lastTime, setLastTime] = useState(0);
   const [visibleChapterText, setVisibleChapterText] = useState('translateY(-100%)'); // -100% = disappear, 0 = appear
 
+  const insertArray = async () => {
+    var markerListTemp = [];
+    // if(markerList == null)
+    const shotsData = await api.get('/session/shots/');
+    for (let i = 0; i < shotsData.data.length; i++) {
+      markerListTemp.push({
+        time: shotsData.data[i]["time"],
+        text: shotsData.data[i]["title"]
+      })
+    }
+
+    setMarkerList(markerListTemp);
+  }
+
   //maps the markers of the markersList to individual <div> elements that then get drawn on the progressbar. every change of the markerList should also rerender the
   // markers. if not markers has to be an state too.
   function calculateMarkerPosition() {
     if (videoRef.current.readyState < 1) {
       setTimeout(calculateMarkerPosition, 500);
+      return;
     }
-    markers = markerList.map((marker) => (
+
+    // das war vor dem loop
+    setMarkers(markerList.map((marker) => (
       <div
         title={marker.text}
         className={styles.markers}
         style={{ left: (marker.time / videoRef.current.duration) * 100 + '%' }}
       />
-    ));
+    )))
+    console.log(markers);
   }
 
   //plays and pauses the video and switches between the right icons for the state of the player.
@@ -136,8 +131,7 @@ const Video = ({ loadUser, loading, user }) => {
   //The function updates the all visual elements of the player. It stops the the player when the autostop mode is selected when a shot is reached
   // and displays the current chapter title. It also manages the current time and the progressbar.
   function updatePlayer() {
-    // if it finds a marker at that spot it will pause the video and display the chapter text. the bigger time gap is necessary because
-    // the execution time isnt predictable and it will cause the player to skip the marker.
+    // if it finds a marker at that spot it will pause the video and display the chapter text. the bigger time gap is necessary because the execution time isnt predictable and it will cause the player to skip the marker.
     var temp = markerList.find(
       (x) => videoRef.current.currentTime >= x.time && videoRef.current.currentTime <= x.time + 1
     );
@@ -233,6 +227,7 @@ const Video = ({ loadUser, loading, user }) => {
 
   //run only one time after the first render.
   useEffect(() => {
+    insertArray();
     calculateMarkerPosition();
     updatePlayer();
   }, []);
@@ -247,7 +242,7 @@ const Video = ({ loadUser, loading, user }) => {
     socketRef.current = new WebSocket(url);
     const socket = socketRef.current;
 
-    socket.onmessage = function(e) {
+    socket.onmessage = function (e) {
       const data = JSON.parse(e.data);
       if (data.action === 'play') {
         if (videoRef.current) {
@@ -309,7 +304,7 @@ const Video = ({ loadUser, loading, user }) => {
       // player.pause();
       pauseVideo(player);*/
     }
-    return () => {};
+    return () => { };
   }, [videoRef]);
 
   return (

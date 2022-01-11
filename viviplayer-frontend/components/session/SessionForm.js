@@ -51,7 +51,7 @@ function SessionForm({ createSession, sessionInfo, updateLayoutState, updateLayo
 
   const videoBuild = (videoInfoPara) => {
     return (
-      <div>
+      <div className='row-responsive'>
         <h3>
           <b>Name of session:</b> {videoInfoPara.name}
         </h3>
@@ -61,10 +61,10 @@ function SessionForm({ createSession, sessionInfo, updateLayoutState, updateLayo
           </Paragraph>
         </h3>
         <Divider />
-        <video controls width="600px" height="350px">
+        <video data-setup='{"fluid":true}' controls width="100%" height="100%">
           <source src={videoInfoPara.video_path} type="video/mp4" />
         </video>
-        <Button type="primary" style={{ marginLeft: '197px' }}>
+        <Button type="primary" style={{ margin: '0px 125px' }}>
           Weiter zu Videobearbeitung
         </Button>
       </div>
@@ -72,7 +72,7 @@ function SessionForm({ createSession, sessionInfo, updateLayoutState, updateLayo
   };
   return (
     <div>
-      <h3>Session Erstellen</h3>
+      <h2>Session Erstellen</h2>
       <Divider />
       <Form
         {...layout}

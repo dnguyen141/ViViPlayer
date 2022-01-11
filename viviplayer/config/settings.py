@@ -96,6 +96,7 @@ CHANNEL_LAYERS = {
             "hosts": [("vivipl3_redis_1", 6379)],
         },
     },
+
 }
 
 # Database

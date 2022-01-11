@@ -102,9 +102,9 @@ const Satz = ({ deleteSentenceById, createSentence, user }) => {
   return (
     <>
       <Table
-        className='number-table'
         columns={columns}
         pagination={false}
+        showHeader={false}
         dataSource={sentencesList}
         scroll={{ y: 200 }}
         style={{ minHeight: '250px' }}
