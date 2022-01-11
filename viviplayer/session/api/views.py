@@ -1,4 +1,4 @@
-from session.models import ViViSession, Shot, UserStory, Sentence, MultipleChoiceQuestion
+from session.models import ViViSession, Shot, UserStory, Sentence, MultipleChoiceQuestion, Answer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets
 from authentication.permissions import IsModerator
@@ -111,16 +111,20 @@ class ExportODT(generics.ListAPIView):
     withbreak.addElement(ParagraphProperties(breakbefore="page"))
     textdoc.automaticstyles.addElement(withbreak)
 
+    pstyle = Style(name="Paragraph 1", family="paragraph", defaultoutlinelevel="1")
+    pstyle.addElement(TextProperties(attributes={'fontsize': "10pt", 'fontfamily': "Arial"}))
+    textdoc.automaticstyles.addElement(pstyle)
+
     h1style = Style(name="Heading 1", family="paragraph", defaultoutlinelevel="1")
-    h1style.addElement(TextProperties(attributes={'fontsize': "20pt", 'fontweight': "bold"}))
+    h1style.addElement(TextProperties(attributes={'fontsize': "20pt", 'fontweight': "bold", 'fontfamily': "Arial"}))
     textdoc.automaticstyles.addElement(h1style)
 
     h2style = Style(name="Heading 2", family="paragraph", defaultoutlinelevel="1")
-    h2style.addElement(TextProperties(attributes={'fontsize': "16pt", 'fontweight': "bold"}))
+    h2style.addElement(TextProperties(attributes={'fontsize': "16pt", 'fontweight': "bold", 'fontfamily': "Arial"}))
     textdoc.automaticstyles.addElement(h2style)
 
     h3style = Style(name="Heading 3", family="paragraph", defaultoutlinelevel="1")
-    h3style.addElement(TextProperties(attributes={'fontsize': "12pt", 'fontweight': "bold"}))
+    h3style.addElement(TextProperties(attributes={'fontsize': "12pt", 'fontweight': "bold", 'fontfamily': "Arial"}))
     textdoc.automaticstyles.addElement(h3style)
 
     def get(self, request):
@@ -149,7 +153,7 @@ class ExportODT(generics.ListAPIView):
             self.textdoc.text.addElement(P())
 
             for (j, us) in enumerate(UserStory.objects.filter(shot=s)):
-                p = P(text=us.desc)
+                p = P(text=us.desc, stylename=self.pstyle)
                 self.textdoc.text.addElement(p)
                 self.textdoc.text.addElement(P())
 
@@ -159,7 +163,7 @@ class ExportODT(generics.ListAPIView):
             self.textdoc.text.addElement(P())
 
             for (j, sent) in enumerate(Sentence.objects.filter(shot=s)):
-                p = P(text=sent.text)
+                p = P(text=sent.text, stylename=self.pstyle)
                 self.textdoc.text.addElement(p)
                 self.textdoc.text.addElement(P())
 
@@ -169,26 +173,26 @@ class ExportODT(generics.ListAPIView):
             self.textdoc.text.addElement(P())
 
             for (j, q) in enumerate(MultipleChoiceQuestion.objects.filter(shot=s)):
-                p = P(text=q.desc)
+                p = P(text=q.desc, stylename=self.pstyle)
                 self.textdoc.text.addElement(p)
 
                 # Add Answers for Question
                 for (k, ans) in enumerate(Answer.objects.filter(question=q)):
-                    p = P(text=ans.text + ': ' + str(ans.votes))
+                    p = P(text=ans.text + ': ' + str(ans.votes), stylename=self.pstyle)
                     self.textdoc.text.addElement(p)
 
             # Add page break
             p = P(stylename=self.withbreak)
             self.textdoc.text.addElement(p)
 
-        # Save document
-        self.textdoc.save(u'media/export.odt')
+        # Save document to server
+        self.textdoc.save('media/' + str(ses.id) + '.odt')
 
         # Return document
-        data = open("media/export.odt", 'rb')
+        data = open('media/' + str(ses.id) + '.odt', 'rb')
         response = HttpResponse(data, content_type='application/vnd.oasis.opendocument.text')
         response['Content-Disposition'] = 'attachment; filename="export.odt"'
-        response['Content-Length'] = os.path.getsize("media/export.odt")
+        response['Content-Length'] = os.path.getsize('media/' + str(ses.id) + '.odt')
         return response
 
 
@@ -222,6 +226,11 @@ class ExportCSV(generics.ListAPIView):
         # Add .csv to .zip
         response.writestr('export.csv', csvf.getvalue())
         response.close()
+
+        # Save .zip on server - If needed
+        f = open("media/"+str(ses.id)+".zip", "wb")
+        f.write(buffer.getvalue())
+        f.close()
 
         # Return .zip in response
         response = HttpResponse(buffer.getvalue())
