@@ -50,7 +50,7 @@ const Video = ({ loadUser, loading, user }) => {
       setUserState(user);
     }
   }, []);
-  
+
   var markerListTemp = [];
   const videoRef = React.useRef(null);
   const playerRef = React.useRef(null);
@@ -71,6 +71,7 @@ const Video = ({ loadUser, loading, user }) => {
 
   const insertArray = async () => {
     var markerListTemp = [];
+    // if(markerList == null)
     const shotsData = await api.get('/session/shots/');
     for (let i = 0; i < shotsData.data.length; i++) {
       markerListTemp.push({
@@ -85,11 +86,12 @@ const Video = ({ loadUser, loading, user }) => {
   //maps the markers of the markersList to individual <div> elements that then get drawn on the progressbar. every change of the markerList should also rerender the
   // markers. if not markers has to be an state too.
   function calculateMarkerPosition() {
-    insertArray();
     if (videoRef.current.readyState < 1) {
       setTimeout(calculateMarkerPosition, 500);
+      return;
     }
 
+    // das war vor dem loop
     setMarkers(markerList.map((marker) => (
       <div
         title={marker.text}
@@ -225,6 +227,7 @@ const Video = ({ loadUser, loading, user }) => {
 
   //run only one time after the first render.
   useEffect(() => {
+    insertArray();
     calculateMarkerPosition();
     updatePlayer();
   }, []);
@@ -232,6 +235,7 @@ const Video = ({ loadUser, loading, user }) => {
   //replaces the old markers with the new markers if the list changes
   useEffect(() => {
     calculateMarkerPosition(videoRef.current);
+    console.log("TEST");
   }, [markerList]);
 
   useEffect(() => {
