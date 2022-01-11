@@ -63,7 +63,7 @@ const SessionTable = ({ deleteSessionById, updateLayout, updateLayoutState, load
       title: 'ID',
       dataIndex: 'id',
       width: '10%',
-      render: (id) => <>{id}</>
+      render: (id) => <p><b>{id}</b></p>
     },
     {
       title: 'Name',

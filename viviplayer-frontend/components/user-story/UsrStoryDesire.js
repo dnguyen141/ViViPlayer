@@ -99,8 +99,8 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById }) => {
   return (
     <>
       <Table
-        className="number-table"
         columns={columns}
+        showHeader={false}
         pagination={false}
         dataSource={userStories}
         scroll={{ y: 200 }}

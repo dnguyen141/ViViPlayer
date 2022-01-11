@@ -45,17 +45,17 @@ const Dashboard = ({ user, loadUser, loading }) => {
   }, [updateTable, loading]);
   return (
     <Vivilayout>
-      <Row>
-        <Col span={12} style={{ padding: '1em' }}>
-          <h3>Session List</h3>
+      <Row className='row-responsive'>
+        <Col className='col-responsive' span={12} style={{ padding: '1em'}}>
+          <h2>Session List</h2>
           <Divider />
           {sessionData != 0 ? (
             <SessionTable updateLayoutState={updateTable} updateLayout={setupdateTable} />
           ) : (
-            'You have no session'
+            <div style={{paddingBottom: '50px'}}>Sie haben keine Session erstellt.</div>
           )}
         </Col>
-        <Col span={12} style={{ padding: '1em' }}>
+        <Col className='col-responsive' span={12} style={{ padding: '1em' }}>
           <SessionForm updateLayoutState={updateTable} updateLayout={setupdateTable} />
         </Col>
       </Row>
