@@ -90,7 +90,7 @@ const SessionTable = ({ deleteSessionById, updateLayout, updateLayoutState, load
           <Space size="middle">
             <EditSession id={id} context={record} updateFunc={updateState} />
             <Popconfirm
-              title="Löschen dieses Session ist nicht rückgängig zu machen. Weiter?"
+              title="Löschen dieser Session ist nicht rückgängig zu machen. Weiter?"
               onConfirm={() => {
                 deleteSessionById(id);
                 updateState();
