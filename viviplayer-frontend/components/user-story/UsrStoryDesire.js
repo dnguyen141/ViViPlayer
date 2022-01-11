@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import api from '../../utils/api';
 import { connect } from 'react-redux';
-import { Button, Input, Table, Space, Popconfirm, Form } from 'antd';
+import { Button, Input, Table, Space, Popconfirm, Form, Select } from 'antd';
 import EditUserStory from './EditUserStory';
 import styles from './user-story.module.css';
 import { WS_BACKEND } from '../../constants/constants';
@@ -11,13 +11,17 @@ import { createUserStory, deleteUserStoryById } from '../../actions/session.acti
 const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById }) => {
   const [updateTable, setupdateTable] = useState(false);
   const [userStories, setUserStories] = useState(null);
+  const [shotList, setShotList] = useState(null);
   const [form] = Form.useForm();
 
   async function fetchUserStories() {
     const res = await api.get('/session/userstories/');
     setUserStories(res.data);
   }
-
+  const getShot = async () => {
+    const shotsData = await api.get('/session/shots/');
+    setShotList(shotsData.data);
+  };
   useEffect(() => {
     fetchUserStories();
   }, [updateTable]);
@@ -31,6 +35,7 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById }) => {
         fetchUserStories();
       }
     };
+    getShot();
   }, []);
   const updateState = () => {
     socket.send(
@@ -59,16 +64,16 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById }) => {
         </div>
       )
     },
-    {
-      title: 'Shot',
-      dataIndex: 'shot',
-      width: '15%',
-      render: (shot) => (
-        <div>
-          Shot:<b>{shot}</b>
-        </div>
-      )
-    },
+    // {
+    //   title: 'Shot',
+    //   dataIndex: 'shot',
+    //   width: '15%',
+    //   render: (shot) => (
+    //     <div>
+    //       Shot:<b>{shot}</b>
+    //     </div>
+    //   )
+    // },
     {
       title: 'Aktionen',
       dataIndex: 'id',
@@ -106,7 +111,12 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById }) => {
         scroll={{ y: 200 }}
         style={{ minHeight: '250px' }}
       />
-      <Form form={form} name="Write sentence" onFinish={createUserStoryFunc} autoComplete="off">
+      <Form
+        form={form}
+        name="User Story schreiben"
+        onFinish={createUserStoryFunc}
+        autoComplete="off"
+      >
         Damit :
         <Form.Item style={{ marginBottom: '0.5em' }} name="damit">
           <Input
@@ -126,8 +136,10 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById }) => {
             placeholder="z.B eine visuelle Darstellung der geleisteten Stunden sehen"
           />
         </Form.Item>
-        <Form.Item style={{ marginBottom: '1em' }} name="shot">
-          <Input placeholder="Geben Sie Shot-Nummer ein." />
+        <Form.Item name="shot" rules={[{ required: true }]}>
+          <Select placeholder="Wählen Sie bitte hier ein Shot" allowClear>
+            {shotList && shotList.map((item) => <Option value={item.id}>{item.title}</Option>)}
+          </Select>
         </Form.Item>
         <Button type="primary" htmlType="submit">
           Posten
