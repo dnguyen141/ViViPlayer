@@ -235,7 +235,6 @@ const Video = ({ loadUser, loading, user }) => {
   //replaces the old markers with the new markers if the list changes
   useEffect(() => {
     calculateMarkerPosition(videoRef.current);
-    console.log("TEST");
   }, [markerList]);
 
   useEffect(() => {
