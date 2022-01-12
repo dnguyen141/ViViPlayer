@@ -27,7 +27,15 @@ import {
   UPDATE_SESSION_SUCCESS,
   UPDATE_SESSION_FAIL,
   DELETE_SESSION_SUCCESS,
-  DELETE_SESSION_FAIL
+  DELETE_SESSION_FAIL,
+  CREATE_SHOT_SUCCESS,
+  CREATE_SHOT_FAIL,
+  GET_SHOTS_SUCCESS,
+  GET_SHOTS_FAIL,
+  DELETE_SHOT_BY_ID_SUCCESS,
+  DELETE_SHOT_SUCCESS_FAIL,
+  UPDATE_SHOT_BY_ID_SUCCESS,
+  UPDATE_SHOT_BY_ID_FAIL
 } from './types';
 import { Notification } from '../utils/notification';
 
@@ -318,6 +326,85 @@ export const deleteUserStoryById = (id) => async (dispatch) => {
     }
     dispatch({
       type: DELETE_USERSTORY_SUCCESS_FAIL
+    });
+  }
+};
+
+// create new shot
+export const createShot = (time, title) => async (dispatch) => {
+  const body = { time, title };
+  try {
+    const res = await api.post(`/session/shots/`, body);
+    dispatch({
+      type: CREATE_SHOT_SUCCESS
+    });
+    Notification('Shot Notification', 'the shot has been created', 'success');
+  } catch (err) {
+    const errors = err.response.data.errors;
+    if (errors) {
+      errors.forEach((error) => Notification('Shot Notification', error.message, 'warning'));
+    }
+    dispatch({
+      type: CREATE_SHOT_FAIL
+    });
+  }
+};
+
+// delete shot by ids
+export const deleteShotById = (id) => async (dispatch) => {
+  try {
+    const res = await api.delete(`/session/shots/${id}/`);
+    dispatch({
+      type: DELETE_SHOT_BY_ID_SUCCESS
+    });
+    Notification('Shot Notification', 'the shot has been deleted', 'success');
+  } catch (err) {
+    const errors = err.response.data.errors;
+    if (errors) {
+      errors.forEach((error) => Notification('Shots Notification', error.message, 'warning'));
+    }
+    dispatch({
+      type: DELETE_SHOT_SUCCESS_FAIL
+    });
+  }
+};
+
+// get Shots
+export const getShots = () => async (dispatch) => {
+  try {
+    const res = await api.get('/session/shots/');
+    dispatch({
+      type: GET_SHOTS_SUCCESS,
+      payload: res.data
+    });
+  } catch (err) {
+    const errors = err.response.data.errors;
+    if (errors) {
+      errors.forEach((error) => Notification('Shots Notification', error.message, 'warning'));
+    }
+    dispatch({
+      type: GET_SHOTS_FAIL
+    });
+  }
+};
+
+export const updateShotById = (time, title, id) => async (dispatch) => {
+  const body = { time, title};
+  try {
+    const res = await api.put(`/session/shots/${id}/`, body);
+    dispatch({
+      type: UPDATE_SHOT_BY_ID_SUCCESS
+    });
+    getShots();
+    Notification('Shots Notification', 'shot has been updated', 'success');
+    return;
+  } catch (err) {
+    const errors = err.response.data.errors;
+    if (errors) {
+      errors.forEach((error) => Notification('Shots Notification', error.message, 'warning'));
+    }
+    dispatch({
+      type: UPDATE_SHOT_BY_ID_FAIL
     });
   }
 };
