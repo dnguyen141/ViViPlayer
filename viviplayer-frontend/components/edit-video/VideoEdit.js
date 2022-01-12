@@ -315,7 +315,7 @@ const VideoEdit = ({ loadUser, loading, user }) => {
     fetchShots();
     insertArray();
   };
-  
+
   const columns = [
     {
       title: 'ID',
@@ -455,12 +455,6 @@ const VideoEdit = ({ loadUser, loading, user }) => {
               )}
             </div>
           </div>
-          <Form onFinish={createShotFunc}>
-            <Form.Item label="Titel" name="text">
-              <Input />
-            </Form.Item>
-            <Button type='primary' htmlType='submit'>Create</Button>
-          </Form>
         </Col>
         <Col
           className="col-responsive"

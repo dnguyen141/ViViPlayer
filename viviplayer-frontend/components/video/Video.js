@@ -426,12 +426,6 @@ const Video = ({ loadUser, loading, user }) => {
       ) : (
         ''
       )}
-      <Form onFinish={createShotFunc}>
-        <Form.Item label="Titel" name="text">
-          <Input />
-        </Form.Item>
-        <Button type='primary' htmlType='submit'>Create</Button>     
-      </Form>
 
     </>
 
