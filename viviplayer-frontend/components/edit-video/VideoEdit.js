@@ -23,8 +23,7 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
   const [session, setSession] = useState({
     name: 'dummy',
     tan: 'dummytan',
-    video_path:
-      ''
+    video_path: ''
   });
 
   // const [session, setSession] = useState(null);
@@ -40,7 +39,6 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
     // will get a 401 response from our API
     loadUser();
     const res = await api.get('/session/');
-    // console.log(res.data[0]);
     setSession(res.data[0]);
     // log user out from all tabs if they log out in one tab
     // window.addEventListener('storage', () => {
@@ -79,13 +77,13 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
     const shotsData = await api.get('/session/shots/');
     for (let i = 0; i < shotsData.data.length; i++) {
       markerListTemp.push({
-        time: shotsData.data[i]["time"],
-        text: shotsData.data[i]["title"]
-      })
+        time: shotsData.data[i]['time'],
+        text: shotsData.data[i]['title']
+      });
     }
 
     setMarkerList(markerListTemp);
-  }
+  };
 
   //maps the markers of the markersList to individual <div> elements that then get drawn on the progressbar. every change of the markerList should also rerender the
   // markers. if not markers has to be an state too.
@@ -96,14 +94,15 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
     }
 
     // das war vor dem loop
-    setMarkers(markerList.map((marker) => (
-      <div
-        title={marker.text}
-        className={styles.markers}
-        style={{ left: (marker.time / videoRef.current.duration) * 100 + '%' }}
-      />
-    )))
-    console.log(markers);
+    setMarkers(
+      markerList.map((marker) => (
+        <div
+          title={marker.text}
+          className={styles.markers}
+          style={{ left: (marker.time / videoRef.current.duration) * 100 + '%' }}
+        />
+      ))
+    );
   }
 
   //plays and pauses the video and switches between the right icons for the state of the player.
@@ -132,7 +131,6 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
 
     if (temp != null) {
       setVisibleChapterText('translateY(0%)');
-      console.log(lastTime);
       setLastTime(temp.time); //last marker that was found.
       setChapterText(temp.text);
       if (autoStop) {
@@ -189,12 +187,11 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
   const createShotFunc = ({ text }) => {
     //post the shot to the server
     var time = videoRef.current.currentTime;
-    console.log("NEW TEXT" + text);
     createShot(time, text);
     updateState();
     setupdateTable(!updateTable);
     form.resetFields();
-  }
+  };
 
   function changeVideoPosition(e) {
     if (videoRef.current.readyState > 2) {
@@ -223,7 +220,6 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
     calculateMarkerPosition(videoRef.current);
   }, [markerList]);
 
-
   useEffect(() => {
     if (videoRef.current != null) {
       setPlayer(videoRef.current);
@@ -235,35 +231,8 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
       const player = (playerRef.current = videoJs(videoElement, () => {
         console.log('player is ready');
       }));
-
-      /* player.markers({
-        markerStyle: {
-          width: '8px',
-          'background-color': 'red'
-        },
-        markerTip: {
-          display: true,
-          html: function (marker) {
-            return <EditableMarkers text={marker.text} />;
-          }
-        },
-        breakOverlay: {
-          display: false,
-          displayTime: 3,
-          text: function (marker) {
-            return marker.text;
-          }
-        },
-        onMarkerReached: function (marker) {
-          console.log(marker);
-        },
-        markers: markerListDefault
-      });
-      //player.autoplay('muted');
-      // player.pause();
-      pauseVideo(player);*/
     }
-    return () => { };
+    return () => {};
   }, [videoRef]);
 
   //===============================================================================
@@ -321,7 +290,11 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
       title: 'ID',
       dataIndex: 'id',
       width: '10%',
-      render: (id) => <p><b>{id}</b></p>
+      render: (id) => (
+        <p>
+          <b>{id}</b>
+        </p>
+      )
     },
     {
       title: 'Time',
@@ -363,7 +336,6 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
     }
   ];
 
-
   return (
     <>
       <Row className="row-responsive">
@@ -372,7 +344,6 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
           span={12}
           style={{ padding: '25px', justifyContent: 'center' }}
         >
-
           <div className={styles.videocontainer}>
             <div className={styles.videocontainer}>
               {session.name !== 'dummy' ? (
@@ -383,14 +354,14 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
                     // onProgress={(e) => pauseSegment(e)}
                     onTimeUpdate={updatePlayer}
                     ref={videoRef}
-                    id='video-viviplayer'
+                    id="video-viviplayer"
                     //controls
-                    preload='auto'
+                    preload="auto"
                     data-setup='{"fluid":true}' //This is used so that the video player is responsive
-                    className='video-js vjs-default-skin vjs-big-play-centered'
+                    className="video-js vjs-default-skin vjs-big-play-centered"
                     onClick={togglePlayPause}
                   >
-                    <source src={VIDEO_PREFIX + session.video_path} type='video/mp4' />
+                    <source src={VIDEO_PREFIX + session.video_path} type="video/mp4" />
                   </video>
                 </div>
               ) : (
@@ -399,47 +370,53 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
                     // onProgress={(e) => pauseSegment(e)}
                     onTimeUpdate={updatePlayer}
                     ref={videoRef}
-                    id='video-viviplayer'
+                    id="video-viviplayer"
                     //controls
-                    preload='auto'
+                    preload="auto"
                     data-setup='{"fluid":true}' //This is used so that the video player is responsive
-                    className='video-js vjs-default-skin vjs-big-play-centered'
+                    className="video-js vjs-default-skin vjs-big-play-centered"
                     onClick={togglePlayPause}
                   >
-                    <source src={VIDEO_PREFIX + session.video_path} type='video/mp4' />
+                    <source src={VIDEO_PREFIX + session.video_path} type="video/mp4" />
                   </video>
                 </div>
               )}
-              <div className={styles.chapterinfocontainer} style={{ transform: visibleChapterText }}>
+              <div
+                className={styles.chapterinfocontainer}
+                style={{ transform: visibleChapterText }}
+              >
                 <p className={styles.chapterinfo}> {chapterText}</p>
               </div>
               {user != null && user.is_mod == true ? (
                 <div className={styles.controls}>
-                  <div className={styles.progressbarcontainer} onClick={changeVideoPosition.bind(this)}>
+                  <div
+                    className={styles.progressbarcontainer}
+                    onClick={changeVideoPosition.bind(this)}
+                  >
                     <div
                       className={styles.progressbar}
-                      id='progressbar'
+                      id="progressbar"
                       style={{ width: progressBarWidth }}
                     ></div>
                     {markers}
                   </div>
 
                   <div className={styles.buttons}>
-                    <button id='play-pause-button' onClick={togglePlayPause}>
+                    <button id="play-pause-button" onClick={togglePlayPause}>
                       {playPauseIcon}
                     </button>
                   </div>
                   <input
-                    type='range'
+                    type="range"
                     className={styles.volumeslider}
-                    min='0'
-                    max='1'
-                    step='0.01'
-                    defaultValue='0.5'
+                    min="0"
+                    max="1"
+                    step="0.01"
+                    defaultValue="0.5"
                     onChange={(e) => (videoRef.current.volume = e.target.value)}
                   />
                   <input
-                    type='checkbox'
+                    type="checkbox"
                     className={styles.checkbox}
                     checked={autoStop}
                     onChange={toggleautoStop}
@@ -455,12 +432,14 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
               )}
             </div>
           </div>
-          <Form form={form} onFinish={createShotFunc} style={{paddingTop: '1em'}}>
+          <Form form={form} onFinish={createShotFunc} style={{ paddingTop: '1em' }}>
             <div>Wählen Sie ein Shot aus dem Video, indem Sie an dem Progressbar klicken.</div>
             <Form.Item name="text">
-                <Input placeholder='Geben Sie bitte Shottitel hier ein.'></Input>
+              <Input placeholder="Geben Sie bitte Shottitel hier ein."></Input>
             </Form.Item>
-            <Button type='primary' htmlType='submit'>Shot Erstellen</Button>
+            <Button type="primary" htmlType="submit">
+              Shot Erstellen
+            </Button>
           </Form>
         </Col>
         <Col
@@ -471,9 +450,7 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
           <Table columns={columns} pagination={false} dataSource={shotData} scroll={{ y: 300 }} />
         </Col>
       </Row>
-
     </>
-
   );
 };
 
@@ -483,4 +460,6 @@ const mapStateToProps = (state) => ({
   loading: state.session.loading
 });
 
-export default connect(mapStateToProps, { createShot, deleteShotById, getInfoSession, loadUser })(VideoEdit);
+export default connect(mapStateToProps, { createShot, deleteShotById, getInfoSession, loadUser })(
+  VideoEdit
+);
