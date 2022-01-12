@@ -51,7 +51,7 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById }) => {
     {
       title: 'User',
       width: '15%',
-      render: () => <div>{user.username && <b>{user.username}</b>}</div>
+      render: () => <div className="test">{user != null ? <b>{user.username}</b> : 'user'}</div>
     },
     {
       title: 'Inhalt',
