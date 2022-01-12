@@ -19,7 +19,7 @@ MEM_USERNAME_REGEX = RegexValidator(
 )
 PASSWORD_REGEX = RegexValidator(
     regex=r"^(?=.{8,50}$)(?!.*\s)(?=.*[a-zA-Z0-9])(?=.*\W).*$",
-    message="Password must contains at least 8 and at most 20 characters, "
+    message="Password must contains at least 8 and at most 50 characters, "
             "with at least one special characters and no white space characters.",
 )
 TAN_REGEX = RegexValidator(
