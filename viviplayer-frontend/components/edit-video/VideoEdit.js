@@ -192,7 +192,7 @@ const VideoEdit = ({ loadUser, loading, user }) => {
     createShot(time, text);
 
     insertArray();
-    console.log(markerList);
+    //console.log(markerList);
   }
 
   function changeVideoPosition(e) {
