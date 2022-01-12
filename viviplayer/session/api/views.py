@@ -1,13 +1,15 @@
-from session.models import ViViSession, Shot, UserStory, Sentence, MultipleChoiceQuestion
-from rest_framework.permissions import IsAuthenticated
-from rest_framework import viewsets
-from authentication.permissions import IsModerator
-from .serializers import SessionSerializer, UserStorySerializer, SentenceSerializer, QuestionSerializer, ShotSerializer
-from rest_framework.parsers import FormParser, MultiPartParser
-from rest_framework import status
-from rest_framework.response import Response
 import random
 import string
+
+from rest_framework import status
+from rest_framework import viewsets
+from rest_framework.parsers import FormParser, MultiPartParser
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+
+from authentication.permissions import IsModerator
+from session.models import ViViSession, Shot, UserStory, Sentence, MultipleChoiceQuestion
+from .serializers import SessionSerializer, UserStorySerializer, SentenceSerializer, QuestionSerializer, ShotSerializer
 
 
 def tan_generator():
@@ -63,6 +65,9 @@ class ShotViewSet(viewsets.ModelViewSet):
         else:
             permission_classes = [IsModerator]
         return [permission() for permission in permission_classes]
+
+    def perform_create(self, serializer):
+        serializer.save(session=ViViSession.objects.first())
 
 
 class UserStoryViewSet(viewsets.ModelViewSet):
