@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import 'videojs-markers';
 import videoJs from 'video.js';
-import { Button, List } from 'antd';
+import { Button, List, Input, Form } from 'antd';
 import { connect } from 'react-redux';
 import { CaretRightOutlined, PauseOutlined } from '@ant-design/icons';
 import styles from './video.module.css';
-import { getInfoSession } from '../../actions/session.action';
+import { getInfoSession, createShot } from '../../actions/session.action';
 import { loadUser } from '../../actions/auth.action';
 import { setAuthToken } from '../../utils/setAuthToken';
 import api from '../../utils/api';
@@ -208,6 +208,16 @@ const Video = ({ loadUser, loading, user }) => {
         }
       }
     }
+  }
+
+  const createShotFunc = ({text}) => {
+    //post the shot to the server
+    var time = videoRef.current.currentTime;
+    console.log("NEW TEXT" + text); 
+    createShot(time, text);
+    
+    insertArray(); 
+    console.log(markerList); 
   }
 
   function changeVideoPosition(e) {
@@ -416,7 +426,15 @@ const Video = ({ loadUser, loading, user }) => {
       ) : (
         ''
       )}
+      <Form onFinish={createShotFunc}>
+        <Form.Item label="Titel" name="text">
+          <Input />
+        </Form.Item>
+        <Button type='primary' htmlType='submit'>Create</Button>     
+      </Form>
+
     </>
+
   );
 };
 
