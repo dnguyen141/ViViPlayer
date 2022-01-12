@@ -15,10 +15,11 @@ import { WS_BACKEND, VIDEO_PREFIX } from '../../constants/constants';
 
 let socket;
 // !!! markers need to be an Integer
-const VideoEdit = ({ loadUser, loading, user }) => {
+const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
   const [updateTable, setupdateTable] = useState(false);
   const [shotData, setShotData] = useState(null);
   const [userState, setUserState] = useState(null);
+  const [form] = Form.useForm();
   const [session, setSession] = useState({
     name: 'dummy',
     tan: 'dummytan',
@@ -190,8 +191,9 @@ const VideoEdit = ({ loadUser, loading, user }) => {
     var time = videoRef.current.currentTime;
     console.log("NEW TEXT" + text);
     createShot(time, text);
-
-    insertArray();
+    updateState();
+    setupdateTable(!updateTable);
+    form.resetFields();
     //console.log(markerList);
   }
 
@@ -309,6 +311,7 @@ const VideoEdit = ({ loadUser, loading, user }) => {
   }
   useEffect(() => {
     fetchShots();
+    insertArray();
   }, [updateTable, loading]);
 
   const updateState = () => {
@@ -455,6 +458,13 @@ const VideoEdit = ({ loadUser, loading, user }) => {
               )}
             </div>
           </div>
+          <Form form={form} onFinish={createShotFunc} style={{paddingTop: '1em'}}>
+            <div>Wählen Sie ein Shot aus dem Video, indem Sie an dem Progressbar klicken.</div>
+            <Form.Item name="text">
+                <Input placeholder='Geben Sie bitte Shottitel hier ein.'></Input>
+            </Form.Item>
+            <Button type='primary' htmlType='submit'>Shot Erstellen</Button>
+          </Form>
         </Col>
         <Col
           className="col-responsive"
@@ -476,4 +486,4 @@ const mapStateToProps = (state) => ({
   loading: state.session.loading
 });
 
-export default connect(mapStateToProps, { getInfoSession, loadUser })(VideoEdit);
+export default connect(mapStateToProps, { createShot, deleteShotById, getInfoSession, loadUser })(VideoEdit);
