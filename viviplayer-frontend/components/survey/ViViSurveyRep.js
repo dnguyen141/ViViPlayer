@@ -7,18 +7,18 @@ import * as Survey from 'survey-react';
 const { Option } = Select;
 const formItemLayout = {
   labelCol: {
-    xs: { span: 24 },
+    xs: { span: 0 },
     sm: { span: 4 }
   },
   wrapperCol: {
-    xs: { span: 24 },
-    sm: { span: 20 }
+    xs: { span: 0 },
+    sm: { span: 24 }
   }
 };
 const formItemLayoutWithOutLabel = {
   wrapperCol: {
     xs: { span: 24, offset: 0 },
-    sm: { span: 20, offset: 4 }
+    sm: { span: 24, offset: 0 }
   }
 };
 const ViViSurveyRep = (props) => {
@@ -47,6 +47,7 @@ const ViViSurveyRep = (props) => {
   };
   return (
     <>
+      <h3>Fragen erstellen</h3>
       <Form name="Frage erstellt" onFinish={createQuestion} autoComplete="off">
         <Form.Item style={{ marginBottom: '1em' }} name="title" rules={[{ required: true }]}>
           <Input rows={4} placeholder="Geben Sie hier ihren Satz ein." />
@@ -63,7 +64,7 @@ const ViViSurveyRep = (props) => {
             {
               validator: async (_, names) => {
                 if (!names || names.length < 2) {
-                  return Promise.reject(new Error('At least 2 passengers'));
+                  return Promise.reject(new Error('mindesten 2 Options zu wählen'));
                 }
               }
             }
@@ -74,7 +75,6 @@ const ViViSurveyRep = (props) => {
               {fields.map((field, index) => (
                 <Form.Item
                   {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
-                  label={index === 0 ? 'Passengers' : ''}
                   required={false}
                   key={field.key}
                 >
@@ -85,14 +85,14 @@ const ViViSurveyRep = (props) => {
                       {
                         required: true,
                         whitespace: true,
-                        message: "Please input passenger's name or delete this field."
+                        message: 'Geben Sie bitte die Antworten ein'
                       }
                     ]}
                     noStyle
                   >
                     <Input
-                      placeholder="passenger name"
-                      style={{ width: '60%' }}
+                      placeholder="Antwort"
+                      style={{ width: '100%' }}
                       icon={<PlusOutlined />}
                     />
                   </Form.Item>
