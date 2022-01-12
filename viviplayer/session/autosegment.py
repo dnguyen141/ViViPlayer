@@ -36,33 +36,17 @@ def find_scenes(video_path, session_id):
         # Obtain list of detected scenes.
         scene_list = scene_manager.get_scene_list()
 
-        """ 
-        # Generate images
-        scenedetect.scene_manager.save_images(scene_list, video_manager, image_name_template='$SCENE_NUMBER',
-                                              output_dir='/screenshots/' + session_id)
-        
-
-        
-        
-        # Rename images to required format
-        """
-
+        # Extract time for each scene
         data = []
         for i, scene in enumerate(scene_list):
             time_secs = scenedetect.FrameTimecode(timecode=scene[0].get_timecode(),
                                                   fps=video_manager.get_framerate()).get_seconds()
-            """
-            # Rename file and replace if exists
-            os.replace(session_id + '/' + str(i + 1).zfill(3) + '.jpg', session_id + '/' + str(round(time_secs, 1)) + '.jpg')
-            """
 
             data.append(round(time_secs, 1))
 
         # We can return the data in various ways
         json_string = json.dumps(data)
         print(json_string)
-
-
 
     finally:
         video_manager.release()

@@ -3,12 +3,12 @@ import Head from 'next/head';
 import Router from 'next/router';
 import { Form, Input, Tabs, Button, Checkbox } from 'antd';
 import NumberOutlined from '@ant-design/icons/NumberOutlined';
-import { login, loadUser, register } from '../actions/auth.action';
+import { login, loadUser, register, loginWithTanFunc } from '../actions/auth.action';
 import { connect } from 'react-redux';
 import { setAuthToken } from '../utils/setAuthToken';
 
 const { TabPane } = Tabs;
-const Home = ({ isAuthenticated, login, loadUser, user, register }) => {
+const Home = ({ isAuthenticated, login, loadUser, user, register, loginWithTanFunc }) => {
   useEffect(() => {
     // check for token in LS when app first runs
     if (localStorage.token) {
@@ -42,13 +42,14 @@ const Home = ({ isAuthenticated, login, loadUser, user, register }) => {
     await login(username.trim(), password.trim());
   };
 
-  const loginWithTan = (values) => {
+  const loginWithTan = async ({ tan }) => {
     // if (values.tan !== '112021') {
     //   console.log('run here');
     //   Notification('Login', 'TAN is not correct!');
     // } else {
     //   Router.push('/dashboard');
     // }
+    await loginWithTanFunc(tan.trim());
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -200,4 +201,4 @@ const mapStateToProps = (state) => ({
   user: state.auth.user
 });
 
-export default connect(mapStateToProps, { login, loadUser, register })(Home);
+export default connect(mapStateToProps, { login, loadUser, register, loginWithTanFunc })(Home);

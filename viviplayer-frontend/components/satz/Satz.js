@@ -54,7 +54,7 @@ const Satz = ({ deleteSentenceById, createSentence, user }) => {
     {
       title: 'User',
       width: '15%',
-      render: () => <div className="test">{user.username && <b>{user.username}</b>}</div>
+      render: () => <div className="test">{user != null ? <b>{user.username}</b> : 'user'}</div>
     },
     {
       title: 'Inhalt',

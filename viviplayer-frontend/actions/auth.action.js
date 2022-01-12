@@ -8,7 +8,9 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   REGISTER_SUCCESS,
-  REGISTER_FAIL
+  REGISTER_FAIL,
+  LOGIN_WITH_TAN_SUCCESS,
+  LOGIN_WITH_TAN_FAIL
 } from './types';
 
 /*
@@ -29,6 +31,32 @@ export const loadUser = () => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: AUTH_ERROR
+    });
+  }
+};
+
+// login with tan
+export const loginWithTanFunc = (password1) => async (dispatch) => {
+  const body = { password1 };
+
+  try {
+    await logout();
+    const res = await api.post('/auth/register/mem/', body);
+
+    await dispatch({
+      type: LOGIN_WITH_TAN_SUCCESS,
+      payload: res.data
+    });
+    setAuthToken(res.data.key);
+    await dispatch(loadUser());
+    Notification('Login Notification', 'Login success as Member', 'success');
+  } catch (err) {
+    const errors = err.response.data.errors;
+    if (errors) {
+      errors.forEach((error) => Notification('Login Notification', error.message, 'warning'));
+    }
+    dispatch({
+      type: LOGIN_WITH_TAN_FAIL
     });
   }
 };

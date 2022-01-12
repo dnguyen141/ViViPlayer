@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Form, Input, Row, Col, Button, Divider, Typography, Spin } from 'antd';
 import { createSession } from '../../actions/session.action';
 import { connect } from 'react-redux';
-import { WS_BACKEND } from '../../constants/constants';
+import { WS_BACKEND, VIDEO_PREFIX } from '../../constants/constants';
 let socket;
 function SessionForm({ createSession, sessionInfo, updateLayoutState, updateLayout }) {
   const [videoInfo, setVideoInfo] = useState(null);
@@ -26,6 +26,7 @@ function SessionForm({ createSession, sessionInfo, updateLayoutState, updateLayo
     const formData = new FormData();
     formData.append('video_path', file);
     formData.append('name', values.name);
+    formData.append('is_opened', true);
     setLoading(true);
     let getInfo = await createSession(formData);
     if (getInfo === undefined) {
@@ -51,9 +52,11 @@ function SessionForm({ createSession, sessionInfo, updateLayoutState, updateLayo
 
   const videoBuild = (videoInfoPara) => {
     return (
-      <div className='row-responsive'>
+      <div className="row-responsive">
         <h3>
-          <b>Name of session:</b> {videoInfoPara.name}
+          <Paragraph copyable>
+            <b>Name of session:</b> {videoInfoPara.name}
+          </Paragraph>
         </h3>
         <h3>
           <Paragraph copyable>
@@ -62,7 +65,7 @@ function SessionForm({ createSession, sessionInfo, updateLayoutState, updateLayo
         </h3>
         <Divider />
         <video data-setup='{"fluid":true}' controls width="100%" height="100%">
-          <source src={videoInfoPara.video_path} type="video/mp4" />
+          <source src={VIDEO_PREFIX + videoInfoPara.video_path} type="video/mp4" />
         </video>
         <Button type="primary" style={{ margin: '0px 125px' }}>
           Weiter zu Videobearbeitung

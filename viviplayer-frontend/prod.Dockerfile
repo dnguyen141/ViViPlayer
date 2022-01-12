@@ -15,4 +15,4 @@ COPY .nginx/nginx.conf /etc/nginx/nginx.conf
 RUN rm -rf /usr/share/nginx/html/*
 COPY --from=buildapp /app/frontend/out /usr/share/nginx/html
 RUN mkdir /usr/share/nginx/media
-CMD ls /usr/share/nginx && nginx -g "daemon off;"
+CMD nginx -g "daemon off;"

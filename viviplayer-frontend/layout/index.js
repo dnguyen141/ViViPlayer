@@ -14,6 +14,9 @@ const Vivilayout = ({ children, logout, user }) => {
           <Menu.Item key="1" className="text-white" onClick={() => Router.push('/dashboard')}>
             VIVIPLAYER3
           </Menu.Item>
+          <Menu.Item key="4" onClick={() => Router.push('/video-edit')}>
+            Edit Video
+          </Menu.Item>
           <Menu.Item key="2" onClick={() => Router.push('/video')}>
             Session
           </Menu.Item>
