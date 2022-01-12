@@ -53,7 +53,9 @@ function SessionForm({ createSession, sessionInfo, updateLayoutState, updateLayo
     return (
       <div className="row-responsive">
         <h3>
-          <b>Name of session:</b> {videoInfoPara.name}
+          <Paragraph copyable>
+            <b>Name of session:</b> {videoInfoPara.name}
+          </Paragraph>
         </h3>
         <h3>
           <Paragraph copyable>
