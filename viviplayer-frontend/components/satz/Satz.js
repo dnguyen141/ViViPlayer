@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../utils/api';
-import { Button, Input, Table, Space, Popconfirm, Form } from 'antd';
+import { Button, Input, Table, Space, Popconfirm, Form, Select } from 'antd';
 import { getSentences, deleteSentenceById, createSentence } from '../../actions/session.action';
 import { connect } from 'react-redux';
 import EditSentence from './EditSentence';
@@ -12,7 +12,13 @@ const { TextArea } = Input;
 const Satz = ({ deleteSentenceById, createSentence, user }) => {
   const [updateTable, setupdateTable] = useState(false);
   const [sentencesList, setSentencesList] = useState(null);
+  const [shotList, setShotList] = useState(null);
   const [form] = Form.useForm();
+
+  const getShot = async () => {
+    const shotsData = await api.get('/session/shots/');
+    setShotList(shotsData.data);
+  };
   // connect to socket and update sentence table
   useEffect(() => {
     const url = (WS_BACKEND || 'ws://' + window.location.host) + '/ws/player/sessionid12345/';
@@ -23,13 +29,16 @@ const Satz = ({ deleteSentenceById, createSentence, user }) => {
         fetchSentenc();
       }
     };
+    getShot();
   }, []);
 
   const updateState = () => {
-    socket.send(JSON.stringify({
-      'action': 'sentenceChange',
-      'time': 0
-    }));
+    socket.send(
+      JSON.stringify({
+        action: 'sentenceChange',
+        time: 0
+      })
+    );
     setupdateTable(!updateTable);
   };
 
@@ -45,7 +54,7 @@ const Satz = ({ deleteSentenceById, createSentence, user }) => {
     {
       title: 'User',
       width: '15%',
-      render: () => <div className="test">{user.username && <b>{user.username}</b>}</div>
+      render: () => <div className="test">{user != null ? <b>{user.username}</b> : 'user'}</div>
     },
     {
       title: 'Inhalt',
@@ -57,16 +66,16 @@ const Satz = ({ deleteSentenceById, createSentence, user }) => {
         </div>
       )
     },
-    {
-      title: 'Shot',
-      dataIndex: 'shot',
-      width: '15%',
-      render: (shot) => (
-        <div>
-          Shot: <b>{shot}</b>
-        </div>
-      )
-    },
+    // {
+    //   title: 'Shot',
+    //   dataIndex: 'shot',
+    //   width: '15%',
+    //   render: (shot) => (
+    //     <div>
+    //       Shot: <b>{shot}</b>
+    //     </div>
+    //   )
+    // },
     {
       title: 'Aktionen',
       dataIndex: 'id',
@@ -93,12 +102,15 @@ const Satz = ({ deleteSentenceById, createSentence, user }) => {
   const createSentenceFunc = ({ text, shot }) => {
     createSentence(text, shot);
     setupdateTable(!updateTable);
-    socket.send(JSON.stringify({
-      'action': 'sentenceChange',
-      'time': 0
-    }));
+    socket.send(
+      JSON.stringify({
+        action: 'sentenceChange',
+        time: 0
+      })
+    );
     form.resetFields();
   };
+
   return (
     <>
       <Table
@@ -109,14 +121,16 @@ const Satz = ({ deleteSentenceById, createSentence, user }) => {
         scroll={{ y: 200 }}
         style={{ minHeight: '250px' }}
       />
-      <Form form={form} name='Write sentence' onFinish={createSentenceFunc} autoComplete='off'>
-        <Form.Item style={{ marginBottom: '1em' }} name='text'>
-          <TextArea rows={4} placeholder='Geben Sie hier ihren Satz ein.' />
+      <Form form={form} name="Write sentence" onFinish={createSentenceFunc} autoComplete="off">
+        <Form.Item style={{ marginBottom: '1em' }} name="text" rules={[{ required: true }]}>
+          <TextArea rows={4} placeholder="Geben Sie hier ihren Satz ein." />
         </Form.Item>
-        <Form.Item style={{ marginBottom: '1em' }} name='shot'>
-          <Input placeholder='Geben Sie Shot-Nummer ein.' />
+        <Form.Item name="shot" rules={[{ required: true }]}>
+          <Select placeholder="Wählen Sie bitte hier ein Shot" allowClear>
+            {shotList && shotList.map((item) => <Option value={item.id}>{item.title}</Option>)}
+          </Select>
         </Form.Item>
-        <Button type='primary' htmlType='submit'>
+        <Button type="primary" htmlType="submit">
           Posten
         </Button>
       </Form>

@@ -1,8 +1,9 @@
 from django.db import models
-from authentication.models import CustomUser
-from session import autosegment, imageextractor
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+
+from authentication.models import CustomUser
+from session import autosegment, imageextractor
 
 
 class ViViSessionManager(models.Manager):
@@ -53,9 +54,7 @@ def get_screenshot(sender, instance, created, *args, **kwargs):
     if created:
         vid = ViViSession.objects.get(shots=instance)
         imageextractor.extract(vid.video_path.path, vid.id, [instance.time])
-        instance.image = (
-            "media/screenshots/" + str(vid.id) + "/" + str(instance.time) + ".jpg"
-        )
+        instance.image = ("media/screenshots/" + str(vid.id) + "/" + str(instance.time) + ".jpg")
         instance.save()
 
 

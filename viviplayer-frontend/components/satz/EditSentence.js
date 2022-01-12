@@ -24,16 +24,16 @@ const EditSentence = ({ id, context, updateFunc, updateSentenceById }) => {
       >
         <div>
           <i>
-            Old Sentence:
-            <b>
+            Alter Satz:
+            <b style={{ marginLeft: '4px' }}>
               {context.text} - {context.shot}
             </b>
           </i>
           <br />
-          <i>write down there to update sentence:</i>
-          <Form name="update sentence" onFinish={updateSen} autoComplete="off">
+          <i>schreib dort hin, um den Satz zu aktualisieren:</i>
+          <Form name="Update Satz" onFinish={updateSen} autoComplete="off">
             <Form.Item style={{ marginBottom: '1em' }} name="text">
-              <Input placeholder="new sentence" />
+              <Input placeholder="neuer Satz" />
             </Form.Item>
             <Button type="primary" htmlType="submit">
               Submit

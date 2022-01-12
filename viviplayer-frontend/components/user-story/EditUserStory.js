@@ -13,9 +13,7 @@ const EditUserStory = ({ id, context, updateFunc, updateUserStoryById }) => {
   };
   return (
     <>
-      <a onClick={() => setIsModalVisible(true)}>
-        Edit
-      </a>
+      <a onClick={() => setIsModalVisible(true)}>Edit</a>
       <Modal
         title="Edit Sentences"
         visible={isModalVisible}
@@ -25,13 +23,13 @@ const EditUserStory = ({ id, context, updateFunc, updateUserStoryById }) => {
       >
         <div>
           <i>
-            Old UserStory:
-            <b> Damit </b> {context.damit}, <b>möchte ich als </b> {context.moechteichals1},
-            {context.moechteichals2}
+            Alte User Story:
+            <b style={{ marginLeft: '5px' }}> Damit </b> {context.damit}, <b>möchte ich als </b>
+            {context.moechteichals1},{context.moechteichals2}
           </i>
           <br />
-          <i>write down there to update user story:</i>
-          <Form name="Write sentence" onFinish={updateUserStory} autoComplete="off">
+          <i>schreibe dort hin, um die User Story zu aktualisieren:</i>
+          <Form name="User Story aktualisieren" onFinish={updateUserStory} autoComplete="off">
             Damit :
             <Form.Item style={{ marginBottom: '1em' }} name="damit">
               <Input rows={4} placeholder="z.B ich weiss,ob jemand unregelmäßig arbeitet" />
