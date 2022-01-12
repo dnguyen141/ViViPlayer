@@ -69,6 +69,22 @@ class ShotViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(session=ViViSession.objects.first())
 
+    def create(self, request, *args, **kwargs):
+        for shot in Shot.objects.all():
+            if shot.time == float(request.data["time"]):
+                error = {
+                    "errors": [
+                        {
+                            "field": "time",
+                            "message": [
+                                "There is a Shot with the same timestamp!"
+                            ]
+                        }
+                    ]
+                }
+                return Response(error, status=status.HTTP_403_FORBIDDEN, headers={})
+        return super().create(request, *args, **kwargs)
+
 
 class UserStoryViewSet(viewsets.ModelViewSet):
     serializer_class = UserStorySerializer
@@ -91,4 +107,3 @@ class SentenceViewSet(viewsets.ModelViewSet):
 class QuestionViewSet(viewsets.ModelViewSet):
     serializer_class = QuestionSerializer
     queryset = MultipleChoiceQuestion.objects.all()
-
