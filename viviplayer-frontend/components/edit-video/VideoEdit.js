@@ -74,8 +74,8 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
   const [visibleChapterText, setVisibleChapterText] = useState('translateY(-100%)'); // -100% = disappear, 0 = appear
 
   const insertArray = async () => {
+    //create and update list of shots
     var markerListTemp = [];
-    // if(markerList == null)
     const shotsData = await api.get('/session/shots/');
     for (let i = 0; i < shotsData.data.length; i++) {
       markerListTemp.push({
@@ -194,7 +194,6 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
     updateState();
     setupdateTable(!updateTable);
     form.resetFields();
-    //console.log(markerList);
   }
 
   function changeVideoPosition(e) {
@@ -236,8 +235,6 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
       const player = (playerRef.current = videoJs(videoElement, () => {
         console.log('player is ready');
       }));
-
-      // DEPRECATED: new implementation of markers and autoStop in calculateMarkerPostition and updatePlayer
 
       /* player.markers({
         markerStyle: {
