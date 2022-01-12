@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Card, Input } from 'antd';
+import { Card, Divider } from 'antd';
 import PropTypes from 'prop-types';
 import Satz from '../satz/Satz';
 import UsrStoryDesire from './UsrStoryDesire';
+import ViViSurveyRep from '../survey/ViViSurveyRep';
 
 const tabList = [
   {
@@ -25,11 +26,15 @@ const UserStory = (props) => {
     tab1: (
       <Card style={{ border: '3px solid gray' }}>
         <UsrStoryDesire />
+        <Divider />
+        <ViViSurveyRep />
       </Card>
     ),
     tab2: (
       <Card style={{ border: '3px solid gray' }}>
         <Satz />
+        <Divider />
+        <ViViSurveyRep />
       </Card>
     )
   };
