@@ -26,6 +26,7 @@ function SessionForm({ createSession, sessionInfo, updateLayoutState, updateLayo
     const formData = new FormData();
     formData.append('video_path', file);
     formData.append('name', values.name);
+    formData.append('is_opened', true);
     setLoading(true);
     let getInfo = await createSession(formData);
     if (getInfo === undefined) {
