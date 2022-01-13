@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.utils.translation import gettext_lazy as _
 
 from authentication.models import CustomUser
 from session import autosegment, imageextractor
@@ -13,15 +14,15 @@ class ViViSessionManager(models.Manager):
 # Create your models here.
 class ViViSession(models.Model):
     name = models.CharField(max_length=255, null=False, blank=False, unique=True)
-    owner = models.ForeignKey(
-        CustomUser, on_delete=models.CASCADE, related_name="sessions"
-    )
+    owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="sessions")
     tan = models.CharField(max_length=20, blank=False)
     video_path = models.FileField(max_length=200)
     is_opened = models.BooleanField(default=False)
 
     class Meta:
-        verbose_name = "ViViPlayer Session"
+        verbose_name = _("ViViSession")
+        verbose_name_plural = _("ViViSessions")
+        ordering = ['id']
 
 
 # Segment video and create Shots
@@ -37,15 +38,18 @@ def segment_video(sender, instance, created, *args, **kwargs):
 
 
 class Shot(models.Model):
-    session = models.ForeignKey(
-        ViViSession, on_delete=models.CASCADE, related_name="shots"
-    )
+    session = models.ForeignKey(ViViSession, on_delete=models.CASCADE, related_name="shots")
     time = models.FloatField()
     title = models.CharField(max_length=50, null=False, blank=False)
     image = models.URLField(max_length=200, null=True)
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        verbose_name = _("Shot")
+        verbose_name_plural = _("Shots")
+        ordering = ['time']
 
 
 # Create Screenshot when a Shot is created
@@ -59,49 +63,58 @@ def get_screenshot(sender, instance, created, *args, **kwargs):
 
 
 class UserStory(models.Model):
-    session = models.ForeignKey(
-        ViViSession, on_delete=models.CASCADE, related_name="userstories"
-    )
-    author = models.ForeignKey(
-        CustomUser, on_delete=models.CASCADE, related_name="userstories"
-    )
+    session = models.ForeignKey(ViViSession, on_delete=models.CASCADE, related_name="userstories")
+    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="userstories")
     shot = models.ForeignKey(Shot, on_delete=models.CASCADE, related_name="userstories")
     damit = models.CharField(max_length=500, null=False, blank=False)
     moechteichals1 = models.CharField(max_length=500, null=False, blank=False)
     moechteichals2 = models.CharField(max_length=500, null=False, blank=False)
 
+    class Meta:
+        verbose_name = _("UserStory")
+        verbose_name_plural = _("UserStories")
+        ordering = ['id']
+
 
 class Sentence(models.Model):
-    session = models.ForeignKey(
-        ViViSession, on_delete=models.CASCADE, related_name="sentence"
-    )
-    author = models.ForeignKey(
-        CustomUser, on_delete=models.CASCADE, related_name="sentence"
-    )
-    shot = models.ForeignKey(Shot, on_delete=models.CASCADE, related_name="sentence")
+    session = models.ForeignKey(ViViSession, on_delete=models.CASCADE, related_name="sentences")
+    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="sentences")
+    shot = models.ForeignKey(Shot, on_delete=models.CASCADE, related_name="sentences")
     text = models.CharField(max_length=500, null=False, blank=False)
 
+    class Meta:
+        verbose_name = _("Sentence")
+        verbose_name_plural = _("Sentences")
+        ordering = ['id']
 
-class MultipleChoiceQuestion(models.Model):
-    MCQ_TYPE = (
-        ("question", "Question"),
-        ("survey", "Survey"),
+
+def get_default_json_for_question():
+    return []
+
+
+class Question(models.Model):
+    RENDER_TYPE = (
+        ("checkbox", _("Checkbox")),
+        ("radiotype", _("Radiotype"))
+    )
+    QUESTION_TYPE = (
+        ("question", _("Question")),
+        ("survey", _("Survey")),
     )
 
-    session = models.ForeignKey(
-        ViViSession, on_delete=models.CASCADE, related_name="questions"
-    )
+    session = models.ForeignKey(ViViSession, on_delete=models.CASCADE, related_name="questions")
     shot = models.ForeignKey(Shot, on_delete=models.CASCADE, related_name="questions")
-    author = models.ForeignKey(
-        CustomUser, on_delete=models.CASCADE, related_name="questions"
-    )
-    desc = models.CharField(max_length=500, null=False, blank=False)
-    type = models.CharField(max_length=8, choices=MCQ_TYPE)
+    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="questions")
+    title = models.CharField(max_length=500, null=False, blank=False)
+    typeOfQuestion = models.CharField(max_length=10, choices=QUESTION_TYPE)
+    typeToRender = models.CharField(max_length=10, choices=RENDER_TYPE)
+    choices = models.JSONField(default=get_default_json_for_question, encoder=None)
+    answers = models.JSONField(default=get_default_json_for_question)
 
+    def __str__(self):
+        return self.title
 
-class Answer(models.Model):
-    question = models.ForeignKey(
-        MultipleChoiceQuestion, on_delete=models.CASCADE, related_name="answers"
-    )
-    text = models.CharField(max_length=100)
-    votes = models.IntegerField()
+    class Meta:
+        verbose_name = _("Question")
+        verbose_name_plural = _("Questions")
+        ordering = ['id']

@@ -1,12 +1,13 @@
+from django.core.validators import FileExtensionValidator
 from rest_framework import serializers
+
 from session.models import (
     ViViSession,
     Shot,
     UserStory,
     Sentence,
-    MultipleChoiceQuestion,
+    Question
 )
-from django.core.validators import FileExtensionValidator, RegexValidator
 
 VID_VALIDATOR = FileExtensionValidator(
     allowed_extensions=["mp4", "mov", "wmv", "flv", "avi", "avchd", "webm", "mkv"]
@@ -42,10 +43,10 @@ class ShotSerializer(serializers.ModelSerializer):
 class UserStorySerializer(serializers.ModelSerializer):
     session = serializers.ReadOnlyField(source="session.id")
     author = serializers.ReadOnlyField(source="author.username")
+    shot = serializers.PrimaryKeyRelatedField(queryset=Shot.objects.all())
     damit = serializers.CharField(min_length=5, max_length=500)
     moechteichals1 = serializers.CharField(min_length=5, max_length=500)
     moechteichals2 = serializers.CharField(min_length=5, max_length=500)
-    shot = serializers.PrimaryKeyRelatedField(queryset=Shot.objects.all())
 
     class Meta:
         model = UserStory
@@ -58,8 +59,8 @@ class UserStorySerializer(serializers.ModelSerializer):
 class SentenceSerializer(serializers.ModelSerializer):
     session = serializers.ReadOnlyField(source="session.id")
     author = serializers.ReadOnlyField(source="author.username")
-    text = serializers.CharField(min_length=10, max_length=500)
     shot = serializers.PrimaryKeyRelatedField(queryset=Shot.objects.all())
+    text = serializers.CharField(min_length=10, max_length=500)
 
     class Meta:
         model = Sentence
@@ -70,6 +71,12 @@ class SentenceSerializer(serializers.ModelSerializer):
 
 
 class QuestionSerializer(serializers.ModelSerializer):
+    session = serializers.ReadOnlyField(source="session.id")
+    author = serializers.ReadOnlyField(source="author.username")
+    shot = serializers.PrimaryKeyRelatedField(queryset=Shot.objects.all())
+    choices = serializers.JSONField()
+    answers = serializers.ReadOnlyField()
+
     class Meta:
-        model = MultipleChoiceQuestion
+        model = Question
         fields = "__all__"
