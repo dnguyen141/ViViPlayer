@@ -1,6 +1,5 @@
 import csv
 import io
-import json
 import os
 import random
 import string
@@ -123,7 +122,7 @@ class QuestionViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(author=self.request.user,
                         session=ViViSession.objects.first(),
-                        answers=[0] * len(json.loads(self.request.data["choices"])))
+                        answers=[])
 
 
 # API View for download a session as a .odt file
