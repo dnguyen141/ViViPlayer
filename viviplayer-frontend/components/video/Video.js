@@ -99,7 +99,6 @@ const Video = ({ loadUser, loading, user }) => {
         style={{ left: (marker.time / videoRef.current.duration) * 100 + '%' }}
       />
     )))
-    console.log(markers);
   }
 
   //plays and pauses the video and switches between the right icons for the state of the player.
@@ -213,11 +212,8 @@ const Video = ({ loadUser, loading, user }) => {
   const createShotFunc = ({ text }) => {
     //post the shot to the server
     var time = videoRef.current.currentTime;
-    console.log("NEW TEXT" + text);
     createShot(time, text);
-
     insertArray();
-    console.log(markerList);
   }
 
   function changeVideoPosition(e) {
