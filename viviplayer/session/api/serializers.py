@@ -75,7 +75,7 @@ class QuestionSerializer(serializers.ModelSerializer):
     author = serializers.ReadOnlyField(source="author.username")
     shot = serializers.PrimaryKeyRelatedField(queryset=Shot.objects.all())
     choices = serializers.JSONField()
-    answers = serializers.ReadOnlyField()
+    answers = serializers.JSONField(required=False)
 
     class Meta:
         model = Question
