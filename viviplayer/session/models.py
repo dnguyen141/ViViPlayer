@@ -95,9 +95,10 @@ def get_default_json_for_question():
 class Question(models.Model):
     RENDER_TYPE = (
         ("checkbox", _("Checkbox")),
-        ("radiotype", _("Radiotype"))
+        ("radiogroup", _("Radiogroup"))
     )
     QUESTION_TYPE = (
+        ("", _("")),
         ("question", _("Question")),
         ("survey", _("Survey")),
     )
@@ -106,10 +107,11 @@ class Question(models.Model):
     shot = models.ForeignKey(Shot, on_delete=models.CASCADE, related_name="questions")
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="questions")
     title = models.CharField(max_length=500, null=False, blank=False)
-    typeOfQuestion = models.CharField(max_length=10, choices=QUESTION_TYPE)
+    typeOfQuestion = models.CharField(max_length=10, choices=QUESTION_TYPE, default="")
     typeToRender = models.CharField(max_length=10, choices=RENDER_TYPE)
     choices = models.JSONField(default=get_default_json_for_question, encoder=None)
-    answers = models.JSONField(default=get_default_json_for_question)
+    answers = models.JSONField(default=get_default_json_for_question, encoder=None)
+    correct_answer = models.CharField(max_length=500, null=False)
 
     def __str__(self):
         return self.title
