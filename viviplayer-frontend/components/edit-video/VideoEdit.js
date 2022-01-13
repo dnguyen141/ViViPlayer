@@ -69,7 +69,7 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
   const [autoStop, setAutoStop] = useState(false);
   const [chapterText, setChapterText] = useState('');
   const [lastTime, setLastTime] = useState(0);
-  const [visibleChapterText, setVisibleChapterText] = useState('translateY(-100%)'); // -100% = disappear, 0 = appear
+  const [visibleChapterText, setVisibleChapterText] = useState('hidden'); // -100% = disappear, 0 = appear
 
   const insertArray = async () => {
     //create and update list of shots
@@ -130,7 +130,7 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
     );
 
     if (temp != null) {
-      setVisibleChapterText('translateY(0%)');
+      setVisibleChapterText('visible');
       setLastTime(temp.time); //last marker that was found.
       setChapterText(temp.text);
       if (autoStop) {
@@ -146,7 +146,7 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
     requestAnimationFrame(() => {
       //checks whether the chapter title should still be shown
       if (lastTime === -1 || videoRef.current.currentTime > lastTime + 5) {
-        setVisibleChapterText('translateY(-100%)');
+        setVisibleChapterText('hidden');
       }
 
       //checks if the site has loaded all necessary data and if not rerun the function after 500ms.
@@ -232,7 +232,7 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
         console.log('player is ready');
       }));
     }
-    return () => {};
+    return () => { };
   }, [videoRef]);
 
   //===============================================================================
@@ -344,11 +344,12 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
           span={12}
           style={{ padding: '25px', justifyContent: 'center' }}
         >
+          {session.name !== 'dummy' ? (<h2> {session.name} </h2>):("")}
           <div className={styles.videocontainer}>
             <div className={styles.videocontainer}>
-              {session.name !== 'dummy' ? (
+              
                 <div key={session.tan}>
-                  <h2> {session.name} </h2>
+                  
                   <video
                     // controls
                     // onProgress={(e) => pauseSegment(e)}
@@ -364,26 +365,9 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
                     <source src={VIDEO_PREFIX + session.video_path} type="video/mp4" />
                   </video>
                 </div>
-              ) : (
-                <div key={session.tan}>
-                  <video
-                    // onProgress={(e) => pauseSegment(e)}
-                    onTimeUpdate={updatePlayer}
-                    ref={videoRef}
-                    id="video-viviplayer"
-                    //controls
-                    preload="auto"
-                    data-setup='{"fluid":true}' //This is used so that the video player is responsive
-                    className="video-js vjs-default-skin vjs-big-play-centered"
-                    onClick={togglePlayPause}
-                  >
-                    <source src={VIDEO_PREFIX + session.video_path} type="video/mp4" />
-                  </video>
-                </div>
-              )}
               <div
                 className={styles.chapterinfocontainer}
-                style={{ transform: visibleChapterText }}
+                style={{ visibility: visibleChapterText }}
               >
                 <p className={styles.chapterinfo}> {chapterText}</p>
               </div>
