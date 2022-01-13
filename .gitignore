@@ -8,3 +8,4 @@ SWP-WS2122-ViViPlayer3-Spec-v02.pdf
 *.fdb_latexmk
 __pycache__
 *.sqlite3
+media/
