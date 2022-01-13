@@ -13,11 +13,9 @@ function SurveyContainer({ user }) {
     const url = (WS_BACKEND || 'ws://' + window.location.host) + '/ws/player/sessionid12345/';
     socket = new WebSocket(url);
     socket.onmessage = (e) => {
-      console.log('socket in survey', e);
       const data = JSON.parse(e.data);
       if (data.action === 'surveyChange') {
-        console.log(data.time);
-        setAskFromAdmin(data.time);
+        setAskFromAdmin(data.payload);
       }
     };
   }, []);
@@ -25,7 +23,8 @@ function SurveyContainer({ user }) {
     socket.send(
       JSON.stringify({
         action: 'surveyChange',
-        time: values
+        time: 0,
+        payload: values
       })
     );
   };
