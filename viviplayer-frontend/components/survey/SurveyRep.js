@@ -5,8 +5,10 @@ import * as Survey from 'survey-react';
 
 const SurveyRep = ({ askFromAdminState }) => {
   const [ask, setAsk] = useState(null);
+  const [correctAns, setCorrectAns] = useState(null);
   useEffect(() => {
     setAsk(askFromAdminState);
+    setCorrectAns(ask != null ? ask.correct_answer : '');
   }, [askFromAdminState]);
   const json = {
     pages: [
@@ -18,13 +20,13 @@ const SurveyRep = ({ askFromAdminState }) => {
             name: 'answer',
             title: ask != null ? ask.title : '',
             isRequired: true,
-            choices: ask != null ? ask.answer : '',
-            correctAnswer: ['green']
+            choices: ask != null ? ask.choices : '',
+            correctAnswer: ask != null ? ask.correct_answer : ''
           }
         ]
       }
     ],
-    completedHtml: 'Vielen Dank für Deine Antwort'
+    completedHtml: `Vielen Dank für Deine Antwort <br /> the correct answer is: <b>${correctAns}</b>`
   };
   const survey = new Survey.Model(json);
   survey.onComplete.add((sender) => {

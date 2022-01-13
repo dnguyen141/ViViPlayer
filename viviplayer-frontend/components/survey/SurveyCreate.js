@@ -1,13 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import api from '../../utils/api';
 import { Button, Input, Table, Space, Popconfirm, Form, Select } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import { WS_BACKEND } from '../../constants/constants';
 
-let socket;
 const { Option } = Select;
 function SurveyCreate({ setAskFromAdminFunc, updateStateFunc }) {
   const [ask, setAsk] = useState(null);
+  const [shotList, setShotList] = useState(null);
+  const getShot = async () => {
+    const shotsData = await api.get('/session/shots/');
+    setShotList(shotsData.data);
+  };
+  useEffect(() => {
+    getShot();
+  }, []);
   const formItemLayout = {
     labelCol: {
       xs: { span: 0 },
@@ -25,6 +32,7 @@ function SurveyCreate({ setAskFromAdminFunc, updateStateFunc }) {
     }
   };
   const createQuestion = (values) => {
+    console.log(values);
     setAsk(values);
     setAskFromAdminFunc(values);
     updateStateFunc(values);
@@ -34,6 +42,11 @@ function SurveyCreate({ setAskFromAdminFunc, updateStateFunc }) {
       <Form.Item style={{ marginBottom: '1em' }} name="title" rules={[{ required: true }]}>
         <Input rows={4} placeholder="Geben Sie hier die Frage ein." />
       </Form.Item>
+      <Form.Item name="shot" rules={[{ required: true }]}>
+        <Select placeholder="Wählen Sie bitte hier ein Shot" allowClear>
+          {shotList && shotList.map((item) => <Option value={item.id}>{item.title}</Option>)}
+        </Select>
+      </Form.Item>
       <Form.Item name="type" rules={[{ required: true }]}>
         <Select placeholder="Wählen Sie type von Fragen" allowClear>
           <Option value="checkbox">Survey</Option>
@@ -41,7 +54,7 @@ function SurveyCreate({ setAskFromAdminFunc, updateStateFunc }) {
         </Select>
       </Form.Item>
       <Form.List
-        name="answer"
+        name="choices"
         rules={[
           {
             validator: async (_, names) => {
@@ -101,6 +114,9 @@ function SurveyCreate({ setAskFromAdminFunc, updateStateFunc }) {
           </>
         )}
       </Form.List>
+      <Form.Item style={{ marginBottom: '1em' }} name="correct_answer" rules={[{ required: true }]}>
+        <Input rows={4} placeholder="Geben Sie hier die richtige Antwort ein." />
+      </Form.Item>
       <Button type="primary" htmlType="submit">
         Posten
       </Button>
