@@ -1,6 +1,16 @@
+import csv
+import io
+import os
 import random
 import string
+import zipfile
 
+from django.http import HttpResponse
+from odf.draw import Frame, Image
+from odf.opendocument import OpenDocumentText
+from odf.style import Style, ParagraphProperties, TextProperties
+from odf.text import P
+from rest_framework import generics
 from rest_framework import status
 from rest_framework import viewsets
 from rest_framework.parsers import FormParser, MultiPartParser
@@ -8,18 +18,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from authentication.permissions import IsModerator
-from session.models import ViViSession, Shot, UserStory, Sentence, MultipleChoiceQuestion
+from session.models import ViViSession, Shot, UserStory, Sentence, Question
 from .serializers import SessionSerializer, UserStorySerializer, SentenceSerializer, QuestionSerializer, ShotSerializer
-
-from odf.opendocument import OpenDocumentText
-from odf.draw import Frame, Image
-from odf.text import P
-from odf.style import Style, ParagraphProperties, TextProperties
-from django.http import HttpResponse
-from rest_framework import generics
-import os, io
-import csv
-import zipfile
 
 
 def tan_generator():
@@ -116,12 +116,17 @@ class SentenceViewSet(viewsets.ModelViewSet):
 
 class QuestionViewSet(viewsets.ModelViewSet):
     serializer_class = QuestionSerializer
-    queryset = MultipleChoiceQuestion.objects.all()
+    queryset = Question.objects.all()
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user,
+                        session=ViViSession.objects.first(),
+                        answers=[])
 
 
 # API View for download a session as a .odt file
 class ExportODT(generics.ListAPIView):
-
     # Public for testing. Should only be accessed by a Moderator
     permission_classes = []
 
@@ -221,7 +226,6 @@ class ExportODT(generics.ListAPIView):
 
 # API View for downloading User Stories as .csv
 class ExportCSV(generics.ListAPIView):
-
     # Public for testing. Should only be accessed by a Moderator
     permission_classes = []
 
@@ -233,7 +237,7 @@ class ExportCSV(generics.ListAPIView):
         # Add Screenshots to .zip
         buffer = io.BytesIO()
         response = zipfile.ZipFile(buffer, "w")
-        for dirname, subdirs, files in os.walk('media/screenshots/'+str(ses.id)):
+        for dirname, subdirs, files in os.walk('media/screenshots/' + str(ses.id)):
             for filename in files:
                 response.write(os.path.join(dirname, filename), filename)
 
@@ -242,7 +246,7 @@ class ExportCSV(generics.ListAPIView):
         writer = csv.writer(csvf)
         writer.writerow(["Title", "Description", "Image"])
         for (i, us) in enumerate(UserStory.objects.all()):
-            row = ["User Story " + str(i+1), us.damit + ' ' + us.moechteichals1 + ' ' + us.moechteichals2
+            row = ["User Story " + str(i + 1), us.damit + ' ' + us.moechteichals1 + ' ' + us.moechteichals2
                 , str(us.shot.image).split("/")[-1]]
             writer.writerow(row)
 
@@ -251,7 +255,7 @@ class ExportCSV(generics.ListAPIView):
         response.close()
 
         # Save .zip on server - If needed
-        f = open("media/"+str(ses.id)+".zip", "wb")
+        f = open("media/" + str(ses.id) + ".zip", "wb")
         f.write(buffer.getvalue())
         f.close()
 

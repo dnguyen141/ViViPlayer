@@ -12,12 +12,8 @@ class ShotAdmin(admin.ModelAdmin):
     model = Shot
 
 
-class MultipleChoiceQuestionAdmin(admin.ModelAdmin):
-    model = MultipleChoiceQuestion
-
-
-class AnswerAdmin(admin.ModelAdmin):
-    model = Answer
+class QuestionAdmin(admin.ModelAdmin):
+    model = Question
 
 
 class SentenceAdmin(admin.ModelAdmin):
@@ -31,7 +27,6 @@ class UserStoryAdmin(admin.ModelAdmin):
 # Register your models here.
 admin.site.register(ViViSession, ViViSessionAdmin)
 admin.site.register(Shot, ShotAdmin)
-admin.site.register(MultipleChoiceQuestion, MultipleChoiceQuestionAdmin)
-admin.site.register(Answer, AnswerAdmin)
+admin.site.register(Question, QuestionAdmin)
 admin.site.register(UserStory, UserStoryAdmin)
 admin.site.register(Sentence, SentenceAdmin)
