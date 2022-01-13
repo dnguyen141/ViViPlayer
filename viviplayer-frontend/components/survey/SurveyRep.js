@@ -18,11 +18,13 @@ const SurveyRep = ({ askFromAdminState }) => {
             name: 'answer',
             title: ask != null ? ask.title : '',
             isRequired: true,
-            choices: ask != null ? ask.answer : ''
+            choices: ask != null ? ask.answer : '',
+            correctAnswer: ['green']
           }
         ]
       }
-    ]
+    ],
+    completedHtml: 'Vielen Dank für Deine Antwort'
   };
   const survey = new Survey.Model(json);
   survey.onComplete.add((sender) => {
