@@ -67,7 +67,7 @@ function SurveyCreate({ setAskFromAdminFunc, updateStateFunc }) {
                     {
                       required: true,
                       whitespace: true,
-                      message: 'Geben Sie bitte die Antworten ein'
+                      message: 'Geben Sie bitte die Antwort ein'
                     }
                   ]}
                   noStyle
@@ -93,7 +93,7 @@ function SurveyCreate({ setAskFromAdminFunc, updateStateFunc }) {
                 style={{ width: '83%' }}
                 icon={<PlusOutlined />}
               >
-                Antworten addieren
+                Antwort hinzufügen
               </Button>
 
               <Form.ErrorList errors={errors} />
