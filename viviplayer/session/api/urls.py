@@ -1,5 +1,3 @@
-from django.urls import path
-
 from django.urls import path, include
 from rest_framework import routers
 
@@ -17,5 +15,4 @@ urlpatterns = [
     path('', include(router.urls)),
     path('export/odt', ExportODT.as_view(), name="rest_odt"),
     path('export/csv', ExportCSV.as_view(), name="rest_csv"),
-
 ]
