@@ -210,14 +210,14 @@ const Video = ({ loadUser, loading, user }) => {
     }
   }
 
-  const createShotFunc = ({text}) => {
+  const createShotFunc = ({ text }) => {
     //post the shot to the server
     var time = videoRef.current.currentTime;
-    console.log("NEW TEXT" + text); 
+    console.log("NEW TEXT" + text);
     createShot(time, text);
-    
-    insertArray(); 
-    console.log(markerList); 
+
+    insertArray();
+    console.log(markerList);
   }
 
   function changeVideoPosition(e) {
@@ -319,27 +319,28 @@ const Video = ({ loadUser, loading, user }) => {
 
   return (
     <>
-      {session.name !== 'dummy' ? (<h2> {session.name} </h2>):("")}
-          <div className={styles.videocontainer}>
-            <div className={styles.videocontainer}>
-              
-                <div key={session.tan}>
-                  
-                  <video
-                    // controls
-                    // onProgress={(e) => pauseSegment(e)}
-                    onTimeUpdate={updatePlayer}
-                    ref={videoRef}
-                    id="video-viviplayer"
-                    //controls
-                    preload="auto"
-                    data-setup='{"fluid":true}' //This is used so that the video player is responsive
-                    className="video-js vjs-default-skin vjs-big-play-centered"
-                    onClick={togglePlayPause}
-                  >
-                    <source src={VIDEO_PREFIX + session.video_path} type="video/mp4" />
-                  </video>
-                </div>
+      {session.name !== 'dummy' ? (<h2> {session.name} </h2>) : ("")}
+      <div className={styles.videocontainer}>
+        <div className={styles.videocontainer}>
+
+          <div key={session.tan}>
+
+            <video
+              // controls
+              // onProgress={(e) => pauseSegment(e)}
+              onTimeUpdate={updatePlayer}
+              ref={videoRef}
+              id="video-viviplayer"
+              //controls
+              preload="auto"
+              data-setup='{"fluid":true}' //This is used so that the video player is responsive
+              className="video-js vjs-default-skin vjs-big-play-centered"
+              onClick={user != null && user.is_mod == true ? togglePlayPause : (e) => {return}}
+            >
+              <source src={VIDEO_PREFIX + session.video_path} type="video/mp4" />
+            </video>
+          </div>
+       
           <div className={styles.chapterinfocontainer} style={{ visibility: visibleChapterText }}>
             <p className={styles.chapterinfo}> {chapterText}</p>
           </div>
@@ -382,7 +383,7 @@ const Video = ({ loadUser, loading, user }) => {
             </div>
           ) : (
             <div className={styles.controls}>
-              <div className={styles.progressbarcontainer}>
+              <div className={styles.progressbarcontainer} onClick={changeVideoPosition.bind(this)}>
                 <div
                   className={styles.progressbar}
                   id='progressbar'
@@ -390,7 +391,7 @@ const Video = ({ loadUser, loading, user }) => {
                 ></div>
                 {markers}
               </div>
-              </div>
+            </div>
           )}
         </div>
       </div>
