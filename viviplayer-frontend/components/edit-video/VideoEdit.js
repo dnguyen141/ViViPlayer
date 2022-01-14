@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import 'videojs-markers';
 import videoJs from 'video.js';
-import { Button, List, Input, Form, Table, Space, Popconfirm, Row, Col } from 'antd';
+import { Button, Divider, Input, Form, Table, Space, Popconfirm, Row, Col, Modal } from 'antd';
 import { connect } from 'react-redux';
 import { CaretRightOutlined, PauseOutlined } from '@ant-design/icons';
 import styles from '../video/video.module.css';
+import SurveyCreate from '../survey/SurveyCreate';
+import SurveyTable from '../survey/SurveyTable';
 import { getInfoSession, createShot } from '../../actions/session.action';
 import { loadUser } from '../../actions/auth.action';
 import { setAuthToken } from '../../utils/setAuthToken';
@@ -25,6 +27,7 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
     tan: 'dummytan',
     video_path: ''
   });
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   // const [session, setSession] = useState(null);
   useEffect(async () => {
@@ -232,7 +235,7 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
         console.log('player is ready');
       }));
     }
-    return () => { };
+    return () => {};
   }, [videoRef]);
 
   //===============================================================================
@@ -344,27 +347,25 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
           span={12}
           style={{ padding: '25px', justifyContent: 'center' }}
         >
-          {session.name !== 'dummy' ? (<h2> {session.name} </h2>):("")}
+          {session.name !== 'dummy' ? <h2> {session.name} </h2> : ''}
           <div className={styles.videocontainer}>
             <div className={styles.videocontainer}>
-              
-                <div key={session.tan}>
-                  
-                  <video
-                    // controls
-                    // onProgress={(e) => pauseSegment(e)}
-                    onTimeUpdate={updatePlayer}
-                    ref={videoRef}
-                    id="video-viviplayer"
-                    //controls
-                    preload="auto"
-                    data-setup='{"fluid":true}' //This is used so that the video player is responsive
-                    className="video-js vjs-default-skin vjs-big-play-centered"
-                    onClick={togglePlayPause}
-                  >
-                    <source src={VIDEO_PREFIX + session.video_path} type="video/mp4" />
-                  </video>
-                </div>
+              <div key={session.tan}>
+                <video
+                  // controls
+                  // onProgress={(e) => pauseSegment(e)}
+                  onTimeUpdate={updatePlayer}
+                  ref={videoRef}
+                  id="video-viviplayer"
+                  //controls
+                  preload="auto"
+                  data-setup='{"fluid":true}' //This is used so that the video player is responsive
+                  className="video-js vjs-default-skin vjs-big-play-centered"
+                  onClick={togglePlayPause}
+                >
+                  <source src={VIDEO_PREFIX + session.video_path} type="video/mp4" />
+                </video>
+              </div>
               <div
                 className={styles.chapterinfocontainer}
                 style={{ visibility: visibleChapterText }}
@@ -432,6 +433,19 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
           style={{ padding: '25px', justifyContent: 'center' }}
         >
           <Table columns={columns} pagination={false} dataSource={shotData} scroll={{ y: 300 }} />
+          <Divider />
+          <SurveyTable />
+          <Button type="primary" onClick={() => setIsModalVisible(true)}>
+            Frage Erstellen
+          </Button>
+          <Modal
+            visible={isModalVisible}
+            footer={null}
+            onOk={() => setIsModalVisible(false)}
+            onCancel={() => setIsModalVisible(false)}
+          >
+            <SurveyCreate setIsModalVisibleFunc={setIsModalVisible} />
+          </Modal>
         </Col>
       </Row>
     </>

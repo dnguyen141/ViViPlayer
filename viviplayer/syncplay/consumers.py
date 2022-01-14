@@ -26,7 +26,15 @@ class AsyncPlayerConsumer(AsyncWebsocketConsumer):
     async def receive(self, text_data=None, bytes_data=None):
         text_data_json = json.loads(text_data)
         action = text_data_json['action']
-        time = text_data_json['time']
+        if "time" in text_data_json:
+            time = text_data_json['time']
+        else:
+            time = 0
+
+        if "payload" in text_data_json:
+            payload = text_data_json['payload']
+        else:
+            payload = ""
 
         # Send message to room group
         await self.channel_layer.group_send(
@@ -34,16 +42,19 @@ class AsyncPlayerConsumer(AsyncWebsocketConsumer):
             {
                 'type': 'player_message',
                 'action': action,
-                'time': time
+                'time': time,
+                'payload': payload,
             }
         )
 
     async def player_message(self, event):
         action = event['action']
         time = event['time']
+        payload = event['payload']
 
         # Send message to WebSocket
         await self.send(text_data=json.dumps({
             'action': action,
-            'time': time
+            'time': time,
+            'payload': payload
         }))
