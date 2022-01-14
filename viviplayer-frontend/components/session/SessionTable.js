@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../utils/api';
-import { Divider, Table, Space, Popconfirm, Typography } from 'antd';
+import { Divider, Table, Space, Popconfirm, Typography, Button } from 'antd';
 import PropTypes from 'prop-types';
 import EditSession from './EditSession';
 import { setAuthToken } from '../../utils/setAuthToken';
@@ -37,6 +37,12 @@ const SessionTable = ({ deleteSessionById, updateLayout, updateLayoutState, load
     wrapperCol: { span: 14 }
   };
   // connect to socket and update sentence table
+
+  //to export the data
+  const exportData = async () =>{
+    const res = await api.get('/session/export/csv');
+  }
+
   useEffect(() => {
     const url = (WS_BACKEND || 'ws://' + window.location.host) + '/ws/player/sessionid12345/';
     socket = new WebSocket(url);
@@ -109,6 +115,7 @@ const SessionTable = ({ deleteSessionById, updateLayout, updateLayoutState, load
   return (
     <div>
       <Table columns={columns} pagination={false} dataSource={sessionData} scroll={{ y: 200 }} />
+      <Button onClick={exportData}><a href='/somefile.txt' download>Click to download</a></Button>
     </div>
   );
 };

@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import 'videojs-markers';
+import Router from 'next/router';
 import videoJs from 'video.js';
 import { Button, List, Input, Form } from 'antd';
+import { logout } from '../../actions/auth.action';
 import { connect } from 'react-redux';
 import { CaretRightOutlined, PauseOutlined } from '@ant-design/icons';
 import styles from './video.module.css';
@@ -13,7 +15,7 @@ import { WS_BACKEND, VIDEO_PREFIX } from '../../constants/constants';
 
 
 // !!! markers need to be an Integer
-const Video = ({ loadUser, loading, user }) => {
+const Video = ({ loadUser, loading, user, logout }) => {
   const [userState, setUserState] = useState(null);
   const [session, setSession] = useState({
     name: 'dummy',
@@ -261,6 +263,16 @@ const Video = ({ loadUser, loading, user }) => {
           videoRef.current.currentTime = data.time + '';
           console.log(data.time + '');
         }
+      } else if (data.action === 'end') {
+        if (user != null && user.is_mod == true) {
+          Router.push('/dashboard');
+        } else {
+
+          logout();
+          Router.push('/');
+        }
+
+
       }
     };
 
@@ -331,12 +343,12 @@ const Video = ({ loadUser, loading, user }) => {
               preload="auto"
               data-setup='{"fluid":true}' //This is used so that the video player is responsive
               className="video-js vjs-default-skin vjs-big-play-centered"
-              onClick={user != null && user.is_mod == true ? togglePlayPause : (e) => {return}}
+              onClick={user != null && user.is_mod == true ? togglePlayPause : (e) => { return }}
             >
               <source src={VIDEO_PREFIX + session.video_path} type="video/mp4" />
             </video>
           </div>
-       
+
           <div className={styles.chapterinfocontainer} style={{ visibility: visibleChapterText }}>
             <p className={styles.chapterinfo}> {chapterText}</p>
           </div>
@@ -417,6 +429,7 @@ const Video = ({ loadUser, loading, user }) => {
         ''
       )}
 
+
     </>
 
   );
@@ -428,4 +441,4 @@ const mapStateToProps = (state) => ({
   loading: state.session.loading
 });
 
-export default connect(mapStateToProps, { getInfoSession, loadUser })(Video);
+export default connect(mapStateToProps, { getInfoSession, loadUser, logout })(Video);
