@@ -380,7 +380,7 @@ class PostAnswerAPIView(generics.CreateAPIView):
         return Response(data=data, status=status.HTTP_200_OK)
 
 
-# API for member to send their answer for question to server
+# API for moderator to get statistics data
 class GetStatisticsAPIView(generics.ListAPIView):
     permission_classes = [IsModerator]
 
