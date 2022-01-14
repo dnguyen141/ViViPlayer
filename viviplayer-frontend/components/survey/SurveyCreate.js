@@ -5,7 +5,9 @@ import { Button, Input, Table, Space, Popconfirm, Form, Select } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { createSurvey } from '../../actions/survey.action';
 import { connect } from 'react-redux';
+import { WS_BACKEND } from '../../constants/constants';
 
+let socket;
 const { Option } = Select;
 function SurveyCreate({
   setAskFromAdminFunc,
@@ -15,10 +17,18 @@ function SurveyCreate({
 }) {
   const [ask, setAsk] = useState(null);
   const [shotList, setShotList] = useState(null);
+  const [answer, setAnswer] = useState([]);
+  const [form] = Form.useForm();
+
   const getShot = async () => {
     const shotsData = await api.get('/session/shots/');
     setShotList(shotsData.data);
   };
+  // connect to socket and update sentence table
+  useEffect(() => {
+    const url = (WS_BACKEND || 'ws://' + window.location.host) + '/ws/player/sessionid12345/';
+    socket = new WebSocket(url);
+  }, []);
   useEffect(() => {
     getShot();
   }, []);
@@ -39,15 +49,22 @@ function SurveyCreate({
     }
   };
   const createQuestion = (values) => {
-    console.log(values);
     createSurvey(values.shot, values.title, values.choices, values.correct_answer, values.type);
+    socket.send(
+      JSON.stringify({
+        action: 'surveyChange',
+        time: 0,
+        payload: values
+      })
+    );
     setAsk(values);
     setAskFromAdminFunc(values);
     updateStateFunc(values);
-    setIsModalVisibleFunc(false);
+    setIsModalVisibleFunc(true);
+    form.resetFields();
   };
   let CreateQuestion = (
-    <Form name="Frage erstellt" onFinish={createQuestion} autoComplete="off">
+    <Form form={form} name="Frage erstellt" onFinish={createQuestion} autoComplete="off">
       <Form.Item
         style={{ marginBottom: '1em' }}
         name="title"
@@ -92,7 +109,7 @@ function SurveyCreate({
           }
         ]}
       >
-        {(fields, { add, remove }, { errors }) => (
+        { (fields, { add, remove }, { errors }) => (
           <>
             {fields.map((field, index) => (
               <Form.Item

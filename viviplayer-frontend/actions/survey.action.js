@@ -9,14 +9,14 @@ import { Notification } from '../utils/notification';
 
 export const createSurvey =
   (shot, title, choices, correct_answer, typeToRender) => async (dispatch) => {
-    const body = { shot, title, choices, correct_answer: 'nothing', typeToRender };
+    const body = { shot, title, choices, correct_answer, typeToRender };
     console.log(body);
     try {
       const res = await api.post('/session/questions/', body);
       await dispatch({
         type: CREATE_SURVEY_SUCCESS
       });
-      Notification('Survey Notification', 'survey has been created', 'success');
+      Notification('Survey Notification', 'question has been created', 'success');
       console.log(res);
     } catch (err) {
       console.log(err);

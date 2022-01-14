@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import SurveyRep from './SurveyRep';
 import SurveyCreate from './SurveyCreate';
+import SurveyTable from './SurveyTable';
 import { createSurvey } from '../../actions/survey.action';
 import { WS_BACKEND } from '../../constants/constants';
 
@@ -16,29 +17,25 @@ function SurveyContainer({ user, createSurvey }) {
     socket.onmessage = (e) => {
       const data = JSON.parse(e.data);
       if (data.action === 'surveyChange') {
-        console.log('survey change message',data.payload);
+        console.log('survey change message', data.payload);
         setAskFromAdmin(data.payload);
       }
     };
   }, []);
-  const updateState = (values) => {
-    createSurvey(values.shot, values.title, values.choices, values.correct_answer, values.type);
-    socket.send(
-      JSON.stringify({
-        action: 'surveyChange',
-        time: 0,
-        payload: values
-      })
-    );
-  };
+  // const updateState = (values) => {
+  //   // createSurvey(values.shot, values.title, values.choices, values.correct_answer, values.type);
+  //   socket.send(
+  //     JSON.stringify({
+  //       action: 'surveyChange',
+  //       time: 0,
+  //       payload: values
+  //     })
+  //   );
+  // };
 
   let SurveyView = (
     <div>
-      {user && user.is_mod ? (
-        <SurveyCreate setAskFromAdminFunc={setAskFromAdmin} updateStateFunc={updateState} />
-      ) : (
-        <SurveyRep askFromAdminState={askFromAdmin} />
-      )}
+      {user && user.is_mod ? <SurveyTable /> : <SurveyRep askFromAdminState={askFromAdmin} />}
     </div>
   );
   return (
