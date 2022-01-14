@@ -42,6 +42,7 @@ const SurveyEdit = ({ id, context, updateFunc }) => {
   };
   useEffect(() => {
     getShot();
+    setFieldsData(context.choices);
   }, []);
   return (
     <>
@@ -110,8 +111,6 @@ const SurveyEdit = ({ id, context, updateFunc }) => {
             ]}
           >
             {(fields, { add, remove }, { errors }) => {
-              setFieldsData(context.choices);
-              console.log(fieldsData);
               return (
                 <>
                   {fields.map((field, index) => {
