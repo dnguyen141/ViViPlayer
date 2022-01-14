@@ -65,9 +65,10 @@
 
 .checkbox{
     color: white; 
-    bottom: 0;
     margin-left: 10px;
-    transform: translateY(50%) translateY(4px);
+    transform: none;
+    -webkit-transform: translateY(50%) translateY(4px);
+    -moz-transform: none;
 }
 
 .volume{

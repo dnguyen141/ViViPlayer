@@ -88,7 +88,7 @@ class Sentence(models.Model):
         ordering = ['id']
 
 
-def get_default_json_for_question():
+def _get_default_json_for_question():
     return []
 
 
@@ -107,11 +107,11 @@ class Question(models.Model):
     shot = models.ForeignKey(Shot, on_delete=models.CASCADE, related_name="questions")
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="questions")
     title = models.CharField(max_length=500, null=False, blank=False)
-    typeOfQuestion = models.CharField(max_length=10, choices=QUESTION_TYPE, default="")
-    typeToRender = models.CharField(max_length=10, choices=RENDER_TYPE)
-    choices = models.JSONField(default=get_default_json_for_question, encoder=None)
-    answers = models.JSONField(default=get_default_json_for_question, encoder=None)
-    correct_answer = models.CharField(max_length=500, null=False)
+    typeOfQuestion = models.CharField(max_length=10, null=False, choices=QUESTION_TYPE, default="")
+    typeToRender = models.CharField(max_length=10, null=False, choices=RENDER_TYPE)
+    choices = models.JSONField(default=_get_default_json_for_question, encoder=None)
+    answers = models.JSONField(default=_get_default_json_for_question, encoder=None)
+    correct_answer = models.CharField(max_length=500, null=False, default="")
 
     def __str__(self):
         return self.title
