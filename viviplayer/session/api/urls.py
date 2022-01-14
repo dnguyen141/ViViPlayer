@@ -8,7 +8,8 @@ from .views import (
     ShotViewSet,
     SessionViewSet,
     ExportODT,
-    ExportCSV
+    ExportCSV,
+    PostAnswerAPI
 )
 
 router = routers.DefaultRouter()
