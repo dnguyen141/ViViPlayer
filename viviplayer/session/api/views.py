@@ -286,7 +286,7 @@ class PostAnswerAPI(generics.CreateAPIView):
         if "question_id" not in request.data \
                 or "answer" not in request.data \
                 or not request.data["question_id"].isdigit() \
-                or not request.data["answer"]:
+                or type(request.data["answer"]) != 'list':
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
         if Question.objects.filter(id=request.data["question_id"]).count() == 0:
