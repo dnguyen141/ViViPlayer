@@ -29,7 +29,7 @@ const EditUserStory = ({ id, context, updateFunc, updateUserStoryById }) => {
           </i>
           <br />
           <i>schreibe dort hin, um die User Story zu aktualisieren:</i>
-          <Form name="User Story aktualisieren" onFinish={updateUserStory} autoComplete="on">
+          <Form name="User Story aktualisieren" onFinish={updateUserStory} autoComplete="off">
             Damit :
             <Form.Item style={{ marginBottom: '1em' }} name="damit" initialValue={context.damit}>
               <Input rows={4} />
