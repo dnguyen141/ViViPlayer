@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Form, Button, Input, Modal } from 'antd';
 import { connect } from 'react-redux';
 import { getSentences, updateSentenceById } from '../../actions/session.action';
+import api from '../../utils/api';
 const EditSentence = ({ id, context, updateFunc, updateSentenceById }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const updateSen = ({ text }) => {
@@ -32,8 +33,8 @@ const EditSentence = ({ id, context, updateFunc, updateSentenceById }) => {
           <br />
           <i>schreib dort hin, um den Satz zu aktualisieren:</i>
           <Form name="Update Satz" onFinish={updateSen} autoComplete="off">
-            <Form.Item style={{ marginBottom: '1em' }} name="text">
-              <Input placeholder="neuer Satz" />
+            <Form.Item style={{ marginBottom: '1em' }} name="text" initialValue={context.text}>
+              <Input />
             </Form.Item>
             <Button type="primary" htmlType="submit">
               Submit

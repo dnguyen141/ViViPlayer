@@ -29,20 +29,17 @@ const EditUserStory = ({ id, context, updateFunc, updateUserStoryById }) => {
           </i>
           <br />
           <i>schreibe dort hin, um die User Story zu aktualisieren:</i>
-          <Form name="User Story aktualisieren" onFinish={updateUserStory} autoComplete="off">
+          <Form name="User Story aktualisieren" onFinish={updateUserStory} autoComplete="on">
             Damit :
-            <Form.Item style={{ marginBottom: '1em' }} name="damit">
-              <Input rows={4} placeholder="z.B ich weiss,ob jemand unregelmäßig arbeitet" />
+            <Form.Item style={{ marginBottom: '1em' }} name="damit" initialValue={context.damit}>
+              <Input rows={4} />
             </Form.Item>
             möchte ich als:
-            <Form.Item style={{ marginBottom: '1em' }} name="moechteichals1">
-              <Input rows={4} placeholder="z.B Abteilungsleiter" />
+            <Form.Item style={{ marginBottom: '1em' }} name="moechteichals1" initialValue={context.moechteichals1}>
+              <Input rows={4} />
             </Form.Item>
-            <Form.Item style={{ marginBottom: '1em' }} name="moechteichals2">
-              <Input
-                rows={4}
-                placeholder="z.B eine visuelle Darstellung der geleisteten Stunden sehen"
-              />
+            <Form.Item style={{ marginBottom: '1em' }} name="moechteichals2" initialValue={context.moechteichals2}>
+              <Input rows={4} />
             </Form.Item>
             <Button type="primary" htmlType="submit">
               Submit
