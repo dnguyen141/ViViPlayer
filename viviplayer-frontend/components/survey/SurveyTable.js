@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Space, Popconfirm } from 'antd';
+import { useRouter } from 'next/router';
 import SurveyEdit from './SurveyEdit';
 import api from '../../utils/api';
 import { connect } from 'react-redux';
@@ -11,10 +12,13 @@ let socket;
 function SurveyTable({ deleteQuestion }) {
   const [questions, setQuestions] = useState(null);
   const [updateTable, setupdateTable] = useState(false);
+
+  const router = useRouter();
   const fetchQuestions = async () => {
     const res = await api.get('/session/questions/');
     setQuestions(res.data);
   };
+  const pathName = router.pathname;
   // connect to socket and update sentence table
   useEffect(() => {
     const url = (WS_BACKEND || 'ws://' + window.location.host) + '/ws/player/sessionid12345/';
@@ -78,21 +82,30 @@ function SurveyTable({ deleteQuestion }) {
       dataIndex: 'id',
       render: (id, record) => (
         <div>
-          <Space size="middle">
-            <div>
-              <SurveyEdit id={id} context={record} updateFunc={updateState} />
-              <Popconfirm
-                title="Löschen dieses Satzes ist nicht rückgängig zu machen. Weiter?"
-                onConfirm={() => {
-                  deleteQuestion(id);
-                  updateState();
-                  setupdateTable(!updateTable);
-                }}
-              >
-                <a style={{ color: 'red' }}>Delete</a>
-              </Popconfirm>
-            </div>
-          </Space>
+          {pathName === '/video-edit' ? (
+            <Space size="middle">
+              <div>
+                <SurveyEdit id={id} context={record} updateFunc={updateState} />
+                <Popconfirm
+                  title="Löschen dieses Satzes ist nicht rückgängig zu machen. Weiter?"
+                  onConfirm={() => {
+                    deleteQuestion(id);
+                    updateState();
+                    setupdateTable(!updateTable);
+                  }}
+                >
+                  <a style={{ color: 'red' }}>Delete</a>
+                </Popconfirm>
+              </div>
+            </Space>
+          ) : (
+            <Space size="middle">
+              <div>
+                <a style={{ color: '#1890ff', marginRight: '1em' }}>Frage</a>
+                <a style={{ color: '#228B22' }}>Statistics</a>
+              </div>
+            </Space>
+          )}
         </div>
       )
     }
