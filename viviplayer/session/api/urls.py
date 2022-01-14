@@ -9,8 +9,8 @@ from .views import (
     SessionViewSet,
     ExportODT,
     ExportCSV,
-    PostAnswerAPI,
-    GetStatisticsAPI
+    PostAnswerAPIView,
+    GetStatisticsAPIView
 )
 
 router = routers.DefaultRouter()
@@ -24,7 +24,7 @@ router.register(r'', SessionViewSet, basename='rest_session')
 urlpatterns = [
     path('export/odt', ExportODT.as_view(), name="rest_odt"),
     path('export/csv', ExportCSV.as_view(), name="rest_csv"),
-    path('answers/', PostAnswerAPI.as_view(), name="rest_answer"),
-    path('statistics/', GetStatisticsAPI.as_view(), name="rest_statistic"),
+    path('answers/', PostAnswerAPIView.as_view(), name="rest_answer"),
+    path('statistics/', GetStatisticsAPIView.as_view(), name="rest_statistic"),
     path('', include(router.urls)),
 ]
