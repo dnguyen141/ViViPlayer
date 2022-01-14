@@ -434,11 +434,16 @@ class GetStatisticsAPI(generics.ListAPIView):
             }
             return Response(data=msg, status=status.HTTP_404_NOT_FOUND)
 
-        data = []
+        statistics = []
         question = Question.objects.get(id=request.data["question_id"])
         for choice in question.choices:
             stat = dict()
             stat["choice"] = choice
             stat["quantity"] = question.answers.count(choice)
-            data.append(stat)
+            statistics.append(stat)
+        data = {
+            "question_id": request.data["question_id"],
+            "question_title": question.title,
+            "data": statistics
+        }
         return Response(data=data, status=status.HTTP_200_OK)
