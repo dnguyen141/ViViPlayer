@@ -43,6 +43,7 @@ class SessionViewSet(viewsets.ModelViewSet):
     serializer_class = SessionSerializer
     queryset = ViViSession.objects.all()
     parser_classes = [FormParser, MultiPartParser]
+    http_method_names = ['get', 'post', 'put', 'delete']
 
     def get_permissions(self):
         if self.action == 'list' or self.action == 'retrieve':
@@ -70,6 +71,7 @@ class SessionViewSet(viewsets.ModelViewSet):
 class ShotViewSet(viewsets.ModelViewSet):
     serializer_class = ShotSerializer
     queryset = Shot.objects.all()
+    http_method_names = ['get', 'post', 'put', 'delete']
 
     class Meta:
         model = Shot
@@ -106,6 +108,7 @@ class UserStoryViewSet(viewsets.ModelViewSet):
     serializer_class = UserStorySerializer
     queryset = UserStory.objects.all()
     permission_classes = [IsAuthenticated]
+    http_method_names = ['get', 'post', 'put', 'delete']
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user, session=ViViSession.objects.first())
@@ -115,6 +118,7 @@ class SentenceViewSet(viewsets.ModelViewSet):
     serializer_class = SentenceSerializer
     queryset = Sentence.objects.all()
     permission_classes = [IsAuthenticated]
+    http_method_names = ['get', 'post', 'put', 'delete']
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user, session=ViViSession.objects.first())
@@ -123,6 +127,7 @@ class SentenceViewSet(viewsets.ModelViewSet):
 class QuestionViewSet(viewsets.ModelViewSet):
     serializer_class = QuestionSerializer
     queryset = Question.objects.all()
+    http_method_names = ['get', 'post', 'put', 'delete']
 
     def get_permissions(self):
         if self.action == 'list' or self.action == 'retrieve':
@@ -132,9 +137,7 @@ class QuestionViewSet(viewsets.ModelViewSet):
         return [permission() for permission in permission_classes]
 
     def perform_create(self, serializer):
-        serializer.save(author=self.request.user,
-                        session=ViViSession.objects.first(),
-                        answers=[])
+        serializer.save(author=self.request.user, session=ViViSession.objects.first(), answers=[])
 
 
 # API View for download a session as a .odt file
@@ -280,7 +283,7 @@ class ExportCSV(generics.ListAPIView):
 
 
 # API for member to send their answer for question to server
-class PostAnswerAPI(generics.CreateAPIView):
+class PostAnswerAPIView(generics.CreateAPIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
@@ -378,7 +381,7 @@ class PostAnswerAPI(generics.CreateAPIView):
 
 
 # API for member to send their answer for question to server
-class GetStatisticsAPI(generics.ListAPIView):
+class GetStatisticsAPIView(generics.ListAPIView):
     permission_classes = [IsModerator]
 
     def get(self, request, *args, **kwargs):
