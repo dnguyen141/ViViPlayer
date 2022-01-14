@@ -8,8 +8,7 @@ from .views import (
     ShotViewSet,
     SessionViewSet,
     ExportODT,
-    ExportCSV,
-    PostAnswer
+    ExportCSV
 )
 
 router = routers.DefaultRouter()
@@ -23,6 +22,6 @@ router.register(r'', SessionViewSet, basename='rest_session')
 urlpatterns = [
     path('export/odt', ExportODT.as_view(), name="rest_odt"),
     path('export/csv', ExportCSV.as_view(), name="rest_csv"),
-    path('answers/', PostAnswer.as_view(), name="rest_answers"),
+    path('answers/', PostAnswerAPI.as_view(), name="rest_answers"),
     path('', include(router.urls)),
 ]

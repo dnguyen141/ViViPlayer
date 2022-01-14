@@ -278,7 +278,8 @@ class ExportCSV(generics.ListAPIView):
         return response
 
 
-class PostAnswer(generics.CreateAPIView):
+# API for member to send their answer for question to server
+class PostAnswerAPI(generics.CreateAPIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
