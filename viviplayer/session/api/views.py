@@ -283,7 +283,6 @@ class PostAnswerAPI(generics.CreateAPIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
-        user_answer = json.loads(request.data["answer"])
         if "question_id" not in request.data \
                 or "answer" not in request.data \
                 or not request.data["question_id"].isdigit() \
@@ -293,6 +292,7 @@ class PostAnswerAPI(generics.CreateAPIView):
         if Question.objects.filter(id=request.data["question_id"]).count() == 0:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
+        user_answer = json.loads(request.data["answer"])
         question = Question.objects.get(id=request.data["question_id"])
         for choice in user_answer:
             if choice not in question.choices:
