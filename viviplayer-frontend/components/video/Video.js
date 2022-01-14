@@ -11,15 +11,13 @@ import { setAuthToken } from '../../utils/setAuthToken';
 import api from '../../utils/api';
 import { WS_BACKEND, VIDEO_PREFIX } from '../../constants/constants';
 
-
 // !!! markers need to be an Integer
 const Video = ({ loadUser, loading, user }) => {
   const [userState, setUserState] = useState(null);
   const [session, setSession] = useState({
     name: 'dummy',
     tan: 'dummytan',
-    video_path:
-      ''
+    video_path: ''
   });
 
   // const [session, setSession] = useState(null);
@@ -75,13 +73,13 @@ const Video = ({ loadUser, loading, user }) => {
     const shotsData = await api.get('/session/shots/');
     for (let i = 0; i < shotsData.data.length; i++) {
       markerListTemp.push({
-        time: shotsData.data[i]["time"],
-        text: shotsData.data[i]["title"]
-      })
+        time: shotsData.data[i]['time'],
+        text: shotsData.data[i]['title']
+      });
     }
 
     setMarkerList(markerListTemp);
-  }
+  };
 
   //maps the markers of the markersList to individual <div> elements that then get drawn on the progressbar. every change of the markerList should also rerender the
   // markers. if not markers has to be an state too.
@@ -92,13 +90,15 @@ const Video = ({ loadUser, loading, user }) => {
     }
 
     // das war vor dem loop
-    setMarkers(markerList.map((marker) => (
-      <div
-        title={marker.text}
-        className={styles.markers}
-        style={{ left: (marker.time / videoRef.current.duration) * 100 + '%' }}
-      />
-    )))
+    setMarkers(
+      markerList.map((marker) => (
+        <div
+          title={marker.text}
+          className={styles.markers}
+          style={{ left: (marker.time / videoRef.current.duration) * 100 + '%' }}
+        />
+      ))
+    );
   }
 
   //plays and pauses the video and switches between the right icons for the state of the player.
@@ -107,18 +107,22 @@ const Video = ({ loadUser, loading, user }) => {
       videoRef.current.play();
       setPlayPauseIcon(<PauseOutlined style={{ fontSize: '150%' }} />);
 
-      socketRef.current.send(JSON.stringify({
-        'action': 'play',
-        'time': videoRef.current.currentTime
-      }));
+      socketRef.current.send(
+        JSON.stringify({
+          action: 'play',
+          time: videoRef.current.currentTime
+        })
+      );
     } else {
       videoRef.current.pause();
       setPlayPauseIcon(<CaretRightOutlined style={{ fontSize: '150%' }} />);
 
-      socketRef.current.send(JSON.stringify({
-        'action': 'pause',
-        'time': videoRef.current.currentTime
-      }));
+      socketRef.current.send(
+        JSON.stringify({
+          action: 'pause',
+          time: videoRef.current.currentTime
+        })
+      );
     }
   }
 
@@ -196,9 +200,9 @@ const Video = ({ loadUser, loading, user }) => {
     if (videoRef.current.readyState > 2) {
       //check if video is ready to be played
       var text = e.target.innerHTML.toString();
-      console.log(text);
       if (text != null) {
         var currentMarker = markerList.find((x) => x.text === text);
+        console.log(currentMarker);
         if (currentMarker != null) {
           var newPosition = currentMarker.time / videoRef.current.duration;
           setProgressBarWidth(newPosition * 100 + '%');
@@ -214,7 +218,7 @@ const Video = ({ loadUser, loading, user }) => {
     var time = videoRef.current.currentTime;
     createShot(time, text);
     insertArray();
-  }
+  };
 
   function changeVideoPosition(e) {
     if (videoRef.current.readyState > 2) {
@@ -310,17 +314,15 @@ const Video = ({ loadUser, loading, user }) => {
       // player.pause();
       pauseVideo(player);*/
     }
-    return () => { };
+    return () => {};
   }, [videoRef]);
 
   return (
     <>
-      {session.name !== 'dummy' ? (<h2> {session.name} </h2>) : ("")}
+      {session.name !== 'dummy' ? <h2> {session.name} </h2> : ''}
       <div className={styles.videocontainer}>
         <div className={styles.videocontainer}>
-
           <div key={session.tan}>
-
             <video
               // controls
               // onProgress={(e) => pauseSegment(e)}
@@ -331,12 +333,18 @@ const Video = ({ loadUser, loading, user }) => {
               preload="auto"
               data-setup='{"fluid":true}' //This is used so that the video player is responsive
               className="video-js vjs-default-skin vjs-big-play-centered"
-              onClick={user != null && user.is_mod == true ? togglePlayPause : (e) => {return}}
+              onClick={
+                user != null && user.is_mod == true
+                  ? togglePlayPause
+                  : (e) => {
+                      return;
+                    }
+              }
             >
               <source src={VIDEO_PREFIX + session.video_path} type="video/mp4" />
             </video>
           </div>
-       
+
           <div className={styles.chapterinfocontainer} style={{ visibility: visibleChapterText }}>
             <p className={styles.chapterinfo}> {chapterText}</p>
           </div>
@@ -345,28 +353,28 @@ const Video = ({ loadUser, loading, user }) => {
               <div className={styles.progressbarcontainer} onClick={changeVideoPosition.bind(this)}>
                 <div
                   className={styles.progressbar}
-                  id='progressbar'
+                  id="progressbar"
                   style={{ width: progressBarWidth }}
                 ></div>
                 {markers}
               </div>
 
               <div className={styles.buttons}>
-                <button id='play-pause-button' onClick={togglePlayPause}>
+                <button id="play-pause-button" onClick={togglePlayPause}>
                   {playPauseIcon}
                 </button>
               </div>
               <input
-                type='range'
+                type="range"
                 className={styles.volumeslider}
-                min='0'
-                max='1'
-                step='0.01'
-                defaultValue='0.5'
+                min="0"
+                max="1"
+                step="0.01"
+                defaultValue="0.5"
                 onChange={(e) => (videoRef.current.volume = e.target.value)}
               />
               <input
-                type='checkbox'
+                type="checkbox"
                 className={styles.checkbox}
                 checked={autoStop}
                 onChange={toggleautoStop}
@@ -382,7 +390,7 @@ const Video = ({ loadUser, loading, user }) => {
               <div className={styles.progressbarcontainer} onClick={changeVideoPosition.bind(this)}>
                 <div
                   className={styles.progressbar}
-                  id='progressbar'
+                  id="progressbar"
                   style={{ width: progressBarWidth }}
                 ></div>
                 {markers}
@@ -393,13 +401,13 @@ const Video = ({ loadUser, loading, user }) => {
       </div>
       {user != null && user.is_mod == true ? (
         <List
-          size='small'
-          className='list-h'
+          size="small"
+          className="list-h"
           dataSource={markerList}
           renderItem={(markerList) => (
-            <List.Item className='menu-item'>
+            <List.Item className="menu-item">
               <Button
-                type='default'
+                type="default"
                 style={{
                   backgroundColor: 'transparent',
                   color: 'white',
@@ -416,9 +424,7 @@ const Video = ({ loadUser, loading, user }) => {
       ) : (
         ''
       )}
-
     </>
-
   );
 };
 
