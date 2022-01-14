@@ -337,19 +337,6 @@ class PostAnswerAPI(generics.CreateAPIView):
             }
             return Response(data=msg, status=status.HTTP_400_BAD_REQUEST)
 
-        if not request.data["question_id"].isdigit() or type(json.loads(request.data["answer"])) != list:
-            msg = {
-                "errors": [
-                    {
-                        "field": "question_id" if not request.data["question_id"].isdigit() else "answer",
-                        "message": [
-                            "question_id or answer input is in wrong format!"
-                        ]
-                    }
-                ]
-            }
-            return Response(data=msg, status=status.HTTP_400_BAD_REQUEST)
-
         if Question.objects.filter(id=request.data["question_id"]).count() == 0:
             msg = {
                 "errors": [
@@ -414,7 +401,7 @@ class GetStatisticsAPI(generics.ListAPIView):
                     {
                         "field": "question_id",
                         "message": [
-                            "question_id or answer input is in wrong format!"
+                            "question_id is in wrong format!"
                         ]
                     }
                 ]
