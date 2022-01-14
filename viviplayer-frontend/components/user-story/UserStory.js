@@ -13,6 +13,10 @@ const tabList = [
   {
     key: 'tab2',
     tab: 'Satz'
+  },
+  {
+    key: 'tab3',
+    tab: 'Ümfrage'
   }
 ];
 
@@ -26,14 +30,15 @@ const UserStory = (props) => {
     tab1: (
       <Card style={{ border: '3px solid gray' }}>
         <UsrStoryDesire />
-        <Divider />
-        <SurveyContainer />
       </Card>
     ),
     tab2: (
       <Card style={{ border: '3px solid gray' }}>
         <Satz />
-        <Divider />
+      </Card>
+    ),
+    tab3: (
+      <Card style={{ border: '3px solid gray' }}>
         <SurveyContainer />
       </Card>
     )
