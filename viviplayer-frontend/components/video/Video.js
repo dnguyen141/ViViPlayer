@@ -284,35 +284,6 @@ const Video = ({ loadUser, loading, user }) => {
       const player = (playerRef.current = videoJs(videoElement, () => {
         console.log('player is ready');
       }));
-
-      // DEPRECATED: new implementation of markers and autoStop in calculateMarkerPostition and updatePlayer
-
-      /* player.markers({
-        markerStyle: {
-          width: '8px',
-          'background-color': 'red'
-        },
-        markerTip: {
-          display: true,
-          html: function (marker) {
-            return <EditableMarkers text={marker.text} />;
-          }
-        },
-        breakOverlay: {
-          display: false,
-          displayTime: 3,
-          text: function (marker) {
-            return marker.text;
-          }
-        },
-        onMarkerReached: function (marker) {
-          console.log(marker);
-        },
-        markers: markerListDefault
-      });
-      //player.autoplay('muted');
-      // player.pause();
-      pauseVideo(player);*/
     }
     return () => {};
   }, [videoRef]);
