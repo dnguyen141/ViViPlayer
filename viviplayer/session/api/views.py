@@ -1,5 +1,6 @@
 import csv
 import io
+import json
 import os
 import random
 import string
@@ -10,16 +11,20 @@ from odf.draw import Frame, Image
 from odf.opendocument import OpenDocumentText
 from odf.style import Style, ParagraphProperties, TextProperties
 from odf.text import P
-from rest_framework import generics
-from rest_framework import status
-from rest_framework import viewsets
+from rest_framework import generics, status, viewsets
 from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from authentication.permissions import IsModerator
 from session.models import ViViSession, Shot, UserStory, Sentence, Question
-from .serializers import SessionSerializer, UserStorySerializer, SentenceSerializer, QuestionSerializer, ShotSerializer
+from .serializers import (
+    SessionSerializer,
+    UserStorySerializer,
+    SentenceSerializer,
+    QuestionSerializer,
+    ShotSerializer
+)
 
 
 def tan_generator():
@@ -117,7 +122,13 @@ class SentenceViewSet(viewsets.ModelViewSet):
 class QuestionViewSet(viewsets.ModelViewSet):
     serializer_class = QuestionSerializer
     queryset = Question.objects.all()
-    permission_classes = [IsAuthenticated]
+
+    def get_permissions(self):
+        if self.action == 'list' or self.action == 'retrieve':
+            permission_classes = [IsAuthenticated]
+        else:
+            permission_classes = [IsModerator]
+        return [permission() for permission in permission_classes]
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user,
@@ -128,7 +139,7 @@ class QuestionViewSet(viewsets.ModelViewSet):
 # API View for download a session as a .odt file
 class ExportODT(generics.ListAPIView):
     # Public for testing. Should only be accessed by a Moderator
-    permission_classes = []
+    permission_classes = [IsModerator]
 
     # New odt document
     textdoc = OpenDocumentText()
@@ -227,7 +238,7 @@ class ExportODT(generics.ListAPIView):
 # API View for downloading User Stories as .csv
 class ExportCSV(generics.ListAPIView):
     # Public for testing. Should only be accessed by a Moderator
-    permission_classes = []
+    permission_classes = [IsModerator]
 
     def get(self, request, *args, **kwargs):
 
@@ -265,3 +276,26 @@ class ExportCSV(generics.ListAPIView):
         response['Content-Disposition'] = 'attachment; filename="export.zip"'
 
         return response
+
+
+class PostAnswer(generics.CreateAPIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        user_answer = json.loads(request.data["answer"])
+        if "question_id" not in request.data \
+                or "answer" not in request.data \
+                or not request.data["question_id"].isdigit() \
+                or not request.data["answer"]:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        if Question.objects.filter(id=request.data["question_id"]).count() == 0:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        question = Question.objects.get(id=request.data["question_id"])
+        for choice in user_answer:
+            if choice not in question.choices:
+                return Response(status=status.HTTP_400_BAD_REQUEST)
+        question.answers += user_answer
+        question.save()
+        return Response(status=status.HTTP_200_OK)
