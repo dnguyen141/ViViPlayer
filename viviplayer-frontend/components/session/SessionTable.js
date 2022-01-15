@@ -57,7 +57,7 @@ const SessionTable = ({ deleteSessionById, updateLayout, updateLayoutState, load
 
         link.href = downloadUrl;
 
-        link.setAttribute('download', 'file.zip'); //any other extension
+        link.setAttribute('download', 'export.zip'); //any other extension
 
         document.body.appendChild(link);
 
@@ -84,7 +84,7 @@ const SessionTable = ({ deleteSessionById, updateLayout, updateLayoutState, load
 
         link.href = downloadUrl;
 
-        link.setAttribute('download', 'file.odt'); //any other extension
+        link.setAttribute('download', "export.odt"); //any other extension
 
         document.body.appendChild(link);
 
@@ -166,8 +166,8 @@ const SessionTable = ({ deleteSessionById, updateLayout, updateLayoutState, load
   return (
     <div>
       <Table columns={columns} pagination={false} dataSource={sessionData} scroll={{ y: 200 }} />
-      <Button onClick={exportCSV}><a href='/somefile.txt' download>Click to download .csv</a></Button>
-      <Button onClick={exportODT}><a href='/somefile.txt' download>Click to download .odt</a></Button>
+      <Button onClick={exportCSV}>Download .csv</Button>
+      <Button onClick={exportODT}>Download .odt</Button>
     </div>
   );
 };
