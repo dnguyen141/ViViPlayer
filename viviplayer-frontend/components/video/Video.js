@@ -216,6 +216,12 @@ const Video = ({ loadUser, loading, user, logout }) => {
           setProgressBarWidth(newPosition * 100 + '%');
           videoRef.current.currentTime = currentMarker.time;
           videoRef.current.pause();
+          socketRef.current.send(
+            JSON.stringify({
+            action: 'pause',
+            time: videoRef.current.currentTime
+        })
+      );
         }
       }
     }
