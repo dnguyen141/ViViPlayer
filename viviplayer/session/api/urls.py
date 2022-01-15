@@ -22,8 +22,8 @@ router.register(r'', SessionViewSet, basename='rest_session')
 
 # URLs for all authentication views
 urlpatterns = [
-    path('export/odt', ExportODT.as_view(), name="rest_odt"),
-    path('export/csv', ExportCSV.as_view(), name="rest_csv"),
+    path('export/odt/', ExportODT.as_view(), name="rest_odt"),
+    path('export/csv/', ExportCSV.as_view(), name="rest_csv"),
     path('answers/', PostAnswerAPIView.as_view(), name="rest_answer"),
     path('statistics/', GetStatisticsAPIView.as_view(), name="rest_statistic"),
     path('', include(router.urls)),
