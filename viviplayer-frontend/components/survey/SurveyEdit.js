@@ -4,6 +4,7 @@ import api from '../../utils/api';
 import { Form, Button, Input, Modal, Select } from 'antd';
 import { connect } from 'react-redux';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { updateSurveyById } from '../../actions/survey.action';
 
 const { Option } = Select;
 
@@ -23,7 +24,7 @@ const formItemLayoutWithOutLabel = {
     sm: { span: 21, offset: 4 }
   }
 };
-const SurveyEdit = ({ id, context, updateFunc }) => {
+const SurveyEdit = ({ id, context, updateFunc, updateSurveyById }) => {
   const [shotList, setShotList] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [fieldsData, setFieldsData] = useState([]);
@@ -32,8 +33,8 @@ const SurveyEdit = ({ id, context, updateFunc }) => {
     const shotsData = await api.get('/session/shots/');
     setShotList(shotsData.data);
   };
-  const updateQuestionInEdit = (values) => {
-    console.log(values);
+  const updateQuestionInEdit = ({shot, title, choices, correct_answer, type}) => {
+    updateSurveyById(shot, title, choices, correct_answer, type, id);
     setIsModalVisible(false);
     updateFunc();
   };
@@ -184,4 +185,4 @@ const SurveyEdit = ({ id, context, updateFunc }) => {
 
 SurveyEdit.propTypes = {};
 const mapStateToProps = (state) => ({});
-export default connect(mapStateToProps, {})(SurveyEdit);
+export default connect(mapStateToProps, { updateSurveyById })(SurveyEdit);
