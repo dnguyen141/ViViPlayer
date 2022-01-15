@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { deleteQuestion } from '../../actions/survey.action';
 import { WS_BACKEND } from '../../constants/constants';
-
+import { Notification } from '../../utils/notification';
 let socket;
 function SurveyTable({ deleteQuestion }) {
   const [questions, setQuestions] = useState(null);
@@ -51,7 +51,7 @@ function SurveyTable({ deleteQuestion }) {
       title: 'Type',
       dataIndex: 'typeToRender',
       width: '15%',
-      render: (type) => <span>{type.checkbox ? 'Survey' : 'Question'}</span>
+      render: (type) => <span>{type === 'checkbox' ? 'Survey' : 'Question'}</span>
     },
     {
       title: 'Choices',
@@ -101,7 +101,21 @@ function SurveyTable({ deleteQuestion }) {
           ) : (
             <Space size="middle">
               <div>
-                <a style={{ color: '#1890ff', marginRight: '1em' }}>Frage</a>
+                <a
+                  style={{ color: '#1890ff', marginRight: '1em' }}
+                  onClick={() => {
+                    socket.send(
+                      JSON.stringify({
+                        action: 'questionFromServer',
+                        time: 0,
+                        payload: record
+                      })
+                    );
+                    Notification('Question notification', 'The question was sent to everyone in the session', 'success');
+                  }}
+                >
+                  Frage
+                </a>
                 <a style={{ color: '#228B22' }}>Statistics</a>
               </div>
             </Space>
