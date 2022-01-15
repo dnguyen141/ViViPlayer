@@ -62,19 +62,20 @@ const SurveyEdit = ({ id, context, updateFunc, updateSurveyById }) => {
             style={{ marginBottom: '1em' }}
             name="title"
             label=" Title"
+            initialValue={context.title}
             rules={[{ required: true, message: 'Geben Sie hier den Title der Frage ein.' }]}
           >
-            <Input rows={4} defaultValue={context.title} />
+            <Input rows={4} />
           </Form.Item>
           <Form.Item
             name="shot"
             label="Shot"
+            initialValue={context.shot}
             rules={[{ required: true, message: 'Wählen Sie bitte hier ein Shot' }]}
           >
             <Select
               placeholder="Wählen Sie bitte hier ein Shot"
               allowClear
-              defaultValue={context.shot}
             >
               {shotList &&
                 shotList.map((item, index) => (
@@ -87,12 +88,12 @@ const SurveyEdit = ({ id, context, updateFunc, updateSurveyById }) => {
           <Form.Item
             name="type"
             label="Type"
+            initialValue={context.typeToRender}
             rules={[{ required: true, message: 'Geben Sie bitte den Typ ein' }]}
           >
             <Select
               placeholder="Wählen Sie type von Fragen"
               allowClear
-              defaultValue={context.typeToRender}
             >
               <Option value="checkbox">Survey</Option>
               <Option value="radiogroup">Question</Option>
@@ -170,9 +171,10 @@ const SurveyEdit = ({ id, context, updateFunc, updateSurveyById }) => {
             style={{ marginBottom: '1em' }}
             name="correct_answer"
             label="Antwort"
+            initialValue={context.correct_answer}
             // rules={[{ required: true }]}
           >
-            <Input rows={4} defaultValue={context.correct_answer} />
+            <Input rows={4}  />
           </Form.Item>
           <Button type="primary" htmlType="submit">
             Submit
