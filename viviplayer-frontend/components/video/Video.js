@@ -146,6 +146,16 @@ const Video = ({ loadUser, loading, user, logout }) => {
       console.log(lastTime);
       setLastTime(temp.time); //last marker that was found.
       setChapterText(temp.text);
+      if(user != null && user.is_mod == true){
+          socketRef.current.send(
+            JSON.stringify({
+            action: "lastShot",
+            time: temp.time
+            })
+           
+        ); 
+        console.log("SEND");
+      }
       
       if (autoStop) {
         //when the player didnt already stop at this marker the player gets paused. this prevents multiple pauses at one marker and it doesnt get stuck
@@ -299,6 +309,8 @@ const Video = ({ loadUser, loading, user, logout }) => {
           if(videoRef.current){
               videoRef.current.currentTime = data.time;
           }  
+        }else if(data.action === "lastShot"){
+          console.log("RECEIVED");
         }
     };
 
