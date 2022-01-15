@@ -360,29 +360,18 @@ class GetStatisticsAPIView(generics.ListAPIView):
     permission_classes = [IsModerator]
 
     def get(self, request, *args, **kwargs):
-        if "question_id" not in request.data:
+        if "pk" not in self.kwargs:
             msg = get_error_message("question_id", "question_id is required for usage!")
             return Response(data=msg, status=status.HTTP_400_BAD_REQUEST)
 
-        question_id = request.data['question_id']
-
-        if type(question_id) != int:
-            if type(question_id) == str:
-                if not question_id.isdigit():
-                    msg = get_error_message("question_id", "Input for question_id is in wrong format")
-                    return Response(data=msg, status=status.HTTP_400_BAD_REQUEST)
-                else:
-                    question_id = int(question_id)
-            else:
-                msg = get_error_message("question_id", "Input for question_id is in wrong format")
-                return Response(data=msg, status=status.HTTP_400_BAD_REQUEST)
+        question_id = self.kwargs.get("pk")
 
         if Question.objects.filter(id=question_id).count() == 0:
             msg = get_error_message("question_id", "No question with given id has been found!")
             return Response(data=msg, status=status.HTTP_404_NOT_FOUND)
 
         statistics = []
-        question = Question.objects.get(id=request.data["question_id"])
+        question = Question.objects.get(id=question_id)
         for choice in question.choices:
             stat = dict()
             stat["choice"] = choice
