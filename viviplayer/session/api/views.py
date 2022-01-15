@@ -169,7 +169,7 @@ class ExportODT(generics.ListAPIView):
     h3style.addElement(TextProperties(attributes={'fontsize': "12pt", 'fontweight': "bold", 'fontfamily': "Arial"}))
     textdoc.automaticstyles.addElement(h3style)
 
-    def get(self, request):
+    def get(self, request, *args, **kwargs):
 
         # Get session and add to document
         ses = ViViSession.objects.get()
@@ -215,14 +215,11 @@ class ExportODT(generics.ListAPIView):
             self.textdoc.text.addElement(p)
             self.textdoc.text.addElement(P())
 
-            for (j, q) in enumerate(MultipleChoiceQuestion.objects.filter(shot=s)):
-                p = P(text=q.desc, stylename=self.pstyle)
-                self.textdoc.text.addElement(p)
+            for (j, q) in enumerate(Question.objects.filter(shot=s)):
+                self.textdoc.text.addElement(P(text=q.title, stylename=self.pstyle))
 
                 # Add Answers for Question
-                for (k, ans) in enumerate(Answer.objects.filter(question=q)):
-                    p = P(text=ans.text + ': ' + str(ans.votes), stylename=self.pstyle)
-                    self.textdoc.text.addElement(p)
+                self.textdoc.text.addElement(P(text=f'- Choices: {", ".join(q.choices)}', stylename=self.pstyle))
 
             # Add page break
             p = P(stylename=self.withbreak)
@@ -261,8 +258,11 @@ class ExportCSV(generics.ListAPIView):
         writer = csv.writer(csvf)
         writer.writerow(["Title", "Description", "Image"])
         for (i, us) in enumerate(UserStory.objects.all()):
-            row = ["User Story " + str(i + 1), us.damit + ' ' + us.moechteichals1 + ' ' + us.moechteichals2
-                , str(us.shot.image).split("/")[-1]]
+            row = [
+                f"User Story {i + 1}",
+                f"{us.damit} {us.moechteichals1} {us.moechteichals2}",
+                str(us.shot.image).split("/")[-1]
+            ]
             writer.writerow(row)
 
         # Add .csv to .zip
