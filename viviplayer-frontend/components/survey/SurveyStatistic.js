@@ -10,8 +10,31 @@ import {
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { Modal } from 'antd';
+import api from '../../utils/api';
 import PropTypes from 'prop-types';
 
+// const data = {
+//   question_id: 9,
+//   question_title: 'day la nam bao nhieu',
+//   data: [
+//     {
+//       choice: '2019',
+//       quantity: 1
+//     },
+//     {
+//       choice: '2020',
+//       quantity: 1
+//     },
+//     {
+//       choice: '2021',
+//       quantity: 1
+//     },
+//     {
+//       choice: '2022',
+//       quantity: 2
+//     }
+//   ]
+// };
 function SurveyStatistic({ id, context }) {
   ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
   console.log(id, context);

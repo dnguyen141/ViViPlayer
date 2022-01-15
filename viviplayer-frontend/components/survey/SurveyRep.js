@@ -46,6 +46,12 @@ const SurveyRep = ({ askFromAdminState, sendAnswer }) => {
   const survey = new Survey.Model(json);
   survey.onComplete.add((sender) => {
     sendAnswer(ask.id, sender.data.answer, ask.typeToRender);
+    socket.send(
+      JSON.stringify({
+        action: 'surveyChange',
+        time: 0
+      })
+    );
   });
 
   return <>{ask != null ? <Survey.Survey model={survey} completeText="Send" /> : ''}</>;
