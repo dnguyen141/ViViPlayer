@@ -5,7 +5,6 @@ import os
 import random
 import string
 import zipfile
-from json import JSONDecodeError
 
 from django.http import HttpResponse
 from odf.draw import Frame, Image
@@ -282,92 +281,68 @@ class ExportCSV(generics.ListAPIView):
         return response
 
 
+def get_error_message(field_text, *message_text):
+    msg = {
+        "errors": [
+            {
+                "field": field_text,
+                "message": [
+                    message for message in message_text
+                ]
+            }
+        ]
+    }
+    return msg
+
+
 # API for member to send their answer for question to server
 class PostAnswerAPIView(generics.CreateAPIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
         if "question_id" not in request.data or "answer" not in request.data:
-            msg = {
-                "errors": [
-                    {
-                        "field": "question_id" if "question_id" not in request.data else "answer",
-                        "message": [
-                            "Both question_id and answer are required!"
-                        ]
-                    }
-                ]
-            }
+            msg = get_error_message(
+                "question_id" if "question_id" not in request.data else "answer",
+                "Both question_id and answer are required!"
+            )
             return Response(data=msg, status=status.HTTP_400_BAD_REQUEST)
 
-        if not request.data["question_id"].isdigit():
-            msg = {
-                "errors": [
-                    {
-                        "field": "question_id",
-                        "message": [
-                            "Input for question_id is in wrong format!"
-                        ]
-                    }
-                ]
-            }
-            return Response(data=msg, status=status.HTTP_400_BAD_REQUEST)
+        question_id = request.data['question_id']
+        answer = request.data['answer']
 
-        try:
-            answer = json.loads(request.data["answer"])
-            if type(answer) != list:
-                msg = {
-                    "errors": [
-                        {
-                            "field": "answer",
-                            "message": [
-                                "Input for answer is in wrong format!"
-                            ]
-                        }
-                    ]
-                }
+        if type(question_id) != int:
+            if type(question_id) == str:
+                if not question_id.isdigit():
+                    msg = get_error_message("question_id", "Input for question_id is in wrong format")
+                    return Response(data=msg, status=status.HTTP_400_BAD_REQUEST)
+                else:
+                    question_id = int(question_id)
+            else:
+                msg = get_error_message("question_id", "Input for question_id is in wrong format")
                 return Response(data=msg, status=status.HTTP_400_BAD_REQUEST)
-        except JSONDecodeError:
-            msg = {
-                "errors": [
-                    {
-                        "field": "answer",
-                        "message": [
-                            "Input for answer is in wrong format!"
-                        ]
-                    }
-                ]
-            }
-            return Response(data=msg, status=status.HTTP_400_BAD_REQUEST)
+
+        if type(answer) != list:
+            if type(answer) == str:
+                answer = json.loads(answer)
+                if type(answer) != list:
+                    msg = get_error_message("answer", "Input for answer is in wrong format!")
+                    return Response(data=msg, status=status.HTTP_400_BAD_REQUEST)
+            else:
+                msg = get_error_message("answer", "Input for answer is in wrong format!")
+                return Response(data=msg, status=status.HTTP_400_BAD_REQUEST)
 
         if Question.objects.filter(id=request.data["question_id"]).count() == 0:
-            msg = {
-                "errors": [
-                    {
-                        "field": "question_id",
-                        "message": [
-                            "No question with given id has been found!"
-                        ]
-                    }
-                ]
-            }
+            msg = get_error_message("question_id", "No question with given id has been found!")
             return Response(data=msg, status=status.HTTP_404_NOT_FOUND)
 
-        user_answer = json.loads(request.data["answer"])
-        question = Question.objects.get(id=request.data["question_id"])
+        user_answer = request.data["answer"] if type(request.data["answer"]) == list else json.loads(
+            request.data["answer"])
+        question = Question.objects.get(id=question_id)
         for choice in user_answer:
             if choice not in question.choices:
-                msg = {
-                    "errors": [
-                        {
-                            "field": "answer",
-                            "message": [
-                                "Invalid answer for the question!"
-                            ]
-                        }
-                    ]
-                }
+                msg = get_error_message("answer", "Invalid answer for question")
                 return Response(data=msg, status=status.HTTP_400_BAD_REQUEST)
+
         question.answers += user_answer
         question.save()
         data = {
@@ -386,42 +361,24 @@ class GetStatisticsAPIView(generics.ListAPIView):
 
     def get(self, request, *args, **kwargs):
         if "question_id" not in request.data:
-            msg = {
-                "errors": [
-                    {
-                        "field": "question_id",
-                        "message": [
-                            "question_id is required for usage!"
-                        ]
-                    }
-                ]
-            }
+            msg = get_error_message("question_id", "question_id is required for usage!")
             return Response(data=msg, status=status.HTTP_400_BAD_REQUEST)
 
-        if not request.data["question_id"].isdigit():
-            msg = {
-                "errors": [
-                    {
-                        "field": "question_id",
-                        "message": [
-                            "question_id is in wrong format!"
-                        ]
-                    }
-                ]
-            }
-            return Response(data=msg, status=status.HTTP_400_BAD_REQUEST)
+        question_id = request.data['question_id']
 
-        if Question.objects.filter(id=request.data["question_id"]).count() == 0:
-            msg = {
-                "errors": [
-                    {
-                        "field": "question_id",
-                        "message": [
-                            "No question with given id has been found!"
-                        ]
-                    }
-                ]
-            }
+        if type(question_id) != int:
+            if type(question_id) == str:
+                if not question_id.isdigit():
+                    msg = get_error_message("question_id", "Input for question_id is in wrong format")
+                    return Response(data=msg, status=status.HTTP_400_BAD_REQUEST)
+                else:
+                    question_id = int(question_id)
+            else:
+                msg = get_error_message("question_id", "Input for question_id is in wrong format")
+                return Response(data=msg, status=status.HTTP_400_BAD_REQUEST)
+
+        if Question.objects.filter(id=question_id).count() == 0:
+            msg = get_error_message("question_id", "No question with given id has been found!")
             return Response(data=msg, status=status.HTTP_404_NOT_FOUND)
 
         statistics = []
@@ -432,7 +389,7 @@ class GetStatisticsAPIView(generics.ListAPIView):
             stat["quantity"] = question.answers.count(choice)
             statistics.append(stat)
         data = {
-            "question_id": request.data["question_id"],
+            "question_id": question_id,
             "question_title": question.title,
             "data": statistics
         }
