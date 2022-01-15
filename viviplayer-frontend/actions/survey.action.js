@@ -50,10 +50,21 @@ export const deleteQuestion = (id) => async (dispatch) => {
   }
 };
 
-export const sendAnswer = (question_id, answer) => async (dispatch) => {
+export const sendAnswer = (question_id, answer, type) => async (dispatch) => {
   const body = { question_id, answer };
-  console.log('sendAnswer', body);
   try {
+    if (type === 'radiogroup') {
+      let data = [];
+      data.push(answer);
+      const body1 = { question_id, answer: data };
+      await api.post('/session/answers/', body1);
+      console.log(body1);
+      dispatch({
+        type: SEND_ANSWER_SUCCESS
+      });
+      Notification('Question Notification', 'the question has been sended QUESTION', 'success');
+      return;
+    }
     await api.post('/session/answers/', body);
     dispatch({
       type: SEND_ANSWER_SUCCESS
