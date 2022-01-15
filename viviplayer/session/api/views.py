@@ -169,7 +169,7 @@ class ExportODT(generics.ListAPIView):
     h3style.addElement(TextProperties(attributes={'fontsize': "12pt", 'fontweight': "bold", 'fontfamily': "Arial"}))
     textdoc.automaticstyles.addElement(h3style)
 
-    def get(self, request):
+    def get(self, request, *args, **kwargs):
 
         # Get session and add to document
         ses = ViViSession.objects.get()
