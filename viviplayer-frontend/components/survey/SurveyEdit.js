@@ -102,6 +102,7 @@ const SurveyEdit = ({ id, context, updateFunc, updateSurveyById }) => {
           <Form.List
             name="choices"
             label="Antworte/n"
+            initialValue={context.choices}
             rules={[
               {
                 validator: async (_, names) => {
