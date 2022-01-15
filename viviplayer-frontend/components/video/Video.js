@@ -146,6 +146,7 @@ const Video = ({ loadUser, loading, user, logout }) => {
       console.log(lastTime);
       setLastTime(temp.time); //last marker that was found.
       setChapterText(temp.text);
+      
       if (autoStop) {
         //when the player didnt already stop at this marker the player gets paused. this prevents multiple pauses at one marker and it doesnt get stuck
         if (videoRef.current.currentTime >= lastTime + 1) {
@@ -153,9 +154,9 @@ const Video = ({ loadUser, loading, user, logout }) => {
           socketRef.current.send(
             JSON.stringify({
             action: 'pause',
-            time: videoRef.current.currentTime
+            time: temp.time
             })
-      );
+          );
         }
       }
     } else if (lastTime !== 0) {
