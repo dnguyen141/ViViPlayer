@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../utils/api';
-import { Divider, Table, Space, Popconfirm, Typography } from 'antd';
+import { Divider, Table, Space, Popconfirm, Typography, Button } from 'antd';
 import PropTypes from 'prop-types';
 import EditSession from './EditSession';
 import { setAuthToken } from '../../utils/setAuthToken';
 import { deleteSessionById } from '../../actions/session.action';
 import { loadUser } from '../../actions/auth.action';
 import { connect } from 'react-redux';
-import { WS_BACKEND } from '../../constants/constants';
+import { WS_BACKEND, SERVER_BACKEND } from '../../constants/constants';
+
 let socket;
 const { Paragraph } = Typography;
 const SessionTable = ({ deleteSessionById, updateLayout, updateLayoutState, loading }) => {
@@ -37,6 +38,62 @@ const SessionTable = ({ deleteSessionById, updateLayout, updateLayoutState, load
     wrapperCol: { span: 14 }
   };
   // connect to socket and update sentence table
+
+  //to export the data
+  const exportCSV = async () =>{
+    //const res = await api.get('/session/export/csv');
+
+    api.request({
+        url: "session/export/csv",
+        responseType: "blob",
+        method: "GET"
+    
+    }).then(({ data }) => {
+    
+
+        const downloadUrl = window.URL.createObjectURL(new Blob([data]));
+
+        const link = document.createElement('a');
+
+        link.href = downloadUrl;
+
+        link.setAttribute('download', 'export.zip'); //any other extension
+
+        document.body.appendChild(link);
+
+        link.click();
+
+        link.remove();
+    });
+  }
+  
+   const exportODT = async () =>{
+    //const res = await api.get('/session/export/csv');
+
+    api.request({
+        url: "session/export/odt",
+        responseType: "blob",
+        method: "GET"
+    
+    }).then(({ data }) => {
+    
+
+        const downloadUrl = window.URL.createObjectURL(new Blob([data]));
+
+        const link = document.createElement('a');
+
+        link.href = downloadUrl;
+
+        link.setAttribute('download', "export.odt"); //any other extension
+
+        document.body.appendChild(link);
+
+        link.click();
+
+        link.remove();
+    });
+  }
+
   useEffect(() => {
     const url = (WS_BACKEND || 'ws://' + window.location.host) + '/ws/player/sessionid12345/';
     socket = new WebSocket(url);
@@ -109,6 +166,8 @@ const SessionTable = ({ deleteSessionById, updateLayout, updateLayoutState, load
   return (
     <div>
       <Table columns={columns} pagination={false} dataSource={sessionData} scroll={{ y: 200 }} />
+      <Button onClick={exportCSV}>Download .csv</Button>
+      <Button onClick={exportODT}>Download .odt</Button>
     </div>
   );
 };
