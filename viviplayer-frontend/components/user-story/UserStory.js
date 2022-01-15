@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Card, Input } from 'antd';
+import { Card, Divider } from 'antd';
 import PropTypes from 'prop-types';
 import Satz from '../satz/Satz';
 import UsrStoryDesire from './UsrStoryDesire';
+import SurveyContainer from '../survey/SurveyContainer';
 
 const tabList = [
   {
@@ -12,6 +13,10 @@ const tabList = [
   {
     key: 'tab2',
     tab: 'Satz'
+  },
+  {
+    key: 'tab3',
+    tab: 'Ümfrage'
   }
 ];
 
@@ -30,6 +35,11 @@ const UserStory = (props) => {
     tab2: (
       <Card style={{ border: '3px solid gray' }}>
         <Satz />
+      </Card>
+    ),
+    tab3: (
+      <Card style={{ border: '3px solid gray' }}>
+        <SurveyContainer />
       </Card>
     )
   };

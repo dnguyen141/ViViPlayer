@@ -1,25 +1,31 @@
 import csv
 import io
+import json
 import os
 import random
 import string
 import zipfile
+from json import JSONDecodeError
 
 from django.http import HttpResponse
 from odf.draw import Frame, Image
 from odf.opendocument import OpenDocumentText
 from odf.style import Style, ParagraphProperties, TextProperties
 from odf.text import P
-from rest_framework import generics
-from rest_framework import status
-from rest_framework import viewsets
+from rest_framework import generics, status, viewsets
 from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from authentication.permissions import IsModerator
 from session.models import ViViSession, Shot, UserStory, Sentence, Question
-from .serializers import SessionSerializer, UserStorySerializer, SentenceSerializer, QuestionSerializer, ShotSerializer
+from .serializers import (
+    SessionSerializer,
+    UserStorySerializer,
+    SentenceSerializer,
+    QuestionSerializer,
+    ShotSerializer
+)
 
 
 def tan_generator():
@@ -37,6 +43,7 @@ class SessionViewSet(viewsets.ModelViewSet):
     serializer_class = SessionSerializer
     queryset = ViViSession.objects.all()
     parser_classes = [FormParser, MultiPartParser]
+    http_method_names = ['get', 'post', 'put', 'delete']
 
     def get_permissions(self):
         if self.action == 'list' or self.action == 'retrieve':
@@ -64,6 +71,7 @@ class SessionViewSet(viewsets.ModelViewSet):
 class ShotViewSet(viewsets.ModelViewSet):
     serializer_class = ShotSerializer
     queryset = Shot.objects.all()
+    http_method_names = ['get', 'post', 'put', 'delete']
 
     class Meta:
         model = Shot
@@ -100,6 +108,7 @@ class UserStoryViewSet(viewsets.ModelViewSet):
     serializer_class = UserStorySerializer
     queryset = UserStory.objects.all()
     permission_classes = [IsAuthenticated]
+    http_method_names = ['get', 'post', 'put', 'delete']
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user, session=ViViSession.objects.first())
@@ -109,6 +118,7 @@ class SentenceViewSet(viewsets.ModelViewSet):
     serializer_class = SentenceSerializer
     queryset = Sentence.objects.all()
     permission_classes = [IsAuthenticated]
+    http_method_names = ['get', 'post', 'put', 'delete']
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user, session=ViViSession.objects.first())
@@ -117,18 +127,23 @@ class SentenceViewSet(viewsets.ModelViewSet):
 class QuestionViewSet(viewsets.ModelViewSet):
     serializer_class = QuestionSerializer
     queryset = Question.objects.all()
-    permission_classes = [IsAuthenticated]
+    http_method_names = ['get', 'post', 'put', 'delete']
+
+    def get_permissions(self):
+        if self.action == 'list' or self.action == 'retrieve':
+            permission_classes = [IsAuthenticated]
+        else:
+            permission_classes = [IsModerator]
+        return [permission() for permission in permission_classes]
 
     def perform_create(self, serializer):
-        serializer.save(author=self.request.user,
-                        session=ViViSession.objects.first(),
-                        answers=[])
+        serializer.save(author=self.request.user, session=ViViSession.objects.first(), answers=[])
 
 
 # API View for download a session as a .odt file
 class ExportODT(generics.ListAPIView):
     # Public for testing. Should only be accessed by a Moderator
-    permission_classes = []
+    permission_classes = [IsModerator]
 
     # New odt document
     textdoc = OpenDocumentText()
@@ -154,7 +169,7 @@ class ExportODT(generics.ListAPIView):
     h3style.addElement(TextProperties(attributes={'fontsize': "12pt", 'fontweight': "bold", 'fontfamily': "Arial"}))
     textdoc.automaticstyles.addElement(h3style)
 
-    def get(self, request):
+    def get(self, request, *args, **kwargs):
 
         # Get session and add to document
         ses = ViViSession.objects.get()
@@ -200,14 +215,11 @@ class ExportODT(generics.ListAPIView):
             self.textdoc.text.addElement(p)
             self.textdoc.text.addElement(P())
 
-            for (j, q) in enumerate(MultipleChoiceQuestion.objects.filter(shot=s)):
-                p = P(text=q.desc, stylename=self.pstyle)
-                self.textdoc.text.addElement(p)
+            for (j, q) in enumerate(Question.objects.filter(shot=s)):
+                self.textdoc.text.addElement(P(text=q.title, stylename=self.pstyle))
 
                 # Add Answers for Question
-                for (k, ans) in enumerate(Answer.objects.filter(question=q)):
-                    p = P(text=ans.text + ': ' + str(ans.votes), stylename=self.pstyle)
-                    self.textdoc.text.addElement(p)
+                self.textdoc.text.addElement(P(text=f'- Choices: {", ".join(q.choices)}', stylename=self.pstyle))
 
             # Add page break
             p = P(stylename=self.withbreak)
@@ -227,7 +239,7 @@ class ExportODT(generics.ListAPIView):
 # API View for downloading User Stories as .csv
 class ExportCSV(generics.ListAPIView):
     # Public for testing. Should only be accessed by a Moderator
-    permission_classes = []
+    permission_classes = [IsModerator]
 
     def get(self, request, *args, **kwargs):
 
@@ -246,8 +258,11 @@ class ExportCSV(generics.ListAPIView):
         writer = csv.writer(csvf)
         writer.writerow(["Title", "Description", "Image"])
         for (i, us) in enumerate(UserStory.objects.all()):
-            row = ["User Story " + str(i + 1), us.damit + ' ' + us.moechteichals1 + ' ' + us.moechteichals2
-                , str(us.shot.image).split("/")[-1]]
+            row = [
+                f"User Story {i + 1}",
+                f"{us.damit} {us.moechteichals1} {us.moechteichals2}",
+                str(us.shot.image).split("/")[-1]
+            ]
             writer.writerow(row)
 
         # Add .csv to .zip
@@ -265,3 +280,160 @@ class ExportCSV(generics.ListAPIView):
         response['Content-Disposition'] = 'attachment; filename="export.zip"'
 
         return response
+
+
+# API for member to send their answer for question to server
+class PostAnswerAPIView(generics.CreateAPIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        if "question_id" not in request.data or "answer" not in request.data:
+            msg = {
+                "errors": [
+                    {
+                        "field": "question_id" if "question_id" not in request.data else "answer",
+                        "message": [
+                            "Both question_id and answer are required!"
+                        ]
+                    }
+                ]
+            }
+            return Response(data=msg, status=status.HTTP_400_BAD_REQUEST)
+
+        if not request.data["question_id"].isdigit():
+            msg = {
+                "errors": [
+                    {
+                        "field": "question_id",
+                        "message": [
+                            "Input for question_id is in wrong format!"
+                        ]
+                    }
+                ]
+            }
+            return Response(data=msg, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            answer = json.loads(request.data["answer"])
+            if type(answer) != list:
+                msg = {
+                    "errors": [
+                        {
+                            "field": "answer",
+                            "message": [
+                                "Input for answer is in wrong format!"
+                            ]
+                        }
+                    ]
+                }
+                return Response(data=msg, status=status.HTTP_400_BAD_REQUEST)
+        except JSONDecodeError:
+            msg = {
+                "errors": [
+                    {
+                        "field": "answer",
+                        "message": [
+                            "Input for answer is in wrong format!"
+                        ]
+                    }
+                ]
+            }
+            return Response(data=msg, status=status.HTTP_400_BAD_REQUEST)
+
+        if Question.objects.filter(id=request.data["question_id"]).count() == 0:
+            msg = {
+                "errors": [
+                    {
+                        "field": "question_id",
+                        "message": [
+                            "No question with given id has been found!"
+                        ]
+                    }
+                ]
+            }
+            return Response(data=msg, status=status.HTTP_404_NOT_FOUND)
+
+        user_answer = json.loads(request.data["answer"])
+        question = Question.objects.get(id=request.data["question_id"])
+        for choice in user_answer:
+            if choice not in question.choices:
+                msg = {
+                    "errors": [
+                        {
+                            "field": "answer",
+                            "message": [
+                                "Invalid answer for the question!"
+                            ]
+                        }
+                    ]
+                }
+                return Response(data=msg, status=status.HTTP_400_BAD_REQUEST)
+        question.answers += user_answer
+        question.save()
+        data = {
+            "success": {
+                "message": [
+                    "Successfully sent the answer!"
+                ]
+            }
+        }
+        return Response(data=data, status=status.HTTP_200_OK)
+
+
+# API for moderator to get statistics data
+class GetStatisticsAPIView(generics.ListAPIView):
+    permission_classes = [IsModerator]
+
+    def get(self, request, *args, **kwargs):
+        if "question_id" not in request.data:
+            msg = {
+                "errors": [
+                    {
+                        "field": "question_id",
+                        "message": [
+                            "question_id is required for usage!"
+                        ]
+                    }
+                ]
+            }
+            return Response(data=msg, status=status.HTTP_400_BAD_REQUEST)
+
+        if not request.data["question_id"].isdigit():
+            msg = {
+                "errors": [
+                    {
+                        "field": "question_id",
+                        "message": [
+                            "question_id is in wrong format!"
+                        ]
+                    }
+                ]
+            }
+            return Response(data=msg, status=status.HTTP_400_BAD_REQUEST)
+
+        if Question.objects.filter(id=request.data["question_id"]).count() == 0:
+            msg = {
+                "errors": [
+                    {
+                        "field": "question_id",
+                        "message": [
+                            "No question with given id has been found!"
+                        ]
+                    }
+                ]
+            }
+            return Response(data=msg, status=status.HTTP_404_NOT_FOUND)
+
+        statistics = []
+        question = Question.objects.get(id=request.data["question_id"])
+        for choice in question.choices:
+            stat = dict()
+            stat["choice"] = choice
+            stat["quantity"] = question.answers.count(choice)
+            statistics.append(stat)
+        data = {
+            "question_id": request.data["question_id"],
+            "question_title": question.title,
+            "data": statistics
+        }
+        return Response(data=data, status=status.HTTP_200_OK)

@@ -1,13 +1,11 @@
-from django.contrib.auth import get_user_model
-from django.shortcuts import get_object_or_404
-
-from rest_framework import generics
-from rest_framework.views import APIView, exception_handler
-from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
-from authentication.permissions import IsModerator
 from dj_rest_auth.registration.views import RegisterView
 from dj_rest_auth.views import LoginView, PasswordChangeView, LogoutView
+from django.contrib.auth import get_user_model
+from django.shortcuts import get_object_or_404
+from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import exception_handler
 
 from authentication.api.serializers import (
     CustomLoginSerializer,
@@ -16,6 +14,7 @@ from authentication.api.serializers import (
     CustomMemRegisterSerializer,
     CustomUserChangePasswordSerializer,
 )
+from authentication.permissions import IsModerator
 
 
 def custom_exception_handler(exc, context):
@@ -94,7 +93,7 @@ class CustomUserListAPI(generics.ListAPIView):
 # @route    GET api/auth/user/
 # @desc     Output a list of current user and his credentials in system
 # @access   Only authenticated users
-class CustomUserAPI(APIView):
+class CustomUserAPI(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
     queryset = get_user_model().objects.all()
     serializer_class = CustomUserSerializer
