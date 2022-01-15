@@ -360,11 +360,11 @@ class GetStatisticsAPIView(generics.ListAPIView):
     permission_classes = [IsModerator]
 
     def get(self, request, *args, **kwargs):
-        if "pk" not in self.kwargs:
+        if "question_id" not in self.kwargs:
             msg = get_error_message("question_id", "question_id is required for usage!")
             return Response(data=msg, status=status.HTTP_400_BAD_REQUEST)
 
-        question_id = self.kwargs.get("pk")
+        question_id = self.kwargs.get("question_id")
 
         if Question.objects.filter(id=question_id).count() == 0:
             msg = get_error_message("question_id", "No question with given id has been found!")
