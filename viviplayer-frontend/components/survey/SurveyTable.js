@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import { deleteQuestion } from '../../actions/survey.action';
 import { WS_BACKEND } from '../../constants/constants';
 import { Notification } from '../../utils/notification';
+import SurveyStatistic from '../survey/SurveyStatistic';
 let socket;
 function SurveyTable({ deleteQuestion }) {
   const [questions, setQuestions] = useState(null);
@@ -111,12 +112,16 @@ function SurveyTable({ deleteQuestion }) {
                         payload: record
                       })
                     );
-                    Notification('Question notification', 'The question was sent to everyone in the session', 'success');
+                    Notification(
+                      'Question notification',
+                      'The question was sent to everyone in the session',
+                      'success'
+                    );
                   }}
                 >
                   Frage
                 </a>
-                <a style={{ color: '#228B22' }}>Statistics</a>
+                <SurveyStatistic id={id} context={record} />
               </div>
             </Space>
           )}
