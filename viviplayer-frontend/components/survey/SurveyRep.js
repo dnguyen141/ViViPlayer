@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import * as Survey from 'survey-react';
 import { WS_BACKEND } from '../../constants/constants';
+import { sendAnswer } from '../../actions/survey.action';
 
 let socket;
 
-const SurveyRep = ({ askFromAdminState }) => {
+const SurveyRep = ({ askFromAdminState, sendAnswer }) => {
   const [ask, setAsk] = useState(null);
   const [correctAns, setCorrectAns] = useState(null);
   useEffect(() => {
@@ -23,6 +25,7 @@ const SurveyRep = ({ askFromAdminState }) => {
       }
     };
   }, []);
+  console.log(ask);
   const json = {
     pages: [
       {
@@ -44,11 +47,13 @@ const SurveyRep = ({ askFromAdminState }) => {
   const survey = new Survey.Model(json);
   survey.onComplete.add((sender) => {
     console.log(sender.data);
+    sendAnswer(ask.id, sender.data.answer);
   });
 
   return <>{ask != null ? <Survey.Survey model={survey} completeText="Send" /> : ''}</>;
 };
 
 SurveyRep.propTypes = {};
+const mapStateToProps = (state) => ({});
 
-export default SurveyRep;
+export default connect(mapStateToProps, { sendAnswer })(SurveyRep);
