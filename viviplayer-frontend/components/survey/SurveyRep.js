@@ -25,7 +25,6 @@ const SurveyRep = ({ askFromAdminState, sendAnswer }) => {
       }
     };
   }, []);
-  console.log(ask);
   const json = {
     pages: [
       {
@@ -42,12 +41,11 @@ const SurveyRep = ({ askFromAdminState, sendAnswer }) => {
         ]
       }
     ],
-    completedHtml: `Vielen Dank für Deine Antwort <br /> the correct answer is: <b>${correctAns}</b>`
+    completedHtml: `Vielen Dank für Deine Antwort`
   };
   const survey = new Survey.Model(json);
   survey.onComplete.add((sender) => {
-    console.log(sender.data);
-    sendAnswer(ask.id, sender.data.answer);
+    sendAnswer(ask.id, sender.data.answer, ask.typeToRender);
   });
 
   return <>{ask != null ? <Survey.Survey model={survey} completeText="Send" /> : ''}</>;
