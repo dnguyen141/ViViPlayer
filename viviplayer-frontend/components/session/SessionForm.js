@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Form, Input, Row, Col, Button, Divider, Typography, Spin } from 'antd';
 import { createSession } from '../../actions/session.action';
 import { connect } from 'react-redux';
+import Router from 'next/router';
 import { WS_BACKEND, VIDEO_PREFIX } from '../../constants/constants';
 let socket;
 function SessionForm({ createSession, sessionInfo, updateLayoutState, updateLayout }) {
@@ -67,7 +68,7 @@ function SessionForm({ createSession, sessionInfo, updateLayoutState, updateLayo
         <video data-setup='{"fluid":true}' controls width="100%" height="100%">
           <source src={VIDEO_PREFIX + videoInfoPara.video_path} type="video/mp4" />
         </video>
-        <Button type="primary" style={{ margin: '0px 125px' }}>
+        <Button type="primary" style={{ margin: '0px 125px' }} onClick={(e) => Router.push("/video-edit")}>
           Weiter zu Videobearbeitung
         </Button>
       </div>
