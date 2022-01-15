@@ -7,7 +7,8 @@ import { setAuthToken } from '../../utils/setAuthToken';
 import { deleteSessionById } from '../../actions/session.action';
 import { loadUser } from '../../actions/auth.action';
 import { connect } from 'react-redux';
-import { WS_BACKEND } from '../../constants/constants';
+import { WS_BACKEND, SERVER_BACKEND } from '../../constants/constants';
+
 let socket;
 const { Paragraph } = Typography;
 const SessionTable = ({ deleteSessionById, updateLayout, updateLayoutState, loading }) => {
@@ -39,8 +40,58 @@ const SessionTable = ({ deleteSessionById, updateLayout, updateLayoutState, load
   // connect to socket and update sentence table
 
   //to export the data
-  const exportData = async () =>{
-    const res = await api.get('/session/export/csv');
+  const exportCSV = async () =>{
+    //const res = await api.get('/session/export/csv');
+
+    api.request({
+        url: "session/export/csv",
+        responseType: "blob",
+        method: "GET"
+    
+    }).then(({ data }) => {
+    
+
+        const downloadUrl = window.URL.createObjectURL(new Blob([data]));
+
+        const link = document.createElement('a');
+
+        link.href = downloadUrl;
+
+        link.setAttribute('download', 'file.zip'); //any other extension
+
+        document.body.appendChild(link);
+
+        link.click();
+
+        link.remove();
+    });
+  }
+  
+   const exportODT = async () =>{
+    //const res = await api.get('/session/export/csv');
+
+    api.request({
+        url: "session/export/odt",
+        responseType: "blob",
+        method: "GET"
+    
+    }).then(({ data }) => {
+    
+
+        const downloadUrl = window.URL.createObjectURL(new Blob([data]));
+
+        const link = document.createElement('a');
+
+        link.href = downloadUrl;
+
+        link.setAttribute('download', 'file.odt'); //any other extension
+
+        document.body.appendChild(link);
+
+        link.click();
+
+        link.remove();
+    });
   }
 
   useEffect(() => {
@@ -115,7 +166,8 @@ const SessionTable = ({ deleteSessionById, updateLayout, updateLayoutState, load
   return (
     <div>
       <Table columns={columns} pagination={false} dataSource={sessionData} scroll={{ y: 200 }} />
-      <Button onClick={exportData}><a href='/somefile.txt' download>Click to download</a></Button>
+      <Button onClick={exportCSV}><a href='/somefile.txt' download>Click to download .csv</a></Button>
+      <Button onClick={exportODT}><a href='/somefile.txt' download>Click to download .odt</a></Button>
     </div>
   );
 };
