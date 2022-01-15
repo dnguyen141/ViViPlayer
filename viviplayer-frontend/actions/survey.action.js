@@ -10,7 +10,6 @@ import { Notification } from '../utils/notification';
 export const createSurvey =
   (shot, title, choices, correct_answer, typeToRender) => async (dispatch) => {
     const body = { shot, title, choices, correct_answer, typeToRender };
-    console.log(body);
     try {
       const res = await api.post('/session/questions/', body);
       await dispatch({
