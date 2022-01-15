@@ -42,7 +42,7 @@ function SurveyStatistic({ id, context }) {
     ]
   };
   return (
-    <div>
+    <>
       <a style={{ color: '#228B22' }} onClick={() => setIsModalVisible(true)}>
         Statistic
       </a>
@@ -55,7 +55,7 @@ function SurveyStatistic({ id, context }) {
       >
         <Bar options={options} data={data} />
       </Modal>
-    </div>
+    </>
   );
 }
 
