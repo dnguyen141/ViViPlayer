@@ -3,13 +3,16 @@ import {
   CREATE_SURVEY_SUCCESS,
   CREATE_SURVEY_FAIL,
   DELETE_QUESTION_SUCCESS,
-  DELETE_QUESTION_FAIL
+  DELETE_QUESTION_FAIL,
+  SEND_ANSWER_SUCCESS,
+  SEND_ANSWER_FAIL
 } from './types';
 import { Notification } from '../utils/notification';
 
 export const createSurvey =
   (shot, title, choices, correct_answer, typeToRender) => async (dispatch) => {
     const body = { shot, title, choices, correct_answer, typeToRender };
+    console.log(body);
     try {
       const res = await api.post('/session/questions/', body);
       await dispatch({
@@ -38,11 +41,28 @@ export const deleteQuestion = (id) => async (dispatch) => {
     Notification('Question Notification', 'the question has been deleted', 'success');
   } catch (err) {
     const errors = err.response.data.errors;
-    // if (errors) {
-    //   errors.forEach((error) => Notification('Sentences Notification', error.message, 'warning'));
-    // }
-    // dispatch({
-    //   type: DELETE_QUESTION_FAIL
-    // });
+    if (errors) {
+      errors.forEach((error) => Notification('Sentences Notification', error.message, 'warning'));
+    }
+    dispatch({
+      type: DELETE_QUESTION_FAIL
+    });
+  }
+};
+
+export const sendAnswer = (question_id, answer) => async (dispatch) => {
+  const body = { question_id, answer };
+  console.log('sendAnswer', body);
+  try {
+    await api.post('/session/answers/', body);
+    dispatch({
+      type: SEND_ANSWER_SUCCESS
+    });
+    Notification('Question Notification', 'the question has been sended', 'success');
+  } catch (err) {
+    console.log(err);
+    dispatch({
+      type: SEND_ANSWER_FAIL
+    });
   }
 };
