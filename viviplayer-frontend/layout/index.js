@@ -14,11 +14,9 @@ const Vivilayout = ({ children, logout, user }) => {
   const userDataGet = async () => {
     const userData = await api.get("/auth/user/");
     setIsMod(userData.data.is_mod);
-    console.log(userData.data.is_mod)
   }
 
   let socket;
-  console.log("IS MOD " + isMod);
   const socketRef = React.useRef(null);
   useEffect(async () => {
     if (localStorage.token) {
@@ -39,13 +37,13 @@ const Vivilayout = ({ children, logout, user }) => {
           <Menu.Item key="1" className="text-white" onClick={() => Router.push('/dashboard')}>
             VIVIPLAYER3
           </Menu.Item>
-           {isMod == true ? (
-          <Menu.Item key="5" onClick={() => Router.push('/video-edit')}>
-            Edit Video
-          </Menu.Item>
-           ) : (
-             ""
-           )}
+          {isMod == true ? (
+            <Menu.Item key="5" onClick={() => Router.push('/video-edit')}>
+              Edit Video
+            </Menu.Item>
+          ) : (
+            ""
+          )}
           <Menu.Item key="2" onClick={() => Router.push('/video')}>
             Session
           </Menu.Item>
