@@ -16,7 +16,7 @@ const EditShot = ({ id, context, updateFunc, updateShotById }) => {
         Edit
       </a>
       <Modal
-        title="Edit Sentences"
+        title="Shot Bearbeitung"
         visible={isModalVisible}
         footer={null}
         onOk={() => setIsModalVisible(false)}
@@ -24,18 +24,17 @@ const EditShot = ({ id, context, updateFunc, updateShotById }) => {
       >
         <div>
           <i>
-            Old Sentence:
+            Vorheriger Shot: 
             <b>
               {context.time} - {context.title}
             </b>
           </i>
           <br />
-          <i>write down there to update shot title:</i>
           <Form name="update shot" onFinish={updateShot} autoComplete="off">
-          <Form.Item style={{ marginBottom: '1em' }} name="time">
+          <Form.Item style={{ marginBottom: '1em' }} initialValue={context.time} name="time">
               <Input placeholder="new time stamp" />
             </Form.Item>
-            <Form.Item style={{ marginBottom: '1em' }} name="text">
+            <Form.Item style={{ marginBottom: '1em' }} name="text" initialValue={context.title}>
               <Input placeholder="new shot title" />
             </Form.Item>
             <Button type="primary" htmlType="submit">

@@ -187,10 +187,10 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
     });
   }
 
-  const createShotFunc = ({ text }) => {
+  const createShotFunc = async({ text }) => {
     //post the shot to the server
     var time = videoRef.current.currentTime;
-    createShot(time, text);
+    await createShot(time, text);
     updateState();
     setupdateTable(!updateTable);
     form.resetFields();
