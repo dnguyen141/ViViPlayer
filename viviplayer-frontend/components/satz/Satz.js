@@ -127,7 +127,7 @@ const Satz = ({ deleteSentenceById, createSentence, user, currentShot }) => {
         <Form.Item style={{ marginBottom: '1em' }} name="text" rules={[{ required: true }]}>
           <TextArea rows={4} placeholder="Geben Sie hier ihren Satz ein." />
         </Form.Item>
-        <Form.Item name="shot" rules={[{ required: true }]}>
+        <Form.Item name="shot" rules={[{ required: true }]} shouldUpdate>
           <Select placeholder="Wählen Sie bitte hier einen Shot">
             <Select.Option value={currentShot}>Momentaner Shot</Select.Option>
             {shotList && shotList.map((item) => <Option value={item.id}>{item.title}</Option>)}
