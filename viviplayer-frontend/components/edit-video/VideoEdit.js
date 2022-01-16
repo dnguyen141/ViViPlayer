@@ -187,10 +187,10 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
     });
   }
 
-  const createShotFunc = ({ text }) => {
+  const createShotFunc = async({ text }) => {
     //post the shot to the server
     var time = videoRef.current.currentTime;
-    createShot(time, text);
+    await createShot(time, text);
     updateState();
     setupdateTable(!updateTable);
     form.resetFields();
@@ -322,7 +322,7 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
       render: (id, record) => (
         <div>
           <Space size="middle">
-            <EditShot id={id} context={record} updateFunc={updateState} />
+            <EditShot id={id} context={record} updateFunc={updateState} videoRef={videoRef}/>
             <Popconfirm
               title="Löschen dieser Session ist nicht rückgängig zu machen. Weiter?"
               onConfirm={() => {

@@ -3,12 +3,18 @@ import PropTypes from 'prop-types';
 import { Form, Button, Input, Modal } from 'antd';
 import { connect } from 'react-redux';
 import { getShots, updateShotById } from '../../actions/session.action';
-const EditShot = ({ id, context, updateFunc, updateShotById }) => {
+import { Notification } from '../../utils/notification';
+const EditShot = ({ id, context, updateFunc, updateShotById, videoRef }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const updateShot = ({ time, text }) => {
-    updateShotById(time, text, id);
-    setIsModalVisible(false);
-    updateFunc();
+    if(time <= videoRef.current.duration && time >= 0){
+        updateShotById(time, text, id);
+        setIsModalVisible(false);
+    } else {
+      Notification('Shot Notification', "Der angebene Zeitstempel ist fehlerhaft.", 'warning');
+    }
+    
+    updateFunc();  
   };
   return (
     <>
@@ -16,7 +22,7 @@ const EditShot = ({ id, context, updateFunc, updateShotById }) => {
         Edit
       </a>
       <Modal
-        title="Edit Sentences"
+        title="Shot Bearbeitung"
         visible={isModalVisible}
         footer={null}
         onOk={() => setIsModalVisible(false)}
@@ -24,18 +30,17 @@ const EditShot = ({ id, context, updateFunc, updateShotById }) => {
       >
         <div>
           <i>
-            Old Sentence:
+            Vorheriger Shot: 
             <b>
               {context.time} - {context.title}
             </b>
           </i>
           <br />
-          <i>write down there to update shot title:</i>
           <Form name="update shot" onFinish={updateShot} autoComplete="off">
-          <Form.Item style={{ marginBottom: '1em' }} name="time">
+          <Form.Item style={{ marginBottom: '1em' }} initialValue={context.time} name="time" rules={[{ required: true }]}>
               <Input placeholder="new time stamp" />
             </Form.Item>
-            <Form.Item style={{ marginBottom: '1em' }} name="text">
+            <Form.Item style={{ marginBottom: '1em' }} name="text" initialValue={context.title} rules={[{ required: true }]}>
               <Input placeholder="new shot title" />
             </Form.Item>
             <Button type="primary" htmlType="submit">
