@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import api from '../../utils/api';
-import { Button, Input, Table, Space, Popconfirm, Form, Select } from 'antd';
+import { Button, Input, Table, Space, Popconfirm, Form, Select, Modal } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { createSurvey } from '../../actions/survey.action';
 import { connect } from 'react-redux';
@@ -9,12 +9,8 @@ import { WS_BACKEND } from '../../constants/constants';
 
 let socket;
 const { Option } = Select;
-function SurveyCreate({
-  setAskFromAdminFunc,
-  updateStateFunc,
-  createSurvey,
-  setIsModalVisibleFunc
-}) {
+function SurveyCreate({ createSurvey }) {
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const [ask, setAsk] = useState(null);
   const [shotList, setShotList] = useState(null);
   const [answer, setAnswer] = useState([]);
@@ -58,9 +54,8 @@ function SurveyCreate({
       })
     );
     setAsk(values);
-    setAskFromAdminFunc(values);
-    updateStateFunc(values);
-    setIsModalVisibleFunc(true);
+    setIsModalVisible(false);
+    console.log('stateModal', isModalVisible);
     form.resetFields();
   };
   let CreateQuestion = (
@@ -158,15 +153,29 @@ function SurveyCreate({
           </>
         )}
       </Form.List>
-      <Button type="primary" htmlType="submit" onClick={setIsModalVisibleFunc(false)}>
+      <Button type="primary" htmlType="submit">
         Posten
       </Button>
     </Form>
   );
   return (
     <div>
-      <h3>Fragen erstellen</h3>
-      {CreateQuestion}
+      <Button
+        type="primary"
+        onClick={() => setIsModalVisible(true)}
+        style={{ marginBottom: '5px', marginTop: '5px' }}
+      >
+        Frage Erstellen
+      </Button>
+      <Modal
+        title="Frage erstellen"
+        visible={isModalVisible}
+        footer={null}
+        onOk={() => setIsModalVisible(false)}
+        onCancel={() => setIsModalVisible(false)}
+      >
+        {CreateQuestion}
+      </Modal>
     </div>
   );
 }

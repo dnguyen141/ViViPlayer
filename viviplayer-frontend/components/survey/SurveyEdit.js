@@ -73,10 +73,7 @@ const SurveyEdit = ({ id, context, updateFunc, updateSurveyById }) => {
             initialValue={context.shot}
             rules={[{ required: true, message: 'Wählen Sie bitte hier ein Shot' }]}
           >
-            <Select
-              placeholder="Wählen Sie bitte hier ein Shot"
-              allowClear
-            >
+            <Select placeholder="Wählen Sie bitte hier ein Shot" allowClear>
               {shotList &&
                 shotList.map((item, index) => (
                   <Option value={item.id} key={index}>
@@ -91,10 +88,7 @@ const SurveyEdit = ({ id, context, updateFunc, updateSurveyById }) => {
             initialValue={context.typeToRender}
             rules={[{ required: true, message: 'Geben Sie bitte den Typ ein' }]}
           >
-            <Select
-              placeholder="Wählen Sie type von Fragen"
-              allowClear
-            >
+            <Select placeholder="Wählen Sie type von Fragen" allowClear>
               <Option value="checkbox">Survey</Option>
               <Option value="radiogroup">Question</Option>
             </Select>

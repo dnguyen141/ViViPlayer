@@ -6,6 +6,7 @@ import Vivilayout from '../../layout';
 import { Row, Col } from 'antd';
 
 function index(props) {
+   const [currentShot, setCurrentShot] = React.useState(1);
   return (
     <Vivilayout>
       <Row className="row-responsive">
@@ -14,14 +15,14 @@ function index(props) {
           span={12}
           style={{ padding: '25px', justifyContent: 'center' }}
         >
-          <Video />
+          <Video setCurrentShot={setCurrentShot}/>
         </Col>
         <Col
           className="col-responsive"
           span={12}
           style={{ padding: '25px', justifyContent: 'center' }}
         >
-          <UserStory />
+          <UserStory currentShot={currentShot}/>
         </Col>
       </Row>
     </Vivilayout>

@@ -20,7 +20,7 @@ const tabList = [
   }
 ];
 
-const UserStory = (props) => {
+const UserStory = ({currentShot}) => {
   const [activeTabKey1, setActiveTabKey1] = useState('tab1');
   const onTab1Change = (key) => {
     setActiveTabKey1(key);
@@ -29,12 +29,12 @@ const UserStory = (props) => {
   const contentList = {
     tab1: (
       <Card style={{ border: '3px solid gray' }}>
-        <UsrStoryDesire />
+        <UsrStoryDesire currentShot={currentShot}/>
       </Card>
     ),
     tab2: (
       <Card style={{ border: '3px solid gray' }}>
-        <Satz />
+        <Satz currentShot={currentShot}/>
       </Card>
     ),
     tab3: (
