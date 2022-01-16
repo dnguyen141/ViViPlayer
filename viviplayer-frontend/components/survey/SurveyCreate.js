@@ -49,7 +49,7 @@ function SurveyCreate({
     }
   };
   const createQuestion = (values) => {
-    createSurvey(values.shot, values.title, values.choices, values.correct_answer, values.type);
+    createSurvey(values.shot, values.title, values.choices, values.type);
     socket.send(
       JSON.stringify({
         action: 'surveyChange',
@@ -68,7 +68,7 @@ function SurveyCreate({
       <Form.Item
         style={{ marginBottom: '1em' }}
         name="title"
-        label=" Title"
+        label="Frage"
         rules={[{ required: true, message: 'Geben Sie hier den Title der Frage ein.' }]}
       >
         <Input rows={4} placeholder="Geben Sie hier die Frage ein." />
@@ -89,7 +89,7 @@ function SurveyCreate({
       </Form.Item>
       <Form.Item
         name="type"
-        label="Type"
+        label="Typ"
         rules={[{ required: true, message: 'Geben Sie bitte den Typ ein' }]}
       >
         <Select placeholder="Wählen Sie type von Fragen" allowClear>
@@ -158,14 +158,6 @@ function SurveyCreate({
           </>
         )}
       </Form.List>
-      <Form.Item
-        style={{ marginBottom: '1em' }}
-        name="correct_answer"
-        label="Antwort"
-        // rules={[{ required: true }]}
-      >
-        <Input rows={4} placeholder="Geben Sie hier die richtige Antwort ein.(wenn es gibt)" />
-      </Form.Item>
       <Button type="primary" htmlType="submit" onClick={setIsModalVisibleFunc(false)}>
         Posten
       </Button>

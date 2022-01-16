@@ -99,8 +99,8 @@ const Satz = ({ deleteSentenceById, createSentence, user }) => {
       )
     }
   ];
-  const createSentenceFunc = ({ text, shot }) => {
-    createSentence(text, shot);
+  const createSentenceFunc = async ({ text, shot }) => {
+    await createSentence(text, shot);
     setupdateTable(!updateTable);
     socket.send(
       JSON.stringify({

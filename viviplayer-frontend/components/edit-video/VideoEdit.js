@@ -300,21 +300,21 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
       )
     },
     {
-      title: 'Time',
+      title: 'Zeit',
       dataIndex: 'time',
       width: '30%',
       render: (time) => <p>{time}</p>
     },
     {
-      title: 'Title',
+      title: 'Titel',
       dataIndex: 'title',
       render: (title) => <p>{title}</p>
-    },
-    {
+    }
+    /*{
       title: 'Image Path',
       dataIndex: 'img_path',
       render: (img_path) => <>{img_path}</>
-    },
+    },*/
     ,
     {
       title: 'Aktionen',

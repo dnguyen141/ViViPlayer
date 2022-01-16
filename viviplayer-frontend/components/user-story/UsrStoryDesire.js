@@ -96,8 +96,8 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById }) => {
     }
   ];
 
-  const createUserStoryFunc = ({ damit, moechteichals1, moechteichals2, shot }) => {
-    createUserStory(damit, moechteichals1, moechteichals2, shot);
+  const createUserStoryFunc = async ({ damit, moechteichals1, moechteichals2, shot }) => {
+    await createUserStory(damit, moechteichals1, moechteichals2, shot);
     updateState();
     form.resetFields();
   };
