@@ -29,8 +29,8 @@ export const createSurvey =
       //   dispatch({
       //     type: CREATE_SURVEY_FAIL
       //   });
-  }
-};
+    }
+  };
 
 export const deleteQuestion = (id) => async (dispatch) => {
   try {
@@ -54,13 +54,12 @@ export const deleteQuestion = (id) => async (dispatch) => {
 export const updateSurveyById =
   (shot, title, choices, correct_answer, typeToRender, id) => async (dispatch) => {
     const body = { shot, title, choices, correct_answer, typeToRender };
-    console.log(body);
     try {
       const res = await api.put(`/session/questions/${id}/`, body);
       await dispatch({
         type: UPDATE_QUESTION_BY_ID_SUCCESS
       });
-      Notification('Survey Notification', 'question has been created', 'success');
+      Notification('Survey Notification', 'question has been updated', 'success');
       console.log(res);
     } catch (err) {
       console.log(err);
