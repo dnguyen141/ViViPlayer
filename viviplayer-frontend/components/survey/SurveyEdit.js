@@ -33,7 +33,7 @@ const SurveyEdit = ({ id, context, updateFunc, updateSurveyById }) => {
     const shotsData = await api.get('/session/shots/');
     setShotList(shotsData.data);
   };
-  const updateQuestionInEdit = async ({shot, title, choices, type}) => {
+  const updateQuestionInEdit = async ({ shot, title, choices, type }) => {
     await updateSurveyById(shot, title, choices, type, id);
     setIsModalVisible(false);
     updateFunc();
