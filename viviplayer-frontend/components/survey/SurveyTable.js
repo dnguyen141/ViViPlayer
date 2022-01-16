@@ -5,15 +5,90 @@ import SurveyEdit from './SurveyEdit';
 import api from '../../utils/api';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { deleteQuestion } from '../../actions/survey.action';
+import { deleteQuestion, getQuestionId } from '../../actions/survey.action';
 import { WS_BACKEND } from '../../constants/constants';
 import { Notification } from '../../utils/notification';
 import SurveyStatistic from '../survey/SurveyStatistic';
+import { Bar } from 'react-chartjs-2';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+} from 'chart.js';
 let socket;
-function SurveyTable({ deleteQuestion }) {
+let preDataSet = [
+  {
+    label: 'Dataset 1',
+    data: [1],
+    backgroundColor: 'rgba(255, 99, 132, 0.5)'
+  },
+  {
+    label: 'Dataset 2',
+    data: [5],
+    backgroundColor: 'rgba(53, 162, 235, 0.5)'
+  }
+];
+function SurveyTable({ deleteQuestion, getQuestionId }) {
+  ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
   const [questions, setQuestions] = useState(null);
   const [updateTable, setupdateTable] = useState(false);
+  const [idQuestion, setIdquestion] = useState(null);
+  const [labels, setLablels] = useState([]);
+  const [statistic, setStatistic] = useState(null);
+  const [questionData, setQuestionData] = useState(null);
+  const [test, setTest] = useState([
+    {
+      label: 'Dataset 1',
+      data: [1, 2],
+      backgroundColor: 'rgba(255, 99, 132, 0.5)'
+    },
+    {
+      label: 'Dataset 2',
+      data: [5, 4],
+      backgroundColor: 'rgba(53, 162, 235, 0.5)'
+    }
+  ]);
+  useEffect(() => {
+    fetchStatistic();
+    fetchQuestion();
+  }, [idQuestion]);
+  useEffect(() => {
+    console.log(questionData);
+    let arr = [];
+    setLablels(questionData != null ? questionData.choices : []);
+    if (statistic != null) {
+      console.log(statistic.data);
+      preDataSet = statistic.data.map((item, index = 50) => ({
+        label: item.choice,
+        data: arr.push(item.quantity),
+        backgroundColor: `rgba(${53 + index}, 162, ${235 + index}, 0.5)`
+        // backgroundColor: 'red'
+      }));
+      setTest(
+        statistic.data.map((item, index = 50) => ({
+          label: item.choice,
+          data: [item.quantity],
+          backgroundColor: `rgba(${53 + index}, 162, ${235 + index}, 0.5)`
+          // backgroundColor: 'red'
+        }))
+      );
+    }
 
+    console.log(preDataSet);
+  }, [questionData, statistic, idQuestion]);
+  const fetchStatistic = async () => {
+    const res = await api.get(`/session/statistics/${idQuestion}/`);
+    setStatistic(res.data);
+  };
+  const fetchQuestion = async () => {
+    const res = await api.get(`/session/questions/${idQuestion}/`);
+    setQuestionData(res.data);
+    console.log(res.data);
+  };
   const router = useRouter();
   const fetchQuestions = async () => {
     const res = await api.get('/session/questions/');
@@ -121,7 +196,9 @@ function SurveyTable({ deleteQuestion }) {
                 >
                   Frage
                 </a>
-                <SurveyStatistic id={id} context={record} />
+                <a style={{ color: '#228B22' }} onClick={() => setIdquestion(id)}>
+                  Statistic
+                </a>
               </div>
             </Space>
           )}
@@ -129,6 +206,24 @@ function SurveyTable({ deleteQuestion }) {
       )
     }
   ];
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top'
+      },
+      title: {
+        display: true,
+        text: statistic != null ? statistic.question_title : ''
+      }
+    }
+  };
+
+  const data = {
+    labels,
+    datasets: test
+  };
+  console.log(data);
   return (
     <>
       <Table
@@ -138,6 +233,7 @@ function SurveyTable({ deleteQuestion }) {
         scroll={{ y: 200 }}
         style={{ minHeight: '300px' }}
       />
+      <Bar options={options} data={data} />
     </>
   );
 }
@@ -145,4 +241,4 @@ function SurveyTable({ deleteQuestion }) {
 SurveyTable.propTypes = {};
 
 const mapStateToProps = (state) => ({});
-export default connect(mapStateToProps, { deleteQuestion })(SurveyTable);
+export default connect(mapStateToProps, { deleteQuestion, getQuestionId })(SurveyTable);

@@ -5,7 +5,8 @@ import {
   DELETE_QUESTION_SUCCESS,
   DELETE_QUESTION_FAIL,
   SEND_ANSWER_SUCCESS,
-  SEND_ANSWER_FAIL
+  SEND_ANSWER_FAIL,
+  GET_QUESTION_ID
 } from './types';
 import { Notification } from '../utils/notification';
 
@@ -77,3 +78,10 @@ export const sendAnswer = (question_id, answer, type) => async (dispatch) => {
     });
   }
 };
+
+export const getQuestionId = (id) => async (dispatch) => {
+  dispatch({
+    type: SEND_ANSWER_SUCCESS,
+    payload:id
+  });
+}
