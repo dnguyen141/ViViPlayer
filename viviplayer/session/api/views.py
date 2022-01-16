@@ -16,6 +16,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from authentication.models import CustomUser
 from authentication.permissions import IsModerator
 from session.models import ViViSession, Shot, UserStory, Sentence, Question
 from .serializers import (
@@ -72,6 +73,10 @@ class SessionViewSet(viewsets.ModelViewSet):
             error = get_error_message("non_field_errors", "Es daft nur maximal ein Session gleichzeitig geben!")
             return Response(data=error, status=status.HTTP_403_FORBIDDEN)
         return super().create(request, *args, **kwargs)
+
+    def destroy(self, request, *args, **kwargs):
+        CustomUser.objects.filter(is_moderator=False).delete()
+        return super().destroy(request, *args, **kwargs)
 
 
 class ShotViewSet(viewsets.ModelViewSet):
@@ -141,13 +146,13 @@ class QuestionViewSet(viewsets.ModelViewSet):
         if request.data["correct_answer"] not in request.data["choices"] + [""]:
             error = get_error_message("correct_answer", "Ungültige Lösung für diese Frage!")
             return Response(data=error, status=status.HTTP_400_BAD_REQUEST)
-        return super(QuestionViewSet, self).create(request, *args, **kwargs)
+        return super().create(request, *args, **kwargs)
 
     def update(self, request, *args, **kwargs):
         if request.data["correct_answer"] not in request.data["choices"] + [""]:
             error = get_error_message("correct_answer", "Ungültige Lösung für diese Frage!")
             return Response(data=error, status=status.HTTP_400_BAD_REQUEST)
-        return super(QuestionViewSet, self).update(request, *args, **kwargs)
+        return super().update(request, *args, **kwargs)
 
 
 # API View for download a session as a .odt file
