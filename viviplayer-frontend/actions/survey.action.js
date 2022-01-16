@@ -5,22 +5,19 @@ import {
   DELETE_QUESTION_SUCCESS,
   DELETE_QUESTION_FAIL,
   SEND_ANSWER_SUCCESS,
-  SEND_ANSWER_FAIL,
-  GET_QUESTION_ID
+  SEND_ANSWER_FAIL
 } from './types';
 import { Notification } from '../utils/notification';
 
 export const createSurvey =
   (shot, title, choices, correct_answer, typeToRender) => async (dispatch) => {
     const body = { shot, title, choices, correct_answer, typeToRender };
-    console.log(body);
     try {
       const res = await api.post('/session/questions/', body);
       await dispatch({
         type: CREATE_SURVEY_SUCCESS
       });
       Notification('Survey Notification', 'question has been created', 'success');
-      console.log(res);
     } catch (err) {
       console.log(err);
       //   const errors = err.response.data.errors;
@@ -59,11 +56,10 @@ export const sendAnswer = (question_id, answer, type) => async (dispatch) => {
       data.push(answer);
       const body1 = { question_id, answer: data };
       await api.post('/session/answers/', body1);
-      console.log(body1);
       dispatch({
         type: SEND_ANSWER_SUCCESS
       });
-      Notification('Question Notification', 'the question has been sended QUESTION', 'success');
+      Notification('Question Notification', 'the question has been sended ', 'success');
       return;
     }
     await api.post('/session/answers/', body);
