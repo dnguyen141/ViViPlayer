@@ -33,28 +33,30 @@ const Vivilayout = ({ children, logout, user }) => {
     <Layout>
       <Layout.Header style={{ position: 'relative', zIndex: 1, width: '100%' }}>
         {/* <div className="logo">Logo there</div> */}
-        <Menu theme="dark" disabledOverflow="true" mode="horizontal" style={{ float: "left" }}>
-          <Menu.Item key="1" className="text-white" onClick={() => Router.push('/dashboard')}>
+        <Menu className="vivi-layout" theme="dark" disabledOverflow="true" mode="horizontal" style={{ float: "left" }}>
+          <Menu.Item key="1" className="text-white vivi-menu-button" onClick={() => Router.push('/dashboard')}>
             VIVIPLAYER3
           </Menu.Item>
           {isMod == true ? (
-            <Menu.Item key="5" onClick={() => Router.push('/video-edit')}>
+            <Menu.Item className="vivi-menu-button" key="5" onClick={() => Router.push('/video-edit')}>
               Edit Video
             </Menu.Item>
           ) : (
             ""
           )}
-          <Menu.Item key="2" onClick={() => Router.push('/video')}>
+          <Menu.Item className="vivi-menu-button" key="2" onClick={() => Router.push('/video')}>
             Session
           </Menu.Item>
         </Menu>
-        <Menu theme="dark" mode="horizontal" disabledOverflow="true" style={{ float: "right" }}>
-          <Menu.Item key="3" onClick={() => Router.push('/video')}>
+        <Menu className="vivi-layout" theme="dark" mode="horizontal" disabledOverflow="true" style={{ float: "right" }}>
+          <Menu.Item className="vivi-menu-button" key="3" onClick={() => Router.push('/video')}>
             {user != null ? <span className="text-white">Hello {user.username}</span> : 'hello'}
           </Menu.Item>
           {isMod == true ? (
             <Menu.Item
               key="4"
+              className="session-end vivi-menu-button"
+              style={{color: 'rgb(199, 12, 12)'}}
               onClick={(e) => (
                 socketRef.current.send(JSON.stringify({
                   'action': 'end',
@@ -68,6 +70,7 @@ const Vivilayout = ({ children, logout, user }) => {
             ""
           )}
           <Menu.Item
+            className="vivi-menu-button"
             key="6"
             onClick={() => {
               logout();
