@@ -102,7 +102,8 @@ function SurveyTable({ deleteQuestion }) {
     socket.onmessage = (e) => {
       const data = JSON.parse(e.data);
       if (data.action === 'surveyChange') {
-        console.log(data);
+        fetchQuestions();
+      } else if (data.action === 'statisticChange') {
         fetchQuestions();
       }
     };
