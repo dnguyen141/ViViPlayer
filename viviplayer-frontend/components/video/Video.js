@@ -146,10 +146,17 @@ const Video = ({ loadUser, loading, user, logout }) => {
       console.log(lastTime);
       setLastTime(temp.time); //last marker that was found.
       setChapterText(temp.text);
+      
       if (autoStop) {
         //when the player didnt already stop at this marker the player gets paused. this prevents multiple pauses at one marker and it doesnt get stuck
         if (videoRef.current.currentTime >= lastTime + 1) {
           videoRef.current.pause();
+          socketRef.current.send(
+            JSON.stringify({
+            action: 'pause',
+            time: temp.time
+            })
+          );
         }
       }
     } else if (lastTime !== 0) {
@@ -210,6 +217,12 @@ const Video = ({ loadUser, loading, user, logout }) => {
           setProgressBarWidth(newPosition * 100 + '%');
           videoRef.current.currentTime = currentMarker.time;
           videoRef.current.pause();
+          socketRef.current.send(
+            JSON.stringify({
+            action: 'pause',
+            time: videoRef.current.currentTime
+        })
+      );
         }
       }
     }
@@ -234,6 +247,13 @@ const Video = ({ loadUser, loading, user, logout }) => {
       //setting the values for the progressbar and the videotime
       setProgressBarWidth(newPosition * 100 + '%');
       videoRef.current.currentTime = newPosition * videoRef.current.duration;
+
+      socketRef.current.send(
+        JSON.stringify({
+          action: 'skip',
+          time: videoRef.current.currentTime
+        })
+      );
     }
   }
 
@@ -275,9 +295,11 @@ const Video = ({ loadUser, loading, user, logout }) => {
           logout();
           Router.push('/');
         }
-
-
-      }
+      } else if(data.action === "skip"){
+          if(videoRef.current){
+              videoRef.current.currentTime = data.time;
+          }  
+        }
     };
 
     return () => {
