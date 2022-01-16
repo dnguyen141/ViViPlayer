@@ -77,7 +77,7 @@ class QuestionSerializer(serializers.ModelSerializer):
     title = serializers.CharField(max_length=500)
     typeOfQuestion = serializers.ReadOnlyField()
     choices = serializers.JSONField()
-    answers = serializers.JSONField(required=False)
+    answers = serializers.ReadOnlyField()
     correct_answer = serializers.CharField(max_length=500, allow_blank=True, required=False)
 
     class Meta:
