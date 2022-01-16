@@ -43,7 +43,7 @@ const SurveyEdit = ({ id, context, updateFunc, updateSurveyById }) => {
   };
   useEffect(() => {
     getShot();
-    setFieldsData(context.choices);
+    //setFieldsData(context.choices);
   }, []);
   return (
     <>
@@ -138,7 +138,6 @@ const SurveyEdit = ({ id, context, updateFunc, updateSurveyById }) => {
                         >
                           <Input
                             placeholder="Antwort"
-                            defaultValue={field}
                             style={{ width: '95%', marginRight: '2px' }}
                             icon={<PlusOutlined />}
                           />
