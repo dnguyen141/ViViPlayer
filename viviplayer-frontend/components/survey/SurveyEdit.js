@@ -33,7 +33,7 @@ const SurveyEdit = ({ id, context, updateFunc, updateSurveyById }) => {
     const shotsData = await api.get('/session/shots/');
     setShotList(shotsData.data);
   };
-  const updateQuestionInEdit = ({shot, title, choices, correct_answer, type}) => {
+  const updateQuestionInEdit = ({ shot, title, choices, correct_answer, type }) => {
     updateSurveyById(shot, title, choices, correct_answer, type, id);
     setIsModalVisible(false);
     updateFunc();
@@ -61,7 +61,7 @@ const SurveyEdit = ({ id, context, updateFunc, updateSurveyById }) => {
           <Form.Item
             style={{ marginBottom: '1em' }}
             name="title"
-            label=" Title"
+            label="Frage"
             initialValue={context.title}
             rules={[{ required: true, message: 'Geben Sie hier den Title der Frage ein.' }]}
           >
@@ -73,10 +73,7 @@ const SurveyEdit = ({ id, context, updateFunc, updateSurveyById }) => {
             initialValue={context.shot}
             rules={[{ required: true, message: 'Wählen Sie bitte hier ein Shot' }]}
           >
-            <Select
-              placeholder="Wählen Sie bitte hier ein Shot"
-              allowClear
-            >
+            <Select placeholder="Wählen Sie bitte hier ein Shot" allowClear>
               {shotList &&
                 shotList.map((item, index) => (
                   <Option value={item.id} key={index}>
@@ -91,16 +88,13 @@ const SurveyEdit = ({ id, context, updateFunc, updateSurveyById }) => {
             initialValue={context.typeToRender}
             rules={[{ required: true, message: 'Geben Sie bitte den Typ ein' }]}
           >
-            <Select
-              placeholder="Wählen Sie type von Fragen"
-              allowClear
-            >
+            <Select placeholder="Wählen Sie type von Fragen" allowClear>
               <Option value="checkbox">Survey</Option>
               <Option value="radiogroup">Question</Option>
             </Select>
           </Form.Item>
           <Form.List
-            name="choices"
+            name="Auswahl"
             label="Antworte/n"
             initialValue={context.choices}
             rules={[
@@ -174,7 +168,7 @@ const SurveyEdit = ({ id, context, updateFunc, updateSurveyById }) => {
             initialValue={context.correct_answer}
             // rules={[{ required: true }]}
           >
-            <Input rows={4}  />
+            <Input rows={4} />
           </Form.Item>
           <Button type="primary" htmlType="submit">
             Submit
