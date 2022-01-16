@@ -46,9 +46,23 @@ const SurveyRep = ({ askFromAdminState, sendAnswer }) => {
   const survey = new Survey.Model(json);
   survey.onComplete.add((sender) => {
     sendAnswer(ask.id, sender.data.answer, ask.typeToRender);
+    socket.send(
+      JSON.stringify({
+        action: 'statisticChange',
+        payload: ask.id
+      })
+    );
   });
 
-  return <>{ask != null ? <Survey.Survey model={survey} completeText="Send" /> : ''}</>;
+  return (
+    <>
+      {ask != null ? (
+        <Survey.Survey model={survey} completeText="Send" />
+      ) : (
+        'Hier gibt es keine Umfrage'
+      )}
+    </>
+  );
 };
 
 SurveyRep.propTypes = {};
