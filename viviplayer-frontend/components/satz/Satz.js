@@ -27,7 +27,6 @@ const Satz = ({ deleteSentenceById, createSentence, user, currentShot }) => {
       
       const data = JSON.parse(e.data);
       if (data.action === 'sentenceChange') { 
-          console.log("TEST");
         fetchSentenc();
       }
     };

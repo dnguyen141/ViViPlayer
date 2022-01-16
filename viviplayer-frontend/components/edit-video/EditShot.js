@@ -37,10 +37,10 @@ const EditShot = ({ id, context, updateFunc, updateShotById, videoRef }) => {
           </i>
           <br />
           <Form name="update shot" onFinish={updateShot} autoComplete="off">
-          <Form.Item style={{ marginBottom: '1em' }} initialValue={context.time} name="time" rules={[{ required: true }]}>
+          <Form.Item style={{ marginBottom: '1em' }} initialValue={context.time} name="time" rules={[{ required: true, message: 'Bitte neuen Zeitstempel eingeben.' }]}>
               <Input placeholder="neu Zeitstempel" />
             </Form.Item>
-            <Form.Item style={{ marginBottom: '1em' }} name="text" initialValue={context.title} rules={[{ required: true }]}>
+            <Form.Item style={{ marginBottom: '1em' }} name="text" initialValue={context.title} rules={[{ required: true, message: 'Bitte neuen Titel eingeben.' }]}>
               <Input placeholder="neu Titel" />
             </Form.Item>
             <Button type="primary" htmlType="submit">
