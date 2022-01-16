@@ -75,7 +75,7 @@ class SessionViewSet(viewsets.ModelViewSet):
         return super().create(request, *args, **kwargs)
 
     def destroy(self, request, *args, **kwargs):
-        CustomUser.objects.filter(is_moderator=False).delete()
+        CustomUser.objects.filter(is_mod=False).delete()
         return super().destroy(request, *args, **kwargs)
 
 
