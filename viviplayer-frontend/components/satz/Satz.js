@@ -25,19 +25,21 @@ const Satz = ({ deleteSentenceById, createSentence, user }) => {
   useEffect(() => {
     const url = (WS_BACKEND || 'ws://' + window.location.host) + '/ws/player/sessionid12345/';
     socketRef.current = new WebSocket(url);
-    getShot();
+    
+    console.log("CURRENT SHOT: " + lastShot);
     socketRef.current.onmessage = (e) => {
-       console.log("TEST");
+      
       const data = JSON.parse(e.data);
-      if (data.action === 'sentenceChange') {
+      if (data.action === 'sentenceChange') { 
+          console.log("TEST");
         fetchSentenc();
-      } else if (data.action === "lastShot"){
+      } else if (data.action === "sendLastShot"){
           setLastShot(data.time); 
-          setCurrentShot(shotList.find((shot) => shot.time === data.time));
-          console.log("CURRENT SHOT: " + currentShot);
+         // setCurrentShot(shotList.find((shot) => shot.time === data.time));
+          console.log("CURRENT SHOT: " + lastShot);
       }
     };
-    
+    getShot();
   }, []);
 
   const updateState = () => {

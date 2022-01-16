@@ -66,9 +66,9 @@ const Video = ({ loadUser, loading, user, logout }) => {
   );
   const [autoStop, setAutoStop] = useState(false);
   const [chapterText, setChapterText] = useState('');
-  const [lastTime, setLastTime] = useState(0);
+  const [lastTime, setLastTime] = useState(0); //used for calculating autostop
   const [visibleChapterText, setVisibleChapterText] = useState('hidden'); // -100% = disappear, 0 = appear
-
+  const [lastShot, setLastShot] = useState(0); //used for communication to socket
   const insertArray = async () => {
     var markerListTemp = [];
     // if(markerList == null)
@@ -145,12 +145,13 @@ const Video = ({ loadUser, loading, user, logout }) => {
       setVisibleChapterText('visible');
       console.log(lastTime);
       setLastTime(temp.time); //last marker that was found.
+      setLastShot(temp.time); 
       setChapterText(temp.text);
       if(user != null && user.is_mod == true){
           socketRef.current.send(
             JSON.stringify({
-            action: "lastShot",
-            time: temp.time
+            action: "sendLastShot",
+            time: lastShot
             })
            
         ); 
@@ -309,8 +310,13 @@ const Video = ({ loadUser, loading, user, logout }) => {
           if(videoRef.current){
               videoRef.current.currentTime = data.time;
           }  
-        }else if(data.action === "lastShot"){
-          console.log("RECEIVED");
+        }else if(data.action === "requestLastShot"){
+            socketRef.current.send(
+            JSON.stringify({
+            action: 'sendLastShot',
+            time: lastShot
+        })
+      );
         }
     };
 
