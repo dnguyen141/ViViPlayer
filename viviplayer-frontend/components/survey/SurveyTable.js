@@ -116,7 +116,7 @@ function SurveyTable({ deleteQuestion }) {
   };
   const columns = [
     {
-      title: 'Title',
+      title: 'Frage',
       dataIndex: 'title',
       width: '20%',
       render: (title) => (
@@ -132,7 +132,7 @@ function SurveyTable({ deleteQuestion }) {
       render: (type) => <span>{type === 'checkbox' ? 'Survey' : 'Question'}</span>
     },
     {
-      title: 'Choices',
+      title: 'Auswahl',
       dataIndex: 'choices',
       width: '30%',
       render: (choices) => {
@@ -191,7 +191,7 @@ function SurveyTable({ deleteQuestion }) {
                     );
                     Notification(
                       'Question notification',
-                      'The question was sent to everyone in the session',
+                      'Die Frage wurde an alle in der Sitzung gesendet',
                       'success'
                     );
                   }}
