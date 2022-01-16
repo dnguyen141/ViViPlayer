@@ -94,9 +94,9 @@ CHANNEL_LAYERS = {
             "hosts": [("vivipl3_redis_1", 6379)],
         },
     },
-
-
 }
+
+
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases

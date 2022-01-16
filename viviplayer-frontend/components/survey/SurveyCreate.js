@@ -109,7 +109,7 @@ function SurveyCreate({
           }
         ]}
       >
-        { (fields, { add, remove }, { errors }) => (
+        {(fields, { add, remove }, { errors }) => (
           <>
             {fields.map((field, index) => (
               <Form.Item
