@@ -3,16 +3,17 @@ import PropTypes from 'prop-types';
 import { Form, Button, Input, Modal } from 'antd';
 import { connect } from 'react-redux';
 import { getShots, updateShotById } from '../../actions/session.action';
+import { Notification } from '../../utils/notification';
 const EditShot = ({ id, context, updateFunc, updateShotById, videoRef }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const updateShot = ({ time, text }) => {
     if(time <= videoRef.current.duration && time >= 0){
         updateShotById(time, text, id);
-        
-    } else{
-
-    } 
-    setIsModalVisible(false);
+        setIsModalVisible(false);
+    } else {
+      Notification('Shot Notification', "Der angebene Zeitstempel ist fehlerhaft.", 'warning');
+    }
+    
     updateFunc();  
   };
   return (
