@@ -1,22 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-
+import { connect } from 'react-redux';
 import * as Survey from 'survey-react';
+import { WS_BACKEND } from '../../constants/constants';
+import { sendAnswer } from '../../actions/survey.action';
 
-const SurveyRep = ({ askFromAdminState }) => {
+let socket;
+
+const SurveyRep = ({ askFromAdminState, sendAnswer }) => {
   const [ask, setAsk] = useState(null);
   const [correctAns, setCorrectAns] = useState(null);
   useEffect(() => {
     setAsk(askFromAdminState);
     setCorrectAns(ask != null ? ask.correct_answer : '');
   }, [askFromAdminState]);
+  // connect to socket and update sentence table
+  useEffect(() => {
+    const url = (WS_BACKEND || 'ws://' + window.location.host) + '/ws/player/sessionid12345/';
+    socket = new WebSocket(url);
+    socket.onmessage = (e) => {
+      const data = JSON.parse(e.data);
+      if (data.action === 'questionFromServer') {
+        setAsk(data.payload);
+      }
+    };
+  }, []);
   const json = {
     pages: [
       {
         // title: ask != null ? ask.title : '',
         elements: [
           {
-            type: ask != null ? ask.type : '',
+            type: ask != null ? ask.typeToRender : '',
             name: 'answer',
             title: ask != null ? ask.title : '',
             isRequired: true,
@@ -26,16 +41,31 @@ const SurveyRep = ({ askFromAdminState }) => {
         ]
       }
     ],
-    completedHtml: `Vielen Dank für Deine Antwort <br /> the correct answer is: <b>${correctAns}</b>`
+    completedHtml: `Vielen Dank für Deine Antwort`
   };
   const survey = new Survey.Model(json);
   survey.onComplete.add((sender) => {
-    console.log(sender.data);
+    sendAnswer(ask.id, sender.data.answer, ask.typeToRender);
+    socket.send(
+      JSON.stringify({
+        action: 'statisticChange',
+        payload: ask.id
+      })
+    );
   });
 
-  return <>{ask != null ? <Survey.Survey model={survey} completeText="Send" /> : ''}</>;
+  return (
+    <>
+      {ask != null ? (
+        <Survey.Survey model={survey} completeText="Send" />
+      ) : (
+        'Hier gibt es keine Umfrage'
+      )}
+    </>
+  );
 };
 
 SurveyRep.propTypes = {};
+const mapStateToProps = (state) => ({});
 
-export default SurveyRep;
+export default connect(mapStateToProps, { sendAnswer })(SurveyRep);

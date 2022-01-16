@@ -83,3 +83,8 @@ class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
         fields = "__all__"
+
+
+class AnswerSerializer(serializers.Serializer):
+    question_id = serializers.IntegerField()
+    answer = serializers.JSONField()
