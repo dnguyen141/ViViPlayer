@@ -230,7 +230,7 @@ function SurveyTable({ deleteQuestion }) {
     <>
       <Table
         columns={columns}
-        // pagination={false}
+        pagination={false}
         dataSource={questions}
         scroll={{ y: 200 }}
         style={{ minHeight: '300px' }}

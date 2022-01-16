@@ -166,7 +166,7 @@ function SurveyCreate({
       >
         <Input rows={4} placeholder="Geben Sie hier die richtige Antwort ein.(wenn es gibt)" />
       </Form.Item>
-      <Button type="primary" htmlType="submit">
+      <Button type="primary" htmlType="submit" onClick={setIsModalVisibleFunc(false)}>
         Posten
       </Button>
     </Form>

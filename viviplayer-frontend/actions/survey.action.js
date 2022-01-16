@@ -4,6 +4,8 @@ import {
   CREATE_SURVEY_FAIL,
   DELETE_QUESTION_SUCCESS,
   DELETE_QUESTION_FAIL,
+  UPDATE_QUESTION_BY_ID_SUCCESS,
+  GET_QUESTION_BY_ID_SUCCESS,
   SEND_ANSWER_SUCCESS,
   SEND_ANSWER_FAIL
 } from './types';
@@ -72,5 +74,47 @@ export const sendAnswer = (question_id, answer, type) => async (dispatch) => {
     dispatch({
       type: SEND_ANSWER_FAIL
     });
+  }
+};
+
+//edit Survey
+export const updateSurveyById =
+  (shot, title, choices, correct_answer, typeToRender, id) => async (dispatch) => {
+    const body = { shot, title, choices, correct_answer, typeToRender };
+    try {
+      const res = await api.put(`/session/questions/${id}/`, body);
+      await dispatch({
+        type: UPDATE_QUESTION_BY_ID_SUCCESS
+      });
+      Notification('Survey Notification', 'question has been updated', 'success');
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+      //   const errors = err.response.data.errors;
+      //   if (errors) {
+      //     errors.forEach((error) => Notification('Survey Notification', error.message, 'warning'));
+      //   }
+      //   dispatch({
+      //     type: CREATE_SURVEY_FAIL
+      //   });
+    }
+  };
+
+//get question by id
+export const getQuestionById = (id) => async (dispatch) => {
+  try {
+    await api.get(`/session/questions/${id}/`);
+    dispatch({
+      type: GET_QUESTION_BY_ID_SUCCESS
+    });
+    Notification('Question Notification', 'the question has been deleted', 'success');
+  } catch (err) {
+    const errors = err.response.data.errors;
+    // if (errors) {
+    //   errors.forEach((error) => Notification('Sentences Notification', error.message, 'warning'));
+    // }
+    // dispatch({
+    //   type: DELETE_QUESTION_FAIL
+    // });
   }
 };
