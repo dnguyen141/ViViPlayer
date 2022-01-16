@@ -136,7 +136,7 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById, currentSho
             placeholder="z.B eine visuelle Darstellung der geleisteten Stunden sehen"
           />
         </Form.Item>
-        <Form.Item name="shot" rules={[{ required: true }]} shouldUpdate>
+        <Form.Item name="shot" rules={[{ required: true }]}>
           <Select placeholder="Wählen Sie bitte hier einen Shot"  >
             <Select.Option key="current" value={currentShot}>Momentaner Shot</Select.Option>
             {shotList && shotList.map((item) => <Option value={item.id}>{item.title}</Option>)}
