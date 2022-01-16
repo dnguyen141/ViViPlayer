@@ -56,7 +56,6 @@ function SurveyTable({ deleteQuestion }) {
     fetchQuestion();
   }, [idQuestion]);
   useEffect(() => {
-    let arr = [];
     setLablels(questionData != null ? questionData.choices : []);
     if (statistic != null) {
       // preDataSet = statistic.data.map((item, index = 20) => ({
@@ -65,13 +64,21 @@ function SurveyTable({ deleteQuestion }) {
       //   backgroundColor: `rgba(${53 + index}, 162, ${235 + index}, 0.5)`
       //   // backgroundColor: 'red'
       // }));
-      setTest(
-        statistic.data.map((item, index = 50) => ({
-          label: item.choice,
-          data: [item.quantity],
-          backgroundColor: `rgba(${53 + index}, 162, ${235 + index}, 0.5)`
-        }))
-      );
+      let arr = statistic.data.map((item) => item.quantity);
+      // setTest(
+      //   statistic.data.map((item , index = 50) => ({
+      //     label: item.choice,
+      //     data: arr,
+      //     backgroundColor: `rgba(${53 + index}, 162, ${235 + index}, 0.5)`
+      //   }))
+      // );
+      setTest([
+        {
+          label: 'Dataset',
+          data: arr,
+          backgroundColor: 'rgba(174, 164, 235, 0.4)'
+        }
+      ]);
     }
   }, [questionData, statistic, idQuestion]);
   const fetchStatistic = async () => {
@@ -217,6 +224,7 @@ function SurveyTable({ deleteQuestion }) {
     labels,
     datasets: test
   };
+  console.log(data);
   return (
     <>
       <Table
