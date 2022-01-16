@@ -16,7 +16,7 @@ const tabList = [
   },
   {
     key: 'tab3',
-    tab: 'Ümfrage'
+    tab: 'Umfrage'
   }
 ];
 

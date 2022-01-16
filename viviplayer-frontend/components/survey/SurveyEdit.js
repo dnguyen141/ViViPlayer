@@ -4,6 +4,7 @@ import api from '../../utils/api';
 import { Form, Button, Input, Modal, Select } from 'antd';
 import { connect } from 'react-redux';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { updateSurveyById } from '../../actions/survey.action';
 
 const { Option } = Select;
 
@@ -23,7 +24,7 @@ const formItemLayoutWithOutLabel = {
     sm: { span: 21, offset: 4 }
   }
 };
-const SurveyEdit = ({ id, context, updateFunc }) => {
+const SurveyEdit = ({ id, context, updateFunc, updateSurveyById }) => {
   const [shotList, setShotList] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [fieldsData, setFieldsData] = useState([]);
@@ -32,8 +33,8 @@ const SurveyEdit = ({ id, context, updateFunc }) => {
     const shotsData = await api.get('/session/shots/');
     setShotList(shotsData.data);
   };
-  const updateQuestionInEdit = (values) => {
-    console.log(values);
+  const updateQuestionInEdit = ({shot, title, choices, correct_answer, type}) => {
+    updateSurveyById(shot, title, choices, correct_answer, type, id);
     setIsModalVisible(false);
     updateFunc();
   };
@@ -42,7 +43,7 @@ const SurveyEdit = ({ id, context, updateFunc }) => {
   };
   useEffect(() => {
     getShot();
-    setFieldsData(context.choices);
+    //setFieldsData(context.choices);
   }, []);
   return (
     <>
@@ -61,19 +62,20 @@ const SurveyEdit = ({ id, context, updateFunc }) => {
             style={{ marginBottom: '1em' }}
             name="title"
             label=" Title"
+            initialValue={context.title}
             rules={[{ required: true, message: 'Geben Sie hier den Title der Frage ein.' }]}
           >
-            <Input rows={4} defaultValue={context.title} />
+            <Input rows={4} />
           </Form.Item>
           <Form.Item
             name="shot"
             label="Shot"
+            initialValue={context.shot}
             rules={[{ required: true, message: 'Wählen Sie bitte hier ein Shot' }]}
           >
             <Select
               placeholder="Wählen Sie bitte hier ein Shot"
               allowClear
-              defaultValue={context.shot}
             >
               {shotList &&
                 shotList.map((item, index) => (
@@ -86,12 +88,12 @@ const SurveyEdit = ({ id, context, updateFunc }) => {
           <Form.Item
             name="type"
             label="Type"
+            initialValue={context.typeToRender}
             rules={[{ required: true, message: 'Geben Sie bitte den Typ ein' }]}
           >
             <Select
               placeholder="Wählen Sie type von Fragen"
               allowClear
-              defaultValue={context.typeToRender}
             >
               <Option value="checkbox">Survey</Option>
               <Option value="radiogroup">Question</Option>
@@ -100,6 +102,7 @@ const SurveyEdit = ({ id, context, updateFunc }) => {
           <Form.List
             name="choices"
             label="Antworte/n"
+            initialValue={context.choices}
             rules={[
               {
                 validator: async (_, names) => {
@@ -135,7 +138,6 @@ const SurveyEdit = ({ id, context, updateFunc }) => {
                         >
                           <Input
                             placeholder="Antwort"
-                            defaultValue={field}
                             style={{ width: '95%', marginRight: '2px' }}
                             icon={<PlusOutlined />}
                           />
@@ -169,9 +171,10 @@ const SurveyEdit = ({ id, context, updateFunc }) => {
             style={{ marginBottom: '1em' }}
             name="correct_answer"
             label="Antwort"
+            initialValue={context.correct_answer}
             // rules={[{ required: true }]}
           >
-            <Input rows={4} defaultValue={context.correct_answer} />
+            <Input rows={4}  />
           </Form.Item>
           <Button type="primary" htmlType="submit">
             Submit
@@ -184,4 +187,4 @@ const SurveyEdit = ({ id, context, updateFunc }) => {
 
 SurveyEdit.propTypes = {};
 const mapStateToProps = (state) => ({});
-export default connect(mapStateToProps, {})(SurveyEdit);
+export default connect(mapStateToProps, { updateSurveyById })(SurveyEdit);

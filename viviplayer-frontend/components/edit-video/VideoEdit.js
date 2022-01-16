@@ -435,8 +435,13 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
         >
           <Table columns={columns} pagination={false} dataSource={shotData} scroll={{ y: 300 }} />
           <Divider />
+
           <SurveyTable />
-          <Button type="primary" onClick={() => setIsModalVisible(true)}>
+          <Button
+            type="primary"
+            onClick={() => setIsModalVisible(true)}
+            style={{ marginBottom: '5px' }}
+          >
             Frage Erstellen
           </Button>
           <Modal
