@@ -143,9 +143,6 @@ class QuestionViewSet(viewsets.ModelViewSet):
         serializer.save(author=self.request.user, session=ViViSession.objects.first(), answers=[])
 
     def create(self, request, *args, **kwargs):
-        if request.data["correct_answer"] not in request.data["choices"] + [""]:
-            error = get_error_message("correct_answer", "Ungültige Lösung für diese Frage!")
-            return Response(data=error, status=status.HTTP_400_BAD_REQUEST)
         return super().create(request, *args, **kwargs)
 
     def update(self, request, *args, **kwargs):
