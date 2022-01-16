@@ -48,8 +48,8 @@ function SurveyCreate({
       sm: { span: 21, offset: 4 }
     }
   };
-  const createQuestion = (values) => {
-    createSurvey(values.shot, values.title, values.choices, values.correct_answer, values.type);
+  const createQuestion = async (values) => {
+    await createSurvey(values.shot, values.title, values.choices, values.correct_answer, values.type);
     socket.send(
       JSON.stringify({
         action: 'surveyChange',
