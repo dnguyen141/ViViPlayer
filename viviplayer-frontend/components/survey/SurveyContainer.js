@@ -8,7 +8,7 @@ import { WS_BACKEND } from '../../constants/constants';
 
 let socket;
 
-function SurveyContainer({ user, createSurvey }) {
+function SurveyContainer({ user }) {
   const [askFromAdmin, setAskFromAdmin] = useState(null);
   // connect to socket and update sentence table
   useEffect(() => {
@@ -22,17 +22,7 @@ function SurveyContainer({ user, createSurvey }) {
       }
     };
   }, []);
-  // const updateState = (values) => {
-  //   // createSurvey(values.shot, values.title, values.choices, values.correct_answer, values.type);
-  //   socket.send(
-  //     JSON.stringify({
-  //       action: 'surveyChange',
-  //       time: 0,
-  //       payload: values
-  //     })
-  //   );
-  // };
-
+  console.log(askFromAdmin);
   let SurveyView = (
     <div>
       {user && user.is_mod ? <SurveyTable /> : <SurveyRep askFromAdminState={askFromAdmin} />}

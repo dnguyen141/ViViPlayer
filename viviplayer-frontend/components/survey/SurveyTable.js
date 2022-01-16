@@ -8,7 +8,6 @@ import PropTypes from 'prop-types';
 import { deleteQuestion, getQuestionId } from '../../actions/survey.action';
 import { WS_BACKEND } from '../../constants/constants';
 import { Notification } from '../../utils/notification';
-import SurveyStatistic from '../survey/SurveyStatistic';
 import { Bar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -20,23 +19,23 @@ import {
   Legend
 } from 'chart.js';
 let socket;
-let preDataSet = [
-  {
-    label: 'Dataset 1',
-    data: [1],
-    backgroundColor: 'rgba(255, 99, 132, 0.5)'
-  },
-  {
-    label: 'Dataset 2',
-    data: [5],
-    backgroundColor: 'rgba(53, 162, 235, 0.5)'
-  }
-];
-function SurveyTable({ deleteQuestion, getQuestionId }) {
+// let preDataSet = [
+//   {
+//     label: 'Dataset 1',
+//     data: [1],
+//     backgroundColor: 'rgba(255, 99, 132, 0.5)'
+//   },
+//   {
+//     label: 'Dataset 2',
+//     data: [5],
+//     backgroundColor: 'rgba(53, 162, 235, 0.5)'
+//   }
+// ];
+function SurveyTable({ deleteQuestion }) {
   ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
   const [questions, setQuestions] = useState(null);
   const [updateTable, setupdateTable] = useState(false);
-  const [idQuestion, setIdquestion] = useState(null);
+  const [idQuestion, setIdquestion] = useState(1);
   const [labels, setLablels] = useState([]);
   const [statistic, setStatistic] = useState(null);
   const [questionData, setQuestionData] = useState(null);
@@ -57,28 +56,23 @@ function SurveyTable({ deleteQuestion, getQuestionId }) {
     fetchQuestion();
   }, [idQuestion]);
   useEffect(() => {
-    console.log(questionData);
     let arr = [];
     setLablels(questionData != null ? questionData.choices : []);
     if (statistic != null) {
-      console.log(statistic.data);
-      preDataSet = statistic.data.map((item, index = 50) => ({
-        label: item.choice,
-        data: arr.push(item.quantity),
-        backgroundColor: `rgba(${53 + index}, 162, ${235 + index}, 0.5)`
-        // backgroundColor: 'red'
-      }));
+      // preDataSet = statistic.data.map((item, index = 20) => ({
+      //   label: item.choice,
+      //   data: arr.push(item.quantity),
+      //   backgroundColor: `rgba(${53 + index}, 162, ${235 + index}, 0.5)`
+      //   // backgroundColor: 'red'
+      // }));
       setTest(
         statistic.data.map((item, index = 50) => ({
           label: item.choice,
           data: [item.quantity],
           backgroundColor: `rgba(${53 + index}, 162, ${235 + index}, 0.5)`
-          // backgroundColor: 'red'
         }))
       );
     }
-
-    console.log(preDataSet);
   }, [questionData, statistic, idQuestion]);
   const fetchStatistic = async () => {
     const res = await api.get(`/session/statistics/${idQuestion}/`);
@@ -87,7 +81,6 @@ function SurveyTable({ deleteQuestion, getQuestionId }) {
   const fetchQuestion = async () => {
     const res = await api.get(`/session/questions/${idQuestion}/`);
     setQuestionData(res.data);
-    console.log(res.data);
   };
   const router = useRouter();
   const fetchQuestions = async () => {
@@ -102,6 +95,7 @@ function SurveyTable({ deleteQuestion, getQuestionId }) {
     socket.onmessage = (e) => {
       const data = JSON.parse(e.data);
       if (data.action === 'surveyChange') {
+        console.log(data);
         fetchQuestions();
       }
     };
@@ -223,7 +217,6 @@ function SurveyTable({ deleteQuestion, getQuestionId }) {
     labels,
     datasets: test
   };
-  console.log(data);
   return (
     <>
       <Table
@@ -233,7 +226,7 @@ function SurveyTable({ deleteQuestion, getQuestionId }) {
         scroll={{ y: 200 }}
         style={{ minHeight: '300px' }}
       />
-      <Bar options={options} data={data} />
+      {pathName === '/video-edit' ? '' : <Bar options={options} data={data} />}
     </>
   );
 }
