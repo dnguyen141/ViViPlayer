@@ -78,10 +78,3 @@ export const sendAnswer = (question_id, answer, type) => async (dispatch) => {
     });
   }
 };
-
-export const getQuestionId = (id) => async (dispatch) => {
-  dispatch({
-    type: SEND_ANSWER_SUCCESS,
-    payload:id
-  });
-}
