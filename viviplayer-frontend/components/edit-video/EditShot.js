@@ -3,12 +3,17 @@ import PropTypes from 'prop-types';
 import { Form, Button, Input, Modal } from 'antd';
 import { connect } from 'react-redux';
 import { getShots, updateShotById } from '../../actions/session.action';
-const EditShot = ({ id, context, updateFunc, updateShotById }) => {
+const EditShot = ({ id, context, updateFunc, updateShotById, videoRef }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const updateShot = ({ time, text }) => {
-    updateShotById(time, text, id);
+    if(time <= videoRef.current.duration && time >= 0){
+        updateShotById(time, text, id);
+        
+    } else{
+
+    } 
     setIsModalVisible(false);
-    updateFunc();
+    updateFunc();  
   };
   return (
     <>
@@ -31,10 +36,10 @@ const EditShot = ({ id, context, updateFunc, updateShotById }) => {
           </i>
           <br />
           <Form name="update shot" onFinish={updateShot} autoComplete="off">
-          <Form.Item style={{ marginBottom: '1em' }} initialValue={context.time} name="time">
+          <Form.Item style={{ marginBottom: '1em' }} initialValue={context.time} name="time" rules={[{ required: true }]}>
               <Input placeholder="new time stamp" />
             </Form.Item>
-            <Form.Item style={{ marginBottom: '1em' }} name="text" initialValue={context.title}>
+            <Form.Item style={{ marginBottom: '1em' }} name="text" initialValue={context.title} rules={[{ required: true }]}>
               <Input placeholder="new shot title" />
             </Form.Item>
             <Button type="primary" htmlType="submit">
