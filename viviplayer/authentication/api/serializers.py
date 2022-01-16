@@ -11,20 +11,20 @@ from session.models import ViViSession
 
 MOD_USERNAME_REGEX = RegexValidator(
     regex=r"^(?!member)[a-zA-Z0-9@#$%^&-_+=()]{8,20}$",
-    message="Invalid username for moderator!",
+    message="Ungültiger Benutzername für Moderator!",
 )
 MEM_USERNAME_REGEX = RegexValidator(
     regex=r"^member_[a-zA-Z0-9@#$%^&-+=()]{8}$",
-    message='Invalid username for member!. It should begin with "member".',
+    message='Ungültiger Benutzername für Teilnehmer!',
 )
 PASSWORD_REGEX = RegexValidator(
     regex=r"^(?=.{8,50}$)(?!.*\s)(?=.*[a-zA-Z0-9])(?=.*\W).*$",
-    message="Password must contains at least 8 and at most 50 characters, "
-            "with at least one special characters and no white space characters.",
+    message="Das Passwort muss mindestens 8 Zeichen, höchstens 50 Zeichen mit mindestens einem Sonderzeichen "
+            "und keine Leerzeichen enthalten."
 )
 TAN_REGEX = RegexValidator(
     regex=r"^(?=.{6,50}$)(?!.*\s)(?=.*[a-zA-Z0-9])(?=.*\W).*$",
-    message="TAN is not correct! Please try again!",
+    message="TAN ist nicht richtig! Bitte versuchen Sie es später noch einmal!",
 )
 
 
@@ -75,11 +75,13 @@ class CustomMemRegisterSerializer(RegisterSerializer):
     def validate_password1(self, password):
         session_queryset = ViViSession.objects.filter(is_opened=True)
         if session_queryset.count() > 1:
-            raise serializers.ValidationError(_("Something is wrong with sessions! Please try again later!"))
+            raise serializers.ValidationError(_("Irgendetwas stimmt mit den Sitzungen nicht! "
+                                                "Bitte versuchen Sie es später noch einmal!"))
         if session_queryset.count() < 1 or (session_queryset.count() == 1 and not session_queryset.first().is_opened):
-            raise serializers.ValidationError(_("There are no session online yet! Please try again later!"))
+            raise serializers.ValidationError(_("Es gibt zur Zeit keinen Live-Sitzung! "
+                                                "Bitte versuchen Sie es später noch einmal!"))
         if session_queryset.first().is_opened and session_queryset.first().tan != password:
-            raise serializers.ValidationError(_("TAN is not correct! Please try again!"))
+            raise serializers.ValidationError(_("TAN ist nicht richtig! Bitte versuchen Sie es später noch einmal!"))
         return password
 
     def validate(self, data):

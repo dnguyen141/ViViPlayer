@@ -38,6 +38,18 @@ def tan_generator():
     return "".join(pwd_list)
 
 
+def get_error_message(field_text, message_text):
+    msg = {
+        "errors": [
+            {
+                "field": field_text,
+                "message": message_text
+            }
+        ]
+    }
+    return msg
+
+
 # Create your views here.
 class SessionViewSet(viewsets.ModelViewSet):
     serializer_class = SessionSerializer
@@ -57,14 +69,8 @@ class SessionViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         if ViViSession.objects.count() > 0:
-            error = {
-                "errors": [
-                    {
-                        "message": "Another session has already been created!"
-                    }
-                ]
-            }
-            return Response(error, status=status.HTTP_403_FORBIDDEN, headers={})
+            error = get_error_message("non_field_errors", "Es daft nur maximal ein Session gleichzeitig geben!")
+            return Response(data=error, status=status.HTTP_403_FORBIDDEN)
         return super().create(request, *args, **kwargs)
 
 
@@ -90,17 +96,8 @@ class ShotViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         for shot in Shot.objects.all():
             if shot.time == float(request.data["time"]):
-                error = {
-                    "errors": [
-                        {
-                            "field": "time",
-                            "message": [
-                                "There is a Shot with the same timestamp!"
-                            ]
-                        }
-                    ]
-                }
-                return Response(error, status=status.HTTP_403_FORBIDDEN, headers={})
+                error = get_error_message("time", "Es gibt schon ein Shot mit dem gleichen Zeitstempel!")
+                return Response(data=error, status=status.HTTP_403_FORBIDDEN, headers={})
         return super().create(request, *args, **kwargs)
 
 
@@ -127,6 +124,7 @@ class SentenceViewSet(viewsets.ModelViewSet):
 class QuestionViewSet(viewsets.ModelViewSet):
     serializer_class = QuestionSerializer
     queryset = Question.objects.all()
+
     http_method_names = ['get', 'post', 'put', 'delete']
 
     def get_permissions(self):
@@ -294,20 +292,6 @@ class ExportCSV(APIView):
         return response
 
 
-def get_error_message(field_text, *message_text):
-    msg = {
-        "errors": [
-            {
-                "field": field_text,
-                "message": [
-                    message for message in message_text
-                ]
-            }
-        ]
-    }
-    return msg
-
-
 # API for member to send their answer for question to server
 class PostAnswerAPIView(generics.CreateAPIView):
     permission_classes = [IsAuthenticated]
@@ -320,22 +304,20 @@ class PostAnswerAPIView(generics.CreateAPIView):
         answer = serializer.data['answer']
 
         if Question.objects.filter(id=question_id).count() == 0:
-            msg = get_error_message("question_id", "No question with given id has been found!")
+            msg = get_error_message("question_id", "Frage/Umfrage kann nicht gefunden werden!")
             return Response(data=msg, status=status.HTTP_404_NOT_FOUND)
 
         question = Question.objects.get(id=question_id)
         for choice in answer:
             if choice not in question.choices:
-                msg = get_error_message("answer", f"Invalid answer for question {choice}")
+                msg = get_error_message("answer", f"Ungültige Antwort für die eingegebene Frage/Umfrage")
                 return Response(data=msg, status=status.HTTP_400_BAD_REQUEST)
 
         question.answers += answer
         question.save()
         data = {
             "success": {
-                "message": [
-                    "Successfully sent the answer!"
-                ]
+                "message": "Successfully sent the answer!"
             }
         }
         return Response(data=data, status=status.HTTP_200_OK)
@@ -347,13 +329,13 @@ class GetStatisticsAPIView(APIView):
 
     def get(self, request, *args, **kwargs):
         if "question_id" not in self.kwargs:
-            msg = get_error_message("question_id", "question_id is required for usage!")
+            msg = get_error_message("question_id", "question_id ist nötig!")
             return Response(data=msg, status=status.HTTP_400_BAD_REQUEST)
 
         question_id = self.kwargs.get("question_id")
 
         if Question.objects.filter(id=question_id).count() == 0:
-            msg = get_error_message("question_id", "No question with given id has been found!")
+            msg = get_error_message("question_id", "Frage/Umfrage kann nicht gefunden werden!")
             return Response(data=msg, status=status.HTTP_404_NOT_FOUND)
 
         statistics = []
