@@ -436,21 +436,8 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
           <Divider />
 
           <SurveyTable />
-          <Button
-            type="primary"
-            onClick={() => setIsModalVisible(true)}
-            style={{ marginBottom: '5px' }}
-          >
-            Frage Erstellen
-          </Button>
-          <Modal
-            visible={isModalVisible}
-            footer={null}
-            onOk={() => setIsModalVisible(false)}
-            onCancel={() => setIsModalVisible(false)}
-          >
-            <SurveyCreate setIsModalVisibleFunc={setIsModalVisible} />
-          </Modal>
+
+          <SurveyCreate />
         </Col>
       </Row>
     </>

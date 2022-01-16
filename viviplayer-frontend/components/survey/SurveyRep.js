@@ -7,13 +7,9 @@ import { sendAnswer } from '../../actions/survey.action';
 
 let socket;
 
-const SurveyRep = ({ askFromAdminState, sendAnswer }) => {
+const SurveyRep = ({ sendAnswer }) => {
   const [ask, setAsk] = useState(null);
-  const [correctAns, setCorrectAns] = useState(null);
-  useEffect(() => {
-    setAsk(askFromAdminState);
-    setCorrectAns(ask != null ? ask.correct_answer : '');
-  }, [askFromAdminState]);
+
   // connect to socket and update sentence table
   useEffect(() => {
     const url = (WS_BACKEND || 'ws://' + window.location.host) + '/ws/player/sessionid12345/';
