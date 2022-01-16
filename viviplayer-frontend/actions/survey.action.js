@@ -5,7 +5,9 @@ import {
   DELETE_QUESTION_SUCCESS,
   DELETE_QUESTION_FAIL,
   UPDATE_QUESTION_BY_ID_SUCCESS,
-  GET_QUESTION_BY_ID_SUCCESS
+  GET_QUESTION_BY_ID_SUCCESS,
+  SEND_ANSWER_SUCCESS,
+  SEND_ANSWER_FAIL
 } from './types';
 import { Notification } from '../utils/notification';
 
