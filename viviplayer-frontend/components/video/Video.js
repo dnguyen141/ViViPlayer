@@ -13,8 +13,7 @@ import { setAuthToken } from '../../utils/setAuthToken';
 import api from '../../utils/api';
 import { WS_BACKEND, VIDEO_PREFIX } from '../../constants/constants';
 
-// !!! markers need to be an Integer
-const Video = ({ loadUser, loading, user, logout }) => {
+const Video = ({ loadUser, loading, user, logout, setCurrentShot }) => {
   const [userState, setUserState] = useState(null);
   const [session, setSession] = useState({
     name: 'dummy',
@@ -68,18 +67,20 @@ const Video = ({ loadUser, loading, user, logout }) => {
   const [chapterText, setChapterText] = useState('');
   const [lastTime, setLastTime] = useState(0); //used for calculating autostop
   const [visibleChapterText, setVisibleChapterText] = useState('hidden'); // -100% = disappear, 0 = appear
-  const [lastShot, setLastShot] = useState(0); //used for communication to socket
+  //const [shotsData, setShotsData] = useState(null);
   const insertArray = async () => {
     var markerListTemp = [];
     // if(markerList == null)
     const shotsData = await api.get('/session/shots/');
-    for (let i = 0; i < shotsData.data.length; i++) {
-      markerListTemp.push({
-        time: shotsData.data[i]['time'],
-        text: shotsData.data[i]['title']
-      });
+    if(shotsData){
+        for (let i = 0; i < shotsData.data.length; i++) {
+            markerListTemp.push({
+                time: shotsData.data[i]['time'],
+                text: shotsData.data[i]['title']
+             });
+        }
     }
-
+    setCurrentShot(shotsData.data[0].id);
     setMarkerList(markerListTemp);
   };
 
@@ -135,7 +136,7 @@ const Video = ({ loadUser, loading, user, logout }) => {
 
   //The function updates the all visual elements of the player. It stops the the player when the autostop mode is selected when a shot is reached
   // and displays the current chapter title. It also manages the current time and the progressbar.
-  function updatePlayer() {
+  async function updatePlayer()  {
     // if it finds a marker at that spot it will pause the video and display the chapter text. the bigger time gap is necessary because the execution time isnt predictable and it will cause the player to skip the marker.
     var temp = markerList.find(
       (x) => videoRef.current.currentTime >= x.time && videoRef.current.currentTime <= x.time + 1
@@ -145,18 +146,16 @@ const Video = ({ loadUser, loading, user, logout }) => {
       setVisibleChapterText('visible');
       console.log(lastTime);
       setLastTime(temp.time); //last marker that was found.
-      setLastShot(temp.time); 
       setChapterText(temp.text);
-      if(user != null && user.is_mod == true){
-          socketRef.current.send(
-            JSON.stringify({
-            action: "sendLastShot",
-            time: lastShot
-            })
-           
-        ); 
-        console.log("SEND");
-      }
+      const shotsData = await api.get("/session/shots/");
+      if(shotsData){
+          for (let i = 0; i < shotsData.data.length; i++) {
+            if(shotsData.data[i]['time'] == temp.time){
+                setCurrentShot(shotsData.data[i]['id']);
+                break;
+            }
+        }
+      }  
       
       if (autoStop) {
         //when the player didnt already stop at this marker the player gets paused. this prevents multiple pauses at one marker and it doesnt get stuck
@@ -173,6 +172,8 @@ const Video = ({ loadUser, loading, user, logout }) => {
     } else if (lastTime !== 0) {
       setLastTime(-1); //resets the last chapter so that it can be played again.
     }
+
+    
 
     requestAnimationFrame(() => {
       //checks whether the chapter title should still be shown
@@ -310,13 +311,6 @@ const Video = ({ loadUser, loading, user, logout }) => {
           if(videoRef.current){
               videoRef.current.currentTime = data.time;
           }  
-        }else if(data.action === "requestLastShot"){
-            socketRef.current.send(
-            JSON.stringify({
-            action: 'sendLastShot',
-            time: lastShot
-        })
-      );
         }
     };
 
