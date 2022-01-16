@@ -33,8 +33,8 @@ const SurveyEdit = ({ id, context, updateFunc, updateSurveyById }) => {
     const shotsData = await api.get('/session/shots/');
     setShotList(shotsData.data);
   };
-  const updateQuestionInEdit = ({ shot, title, choices, correct_answer, type }) => {
-    updateSurveyById(shot, title, choices, correct_answer, type, id);
+  const updateQuestionInEdit = async ({ shot, title, choices, type }) => {
+    await updateSurveyById(shot, title, choices, type, id);
     setIsModalVisible(false);
     updateFunc();
   };
@@ -43,7 +43,7 @@ const SurveyEdit = ({ id, context, updateFunc, updateSurveyById }) => {
   };
   useEffect(() => {
     getShot();
-    //setFieldsData(context.choices);
+    setFieldsData(context.choices);
   }, []);
   return (
     <>
@@ -57,7 +57,7 @@ const SurveyEdit = ({ id, context, updateFunc, updateSurveyById }) => {
         onOk={() => setIsModalVisible(false)}
         onCancel={() => setIsModalVisible(false)}
       >
-        <Form name="Update Question" onFinish={updateQuestionInEdit} autoComplete="off">
+        <Form name="Verständnis-/Umfrage Bearbeitung" onFinish={updateQuestionInEdit} autoComplete="off">
           <Form.Item
             style={{ marginBottom: '1em' }}
             name="title"
@@ -84,7 +84,7 @@ const SurveyEdit = ({ id, context, updateFunc, updateSurveyById }) => {
           </Form.Item>
           <Form.Item
             name="type"
-            label="Type"
+            label="Typ"
             initialValue={context.typeToRender}
             rules={[{ required: true, message: 'Geben Sie bitte den Typ ein' }]}
           >
@@ -94,8 +94,8 @@ const SurveyEdit = ({ id, context, updateFunc, updateSurveyById }) => {
             </Select>
           </Form.Item>
           <Form.List
-            name="Auswahl"
-            label="Antworte/n"
+            name="choices"
+            label="Antwort/en"
             initialValue={context.choices}
             rules={[
               {
@@ -152,7 +152,7 @@ const SurveyEdit = ({ id, context, updateFunc, updateSurveyById }) => {
                       style={{ width: '100%' }}
                       icon={<PlusOutlined />}
                     >
-                      Antwort bearbeiten
+                      Antwort hinzufügen
                     </Button>
 
                     <Form.ErrorList errors={errors} />
@@ -161,15 +161,6 @@ const SurveyEdit = ({ id, context, updateFunc, updateSurveyById }) => {
               );
             }}
           </Form.List>
-          <Form.Item
-            style={{ marginBottom: '1em' }}
-            name="correct_answer"
-            label="Antwort"
-            initialValue={context.correct_answer}
-            // rules={[{ required: true }]}
-          >
-            <Input rows={4} />
-          </Form.Item>
           <Button type="primary" htmlType="submit">
             Submit
           </Button>

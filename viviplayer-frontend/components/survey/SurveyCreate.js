@@ -44,14 +44,8 @@ function SurveyCreate({ createSurvey }) {
       sm: { span: 21, offset: 4 }
     }
   };
-  const createQuestion = async (values) => {
-    await createSurvey(
-      values.shot,
-      values.title,
-      values.choices,
-      values.correct_answer,
-      values.type
-    );
+  const createQuestion = (values) => {
+    createSurvey(values.shot, values.title, values.choices, values.correct_answer, values.type);
     socket.send(
       JSON.stringify({
         action: 'surveyChange',
@@ -90,7 +84,7 @@ function SurveyCreate({ createSurvey }) {
       </Form.Item>
       <Form.Item
         name="type"
-        label="Type"
+        label="Typ"
         rules={[{ required: true, message: 'Geben Sie bitte den Typ ein' }]}
       >
         <Select placeholder="Wählen Sie type von Fragen" allowClear>
@@ -159,14 +153,6 @@ function SurveyCreate({ createSurvey }) {
           </>
         )}
       </Form.List>
-      <Form.Item
-        style={{ marginBottom: '1em' }}
-        name="correct_answer"
-        label="Antwort"
-        // rules={[{ required: true }]}
-      >
-        <Input rows={4} placeholder="Geben Sie hier die richtige Antwort ein.(wenn es gibt)" />
-      </Form.Item>
       <Button type="primary" htmlType="submit">
         Posten
       </Button>
