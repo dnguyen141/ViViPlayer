@@ -45,7 +45,7 @@ function SurveyCreate({ createSurvey }) {
     }
   };
   const createQuestion = (values) => {
-    createSurvey(values.shot, values.title, values.choices, values.type);
+    createSurvey(values.shot, values.title, values.choices, values.correct_answer, values.type);
     socket.send(
       JSON.stringify({
         action: 'surveyChange',
