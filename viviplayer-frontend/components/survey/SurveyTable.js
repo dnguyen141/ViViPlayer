@@ -19,23 +19,11 @@ import {
   Legend
 } from 'chart.js';
 let socket;
-// let preDataSet = [
-//   {
-//     label: 'Dataset 1',
-//     data: [1],
-//     backgroundColor: 'rgba(255, 99, 132, 0.5)'
-//   },
-//   {
-//     label: 'Dataset 2',
-//     data: [5],
-//     backgroundColor: 'rgba(53, 162, 235, 0.5)'
-//   }
-// ];
 function SurveyTable({ deleteQuestion }) {
   ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
   const [questions, setQuestions] = useState(null);
   const [updateTable, setupdateTable] = useState(false);
-  const [idQuestion, setIdquestion] = useState(1);
+  const [idQuestion, setIdquestion] = useState(null);
   const [labels, setLablels] = useState([]);
   const [statistic, setStatistic] = useState(null);
   const [questionData, setQuestionData] = useState(null);
@@ -44,34 +32,20 @@ function SurveyTable({ deleteQuestion }) {
       label: 'Dataset 1',
       data: [1, 2],
       backgroundColor: 'rgba(255, 99, 132, 0.5)'
-    },
-    {
-      label: 'Dataset 2',
-      data: [5, 4],
-      backgroundColor: 'rgba(53, 162, 235, 0.5)'
     }
   ]);
   useEffect(() => {
-    fetchStatistic();
-    fetchQuestion();
-  }, [idQuestion]);
+    if (questions != null && idQuestion != null) {
+      setIdquestion(idQuestion);
+      console.log('run inside');
+      fetchStatistic();
+      fetchQuestion();
+    }
+  }, [questions, idQuestion]);
   useEffect(() => {
     setLablels(questionData != null ? questionData.choices : []);
     if (statistic != null) {
-      // preDataSet = statistic.data.map((item, index = 20) => ({
-      //   label: item.choice,
-      //   data: arr.push(item.quantity),
-      //   backgroundColor: `rgba(${53 + index}, 162, ${235 + index}, 0.5)`
-      //   // backgroundColor: 'red'
-      // }));
       let arr = statistic.data.map((item) => item.quantity);
-      // setTest(
-      //   statistic.data.map((item , index = 50) => ({
-      //     label: item.choice,
-      //     data: arr,
-      //     backgroundColor: `rgba(${53 + index}, 162, ${235 + index}, 0.5)`
-      //   }))
-      // );
       setTest([
         {
           label: 'Dataset',
@@ -116,7 +90,7 @@ function SurveyTable({ deleteQuestion }) {
   };
   const columns = [
     {
-      title: 'Title',
+      title: 'Frage',
       dataIndex: 'title',
       width: '20%',
       render: (title) => (
@@ -132,7 +106,7 @@ function SurveyTable({ deleteQuestion }) {
       render: (type) => <span>{type === 'checkbox' ? 'Survey' : 'Question'}</span>
     },
     {
-      title: 'Choices',
+      title: 'Auswahl',
       dataIndex: 'choices',
       width: '30%',
       render: (choices) => {
@@ -191,7 +165,7 @@ function SurveyTable({ deleteQuestion }) {
                     );
                     Notification(
                       'Question notification',
-                      'The question was sent to everyone in the session',
+                      'Die Frage wurde an alle in der Sitzung gesendet',
                       'success'
                     );
                   }}

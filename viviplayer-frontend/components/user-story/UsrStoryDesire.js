@@ -5,10 +5,10 @@ import { connect } from 'react-redux';
 import { Button, Input, Table, Space, Popconfirm, Form, Select } from 'antd';
 import EditUserStory from './EditUserStory';
 import styles from './user-story.module.css';
-import { WS_BACKEND } from '../../constants/constants';
+import { VIDEO_PREFIX, WS_BACKEND } from '../../constants/constants';
 let socket;
 import { createUserStory, deleteUserStoryById } from '../../actions/session.action';
-const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById }) => {
+const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById, currentShot }) => {
   const [updateTable, setupdateTable] = useState(false);
   const [userStories, setUserStories] = useState(null);
   const [shotList, setShotList] = useState(null);
@@ -26,7 +26,7 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById }) => {
     fetchUserStories();
   }, [updateTable]);
   // connect to socket and update sentence table
-  useEffect(() => {
+  useEffect  (() => {
     const url = (WS_BACKEND || 'ws://' + window.location.host) + '/ws/player/sessionid12345/';
     socket = new WebSocket(url);
     socket.onmessage = (e) => {
@@ -96,8 +96,8 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById }) => {
     }
   ];
 
-  const createUserStoryFunc = ({ damit, moechteichals1, moechteichals2, shot }) => {
-    createUserStory(damit, moechteichals1, moechteichals2, shot);
+  const  createUserStoryFunc = async({   damit, moechteichals1, moechteichals2, shot }) => {
+    await createUserStory(damit, moechteichals1, moechteichals2, shot);
     updateState();
     form.resetFields();
   };
@@ -137,7 +137,8 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById }) => {
           />
         </Form.Item>
         <Form.Item name="shot" rules={[{ required: true }]}>
-          <Select placeholder="Wählen Sie bitte hier ein Shot" allowClear>
+          <Select placeholder="Wählen Sie bitte hier einen Shot"  >
+            <Select.Option key="current" value={currentShot}>Momentaner Shot</Select.Option>
             {shotList && shotList.map((item) => <Option value={item.id}>{item.title}</Option>)}
           </Select>
         </Form.Item>

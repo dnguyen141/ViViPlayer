@@ -188,10 +188,10 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
     });
   }
 
-  const createShotFunc = ({ text }) => {
+  const createShotFunc = async({ text }) => {
     //post the shot to the server
     var time = videoRef.current.currentTime;
-    createShot(time, text);
+    await createShot(time, text);
     updateState();
     setupdateTable(!updateTable);
     form.resetFields();
@@ -301,21 +301,21 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
       )
     },
     {
-      title: 'Time',
+      title: 'Zeit',
       dataIndex: 'time',
       width: '30%',
       render: (time) => <p>{time}</p>
     },
     {
-      title: 'Title',
+      title: 'Titel',
       dataIndex: 'title',
       render: (title) => <p>{title}</p>
-    },
-    {
+    }
+    /*{
       title: 'Image Path',
       dataIndex: 'img_path',
       render: (img_path) => <>{img_path}</>
-    },
+    },*/
     ,
     {
       title: 'Aktionen',
@@ -323,7 +323,7 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
       render: (id, record) => (
         <div>
           <Space size="middle">
-            <EditShot id={id} context={record} updateFunc={updateState} />
+            <EditShot id={id} context={record} updateFunc={updateState} videoRef={videoRef}/>
             <Popconfirm
               title="Löschen dieser Session ist nicht rückgängig zu machen. Weiter?"
               onConfirm={() => {
@@ -437,6 +437,7 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
           <Divider />
 
           <SurveyTable />
+<<<<<<< HEAD
           <Button
             type="primary"
             onClick={() => setIsModalVisible(true)}
@@ -455,6 +456,10 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
           <Button className="csv-button" style={{ float: 'right' }} onClick={() => Router.push("/video")}>
             Weiter zu Session
           </Button>
+=======
+
+          <SurveyCreate />
+>>>>>>> main
         </Col>
       </Row>
     </>

@@ -19,7 +19,7 @@ export const createSurvey =
       await dispatch({
         type: CREATE_SURVEY_SUCCESS
       });
-      Notification('Survey Notification', 'question has been created', 'success');
+      Notification('Question Notification', 'Die Frage wurde erstellt', 'success');
     } catch (err) {
       console.log(err);
       //   const errors = err.response.data.errors;
@@ -38,11 +38,11 @@ export const deleteQuestion = (id) => async (dispatch) => {
     dispatch({
       type: DELETE_QUESTION_SUCCESS
     });
-    Notification('Question Notification', 'the question has been deleted', 'success');
+    Notification('Question Notification', 'Die Frage wurde gelöscht', 'success');
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
-      errors.forEach((error) => Notification('Sentences Notification', error.message, 'warning'));
+      errors.forEach((error) => Notification('Question Notification', error.message, 'warning'));
     }
     dispatch({
       type: DELETE_QUESTION_FAIL
@@ -61,14 +61,14 @@ export const sendAnswer = (question_id, answer, type) => async (dispatch) => {
       dispatch({
         type: SEND_ANSWER_SUCCESS
       });
-      Notification('Question Notification', 'the question has been sended ', 'success');
+      Notification('Question Notification', 'Die Antwort wurde gesendet', 'success');
       return;
     }
     await api.post('/session/answers/', body);
     dispatch({
       type: SEND_ANSWER_SUCCESS
     });
-    Notification('Question Notification', 'the question has been sended', 'success');
+    Notification('Question Notification', 'Die Antwort wurde gesendet', 'success');
   } catch (err) {
     console.log(err);
     dispatch({
@@ -79,14 +79,14 @@ export const sendAnswer = (question_id, answer, type) => async (dispatch) => {
 
 //edit Survey
 export const updateSurveyById =
-  (shot, title, choices, correct_answer, typeToRender, id) => async (dispatch) => {
-    const body = { shot, title, choices, correct_answer, typeToRender };
+  (shot, title, choices, typeToRender, id) => async (dispatch) => {
+    const body = { shot, title, choices, typeToRender };
     try {
       const res = await api.put(`/session/questions/${id}/`, body);
       await dispatch({
         type: UPDATE_QUESTION_BY_ID_SUCCESS
       });
-      Notification('Survey Notification', 'question has been updated', 'success');
+      Notification('Question Notification', 'Die Frage wurde aktualisiert', 'success');
       console.log(res);
     } catch (err) {
       console.log(err);
@@ -107,7 +107,7 @@ export const getQuestionById = (id) => async (dispatch) => {
     dispatch({
       type: GET_QUESTION_BY_ID_SUCCESS
     });
-    Notification('Question Notification', 'the question has been deleted', 'success');
+    // Notification('Question Notification', 'the question has been deleted', 'success');
   } catch (err) {
     const errors = err.response.data.errors;
     // if (errors) {
