@@ -24,9 +24,8 @@ const Satz = ({ deleteSentenceById, createSentence, user, currentShot }) => {
     const url = (WS_BACKEND || 'ws://' + window.location.host) + '/ws/player/sessionid12345/';
     socketRef.current = new WebSocket(url);
     socketRef.current.onmessage = (e) => {
-      
       const data = JSON.parse(e.data);
-      if (data.action === 'sentenceChange') { 
+      if (data.action === 'sentenceChange') {
         fetchSentenc();
       }
     };
@@ -48,14 +47,21 @@ const Satz = ({ deleteSentenceById, createSentence, user, currentShot }) => {
     setSentencesList(res.data);
   }
 
+  const getTitle = async (id) => {
+    const res = await api.get(`/session/shots/${id}/`);
+    return res.data.title;
+  };
+
   useEffect(() => {
     fetchSentenc();
   }, [updateTable]);
   const columns = [
     {
       title: 'User',
+      dataIndex: 'author',
       width: '15%',
-      render: () => <div className="test">{user != null ? <b>{user.username}</b> : 'user'}</div>
+
+      render: (author) => <div className="test">{user != null ? <b>{author}</b> : 'user'}</div>
     },
     {
       title: 'Inhalt',
@@ -67,16 +73,16 @@ const Satz = ({ deleteSentenceById, createSentence, user, currentShot }) => {
         </div>
       )
     },
-    // {
-    //   title: 'Shot',
-    //   dataIndex: 'shot',
-    //   width: '15%',
-    //   render: (shot) => (
-    //     <div>
-    //       Shot: <b>{shot}</b>
-    //     </div>
-    //   )
-    // },
+    {
+      title: 'Shot',
+      dataIndex: 'shot',
+      width: '15%',
+      render: async (shot) => {
+        let text = await getTitle(shot);
+        console.log(text.toString());
+        return <p>{text}</p>;
+      }
+    },
     {
       title: 'Aktionen',
       dataIndex: 'id',
@@ -117,7 +123,7 @@ const Satz = ({ deleteSentenceById, createSentence, user, currentShot }) => {
       <Table
         columns={columns}
         pagination={false}
-        showHeader={false}
+        // showHeader={false}
         dataSource={sentencesList}
         scroll={{ y: 200 }}
         style={{ minHeight: '250px' }}
@@ -128,7 +134,9 @@ const Satz = ({ deleteSentenceById, createSentence, user, currentShot }) => {
         </Form.Item>
         <Form.Item name="shot" rules={[{ required: true }]}>
           <Select placeholder="Wählen Sie bitte hier einen Shot">
-            <Select.Option key="current" value={currentShot}>Momentaner Shot</Select.Option>
+            <Select.Option key="current" value={currentShot}>
+              Momentaner Shot
+            </Select.Option>
             {shotList && shotList.map((item) => <Option value={item.id}>{item.title}</Option>)}
           </Select>
         </Form.Item>

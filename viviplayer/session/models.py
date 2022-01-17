@@ -111,7 +111,7 @@ class Question(models.Model):
     typeToRender = models.CharField(max_length=10, null=False, choices=RENDER_TYPE)
     choices = models.JSONField(default=_get_default_json_for_question, encoder=None)
     answers = models.JSONField(default=_get_default_json_for_question, encoder=None)
-    correct_answer = models.CharField(max_length=500, null=False, blank=True, default="")
+    correct_answer = models.CharField(max_length=500, null=False, default="")
 
     def __str__(self):
         return self.title
