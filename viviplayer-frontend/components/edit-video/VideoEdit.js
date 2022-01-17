@@ -18,7 +18,7 @@ import { WS_BACKEND, VIDEO_PREFIX } from '../../constants/constants';
 
 let socket;
 // !!! markers need to be an Integer
-const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
+const VideoEdit = ({ loadUser, loading, user, createShot, deleteShotById }) => {
   const [updateTable, setupdateTable] = useState(false);
   const [shotData, setShotData] = useState(null);
   const [userState, setUserState] = useState(null);
@@ -240,7 +240,7 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
   }, [videoRef]);
 
   //===============================================================================
-  useEffect(() => {
+  /*useEffect(() => {
     // check for token in LS when app first runs
     if (localStorage.token) {
       // if there is a token set axios headers for all requests
@@ -258,7 +258,7 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
     //     type: LOGOUT;
     //   }
     // });
-  }, []);
+  }, []);*/
   const layout = {
     labelCol: { span: 5 },
     wrapperCol: { span: 14 }
@@ -419,7 +419,7 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
             </div>
           </div>
           <Form form={form} onFinish={createShotFunc} style={{ paddingTop: '1em' }}>
-            <div>Wählen Sie einen Shot aus dem Video, indem Sie an dem Progressbar klicken.</div>
+            <div>Stellen Sie ein Shot aus dem Video, indem Sie an dem Progressbar klicken.</div>
             <Form.Item name="text">
               <Input placeholder="Geben Sie bitte einen Shottitel hier ein."></Input>
             </Form.Item>
@@ -436,11 +436,11 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
           <Table columns={columns} pagination={false} dataSource={shotData} scroll={{ y: 300 }} />
           <Divider />
 
-          <SurveyTable />
+          <SurveyTable shotData={shotData}/>
 
-          <SurveyCreate />
-          <Button className="csv-button" style={{ float: 'right' }} onClick={() => Router.push("/video")}>
-            Weiter zu Session
+          <SurveyCreate shotData={shotData}/>
+          <Button type="primary" className="csv-button" style={{ float: 'right' , marginTop: '-2.6em'}} onClick={() => Router.push("/video")}>
+            Session Erstellen
           </Button>
         </Col>
       </Row>

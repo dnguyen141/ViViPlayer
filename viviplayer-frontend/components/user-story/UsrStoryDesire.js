@@ -81,7 +81,7 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById, currentSho
        title: 'Shot',
        dataIndex: 'shot',
        width: '20%',
-       render: (shot) => <div>{getTitle(shot)}</div>,
+       render: (shot) => <div><b>Shot: {getTitle(shot)}</b></div>,
       
        
      },
@@ -117,7 +117,7 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById, currentSho
     <>
       <Table
         columns={columns}
-        //showHeader={false}
+        showHeader={false}
         pagination={false}
         dataSource={userStories}
         scroll={{ y: 200 }}

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import api from '../../utils/api';
+import Router from 'next/router';
+import { useRouter } from 'next/router';
 import { Button, Input, Table, Space, Popconfirm, Form, Select, Modal } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { createSurvey } from '../../actions/survey.action';
@@ -9,13 +11,14 @@ import { WS_BACKEND } from '../../constants/constants';
 
 let socket;
 const { Option } = Select;
-function SurveyCreate({ createSurvey, currentShot}) {
+function SurveyCreate({ createSurvey, currentShot, shotData}) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [ask, setAsk] = useState(null);
   const [shotList, setShotList] = useState(null);
   const [answer, setAnswer] = useState([]);
   const [form] = Form.useForm();
-
+  const router = useRouter();
+  const pathName = router.pathname;
   const updateShotList = async () => {
     const shotsData = await api.get('/session/shots/');
     setShotList(shotsData.data);
@@ -28,6 +31,7 @@ function SurveyCreate({ createSurvey, currentShot}) {
   useEffect(() => {
     updateShotList();
   }, []);
+
   const formItemLayout = {
     wrapperCol: {
       xs: { span: 21, offset: 4 },
@@ -74,15 +78,28 @@ function SurveyCreate({ createSurvey, currentShot}) {
         rules={[{ required: true, message: 'Wählen Sie bitte hier ein Shot' }]}
       >
         <Select placeholder="Wählen Sie bitte hier ein Shot" allowClear>
+          {pathName === '/video-edit' ?
+              ""
+            :
             <Select.Option key="current" value={currentShot}>
               Momentaner Shot
-            </Select.Option>
-          {shotList &&
+            </Select.Option> 
+          }
+          {pathName === '/video-edit' ? 
+            shotData &&
+            shotData.map((item, index) => (
+              <Option value={item.id} key={index}>
+                {item.title}
+              </Option>
+            )) : 
+            shotList &&
             shotList.map((item, index) => (
               <Option value={item.id} key={index}>
                 {item.title}
               </Option>
-            ))}
+            ))  
+          }
+          
         </Select>
       </Form.Item>
       <Form.Item
@@ -90,9 +107,9 @@ function SurveyCreate({ createSurvey, currentShot}) {
         label="Typ"
         rules={[{ required: true, message: 'Geben Sie bitte den Typ ein' }]}
       >
-        <Select placeholder="Wählen Sie type von Fragen" allowClear>
-          <Option value="checkbox">Survey</Option>
-          <Option value="radiogroup">Question</Option>
+        <Select placeholder="Wählen Sie typ von Fragen" allowClear>
+          <Option value="checkbox">Umfrage</Option>
+          <Option value="radiogroup">Verständnisfrage</Option>
         </Select>
       </Form.Item>
       <Form.List

@@ -14,7 +14,7 @@ const Satz = ({ deleteSentenceById, createSentence, user, currentShot }) => {
   const [sentencesList, setSentencesList] = useState(null);
   const [shotList, setShotList] = useState(null);
   const [form] = Form.useForm();
-  const updateShotList = async () => {
+  const getShot = async () => {
     const shotsData = await api.get('/session/shots/');
     setShotList(shotsData.data);
   };
@@ -29,9 +29,19 @@ const Satz = ({ deleteSentenceById, createSentence, user, currentShot }) => {
         fetchSentenc();
       }
     };
-    updateShotList();
+    getShot();
   }, []);
 
+ const getTitle = (shot) => {
+     if(shotList){
+        for(let i = 0; i < shotList.length; i++){
+         if(shotList[i].id == shot){
+             return shotList[i].title;
+         }
+        } 
+     }
+     
+  }
   const updateState = () => {
     socketRef.current.send(
       JSON.stringify({
@@ -46,11 +56,6 @@ const Satz = ({ deleteSentenceById, createSentence, user, currentShot }) => {
     const res = await api.get('/session/sentences/');
     setSentencesList(res.data);
   }
-
-  const getTitle = async (id) => {
-    const res = await api.get(`/session/shots/${id}/`);
-    return res.data.title;
-  };
 
   useEffect(() => {
     fetchSentenc();
@@ -73,16 +78,14 @@ const Satz = ({ deleteSentenceById, createSentence, user, currentShot }) => {
         </div>
       )
     },
-    {
-      title: 'Shot',
-      dataIndex: 'shot',
-      width: '15%',
-      render: async (shot) => {
-        let text = await getTitle(shot);
-        console.log(text.toString());
-        return <p>{text}</p>;
-      }
-    },
+     {
+       title: 'Shot',
+       dataIndex: 'shot',
+       width: '20%',
+       render: (shot) => <div><b>Shot: {getTitle(shot)}</b></div>,
+      
+       
+     },
     {
       title: 'Aktionen',
       dataIndex: 'id',
@@ -99,7 +102,7 @@ const Satz = ({ deleteSentenceById, createSentence, user, currentShot }) => {
                   setupdateTable(!updateTable);
                 }}
               >
-                <a style={{ color: 'red' }}>Delete</a>
+                <a style={{ color: 'red' }}>Löschen</a>
               </Popconfirm>
             </div>
           </Space>
@@ -124,7 +127,7 @@ const Satz = ({ deleteSentenceById, createSentence, user, currentShot }) => {
       <Table
         columns={columns}
         pagination={false}
-        // showHeader={false}
+        showHeader={false}
         dataSource={sentencesList}
         scroll={{ y: 200 }}
         style={{ minHeight: '250px' }}
