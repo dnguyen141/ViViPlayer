@@ -24,14 +24,14 @@ const EditSentence = ({ id, context, updateFunc, updateSentenceById }) => {
         onCancel={() => setIsModalVisible(false)}
       >
         <div>
-          <i>
+          
             Alter Satz:
-            <b style={{ marginLeft: '4px' }}>
-              {context.text} - {context.shot}
+           <i> <b style={{ marginLeft: '4px' }}>
+                {context.text} - {context.shot}
             </b>
           </i>
           <br />
-          <i>Schreib hier, um den Satz zu aktualisieren:</i>
+          Schreib hier, um den Satz zu aktualisieren:
           <Form name="Update Satz" onFinish={updateSen} autoComplete="off">
             <Form.Item style={{ marginBottom: '1em' }} name="text" initialValue={context.text}>
               <Input />

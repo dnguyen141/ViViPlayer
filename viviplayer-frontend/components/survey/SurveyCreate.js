@@ -64,7 +64,7 @@ function SurveyCreate({ createSurvey }) {
         style={{ marginBottom: '1em' }}
         name="title"
         label="Frage"
-        rules={[{ required: true, message: 'Geben Sie hier den Title der Frage ein.' }]}
+        rules={[{ required: true, message: 'Geben Sie hier den Titel der Frage ein.' }]}
       >
         <Input rows={4} placeholder="Geben Sie hier die Frage ein." />
       </Form.Item>

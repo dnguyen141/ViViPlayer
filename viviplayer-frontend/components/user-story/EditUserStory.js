@@ -22,13 +22,14 @@ const EditUserStory = ({ id, context, updateFunc, updateUserStoryById }) => {
         onCancel={() => setIsModalVisible(false)}
       >
         <div>
-          <i>
-            Alte User Story:
-            <b style={{ marginLeft: '5px' }}> Damit </b> {context.damit}, <b>möchte ich als </b>
-            {context.moechteichals1},{context.moechteichals2}
+          
+          Alte User Story:
+           <i>
+              <b style={{ marginLeft: '5px' }}> Damit </b> {context.damit}, <b>möchte ich als </b>
+              {context.moechteichals1},{context.moechteichals2}
           </i>
           <br />
-          <i>schreibe dort hin, um die User Story zu aktualisieren:</i>
+          Schreibe hier, um die User Story zu aktualisieren:
           <Form name="User Story aktualisieren" onFinish={updateUserStory} autoComplete="off">
             Damit :
             <Form.Item style={{ marginBottom: '1em' }} name="damit" initialValue={context.damit}>

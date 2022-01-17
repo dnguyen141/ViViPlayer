@@ -100,7 +100,7 @@ function SurveyTable({ deleteQuestion }) {
       )
     },
     {
-      title: 'Type',
+      title: 'Typ',
       dataIndex: 'typeToRender',
       width: '15%',
       render: (type) => <span>{type === 'checkbox' ? 'Survey' : 'Question'}</span>

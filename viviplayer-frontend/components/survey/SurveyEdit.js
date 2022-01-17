@@ -63,7 +63,7 @@ const SurveyEdit = ({ id, context, updateFunc, updateSurveyById }) => {
             name="title"
             label="Frage"
             initialValue={context.title}
-            rules={[{ required: true, message: 'Geben Sie hier den Title der Frage ein.' }]}
+            rules={[{ required: true, message: 'Geben Sie hier den Titel der Frage ein.' }]}
           >
             <Input rows={4} />
           </Form.Item>
