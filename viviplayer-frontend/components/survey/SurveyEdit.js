@@ -89,8 +89,8 @@ const SurveyEdit = ({ id, context, updateFunc, updateSurveyById }) => {
             rules={[{ required: true, message: 'Geben Sie bitte den Typ ein' }]}
           >
             <Select placeholder="Wählen Sie type von Fragen" allowClear>
-              <Option value="checkbox">Survey</Option>
-              <Option value="radiogroup">Question</Option>
+              <Option value="checkbox">Umfrage</Option>
+              <Option value="radiogroup">Verständnisfrage</Option>
             </Select>
           </Form.Item>
           <Form.List
