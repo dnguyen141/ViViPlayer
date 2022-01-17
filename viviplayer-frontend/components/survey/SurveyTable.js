@@ -156,10 +156,11 @@ function SurveyTable({ deleteQuestion }) {
                 <a
                   style={{ color: '#1890ff', marginRight: '1em' }}
                   onClick={() => {
+                    setIdquestion(id);
                     socket.send(
                       JSON.stringify({
                         action: 'questionFromServer',
-                        time: 0,
+                        time: statistic,
                         payload: record
                       })
                     );
@@ -172,7 +173,12 @@ function SurveyTable({ deleteQuestion }) {
                 >
                   Frage
                 </a>
-                <a style={{ color: '#228B22' }} onClick={() => setIdquestion(id)}>
+                <a
+                  style={{ color: '#228B22' }}
+                  onClick={() => {
+                    setIdquestion(id);
+                  }}
+                >
                   Statistic
                 </a>
               </div>
@@ -199,7 +205,6 @@ function SurveyTable({ deleteQuestion }) {
     labels,
     datasets: test
   };
-  console.log(data);
   return (
     <>
       <Table
