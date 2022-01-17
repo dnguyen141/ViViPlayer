@@ -79,8 +79,8 @@ export const sendAnswer = (question_id, answer, type) => async (dispatch) => {
 
 //edit Survey
 export const updateSurveyById =
-  (shot, title, choices, typeToRender, id) => async (dispatch) => {
-    const body = { shot, title, choices, typeToRender };
+  (shot, title, choices, correct_answer, typeToRender, id) => async (dispatch) => {
+    const body = { shot, title, choices, correct_answer, typeToRender };
     try {
       const res = await api.put(`/session/questions/${id}/`, body);
       await dispatch({

@@ -13,6 +13,7 @@ import { setAuthToken } from '../../utils/setAuthToken';
 import { deleteShotById } from '../../actions/session.action';
 import api from '../../utils/api';
 import EditShot from './EditShot';
+import Router from 'next/router';
 import { WS_BACKEND, VIDEO_PREFIX } from '../../constants/constants';
 
 let socket;
@@ -235,7 +236,7 @@ const VideoEdit = ({ loadUser, loading, user, createShot, deleteShotById }) => {
         console.log('player is ready');
       }));
     }
-    return () => {};
+    return () => { };
   }, [videoRef]);
 
   //===============================================================================
@@ -438,6 +439,9 @@ const VideoEdit = ({ loadUser, loading, user, createShot, deleteShotById }) => {
           <SurveyTable />
 
           <SurveyCreate />
+          <Button type="primary" className="csv-button" style={{ float: 'right' , marginTop: '-2.6em'}} onClick={() => Router.push("/video")}>
+            Weiter zur Session
+          </Button>
         </Col>
       </Row>
     </>

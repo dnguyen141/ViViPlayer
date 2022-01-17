@@ -32,6 +32,17 @@ const Satz = ({ deleteSentenceById, createSentence, user, currentShot }) => {
     getShot();
   }, []);
 
+ const getTitle = (shot) => {
+     if(shotList){
+        for(let i = 0; i < shotList.length; i++){
+         if(shotList[i].id == shot){
+             return shotList[i].title;
+         }
+        } 
+     }
+     
+  }
+
   const updateState = () => {
     socketRef.current.send(
       JSON.stringify({
@@ -47,11 +58,6 @@ const Satz = ({ deleteSentenceById, createSentence, user, currentShot }) => {
     setSentencesList(res.data);
   }
 
-  const getTitle = async (id) => {
-    const res = await api.get(`/session/shots/${id}/`);
-    return res.data.title;
-  };
-
   useEffect(() => {
     fetchSentenc();
   }, [updateTable]);
@@ -66,23 +72,21 @@ const Satz = ({ deleteSentenceById, createSentence, user, currentShot }) => {
     {
       title: 'Inhalt',
       dataIndex: 'text',
-      width: '55%',
+      width: '40%',
       render: (text) => (
         <div className="test">
           <span> {text}</span>
         </div>
       )
     },
-    {
-      title: 'Shot',
-      dataIndex: 'shot',
-      width: '15%',
-      render: async (shot) => {
-        let text = await getTitle(shot);
-        console.log(text.toString());
-        return <p>{text}</p>;
-      }
-    },
+     {
+       title: 'Shot',
+       dataIndex: 'shot',
+       width: '30%',
+       render: (shot) => <div><b>Shot: {getTitle(shot)}</b></div>,
+      
+       
+     },
     {
       title: 'Aktionen',
       dataIndex: 'id',
@@ -123,7 +127,7 @@ const Satz = ({ deleteSentenceById, createSentence, user, currentShot }) => {
       <Table
         columns={columns}
         pagination={false}
-        // showHeader={false}
+        showHeader={false}
         dataSource={sentencesList}
         scroll={{ y: 200 }}
         style={{ minHeight: '250px' }}
