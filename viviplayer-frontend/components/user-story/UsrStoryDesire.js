@@ -38,6 +38,17 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById, currentSho
     };
     getShot();
   }, []);
+
+  const getTitle = (shot) => {
+     if(shotList){
+        for(let i = 0; i < shotList.length; i++){
+         if(shotList[i].id == shot){
+             return shotList[i].title;
+         }
+        } 
+     }
+     
+  }
   const updateState = () => {
     socket.send(
       JSON.stringify({
@@ -66,19 +77,18 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById, currentSho
         </div>
       )
     },
-    // {
-    //   title: 'Shot',
-    //   dataIndex: 'shot',
-    //   width: '15%',
-    //   render: (shot) => (
-    //     <div>
-    //       Shot:<b>{shot}</b>
-    //     </div>
-    //   )
-    // },
+     {
+       title: 'Shot',
+       dataIndex: 'shot',
+       width: '20%',
+       render: (shot) => <div>{getTitle(shot)}</div>,
+      
+       
+     },
     {
       title: 'Aktionen',
       dataIndex: 'id',
+      width: '25%',
       render: (id, record) => (
         <div>
           <Space size="middle">
@@ -107,7 +117,7 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById, currentSho
     <>
       <Table
         columns={columns}
-        showHeader={false}
+        //showHeader={false}
         pagination={false}
         dataSource={userStories}
         scroll={{ y: 200 }}

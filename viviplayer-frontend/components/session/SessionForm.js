@@ -68,7 +68,7 @@ function SessionForm({ createSession, sessionInfo, updateLayoutState, updateLayo
         <video data-setup='{"fluid":true}' controls width="100%" height="100%">
           <source src={VIDEO_PREFIX + videoInfoPara.video_path} type="video/mp4" />
         </video>
-        <Button type="primary" style={{ margin: '0px 125px' }} onClick={(e) => Router.push("/video-edit")}>
+        <Button type="primary" style={{ float : 'right' }} onClick={(e) => Router.push("/video-edit")}>
           Weiter zu Videobearbeitung
         </Button>
       </div>

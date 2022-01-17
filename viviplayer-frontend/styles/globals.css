@@ -77,6 +77,20 @@ a {
   }
 }
 
+@media only screen and (max-width: 780px) {
+  .vivi-layout{
+    font-size: smaller !important;
+  }
+  .vivi-menu-button{
+    padding: 0 10px !important;
+  }
+}
+
+.session-end:hover {
+  background-color: rgb(160, 16, 16) !important;
+  color: white !important;
+}
+
 .row-custom {
   width: 100%;
 }
@@ -120,4 +134,9 @@ a {
 
 .ant-table-placeholder {
   display: none !important;
+}
+
+.csv-button {
+  background-color: green !important;
+  color: white !important;
 }

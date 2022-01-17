@@ -166,8 +166,8 @@ const SessionTable = ({ deleteSessionById, updateLayout, updateLayoutState, load
   return (
     <div>
       <Table columns={columns} pagination={false} dataSource={sessionData} scroll={{ y: 200 }} />
-      <Button onClick={exportCSV}>Download .csv</Button>
-      <Button onClick={exportODT}>Download .odt</Button>
+      <Button className="csv-button" style={{marginRight : '1em', marginTop: '0.5em'}} onClick={exportCSV}>Download .csv</Button>
+      <Button style={{marginTop: '0.5em'}} onClick={exportODT}>Download .odt</Button>
     </div>
   );
 };
