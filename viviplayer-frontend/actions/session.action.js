@@ -51,7 +51,7 @@ export const getInfoSession = () => async (dispatch) => {
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
-      errors.forEach((error) => Notification('Session Notification', error.message, 'warning'));
+      errors.forEach((error) => Notification('Session Benachrichtigung', error.message, 'warning'));
     }
 
     dispatch({
@@ -72,12 +72,12 @@ export const createSession = (formData) => async (dispatch) => {
       type: CREATE_SESSION_SUCCESS,
       payload: res.data
     });
-    Notification('Session Notification', 'Create session success', 'success');
+    Notification('Session Benachrichtigung', 'Session erfolgreich erstellt.', 'success');
     return res.data;
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
-      errors.forEach((error) => Notification('Session Notification', error.message, 'warning'));
+      errors.forEach((error) => Notification('Session Benachrichtigung', error.message, 'warning'));
     }
 
     dispatch({
@@ -98,12 +98,12 @@ export const updateSession = (formData, id) => async (dispatch) => {
       type: UPDATE_SESSION_SUCCESS,
       payload: res.data
     });
-    Notification('Session Notification', 'update session success', 'success');
+    Notification('Session Benachrichtigung', 'Session erfolgreich aktualisiert.', 'success');
     return res.data;
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
-      errors.forEach((error) => Notification('Session Notification', error.message, 'warning'));
+      errors.forEach((error) => Notification('Session Benachrichtigung', error.message, 'warning'));
     }
 
     dispatch({
@@ -122,7 +122,7 @@ export const getSentences = () => async (dispatch) => {
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
-      errors.forEach((error) => Notification('Sentences Notification', error.message, 'warning'));
+      errors.forEach((error) => Notification('Satz Benachrichtigung', error.message, 'warning'));
     }
     dispatch({
       type: GET_SENTENCES_FAIL
@@ -137,11 +137,11 @@ export const deleteSessionById = (id) => async (dispatch) => {
     dispatch({
       type: DELETE_SESSION_SUCCESS
     });
-    Notification('Session Notification', 'the session has been deleted', 'success');
+    Notification('Session Benachrichtigung', 'Die Session wurde beendet.', 'success');
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
-      errors.forEach((error) => Notification('Sentences Notification', error.message, 'warning'));
+      errors.forEach((error) => Notification('Session Benachrichtigung', error.message, 'warning'));
     }
     dispatch({
       type: DELETE_SESSION_FAIL
@@ -160,7 +160,7 @@ export const getSentenceById = (id) => async (dispatch) => {
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
-      errors.forEach((error) => Notification('Sentences Notification', error.message, 'warning'));
+      errors.forEach((error) => Notification('Satz Benachrichtigung', error.message, 'warning'));
     }
     dispatch({
       type: GET_SETTENCE_BY_ID_FAIL
@@ -177,12 +177,12 @@ export const updateSentenceById = (text, shot, id) => async (dispatch) => {
       type: UPDATE_SENTENCE_BY_ID
     });
     getSentences();
-    Notification('Sentences Notification', 'sentence has been updated', 'success');
+    Notification('Satz Benachrichtigung', 'Satz wurde erfolgreich aktualisiert.', 'success');
     return;
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
-      errors.forEach((error) => Notification('Sentences Notification', error.message, 'warning'));
+      errors.forEach((error) => Notification('Satz Benachrichtigung', error.message, 'warning'));
     }
     dispatch({
       type: UPDATE_SENTENCE_BY_ID_FAIL
@@ -197,11 +197,11 @@ export const deleteSentenceById = (id) => async (dispatch) => {
     dispatch({
       type: DELETE_SENTENCE_SUCCESS
     });
-    Notification('Sentences Notification', 'the sentence has been deleted', 'success');
+    Notification('Satz Benachrichtigung', 'Satz wurde erfolgreich gelöscht', 'success');
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
-      errors.forEach((error) => Notification('Sentences Notification', error.message, 'warning'));
+      errors.forEach((error) => Notification('Satz Benachrichtigung', error.message, 'warning'));
     }
     dispatch({
       type: DELETE_SENTENCE_SUCCESS_FAIL
@@ -217,11 +217,11 @@ export const createSentence = (text, shot) => async (dispatch) => {
     dispatch({
       type: CREATE_SENTENCES_SUCCESS
     });
-    Notification('Sentences Notification', 'the sentence has been created', 'success');
+    Notification('Satz Benachrichtigung', 'Satz wurde erfolgreich gelöscht.', 'success');
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
-      errors.forEach((error) => Notification('Sentences Notification', error.message, 'warning'));
+      errors.forEach((error) => Notification('Satz Benachrichtigung', error.message, 'warning'));
     }
     dispatch({
       type: CREATE_SENTENCES_FAIL
@@ -240,7 +240,7 @@ export const getAllUserStories = () => async (dispatch) => {
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
-      errors.forEach((error) => Notification('UserStory notification', error.message, 'warning'));
+      errors.forEach((error) => Notification('UserStory Benachrichtigung', error.message, 'warning'));
     }
     dispatch({
       type: GET_ALL_USERSTORIRES_FAILS
@@ -257,12 +257,12 @@ export const createUserStory =
       dispatch({
         type: CREATE_USERSTORY_SUCCESS
       });
-      Notification('UserStory Notification', 'the user story has been created', 'success');
+      Notification('UserStory Benachrichtigung', 'User Story wurde erfolgreich erstellt.', 'success');
       return;
     } catch (err) {
       const errors = err.response.data.errors;
       if (errors) {
-        errors.forEach((error) => Notification('UserStory notification', error.message, 'warning'));
+        errors.forEach((error) => Notification('UserStory Benachrichtigung', error.message, 'warning'));
       }
       dispatch({
         type: CREATE_USERSTORY_FAIL
@@ -279,12 +279,12 @@ export const updateUserStoryById =
       dispatch({
         type: UPDATE_USERSTORY_SUCCESS
       });
-      Notification('UserStory Notification', 'the user story has been updated', 'success');
+      Notification('UserStory Benachrichtigung', 'User Story wurde erfolgreich aktualisiert.', 'success');
       return;
     } catch (err) {
       const errors = err.response.data.errors;
       if (errors) {
-        errors.forEach((error) => Notification('UserStory notification', error.message, 'warning'));
+        errors.forEach((error) => Notification('UserStory Benachrichtigung', error.message, 'warning'));
       }
       dispatch({
         type: UPDATE_USERSTORY_FAIL
@@ -303,7 +303,7 @@ export const getUserStoryById = (id) => async (dispatch) => {
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
-      errors.forEach((error) => Notification('UserStory notification', error.message, 'warning'));
+      errors.forEach((error) => Notification('UserStory Benachrichtigung', error.message, 'warning'));
     }
     dispatch({
       type: GET_USERSTORY_BY_ID_FAIL
@@ -318,11 +318,11 @@ export const deleteUserStoryById = (id) => async (dispatch) => {
     dispatch({
       type: DELETE_USERSTORY_BY_ID_SUCCESS
     });
-    Notification('UserStory Notification', 'the user story has been deleted', 'success');
+    Notification('UserStory Benachrichtigung', 'User Story wurde erfolgreich gelöscht.', 'success');
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
-      errors.forEach((error) => Notification('UserStory Notification', error.message, 'warning'));
+      errors.forEach((error) => Notification('UserStory Benachrichtigung', error.message, 'warning'));
     }
     dispatch({
       type: DELETE_USERSTORY_SUCCESS_FAIL
@@ -338,11 +338,11 @@ export const createShot = (time, title) => async (dispatch) => {
     dispatch({
       type: CREATE_SHOT_SUCCESS
     });
-    Notification('Shot Notification', 'the shot has been created', 'success');
+    Notification('Shot Benachrichtigung', 'Shot wurde erfolgreich erstellt.', 'success');
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
-      errors.forEach((error) => Notification('Shot Notification', error.message, 'warning'));
+      errors.forEach((error) => Notification('Shot Benachrichtigung', error.message, 'warning'));
     }
     dispatch({
       type: CREATE_SHOT_FAIL
@@ -357,11 +357,11 @@ export const deleteShotById = (id) => async (dispatch) => {
     dispatch({
       type: DELETE_SHOT_BY_ID_SUCCESS
     });
-    Notification('Shot Notification', 'the shot has been deleted', 'success');
+    Notification('Shot Benachrichtigung', 'Der Shot wurde entfernt.', 'success');
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
-      errors.forEach((error) => Notification('Shots Notification', error.message, 'warning'));
+      errors.forEach((error) => Notification('Shots Benachrichtigung', error.message, 'warning'));
     }
     dispatch({
       type: DELETE_SHOT_SUCCESS_FAIL
@@ -380,7 +380,7 @@ export const getShots = () => async (dispatch) => {
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
-      errors.forEach((error) => Notification('Shots Notification', error.message, 'warning'));
+      errors.forEach((error) => Notification('Shots Benachrichtigung', error.message, 'warning'));
     }
     dispatch({
       type: GET_SHOTS_FAIL
@@ -396,12 +396,12 @@ export const updateShotById = (time, title, id) => async (dispatch) => {
       type: UPDATE_SHOT_BY_ID_SUCCESS
     });
     getShots();
-    Notification('Shots Notification', 'shot has been updated', 'success');
+    Notification('Shots Benachrichtigung', 'Shot wurde erfolgreich aktualisiert.', 'success');
     return;
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
-      errors.forEach((error) => Notification('Shots Notification', error.message, 'warning'));
+      errors.forEach((error) => Notification('Shots Benachrichtigung', error.message, 'warning'));
     }
     dispatch({
       type: UPDATE_SHOT_BY_ID_FAIL

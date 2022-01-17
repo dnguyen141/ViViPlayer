@@ -146,7 +146,7 @@ function SurveyTable({ deleteQuestion }) {
                     setupdateTable(!updateTable);
                   }}
                 >
-                  <a style={{ color: 'red' }}>Delete</a>
+                  <a style={{ color: 'red' }}>Löschen</a>
                 </Popconfirm>
               </div>
             </Space>
@@ -164,7 +164,7 @@ function SurveyTable({ deleteQuestion }) {
                       })
                     );
                     Notification(
-                      'Question notification',
+                      'Umfrage Benachrichtigung',
                       'Die Frage wurde an alle in der Sitzung gesendet',
                       'success'
                     );

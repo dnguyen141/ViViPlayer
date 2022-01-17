@@ -13,9 +13,9 @@ const EditUserStory = ({ id, context, updateFunc, updateUserStoryById }) => {
   };
   return (
     <>
-      <a onClick={() => setIsModalVisible(true)}>Edit</a>
+      <a onClick={() => setIsModalVisible(true)}>Bearbeiten</a>
       <Modal
-        title="Edit Sentences"
+        title="Satz bearbeiten"
         visible={isModalVisible}
         footer={null}
         onOk={() => setIsModalVisible(false)}

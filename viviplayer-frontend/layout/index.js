@@ -39,7 +39,7 @@ const Vivilayout = ({ children, logout, user }) => {
           </Menu.Item>
           {isMod == true ? (
             <Menu.Item key="5" onClick={() => Router.push('/video-edit')}>
-              Edit Video
+              Video bearbeiten
             </Menu.Item>
           ) : (
             ""
@@ -50,7 +50,7 @@ const Vivilayout = ({ children, logout, user }) => {
         </Menu>
         <Menu theme="dark" mode="horizontal" disabledOverflow="true" style={{ float: "right" }}>
           <Menu.Item key="3" onClick={() => Router.push('/video')}>
-            {user != null ? <span className="text-white">Hello {user.username}</span> : 'hello'}
+            {user != null ? <span className="text-white">Hallo {user.username}</span> : 'Hallo'}
           </Menu.Item>
           {isMod == true ? (
             <Menu.Item

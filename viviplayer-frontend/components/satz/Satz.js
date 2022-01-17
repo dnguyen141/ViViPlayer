@@ -66,7 +66,7 @@ const Satz = ({ deleteSentenceById, createSentence, user, currentShot }) => {
     {
       title: 'Inhalt',
       dataIndex: 'text',
-      width: '55%',
+      width: '40%',
       render: (text) => (
         <div className="test">
           <span> {text}</span>
@@ -98,7 +98,7 @@ const Satz = ({ deleteSentenceById, createSentence, user, currentShot }) => {
                   setupdateTable(!updateTable);
                 }}
               >
-                <a style={{ color: 'red' }}>Delete</a>
+                <a style={{ color: 'red' }}>Löschen</a>
               </Popconfirm>
             </div>
           </Space>

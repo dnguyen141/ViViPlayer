@@ -155,7 +155,7 @@ const SessionTable = ({ deleteSessionById, updateLayout, updateLayoutState, load
                 updateLayout(!updateLayoutState);
               }}
             >
-              <a style={{ color: 'red' }}>Delete</a>
+              <a style={{ color: 'red' }}>Löschen</a>
             </Popconfirm>
           </Space>
         </div>

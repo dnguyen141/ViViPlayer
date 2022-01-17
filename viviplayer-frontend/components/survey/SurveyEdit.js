@@ -48,10 +48,10 @@ const SurveyEdit = ({ id, context, updateFunc, updateSurveyById }) => {
   return (
     <>
       <a onClick={() => setIsModalVisible(true)} style={{ marginRight: '1em' }}>
-        Edit
+        Bearbeiten
       </a>
       <Modal
-        title="Edit Question"
+        title="Question bearbeiten"
         visible={isModalVisible}
         footer={null}
         onOk={() => setIsModalVisible(false)}

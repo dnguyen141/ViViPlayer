@@ -58,7 +58,7 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById, currentSho
     {
       title: 'Inhalt',
       dataIndex: 'id',
-      width: '55%',
+      width: '40%',
       render: (id, record) => (
         <div>
           <b> Damit </b> {record.damit}, <b>möchte ich als </b> {record.moechteichals1},{' '}
@@ -90,7 +90,7 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById, currentSho
                 updateState();
               }}
             >
-              <a style={{ color: 'red' }}>Delete</a>
+              <a style={{ color: 'red' }}>Löschen</a>
             </Popconfirm>
           </Space>
         </div>
