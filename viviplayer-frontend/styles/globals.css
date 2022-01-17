@@ -78,10 +78,10 @@ a {
 }
 
 @media only screen and (max-width: 780px) {
-  .vivi-layout{
+  .vivi-layout {
     font-size: smaller !important;
   }
-  .vivi-menu-button{
+  .vivi-menu-button {
     padding: 0 10px !important;
   }
 }
