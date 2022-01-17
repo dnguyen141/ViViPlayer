@@ -18,6 +18,7 @@ import {
   Tooltip,
   Legend
 } from 'chart.js';
+
 let socket;
 function SurveyTable({ deleteQuestion }) {
   ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -27,6 +28,7 @@ function SurveyTable({ deleteQuestion }) {
   const [labels, setLablels] = useState([]);
   const [statistic, setStatistic] = useState(null);
   const [questionData, setQuestionData] = useState(null);
+  const [shotList, setShotList] = useState(null);
   const [test, setTest] = useState([
     {
       label: 'Dataset 1',
@@ -41,6 +43,7 @@ function SurveyTable({ deleteQuestion }) {
       fetchStatistic();
       fetchQuestion();
     }
+    updateShotList();
   }, [questions, idQuestion]);
   useEffect(() => {
     setLablels(questionData != null ? questionData.choices : []);
@@ -55,6 +58,23 @@ function SurveyTable({ deleteQuestion }) {
       ]);
     }
   }, [questionData, statistic, idQuestion]);
+
+
+  const getTitle = (shot) => {
+     if(shotList){
+        for(let i = 0; i < shotList.length; i++){
+         if(shotList[i].id == shot){
+             return shotList[i].title;
+         }
+        } 
+     }
+     
+  }
+
+  const updateShotList = async () => {
+    const shotsData = await api.get('/session/shots/');
+    setShotList(shotsData.data);
+  };
   const fetchStatistic = async () => {
     const res = await api.get(`/session/statistics/${idQuestion}/`);
     setStatistic(res.data);
@@ -108,7 +128,7 @@ function SurveyTable({ deleteQuestion }) {
     {
       title: 'Auswahl',
       dataIndex: 'choices',
-      width: '30%',
+      width: '25%',
       render: (choices) => {
         return choices.map((item, index) => {
           return (
@@ -120,18 +140,17 @@ function SurveyTable({ deleteQuestion }) {
       }
     },
     {
-      title: 'Shot',
-      dataIndex: 'shot',
-      width: '15%',
-      render: (shot) => (
-        <div>
-          Shot: <b>{shot}</b>
-        </div>
-      )
-    },
+       title: 'Shot',
+       dataIndex: 'shot',
+       width: '20%',
+       render: (shot) => <div>{getTitle(shot)}</div>,
+      
+       
+     },
     {
       title: 'Aktionen',
       dataIndex: 'id',
+      width: '20%',
       render: (id, record) => (
         <div>
           {pathName === '/video-edit' ? (

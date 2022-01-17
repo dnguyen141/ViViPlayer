@@ -39,7 +39,7 @@ const UserStory = ({currentShot}) => {
     ),
     tab3: (
       <Card style={{ border: '3px solid gray' }}>
-        <SurveyContainer />
+        <SurveyContainer currentShot={currentShot}/>
       </Card>
     )
   };

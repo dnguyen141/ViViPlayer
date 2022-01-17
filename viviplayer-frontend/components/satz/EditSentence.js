@@ -6,8 +6,8 @@ import { getSentences, updateSentenceById } from '../../actions/session.action';
 import api from '../../utils/api';
 const EditSentence = ({ id, context, updateFunc, updateSentenceById }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const updateSen = ({ text }) => {
-    updateSentenceById(text, context.shot, id);
+  const updateSen = async ({ text }) => {
+    await updateSentenceById(text, context.shot, id);
     setIsModalVisible(false);
     updateFunc();
   };

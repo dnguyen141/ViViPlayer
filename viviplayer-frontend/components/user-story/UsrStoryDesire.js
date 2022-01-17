@@ -19,7 +19,7 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById, currentSho
     setUserStories(res.data);
     console.log(res.data);
   }
-  const getShot = async () => {
+  const updateShotList = async () => {
     const shotsData = await api.get('/session/shots/');
     setShotList(shotsData.data);
   };
@@ -36,7 +36,7 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById, currentSho
         fetchUserStories();
       }
     };
-    getShot();
+    updateShotList();
   }, []);
 
   const getTitle = (shot) => {
