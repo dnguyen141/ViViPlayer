@@ -80,7 +80,7 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById, currentSho
      {
        title: 'Shot',
        dataIndex: 'shot',
-       width: '30%',
+       width: '20%',
        render: (shot) => <div><b>Shot: {getTitle(shot)}</b></div>,
       
        
@@ -88,6 +88,7 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById, currentSho
     {
       title: 'Aktionen',
       dataIndex: 'id',
+      width: '25%',
       render: (id, record) => (
         <div>
           <Space size="middle">
@@ -99,7 +100,7 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById, currentSho
                 updateState();
               }}
             >
-              <a style={{ color: 'red' }}>Delete</a>
+              <a style={{ color: 'red' }}>Löschen</a>
             </Popconfirm>
           </Space>
         </div>

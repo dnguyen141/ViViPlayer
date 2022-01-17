@@ -48,10 +48,10 @@ const SurveyEdit = ({ id, context, updateFunc, updateSurveyById, shotData }) => 
   return (
     <>
       <a onClick={() => setIsModalVisible(true)} style={{ marginRight: '1em' }}>
-        Edit
+        Bearbeiten
       </a>
       <Modal
-        title="Edit Question"
+        title="Question bearbeiten"
         visible={isModalVisible}
         footer={null}
         onOk={() => setIsModalVisible(false)}
@@ -63,7 +63,7 @@ const SurveyEdit = ({ id, context, updateFunc, updateSurveyById, shotData }) => 
             name="title"
             label="Frage"
             initialValue={context.title}
-            rules={[{ required: true, message: 'Geben Sie hier den Title der Frage ein.' }]}
+            rules={[{ required: true, message: 'Geben Sie hier den Titel der Frage ein.' }]}
           >
             <Input rows={4} />
           </Form.Item>

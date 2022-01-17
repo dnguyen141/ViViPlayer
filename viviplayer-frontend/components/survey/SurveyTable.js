@@ -124,7 +124,7 @@ function SurveyTable({ deleteQuestion, shotData }) {
       )
     },
     {
-      title: 'Type',
+      title: 'Typ',
       dataIndex: 'typeToRender',
       width: '15%',
       render: (type) => <span>{type === 'checkbox' ? 'Survey' : 'Question'}</span>
@@ -170,7 +170,7 @@ function SurveyTable({ deleteQuestion, shotData }) {
                     setupdateTable(!updateTable);
                   }}
                 >
-                  <a style={{ color: 'red' }}>Delete</a>
+                  <a style={{ color: 'red' }}>Löschen</a>
                 </Popconfirm>
               </div>
             </Space>
@@ -188,7 +188,7 @@ function SurveyTable({ deleteQuestion, shotData }) {
                       })
                     );
                     Notification(
-                      'Question notification',
+                      'Umfrage Benachrichtigung',
                       'Die Frage wurde an alle in der Sitzung gesendet',
                       'success'
                     );

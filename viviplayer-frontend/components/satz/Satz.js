@@ -82,7 +82,7 @@ const Satz = ({ deleteSentenceById, createSentence, user, currentShot }) => {
      {
        title: 'Shot',
        dataIndex: 'shot',
-       width: '30%',
+       width: '20%',
        render: (shot) => <div><b>Shot: {getTitle(shot)}</b></div>,
       
        
@@ -90,6 +90,7 @@ const Satz = ({ deleteSentenceById, createSentence, user, currentShot }) => {
     {
       title: 'Aktionen',
       dataIndex: 'id',
+      width: '25%',
       render: (id, record) => (
         <div>
           <Space size="middle">
@@ -102,7 +103,7 @@ const Satz = ({ deleteSentenceById, createSentence, user, currentShot }) => {
                   setupdateTable(!updateTable);
                 }}
               >
-                <a style={{ color: 'red' }}>Delete</a>
+                <a style={{ color: 'red' }}>Löschen</a>
               </Popconfirm>
             </div>
           </Space>

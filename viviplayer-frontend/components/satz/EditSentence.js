@@ -14,30 +14,30 @@ const EditSentence = ({ id, context, updateFunc, updateSentenceById }) => {
   return (
     <>
       <a onClick={() => setIsModalVisible(true)} style={{ marginRight: '1em' }}>
-        Edit
+        Bearbeiten
       </a>
       <Modal
-        title="Edit Sentences"
+        title="Satz bearbeiten"
         visible={isModalVisible}
         footer={null}
         onOk={() => setIsModalVisible(false)}
         onCancel={() => setIsModalVisible(false)}
       >
         <div>
-          <i>
+          
             Alter Satz:
-            <b style={{ marginLeft: '4px' }}>
-              {context.text} - {context.shot}
+           <i> <b style={{ marginLeft: '4px' }}>
+                {context.text} - {context.shot}
             </b>
           </i>
           <br />
-          <i>schreib dort hin, um den Satz zu aktualisieren:</i>
+          Schreib hier, um den Satz zu aktualisieren:
           <Form name="Update Satz" onFinish={updateSen} autoComplete="off">
             <Form.Item style={{ marginBottom: '1em' }} name="text" initialValue={context.text}>
               <Input />
             </Form.Item>
             <Button type="primary" htmlType="submit">
-              Submit
+              Senden
             </Button>
           </Form>
         </div>

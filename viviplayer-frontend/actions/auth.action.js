@@ -49,11 +49,11 @@ export const loginWithTanFunc = (password1) => async (dispatch) => {
     });
     setAuthToken(res.data.key);
     await dispatch(loadUser());
-    Notification('Login Notification', 'Login success as Member', 'success');
+    Notification('Login Benachrichtigung', 'Erfolgreich als Teilnehmer eingeloggt.', 'success');
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
-      errors.forEach((error) => Notification('Login Notification', error.message, 'warning'));
+      errors.forEach((error) => Notification('Login Benachrichtigung', error.message, 'warning'));
     }
     dispatch({
       type: LOGIN_WITH_TAN_FAIL
@@ -71,15 +71,15 @@ export const register = (username, password1, password2) => async (dispatch) => 
       payload: res.data
     });
     Notification(
-      'Register Notification',
-      'Your account has been submitted for review. Currently you can only log in as a regular account',
+      'Registrierungs Benachrichtigung',
+      'Ihr Account wurde zur Bearbeitung eingeschickt. Momentan können Sie sich nur als Teilnehmer einloggen.',
       'success'
     );
   } catch (err) {
     const errors = err.response.data.errors;
     console.log(err.response);
     if (errors) {
-      errors.forEach((error) => Notification('Login Notification', error.message, 'warning'));
+      errors.forEach((error) => Notification('Login Benachrichtigung', error.message, 'warning'));
     }
 
     dispatch({
@@ -102,11 +102,11 @@ export const login = (username, password) => async (dispatch) => {
     });
     setAuthToken(res.data.key);
     await dispatch(loadUser());
-    Notification('Login Notification', 'Login Success', 'success');
+    Notification('Login Benachrichtigung', 'Login erfolgreich', 'success');
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
-      errors.forEach((error) => Notification('Login Notification', error.message, 'warning'));
+      errors.forEach((error) => Notification('Login Benachrichtigung', error.message, 'warning'));
     }
     dispatch({
       type: LOGIN_FAIL

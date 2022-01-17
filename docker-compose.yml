@@ -1,23 +1,20 @@
 version: '3'
 
 services:
-  redis:
-    image: redis:5
-    container_name: vivipl3_redis
-    expose:
-      - "6379"
   django:
     build: ./viviplayer
     container_name: vivipl3_backend
+    environment:
+      - VIVIMODE=dev
     volumes:
       - ./viviplayer:/app/backend
     ports:
       - "8000:8000"
-    links:
-      - redis
   frontend:
     build: ./viviplayer-frontend
     container_name: vivipl3_frontend
+    environment:
+      - VIVIMODE=dev
     volumes:
       - next_cache:/app/frontend/.next
       - ./viviplayer-frontend:/app/frontend

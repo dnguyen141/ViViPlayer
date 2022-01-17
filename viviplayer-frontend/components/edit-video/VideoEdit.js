@@ -332,7 +332,7 @@ const VideoEdit = ({ loadUser, loading, user, createShot, deleteShotById }) => {
                 setupdateTable(!updateTable);
               }}
             >
-              <a style={{ color: 'red' }}>Delete</a>
+              <a style={{ color: 'red' }}>Löschen</a>
             </Popconfirm>
           </Space>
         </div>
@@ -421,7 +421,7 @@ const VideoEdit = ({ loadUser, loading, user, createShot, deleteShotById }) => {
           <Form form={form} onFinish={createShotFunc} style={{ paddingTop: '1em' }}>
             <div>Stellen Sie ein Shot aus dem Video, indem Sie an dem Progressbar klicken.</div>
             <Form.Item name="text">
-              <Input placeholder="Geben Sie bitte Shottitel hier ein."></Input>
+              <Input placeholder="Geben Sie bitte einen Shottitel hier ein."></Input>
             </Form.Item>
             <Button type="primary" htmlType="submit">
               Shot Erstellen
