@@ -9,14 +9,14 @@ import { WS_BACKEND } from '../../constants/constants';
 
 let socket;
 const { Option } = Select;
-function SurveyCreate({ createSurvey }) {
+function SurveyCreate({ createSurvey, currentShot}) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [ask, setAsk] = useState(null);
   const [shotList, setShotList] = useState(null);
   const [answer, setAnswer] = useState([]);
   const [form] = Form.useForm();
 
-  const getShot = async () => {
+  const updateShotList = async () => {
     const shotsData = await api.get('/session/shots/');
     setShotList(shotsData.data);
   };
@@ -26,7 +26,7 @@ function SurveyCreate({ createSurvey }) {
     socket = new WebSocket(url);
   }, []);
   useEffect(() => {
-    getShot();
+    updateShotList();
   }, []);
   const formItemLayout = {
     wrapperCol: {
@@ -44,8 +44,8 @@ function SurveyCreate({ createSurvey }) {
       sm: { span: 21, offset: 4 }
     }
   };
-  const createQuestion = (values) => {
-    createSurvey(values.shot, values.title, values.choices, values.correct_answer, values.type);
+  const createQuestion = async (values) => {
+    await createSurvey(values.shot, values.title, values.choices, values.correct_answer, values.type);
     socket.send(
       JSON.stringify({
         action: 'surveyChange',
@@ -74,6 +74,9 @@ function SurveyCreate({ createSurvey }) {
         rules={[{ required: true, message: 'Wählen Sie bitte hier ein Shot' }]}
       >
         <Select placeholder="Wählen Sie bitte hier ein Shot" allowClear>
+            <Select.Option key="current" value={currentShot}>
+              Momentaner Shot
+            </Select.Option>
           {shotList &&
             shotList.map((item, index) => (
               <Option value={item.id} key={index}>
