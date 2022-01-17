@@ -17,6 +17,7 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById, currentSho
   async function fetchUserStories() {
     const res = await api.get('/session/userstories/');
     setUserStories(res.data);
+    console.log(res.data);
   }
   const getShot = async () => {
     const shotsData = await api.get('/session/shots/');
@@ -26,7 +27,7 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById, currentSho
     fetchUserStories();
   }, [updateTable]);
   // connect to socket and update sentence table
-  useEffect  (() => {
+  useEffect(() => {
     const url = (WS_BACKEND || 'ws://' + window.location.host) + '/ws/player/sessionid12345/';
     socket = new WebSocket(url);
     socket.onmessage = (e) => {
@@ -50,8 +51,9 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById, currentSho
   const columns = [
     {
       title: 'User',
+      dataIndex: 'author',
       width: '15%',
-      render: () => <div className="test">{user != null ? <b>{user.username}</b> : 'user'}</div>
+      render: (author) => <div className="test">{user != null ? <b>{author}</b> : 'user'}</div>
     },
     {
       title: 'Inhalt',
@@ -96,7 +98,7 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById, currentSho
     }
   ];
 
-  const  createUserStoryFunc = async({   damit, moechteichals1, moechteichals2, shot }) => {
+  const createUserStoryFunc = async ({ damit, moechteichals1, moechteichals2, shot }) => {
     await createUserStory(damit, moechteichals1, moechteichals2, shot);
     updateState();
     form.resetFields();
@@ -137,8 +139,10 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById, currentSho
           />
         </Form.Item>
         <Form.Item name="shot" rules={[{ required: true }]}>
-          <Select placeholder="Wählen Sie bitte hier einen Shot"  >
-            <Select.Option key="current" value={currentShot}>Momentaner Shot</Select.Option>
+          <Select placeholder="Wählen Sie bitte hier einen Shot">
+            <Select.Option key="current" value={currentShot}>
+              Momentaner Shot
+            </Select.Option>
             {shotList && shotList.map((item) => <Option value={item.id}>{item.title}</Option>)}
           </Select>
         </Form.Item>
