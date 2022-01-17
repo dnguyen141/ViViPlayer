@@ -233,7 +233,7 @@ class ExportODT(APIView):
                 self.textdoc.text.addElement(P())
 
             # Add Sentences for Shot
-            p = P(text="Sentences:", stylename=self.h3style)
+            p = P(text="Sätze:", stylename=self.h3style)
             self.textdoc.text.addElement(p)
             self.textdoc.text.addElement(P())
 
@@ -243,7 +243,7 @@ class ExportODT(APIView):
                 self.textdoc.text.addElement(P())
 
             # Add Questions for Shot
-            p = P(text="Questions:", stylename=self.h3style)
+            p = P(text="Fragen:", stylename=self.h3style)
             self.textdoc.text.addElement(p)
             self.textdoc.text.addElement(P())
 
@@ -252,8 +252,22 @@ class ExportODT(APIView):
 
                 # Add Answers for Question
                 self.textdoc.text.addElement(
-                    P(text=f'- Choices: {", ".join(q.choices)}', stylename=self.pstyle)
+                    P(text=f'- Antwortmöglichkeiten: {", ".join(q.choices)}', stylename=self.pstyle)
                 )
+                if q.typeOfQuestion == "question":
+                    p = P(text="- Richtige Antwort: " + str(q.correct_answer), stylename=self.pstyle)
+                    self.textdoc.text.addElement(p)
+
+                # Add blank line
+                self.textdoc.text.addElement(P())
+
+                for choice in q.choices:
+                    stat = "-- " + str(choice) + ": " + str(q.answers.count(choice)) + " Stimmen"
+                    p = P(text=stat, stylename=self.pstyle)
+                    self.textdoc.text.addElement(p)
+
+                # Add blank line
+                self.textdoc.text.addElement(P())
 
             # Add page break
             p = P(stylename=self.withbreak)
@@ -292,7 +306,7 @@ class ExportCSV(APIView):
         # Add User Stories to .csv
         csvf = io.StringIO()
         writer = csv.writer(csvf)
-        writer.writerow(["Title", "Description", "Image"])
+        writer.writerow(["Titel", "Beschreibung", "Bild"])
         for (i, us) in enumerate(UserStory.objects.all()):
             row = [
                 f"User Story {i + 1}",
