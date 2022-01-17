@@ -52,6 +52,7 @@ const SurveyRep = ({ sendAnswer }) => {
       const data = JSON.parse(e.data);
       if (data.action === 'questionFromServer') {
         localStorage.setItem('questionID', data.payload.id);
+        setAnswered(false);
         setIdquestion(data.payload.id);
         setAsk(data.payload);
       } else if (data.action === 'statisticChange') {
