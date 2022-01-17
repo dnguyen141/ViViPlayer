@@ -10,26 +10,23 @@ import { WS_BACKEND } from '../../constants/constants';
 
 let socket;
 const { Option } = Select;
-function SurveyCreate({ createSurvey }) {
+function SurveyCreate({ createSurvey, shotData }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [ask, setAsk] = useState(null);
-  const [shotList, setShotList] = useState(null);
+  //const [shotList, setShotList] = useState(null);
   const [answer, setAnswer] = useState([]);
   const [form] = Form.useForm();
 
-  const getShot = async () => {
+  /* getShot = async () => {
     const shotsData = await api.get('/session/shots/');
     setShotList(shotsData.data);
-  };
+  };*/
   // connect to socket and update sentence table
   useEffect(() => {
     const url = (WS_BACKEND || 'ws://' + window.location.host) + '/ws/player/sessionid12345/';
     socket = new WebSocket(url);
-    getShot();
   }, []);
-  /*useEffect(() => {
-    getShot();
-  }, []);*/
+
   const formItemLayout = {
     wrapperCol: {
       xs: { span: 21, offset: 4 },
@@ -76,8 +73,8 @@ function SurveyCreate({ createSurvey }) {
         rules={[{ required: true, message: 'Wählen Sie bitte hier ein Shot' }]}
       >
         <Select placeholder="Wählen Sie bitte hier ein Shot" allowClear>
-          {shotList &&
-            shotList.map((item, index) => (
+          {shotData &&
+            shotData.map((item, index) => (
               <Option value={item.id} key={index}>
                 {item.title}
               </Option>

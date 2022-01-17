@@ -438,7 +438,7 @@ const VideoEdit = ({ loadUser, loading, user, createShot, deleteShotById }) => {
 
           <SurveyTable />
 
-          <SurveyCreate />
+          <SurveyCreate shotData={shotData}/>
           <Button type="primary" className="csv-button" style={{ float: 'right' , marginTop: '-2.6em'}} onClick={() => Router.push("/video")}>
             Weiter zur Session
           </Button>
