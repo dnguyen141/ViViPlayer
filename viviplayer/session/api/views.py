@@ -254,6 +254,12 @@ class ExportODT(APIView):
                 self.textdoc.text.addElement(
                     P(text=f'- Antwortmöglichkeiten: {", ".join(q.choices)}', stylename=self.pstyle)
                 )
+                if q.typeOfQuestion == "question":
+                    p = P(text="- Richtige Antwort: " + str(q.correct_answer), stylename=self.pstyle)
+                    self.textdoc.text.addElement(p)
+
+                # Add blank line
+                self.textdoc.text.addElement(P())
 
                 for choice in q.choices:
                     stat = "-- " + str(choice) + ": " + str(q.answers.count(choice)) + " Stimmen"
