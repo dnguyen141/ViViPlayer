@@ -82,12 +82,19 @@ class QuestionSerializer(serializers.ModelSerializer):
     correct_answer = serializers.CharField(max_length=500, allow_blank=True, required=False)
 
     def validate_choices(self, choices):
-        if type(choices) == list and all(isinstance(choice, str) for choice in choices):
-            return list(set(choices))
-        raise serializers.ValidationError(_("Ungültiges Format für die Liste der Auswähle!"))
+        if type(choices) != list and not all(isinstance(choice, str) for choice in choices):
+            raise serializers.ValidationError(_("Ungültiges Format für die Liste der Auswähle!"))
+        if type(choices) == list and len(choices) == 0:
+            raise serializers.ValidationError(_("Die Liste der Auswähle darf nicht leer sein!"))
+        if type(choices) == list and '' in choices:
+            raise serializers.ValidationError(_("Die Liste der Auswähle darf nicht ein leeres String erhalten!"))
+        return list(set(choices))
 
     def validate_correct_answer(self, correct_answer):
-        choices = self.initial_data["choices"] + [""]
+        choices = self.initial_data["choices"]
+        if len(choices) == 0:
+            return ""
+        choices += [""]
         if correct_answer not in choices:
             raise serializers.ValidationError(_("Ungültige Lösung für diese Frage!"))
         return correct_answer
