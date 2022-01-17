@@ -11,7 +11,7 @@ const EditShot = ({ id, context, updateFunc, updateShotById, videoRef }) => {
         updateShotById(time, text, id);
         setIsModalVisible(false);
     } else {
-      Notification('Shot Notification', "Der angebene Zeitstempel ist fehlerhaft.", 'warning');
+      Notification('Shot Benachrichtigung', "Der angebene Zeitstempel ist fehlerhaft.", 'warning');
     }
     
     updateFunc();  
@@ -19,7 +19,7 @@ const EditShot = ({ id, context, updateFunc, updateShotById, videoRef }) => {
   return (
     <>
       <a onClick={() => setIsModalVisible(true)} style={{ marginRight: '1em' }}>
-        Edit
+        Bearbeiten
       </a>
       <Modal
         title="Shot Bearbeitung"
@@ -38,10 +38,10 @@ const EditShot = ({ id, context, updateFunc, updateShotById, videoRef }) => {
           <br />
           <Form name="update shot" onFinish={updateShot} autoComplete="off">
           <Form.Item style={{ marginBottom: '1em' }} initialValue={context.time} name="time" rules={[{ required: true, message: 'Bitte neuen Zeitstempel eingeben.' }]}>
-              <Input placeholder="neu Zeitstempel" />
+              <Input placeholder="Neuer Zeitstempel" />
             </Form.Item>
             <Form.Item style={{ marginBottom: '1em' }} name="text" initialValue={context.title} rules={[{ required: true, message: 'Bitte neuen Titel eingeben.' }]}>
-              <Input placeholder="neu Titel" />
+              <Input placeholder="Neuer Titel" />
             </Form.Item>
             <Button type="primary" htmlType="submit">
               Submit

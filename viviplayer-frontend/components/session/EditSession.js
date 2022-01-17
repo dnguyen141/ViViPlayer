@@ -56,7 +56,7 @@ function EditSession({ id, updateSession, updateFunc }) {
   return (
     <div>
       <a onClick={() => setIsModalVisible(true)} style={{ marginRight: '1em' }}>
-        Edit
+        Bearbeiten
       </a>
       <Modal
         title="update session"

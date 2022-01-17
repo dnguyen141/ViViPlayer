@@ -19,12 +19,12 @@ export const createSurvey =
       await dispatch({
         type: CREATE_SURVEY_SUCCESS
       });
-      Notification('Question Notification', 'Die Frage wurde erstellt', 'success');
+      Notification('Umfrage Benachrichtigung', 'Die Frage wurde erstellt', 'success');
     } catch (err) {
       console.log(err);
       //   const errors = err.response.data.errors;
       //   if (errors) {
-      //     errors.forEach((error) => Notification('Survey Notification', error.message, 'warning'));
+      //     errors.forEach((error) => Notification('Survey Benachrichtigung', error.message, 'warning'));
       //   }
       //   dispatch({
       //     type: CREATE_SURVEY_FAIL
@@ -38,11 +38,11 @@ export const deleteQuestion = (id) => async (dispatch) => {
     dispatch({
       type: DELETE_QUESTION_SUCCESS
     });
-    Notification('Question Notification', 'Die Frage wurde gelöscht', 'success');
+    Notification('Umfrage Benachrichtigung', 'Die Frage wurde gelöscht', 'success');
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
-      errors.forEach((error) => Notification('Question Notification', error.message, 'warning'));
+      errors.forEach((error) => Notification('Umfrage Benachrichtigung', error.message, 'warning'));
     }
     dispatch({
       type: DELETE_QUESTION_FAIL
@@ -61,14 +61,14 @@ export const sendAnswer = (question_id, answer, type) => async (dispatch) => {
       dispatch({
         type: SEND_ANSWER_SUCCESS
       });
-      Notification('Question Notification', 'Die Antwort wurde gesendet', 'success');
+      Notification('Umfrage Benachrichtigung', 'Die Antwort wurde gesendet', 'success');
       return;
     }
     await api.post('/session/answers/', body);
     dispatch({
       type: SEND_ANSWER_SUCCESS
     });
-    Notification('Question Notification', 'Die Antwort wurde gesendet', 'success');
+    Notification('Umfrage Benachrichtigung', 'Die Antwort wurde gesendet', 'success');
   } catch (err) {
     console.log(err);
     dispatch({
@@ -79,20 +79,20 @@ export const sendAnswer = (question_id, answer, type) => async (dispatch) => {
 
 //edit Survey
 export const updateSurveyById =
-  (shot, title, choices, typeToRender, id) => async (dispatch) => {
-    const body = { shot, title, choices, typeToRender };
+  (shot, title, choices, correct_answer, typeToRender, id) => async (dispatch) => {
+    const body = { shot, title, choices, correct_answer, typeToRender };
     try {
       const res = await api.put(`/session/questions/${id}/`, body);
       await dispatch({
         type: UPDATE_QUESTION_BY_ID_SUCCESS
       });
-      Notification('Question Notification', 'Die Frage wurde aktualisiert', 'success');
+      Notification('Umfrage Benachrichtigung', 'Die Frage wurde aktualisiert', 'success');
       console.log(res);
     } catch (err) {
       console.log(err);
       //   const errors = err.response.data.errors;
       //   if (errors) {
-      //     errors.forEach((error) => Notification('Survey Notification', error.message, 'warning'));
+      //     errors.forEach((error) => Notification('Survey Benachrichtigung', error.message, 'warning'));
       //   }
       //   dispatch({
       //     type: CREATE_SURVEY_FAIL
@@ -107,11 +107,11 @@ export const getQuestionById = (id) => async (dispatch) => {
     dispatch({
       type: GET_QUESTION_BY_ID_SUCCESS
     });
-    // Notification('Question Notification', 'the question has been deleted', 'success');
+    // Notification('Question Benachrichtigung', 'the question has been deleted', 'success');
   } catch (err) {
     const errors = err.response.data.errors;
     // if (errors) {
-    //   errors.forEach((error) => Notification('Sentences Notification', error.message, 'warning'));
+    //   errors.forEach((error) => Notification('Sentences Benachrichtigung', error.message, 'warning'));
     // }
     // dispatch({
     //   type: DELETE_QUESTION_FAIL

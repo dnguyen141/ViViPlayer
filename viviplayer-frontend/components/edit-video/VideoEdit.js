@@ -13,6 +13,7 @@ import { setAuthToken } from '../../utils/setAuthToken';
 import { deleteShotById } from '../../actions/session.action';
 import api from '../../utils/api';
 import EditShot from './EditShot';
+import Router from 'next/router';
 import { WS_BACKEND, VIDEO_PREFIX } from '../../constants/constants';
 
 let socket;
@@ -235,7 +236,7 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
         console.log('player is ready');
       }));
     }
-    return () => {};
+    return () => { };
   }, [videoRef]);
 
   //===============================================================================
@@ -331,7 +332,7 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
                 setupdateTable(!updateTable);
               }}
             >
-              <a style={{ color: 'red' }}>Delete</a>
+              <a style={{ color: 'red' }}>Löschen</a>
             </Popconfirm>
           </Space>
         </div>
@@ -418,9 +419,9 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
             </div>
           </div>
           <Form form={form} onFinish={createShotFunc} style={{ paddingTop: '1em' }}>
-            <div>Wählen Sie ein Shot aus dem Video, indem Sie an dem Progressbar klicken.</div>
+            <div>Wählen Sie einen Shot aus dem Video, indem Sie an dem Progressbar klicken.</div>
             <Form.Item name="text">
-              <Input placeholder="Geben Sie bitte Shottitel hier ein."></Input>
+              <Input placeholder="Geben Sie bitte einen Shottitel hier ein."></Input>
             </Form.Item>
             <Button type="primary" htmlType="submit">
               Shot Erstellen
@@ -438,6 +439,9 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
           <SurveyTable />
 
           <SurveyCreate />
+          <Button className="csv-button" style={{ float: 'right' }} onClick={() => Router.push("/video")}>
+            Weiter zu Session
+          </Button>
         </Col>
       </Row>
     </>

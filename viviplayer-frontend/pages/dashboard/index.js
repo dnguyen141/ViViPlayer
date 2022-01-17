@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Vivilayout from '../../layout/index';
+import Vivilayout2 from '../../layout/index2';
 import Router from 'next/router';
 import api from '../../utils/api';
 import SessionForm from '../../components/session/SessionForm';
@@ -44,7 +44,7 @@ const Dashboard = ({ user, loadUser, loading }) => {
     fetchSession();
   }, [updateTable, loading]);
   return (
-    <Vivilayout>
+    <Vivilayout2>
       <Row className="row-responsive">
         <Col className="col-responsive" span={12} style={{ padding: '1em' }}>
           <h2>Session List</h2>
@@ -59,7 +59,7 @@ const Dashboard = ({ user, loadUser, loading }) => {
           <SessionForm updateLayoutState={updateTable} updateLayout={setupdateTable} />
         </Col>
       </Row>
-    </Vivilayout>
+    </Vivilayout2>
   );
 };
 

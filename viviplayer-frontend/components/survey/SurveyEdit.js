@@ -33,8 +33,8 @@ const SurveyEdit = ({ id, context, updateFunc, updateSurveyById }) => {
     const shotsData = await api.get('/session/shots/');
     setShotList(shotsData.data);
   };
-  const updateQuestionInEdit = async ({ shot, title, choices, type }) => {
-    await updateSurveyById(shot, title, choices, type, id);
+  const updateQuestionInEdit = ({ shot, title, choices, correct_answer, type }) => {
+    updateSurveyById(shot, title, choices, correct_answer, type, id);
     setIsModalVisible(false);
     updateFunc();
   };
@@ -48,10 +48,10 @@ const SurveyEdit = ({ id, context, updateFunc, updateSurveyById }) => {
   return (
     <>
       <a onClick={() => setIsModalVisible(true)} style={{ marginRight: '1em' }}>
-        Edit
+        Bearbeiten
       </a>
       <Modal
-        title="Edit Question"
+        title="Question bearbeiten"
         visible={isModalVisible}
         footer={null}
         onOk={() => setIsModalVisible(false)}
@@ -63,7 +63,7 @@ const SurveyEdit = ({ id, context, updateFunc, updateSurveyById }) => {
             name="title"
             label="Frage"
             initialValue={context.title}
-            rules={[{ required: true, message: 'Geben Sie hier den Title der Frage ein.' }]}
+            rules={[{ required: true, message: 'Geben Sie hier den Titel der Frage ein.' }]}
           >
             <Input rows={4} />
           </Form.Item>
@@ -161,6 +161,16 @@ const SurveyEdit = ({ id, context, updateFunc, updateSurveyById }) => {
               );
             }}
           </Form.List>
+          <Form.Item
+            style={{ marginBottom: '1em' }}
+            name="correct_answer"
+            label="Antwort"
+            initialValue={context.correct_answer}
+          // rules={[{ required: true }]}
+          >
+            <Input rows={4} placeholder="Geben Sie hier die richtige Antwort ein.(wenn es gibt)" />
+          </Form.Item>
+
           <Button type="primary" htmlType="submit">
             Submit
           </Button>
