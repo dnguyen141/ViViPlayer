@@ -33,8 +33,8 @@ const SurveyEdit = ({ id, context, updateFunc, updateSurveyById }) => {
     const shotsData = await api.get('/session/shots/');
     setShotList(shotsData.data);
   };
-  const updateQuestionInEdit = async ({ shot, title, choices, type }) => {
-    await updateSurveyById(shot, title, choices, type, id);
+  const updateQuestionInEdit = ({ shot, title, choices, correct_answer, type }) => {
+    updateSurveyById(shot, title, choices, correct_answer, type, id);
     setIsModalVisible(false);
     updateFunc();
   };
@@ -161,6 +161,16 @@ const SurveyEdit = ({ id, context, updateFunc, updateSurveyById }) => {
               );
             }}
           </Form.List>
+          <Form.Item
+            style={{ marginBottom: '1em' }}
+            name="correct_answer"
+            label="Antwort"
+            initialValue={context.correct_answer}
+          // rules={[{ required: true }]}
+          >
+            <Input rows={4} placeholder="Geben Sie hier die richtige Antwort ein.(wenn es gibt)" />
+          </Form.Item>
+
           <Button type="primary" htmlType="submit">
             Submit
           </Button>

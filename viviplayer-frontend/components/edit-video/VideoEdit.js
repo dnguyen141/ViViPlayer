@@ -437,29 +437,11 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
           <Divider />
 
           <SurveyTable />
-<<<<<<< HEAD
-          <Button
-            type="primary"
-            onClick={() => setIsModalVisible(true)}
-            style={{ marginBottom: '5px' }}
-          >
-            Frage Erstellen
-          </Button>
-          <Modal
-            visible={isModalVisible}
-            footer={null}
-            onOk={() => setIsModalVisible(false)}
-            onCancel={() => setIsModalVisible(false)}
-          >
-            <SurveyCreate setIsModalVisibleFunc={setIsModalVisible} />
-          </Modal>
+
+          <SurveyCreate />
           <Button className="csv-button" style={{ float: 'right' }} onClick={() => Router.push("/video")}>
             Weiter zu Session
           </Button>
-=======
-
-          <SurveyCreate />
->>>>>>> main
         </Col>
       </Row>
     </>
