@@ -91,7 +91,7 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("vivipl3_redis_1", 6379)],
+            "hosts": [("vivipl3_redis", 6379)],
         },
     },
 

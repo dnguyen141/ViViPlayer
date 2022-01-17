@@ -3,10 +3,12 @@ version: '3'
 services:
   redis:
     image: redis:5
+    container_name: vivipl3_redis
     expose:
       - "6379"
   django:
     build: ./viviplayer
+    container_name: vivipl3_backend
     volumes:
       - ./viviplayer:/app/backend
       - ./media:/app/backend/media
@@ -18,6 +20,7 @@ services:
     build:
       context: ./viviplayer-frontend/
       dockerfile: prod.Dockerfile
+    container_name: vivipl3_frontend
     volumes:
       - ./media:/usr/share/nginx/media
     ports:
