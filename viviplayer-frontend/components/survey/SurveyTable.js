@@ -27,6 +27,7 @@ function SurveyTable({ deleteQuestion }) {
   const [labels, setLablels] = useState([]);
   const [statistic, setStatistic] = useState(null);
   const [questionData, setQuestionData] = useState(null);
+  console.log(statistic);
   const [test, setTest] = useState([
     {
       label: 'Dataset 1',
@@ -34,6 +35,7 @@ function SurveyTable({ deleteQuestion }) {
       backgroundColor: 'rgba(255, 99, 132, 0.5)'
     }
   ]);
+  console.log('QUESTION ID', idQuestion);
   useEffect(() => {
     if (questions != null && idQuestion != null) {
       setIdquestion(idQuestion);
@@ -156,10 +158,11 @@ function SurveyTable({ deleteQuestion }) {
                 <a
                   style={{ color: '#1890ff', marginRight: '1em' }}
                   onClick={() => {
+                    setIdquestion(id);
                     socket.send(
                       JSON.stringify({
                         action: 'questionFromServer',
-                        time: 0,
+                        time: statistic,
                         payload: record
                       })
                     );
@@ -172,7 +175,12 @@ function SurveyTable({ deleteQuestion }) {
                 >
                   Frage
                 </a>
-                <a style={{ color: '#228B22' }} onClick={() => setIdquestion(id)}>
+                <a
+                  style={{ color: '#228B22' }}
+                  onClick={() => {
+                    setIdquestion(id);
+                  }}
+                >
                   Statistic
                 </a>
               </div>
