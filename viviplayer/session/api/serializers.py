@@ -83,7 +83,7 @@ class QuestionSerializer(serializers.ModelSerializer):
 
     def validate_choices(self, choices):
         if type(choices) == list and all(isinstance(choice, str) for choice in choices):
-            return choices
+            return list(set(choices))
         raise serializers.ValidationError(_("Ungültiges Format für die Liste der Auswähle!"))
 
     def validate_correct_answer(self, correct_answer):
