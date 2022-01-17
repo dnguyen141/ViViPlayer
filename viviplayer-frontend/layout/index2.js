@@ -15,7 +15,7 @@ const Vivilayout2 = ({ children, logout, user }) => {
             VIVIPLAYER3
           </Menu.Item>
           <Menu.Item className="vivi-menu-button" key="5" onClick={() => Router.push('/video-edit')}>
-            Edit Video
+            Video bearbeiten
           </Menu.Item>
           <Menu.Item className="vivi-menu-button" key="2" onClick={() => Router.push('/video')}>
             Session
@@ -23,7 +23,7 @@ const Vivilayout2 = ({ children, logout, user }) => {
         </Menu>
         <Menu className="vivi-layout" theme="dark" mode="horizontal" disabledOverflow="true" style={{ float: "right" }}>
           <Menu.Item className="vivi-menu-button" key="3" onClick={() => Router.push('/video')}>
-            {user != null ? <span className="text-white">Hello {user.username}</span> : 'hello'}
+            {user != null ? <span className="text-white">Hallo {user.username}</span> : 'Hallo'}
           </Menu.Item>
           <Menu.Item
             className="vivi-menu-button"
