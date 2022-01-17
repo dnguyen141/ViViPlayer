@@ -11,7 +11,7 @@ import { WS_BACKEND } from '../../constants/constants';
 
 let socket;
 const { Option } = Select;
-function SurveyCreate({ createSurvey, shotData }) {
+function SurveyCreate({ createSurvey, currentShot, shotData}) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [ask, setAsk] = useState(null);
   const [shotList, setShotList] = useState(null);
@@ -19,7 +19,7 @@ function SurveyCreate({ createSurvey, shotData }) {
   const [form] = Form.useForm();
   const router = useRouter();
   const pathName = router.pathname;
-  const getShot = async () => {
+  const updateShotList = async () => {
     const shotsData = await api.get('/session/shots/');
     setShotList(shotsData.data);
   };
@@ -27,7 +27,9 @@ function SurveyCreate({ createSurvey, shotData }) {
   useEffect(() => {
     const url = (WS_BACKEND || 'ws://' + window.location.host) + '/ws/player/sessionid12345/';
     socket = new WebSocket(url);
-    getShot();
+  }, []);
+  useEffect(() => {
+    updateShotList();
   }, []);
 
   const formItemLayout = {
@@ -46,8 +48,8 @@ function SurveyCreate({ createSurvey, shotData }) {
       sm: { span: 21, offset: 4 }
     }
   };
-  const createQuestion = (values) => {
-    createSurvey(values.shot, values.title, values.choices, values.correct_answer, values.type);
+  const createQuestion = async (values) => {
+    await createSurvey(values.shot, values.title, values.choices, values.correct_answer, values.type);
     socket.send(
       JSON.stringify({
         action: 'surveyChange',
@@ -76,8 +78,15 @@ function SurveyCreate({ createSurvey, shotData }) {
         rules={[{ required: true, message: 'Wählen Sie bitte hier ein Shot' }]}
       >
         <Select placeholder="Wählen Sie bitte hier ein Shot" allowClear>
+          {pathName === '/video-edit' ?
+              ""
+            :
+            <Select.Option key="current" value={currentShot}>
+              Momentaner Shot
+            </Select.Option> 
+          }
           {pathName === '/video-edit' ? 
-          shotData &&
+            shotData &&
             shotData.map((item, index) => (
               <Option value={item.id} key={index}>
                 {item.title}

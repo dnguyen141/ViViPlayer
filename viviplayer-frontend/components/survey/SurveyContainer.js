@@ -5,12 +5,12 @@ import SurveyCreate from './SurveyCreate';
 import SurveyTable from './SurveyTable';
 import { createSurvey } from '../../actions/survey.action';
 
-function SurveyContainer({ user }) {
+function SurveyContainer({ user, currentShot}) {
   let SurveyView = (
     <div>
       {user && user.is_mod ? (
         <>
-          <SurveyTable /> <SurveyCreate />
+          <SurveyTable /> <SurveyCreate currentShot={currentShot}/>
         </>
       ) : (
         <SurveyRep />

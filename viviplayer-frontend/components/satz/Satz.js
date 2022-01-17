@@ -42,7 +42,6 @@ const Satz = ({ deleteSentenceById, createSentence, user, currentShot }) => {
      }
      
   }
-
   const updateState = () => {
     socketRef.current.send(
       JSON.stringify({

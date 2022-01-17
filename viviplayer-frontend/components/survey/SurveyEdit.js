@@ -29,12 +29,12 @@ const SurveyEdit = ({ id, context, updateFunc, updateSurveyById, shotData }) => 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [fieldsData, setFieldsData] = useState([]);
 
-  const getShot = async () => {
+  const updateShotList = async () => {
     const shotsData = await api.get('/session/shots/');
     setShotList(shotsData.data);
   };
-  const updateQuestionInEdit = ({ shot, title, choices, correct_answer, type }) => {
-    updateSurveyById(shot, title, choices, correct_answer, type, id);
+  const  updateQuestionInEdit = async ({ shot, title, choices, correct_answer, type }) => {
+    await updateSurveyById(shot, title, choices, correct_answer, type, id);
     setIsModalVisible(false);
     updateFunc();
   };
@@ -42,7 +42,7 @@ const SurveyEdit = ({ id, context, updateFunc, updateSurveyById, shotData }) => 
     console.log(values);
   };
   useEffect(() => {
-    getShot();
+    updateShotList();
     setFieldsData(context.choices);
   }, []);
   return (

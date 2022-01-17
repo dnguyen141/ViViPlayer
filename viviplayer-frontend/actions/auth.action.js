@@ -118,5 +118,6 @@ export const login = (username, password) => async (dispatch) => {
 export const logout = () => async (dispatch) => {
   delete api.defaults.headers.common['Authorization'];
   localStorage.removeItem('token');
+  localStorage.removeItem('questionID');
   dispatch({ type: LOGOUT });
 };

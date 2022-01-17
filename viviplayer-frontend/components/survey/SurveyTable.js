@@ -21,6 +21,7 @@ import {
   Tooltip,
   Legend
 } from 'chart.js';
+
 let socket;
 function SurveyTable({ deleteQuestion, shotData }) {
   ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -30,6 +31,7 @@ function SurveyTable({ deleteQuestion, shotData }) {
   const [labels, setLablels] = useState([]);
   const [statistic, setStatistic] = useState(null);
   const [questionData, setQuestionData] = useState(null);
+  const [shotList, setShotList] = useState(null);
   const [test, setTest] = useState([
     {
       label: 'Dataset 1',
@@ -65,6 +67,7 @@ function SurveyTable({ deleteQuestion, shotData }) {
       fetchStatistic();
       fetchQuestion();
     }
+    updateShotList();
   }, [questions, idQuestion]);
   useEffect(() => {
     setLablels(questionData != null ? questionData.choices : []);
@@ -79,6 +82,23 @@ function SurveyTable({ deleteQuestion, shotData }) {
       ]);
     }
   }, [questionData, statistic, idQuestion]);
+
+
+  const getTitle = (shot) => {
+     if(shotList){
+        for(let i = 0; i < shotList.length; i++){
+         if(shotList[i].id == shot){
+             return shotList[i].title;
+         }
+        } 
+     }
+     
+  }
+
+  const updateShotList = async () => {
+    const shotsData = await api.get('/session/shots/');
+    setShotList(shotsData.data);
+  };
   const fetchStatistic = async () => {
     const res = await api.get(`/session/statistics/${idQuestion}/`);
     setStatistic(res.data);
@@ -132,7 +152,7 @@ function SurveyTable({ deleteQuestion, shotData }) {
     {
       title: 'Auswahl',
       dataIndex: 'choices',
-      width: '30%',
+      width: '25%',
       render: (choices) => {
         return choices.map((item, index) => {
           return (
@@ -144,18 +164,17 @@ function SurveyTable({ deleteQuestion, shotData }) {
       }
     },
     {
-      title: 'Shot',
-      dataIndex: 'shot',
-      width: '15%',
-      render: (shot) => (
-        <div>
-          Shot: <b>{shot}</b>
-        </div>
-      )
-    },
+       title: 'Shot',
+       dataIndex: 'shot',
+       width: '20%',
+       render: (shot) => <div>{getTitle(shot)}</div>,
+      
+       
+     },
     {
       title: 'Aktionen',
       dataIndex: 'id',
+      width: '20%',
       render: (id, record) => (
         <div>
           {pathName === '/video-edit' ? (
@@ -180,10 +199,11 @@ function SurveyTable({ deleteQuestion, shotData }) {
                 <a
                   style={{ color: '#1890ff', marginRight: '1em' }}
                   onClick={() => {
+                    setIdquestion(id);
                     socket.send(
                       JSON.stringify({
                         action: 'questionFromServer',
-                        time: 0,
+                        time: statistic,
                         payload: record
                       })
                     );
@@ -196,7 +216,12 @@ function SurveyTable({ deleteQuestion, shotData }) {
                 >
                   Frage
                 </a>
-                <a style={{ color: '#228B22' }} onClick={() => setIdquestion(id)}>
+                <a
+                  style={{ color: '#228B22' }}
+                  onClick={() => {
+                    setIdquestion(id);
+                  }}
+                >
                   Statistic
                 </a>
               </div>
@@ -223,7 +248,6 @@ function SurveyTable({ deleteQuestion, shotData }) {
     labels,
     datasets: test
   };
-  console.log(data);
   return (
     <>
       <Table
