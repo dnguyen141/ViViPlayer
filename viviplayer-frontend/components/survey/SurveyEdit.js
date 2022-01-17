@@ -24,7 +24,7 @@ const formItemLayoutWithOutLabel = {
     sm: { span: 21, offset: 4 }
   }
 };
-const SurveyEdit = ({ id, context, updateFunc, updateSurveyById }) => {
+const SurveyEdit = ({ id, context, updateFunc, updateSurveyById, shotData }) => {
   const [shotList, setShotList] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [fieldsData, setFieldsData] = useState([]);
@@ -74,8 +74,8 @@ const SurveyEdit = ({ id, context, updateFunc, updateSurveyById }) => {
             rules={[{ required: true, message: 'Wählen Sie bitte hier ein Shot' }]}
           >
             <Select placeholder="Wählen Sie bitte hier ein Shot" allowClear>
-              {shotList &&
-                shotList.map((item, index) => (
+              {shotData &&
+                shotData.map((item, index) => (
                   <Option value={item.id} key={index}>
                     {item.title}
                   </Option>

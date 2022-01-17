@@ -436,7 +436,7 @@ const VideoEdit = ({ loadUser, loading, user, createShot, deleteShotById }) => {
           <Table columns={columns} pagination={false} dataSource={shotData} scroll={{ y: 300 }} />
           <Divider />
 
-          <SurveyTable />
+          <SurveyTable shotData={shotData}/>
 
           <SurveyCreate shotData={shotData}/>
           <Button type="primary" className="csv-button" style={{ float: 'right' , marginTop: '-2.6em'}} onClick={() => Router.push("/video")}>

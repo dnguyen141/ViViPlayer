@@ -22,7 +22,7 @@ import {
   Legend
 } from 'chart.js';
 let socket;
-function SurveyTable({ deleteQuestion }) {
+function SurveyTable({ deleteQuestion, shotData }) {
   ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
   const [questions, setQuestions] = useState(null);
   const [updateTable, setupdateTable] = useState(false);
@@ -161,7 +161,7 @@ function SurveyTable({ deleteQuestion }) {
           {pathName === '/video-edit' ? (
             <Space size="middle">
               <div>
-                <SurveyEdit id={id} context={record} updateFunc={updateState} />
+                <SurveyEdit id={id} context={record} updateFunc={updateState} shotData={shotData}/>
                 <Popconfirm
                   title="Löschen dieses Satzes ist nicht rückgängig zu machen. Weiter?"
                   onConfirm={() => {
