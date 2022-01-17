@@ -44,7 +44,9 @@ def get_error_message(field_text, message_text):
         "errors": [
             {
                 "field": field_text,
-                "message": message_text
+                "message": [
+                    message_text
+                ]
             }
         ]
     }
@@ -300,6 +302,10 @@ class PostAnswerAPIView(generics.CreateAPIView):
             msg = get_error_message("question_id", "Frage/Umfrage kann nicht gefunden werden!")
             return Response(data=msg, status=status.HTTP_404_NOT_FOUND)
 
+        if len(answer) == 0:
+            msg = get_error_message("answer", "Antwort darf nicht leer sein!")
+            return Response(data=msg, status=status.HTTP_404_NOT_FOUND)
+
         question = Question.objects.get(id=question_id)
         for choice in answer:
             if choice not in question.choices:
@@ -310,7 +316,9 @@ class PostAnswerAPIView(generics.CreateAPIView):
         question.save()
         data = {
             "success": {
-                "message": "Successfully sent the answer!"
+                "message": [
+                    "Successfully sent the answer!"
+                ]
             }
         }
         return Response(data=data, status=status.HTTP_200_OK)

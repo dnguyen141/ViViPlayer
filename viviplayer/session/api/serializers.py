@@ -1,4 +1,5 @@
 from django.core.validators import FileExtensionValidator
+from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
 from session.models import (
@@ -80,6 +81,24 @@ class QuestionSerializer(serializers.ModelSerializer):
     answers = serializers.ReadOnlyField()
     correct_answer = serializers.CharField(max_length=500, allow_blank=True, required=False)
 
+    def validate_choices(self, choices):
+        if type(choices) != list and not all(isinstance(choice, str) for choice in choices):
+            raise serializers.ValidationError(_("Ungültiges Format für die Liste der Auswähle!"))
+        if type(choices) == list and len(choices) == 0:
+            raise serializers.ValidationError(_("Die Liste der Auswähle darf nicht leer sein!"))
+        if type(choices) == list and '' in choices:
+            raise serializers.ValidationError(_("Die Liste der Auswähle darf nicht ein leeres String erhalten!"))
+        return list(set(choices))
+
+    def validate_correct_answer(self, correct_answer):
+        choices = self.initial_data["choices"]
+        if len(choices) == 0:
+            return ""
+        choices += [""]
+        if correct_answer not in choices:
+            raise serializers.ValidationError(_("Ungültige Lösung für diese Frage!"))
+        return correct_answer
+
     class Meta:
         model = Question
         fields = "__all__"
@@ -88,3 +107,8 @@ class QuestionSerializer(serializers.ModelSerializer):
 class AnswerSerializer(serializers.Serializer):
     question_id = serializers.IntegerField()
     answer = serializers.JSONField()
+
+    def validate_answer(self, answer):
+        if type(answer) != list or not all(isinstance(choice, str) for choice in answer):
+            raise serializers.ValidationError(_("Ungültiges Format für die Antwort eines Benutzer!"))
+        return answer
