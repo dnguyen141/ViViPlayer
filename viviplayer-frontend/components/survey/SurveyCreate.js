@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import api from '../../utils/api';
+import Router from 'next/router';
 import { Button, Input, Table, Space, Popconfirm, Form, Select, Modal } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { createSurvey } from '../../actions/survey.action';
+import { loadUser } from '../../actions/auth.action';
+import { setAuthToken } from '../../utils/setAuthToken';
 import { connect } from 'react-redux';
 import { WS_BACKEND } from '../../constants/constants';
 
@@ -15,6 +18,26 @@ function SurveyCreate({ createSurvey }) {
   const [shotList, setShotList] = useState(null);
   const [answer, setAnswer] = useState([]);
   const [form] = Form.useForm();
+
+  useEffect(() => {
+    // check for token in LS when app first runs
+    if (localStorage.token) {
+      // if there is a token set axios headers for all requests
+      setAuthToken(localStorage.token);
+    } else {
+      Router.push('/');
+    }
+    // try to fetch a user, if no token or invalid token we
+    // will get a 401 response from our API
+    loadUser();
+
+    // log user out from all tabs if they log out in one tab
+    // window.addEventListener('storage', () => {
+    //   if (!localStorage.token) {
+    //     type: LOGOUT;
+    //   }
+    // });
+  }, []);
 
   const getShot = async () => {
     const shotsData = await api.get('/session/shots/');
@@ -44,8 +67,8 @@ function SurveyCreate({ createSurvey }) {
       sm: { span: 21, offset: 4 }
     }
   };
-  const createQuestion = (values) => {
-    createSurvey(values.shot, values.title, values.choices, values.correct_answer, values.type);
+  const createQuestion = async (values) => {
+    await createSurvey(values.shot, values.title, values.choices, values.correct_answer, values.type);
     socket.send(
       JSON.stringify({
         action: 'surveyChange',

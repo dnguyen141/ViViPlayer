@@ -17,7 +17,7 @@ import { WS_BACKEND, VIDEO_PREFIX } from '../../constants/constants';
 
 let socket;
 // !!! markers need to be an Integer
-const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
+const VideoEdit = ({ loadUser, loading, user, createShot, deleteShotById }) => {
   const [updateTable, setupdateTable] = useState(false);
   const [shotData, setShotData] = useState(null);
   const [userState, setUserState] = useState(null);
@@ -239,7 +239,7 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
   }, [videoRef]);
 
   //===============================================================================
-  useEffect(() => {
+  /*useEffect(() => {
     // check for token in LS when app first runs
     if (localStorage.token) {
       // if there is a token set axios headers for all requests
@@ -257,7 +257,7 @@ const VideoEdit = ({ createShot, deleteShotById, loadUser, loading, user }) => {
     //     type: LOGOUT;
     //   }
     // });
-  }, []);
+  }, []);*/
   const layout = {
     labelCol: { span: 5 },
     wrapperCol: { span: 14 }

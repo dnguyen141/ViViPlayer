@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Space, Popconfirm } from 'antd';
 import { useRouter } from 'next/router';
+import Router from 'next/router';
 import SurveyEdit from './SurveyEdit';
 import api from '../../utils/api';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { loadUser } from '../../actions/auth.action';
+import { setAuthToken } from '../../utils/setAuthToken';
 import { deleteQuestion, getQuestionId } from '../../actions/survey.action';
 import { WS_BACKEND } from '../../constants/constants';
 import { Notification } from '../../utils/notification';
@@ -34,6 +37,27 @@ function SurveyTable({ deleteQuestion }) {
       backgroundColor: 'rgba(255, 99, 132, 0.5)'
     }
   ]);
+
+  useEffect(() => {
+    // check for token in LS when app first runs
+    if (localStorage.token) {
+      // if there is a token set axios headers for all requests
+      setAuthToken(localStorage.token);
+    } else {
+      Router.push('/');
+    }
+    // try to fetch a user, if no token or invalid token we
+    // will get a 401 response from our API
+    loadUser();
+
+    // log user out from all tabs if they log out in one tab
+    // window.addEventListener('storage', () => {
+    //   if (!localStorage.token) {
+    //     type: LOGOUT;
+    //   }
+    // });
+  }, []);
+
   useEffect(() => {
     if (questions != null && idQuestion != null) {
       setIdquestion(idQuestion);
