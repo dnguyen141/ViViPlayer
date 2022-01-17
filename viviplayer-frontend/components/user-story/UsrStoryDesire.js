@@ -81,7 +81,7 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById, currentSho
        title: 'Shot',
        dataIndex: 'shot',
        width: '30%',
-       render: (shot) => <div>{getTitle(shot)}</div>,
+       render: (shot) => <div><b>Shot: {getTitle(shot)}</b></div>,
       
        
      },

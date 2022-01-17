@@ -58,11 +58,6 @@ const Satz = ({ deleteSentenceById, createSentence, user, currentShot }) => {
     setSentencesList(res.data);
   }
 
-  const getTitle = async (id) => {
-    const res = await api.get(`/session/shots/${id}/`);
-    return res.data.title;
-  };
-
   useEffect(() => {
     fetchSentenc();
   }, [updateTable]);
@@ -88,7 +83,7 @@ const Satz = ({ deleteSentenceById, createSentence, user, currentShot }) => {
        title: 'Shot',
        dataIndex: 'shot',
        width: '30%',
-       render: (shot) => <div>{getTitle(shot)}</div>,
+       render: (shot) => <div><b>Shot: {getTitle(shot)}</b></div>,
       
        
      },
@@ -132,7 +127,7 @@ const Satz = ({ deleteSentenceById, createSentence, user, currentShot }) => {
       <Table
         columns={columns}
         pagination={false}
-        // showHeader={false}
+        showHeader={false}
         dataSource={sentencesList}
         scroll={{ y: 200 }}
         style={{ minHeight: '250px' }}
