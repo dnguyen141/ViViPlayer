@@ -9,6 +9,8 @@ services:
   django:
     build: ./viviplayer
     container_name: vivipl3_backend
+    environment:
+      - VIVIMODE=prod
     volumes:
       - ./viviplayer:/app/backend
       - ./media:/app/backend/media
@@ -21,6 +23,8 @@ services:
       context: ./viviplayer-frontend/
       dockerfile: prod.Dockerfile
     container_name: vivipl3_frontend
+    environment:
+      - VIVIMODE=prod
     volumes:
       - ./media:/usr/share/nginx/media
     ports:
