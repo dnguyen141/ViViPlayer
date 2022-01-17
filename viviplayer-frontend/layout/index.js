@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Router from 'next/router';
+import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import { Layout, Menu } from 'antd';
 import { logout } from '../actions/auth.action';
@@ -11,6 +12,8 @@ import { WS_BACKEND, VIDEO_PREFIX } from '../constants/constants';
 
 const Vivilayout = ({ children, logout, user }) => {
   const [isMod, setIsMod] = useState(false);
+  const router = useRouter();
+  const pathName = router.pathname;
   const userDataGet = async () => {
     const userData = await api.get("/auth/user/");
     setIsMod(userData.data.is_mod);
@@ -52,7 +55,7 @@ const Vivilayout = ({ children, logout, user }) => {
           <Menu.Item className="vivi-menu-button" key="3" onClick={() => Router.push('/video')}>
             {user != null ? <span className="text-white">Hello {user.username}</span> : 'hello'}
           </Menu.Item>
-          {isMod == true ? (
+          {(isMod == true && pathName === '/video') ? (
             <Menu.Item
               key="4"
               className="session-end vivi-menu-button"
