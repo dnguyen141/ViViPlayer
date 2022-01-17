@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as Survey from 'survey-react';
 import api from '../../utils/api';
+import { Spin } from 'antd';
 import { WS_BACKEND } from '../../constants/constants';
 import { sendAnswer } from '../../actions/survey.action';
+import { Notification } from '../../utils/notification';
 import { Bar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -21,16 +23,24 @@ let socket;
 const SurveyRep = ({ sendAnswer }) => {
   ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
   const [ask, setAsk] = useState(null);
-
+  const [labels, setLablels] = useState([]);
   const [questions, setQuestions] = useState(null);
   const [idQuestion, setIdquestion] = useState(null);
   const [statistic, setStatistic] = useState(null);
   const [questionData, setQuestionData] = useState(null);
+  const [answered, setAnswered] = useState(false);
+  const [test, setTest] = useState([
+    {
+      label: 'Dataset 1',
+      data: [1, 2],
+      backgroundColor: 'rgba(255, 99, 132, 0.5)'
+    }
+  ]);
 
   useEffect(() => {
     if (questions != null && idQuestion != null) {
       setIdquestion(idQuestion);
-      // fetchStatistic();
+      fetchStatistic(idQuestion);
       fetchQuestion();
     }
   }, [questions, idQuestion]);
@@ -42,27 +52,50 @@ const SurveyRep = ({ sendAnswer }) => {
       const data = JSON.parse(e.data);
       if (data.action === 'questionFromServer') {
         localStorage.setItem('questionID', data.payload.id);
-        localStorage.setItem('static', data.time);
         setIdquestion(data.payload.id);
         setAsk(data.payload);
+      } else if (data.action === 'statisticChange') {
+        fetchStatistic();
       }
     };
   }, []);
-  // const fetchStatistic = async () => {
-  //   const res = await api.get(`/session/statistics/${idQuestion}/`);
-  //   setStatistic(res.data);
-  // };
-  // console.log('statistic', statistic);
+  const fetchStatistic = async () => {
+    try {
+      const res = await api.get(`/session/statistics/${idQuestion}/`);
+      setStatistic(res.data);
+    } catch (error) {
+      setStatistic(null);
+    }
+  };
   const fetchQuestion = async () => {
-    const res = await api.get(`/session/questions/${idQuestion}/`);
-    setQuestionData(res.data);
+    try {
+      const res = await api.get(`/session/questions/${idQuestion}/`);
+      setQuestionData(res.data);
+    } catch (error) {
+      setQuestionData(null);
+    }
   };
-  console.log('questionByID', questionData);
   const fetchQuestions = async () => {
-    const res = await api.get('/session/questions/');
-    setQuestions(res.data);
+    try {
+      const res = await api.get('/session/questions/');
+      setQuestions(res.data);
+    } catch (error) {
+      setQuestions(null);
+    }
   };
-  console.log('Question Data:', questionData);
+  useEffect(() => {
+    setLablels(questionData != null ? questionData.choices : []);
+    if (statistic != null) {
+      let arr = statistic.data.map((item) => item.quantity);
+      setTest([
+        {
+          label: 'Dataset',
+          data: arr,
+          backgroundColor: 'rgba(174, 164, 235, 0.4)'
+        }
+      ]);
+    }
+  }, [questionData, statistic, idQuestion]);
   useEffect(() => {
     setIdquestion(localStorage.getItem('questionID'));
     fetchQuestions();
@@ -112,17 +145,50 @@ const SurveyRep = ({ sendAnswer }) => {
         payload: questionData.id
       })
     );
+    setAnswered(true);
+    fetchStatistic();
+    localStorage.removeItem('questionID');
   });
 
-  return (
+  // data for statics
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top'
+      },
+      title: {
+        display: true,
+        text: statistic != null ? statistic.question_title : ''
+      }
+    }
+  };
+
+  const data = {
+    labels,
+    datasets: test
+  };
+
+  let BeforeAnswers = (
     <>
       {questionData != null ? (
-        <Survey.Survey model={survey} completeText="Send" />
+        <Survey.Survey model={survey} completeText="Senden" />
       ) : (
-        'Hier gibt es keine Umfrage'
+        <span>
+          <Spin />
+        </span>
       )}
+      {questionData != null ? <Bar options={options} data={data} /> : ''}
     </>
   );
+  let AfterAnswers = (
+    <>
+      <p style={{ textAlign: 'center', width: '100%' }}>Vielen Dank für Deine Antwort</p>
+      {questionData != null ? <Bar options={options} data={data} /> : ''}
+    </>
+  );
+
+  return <>{answered === true ? AfterAnswers : BeforeAnswers}</>;
 };
 
 SurveyRep.propTypes = {};
