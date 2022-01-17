@@ -33,6 +33,17 @@ const Satz = ({ deleteSentenceById, createSentence, user, currentShot }) => {
     getShot();
   }, []);
 
+ const getTitle = (shot) => {
+     if(shotList){
+        for(let i = 0; i < shotList.length; i++){
+         if(shotList[i].id == shot){
+             return shotList[i].title;
+         }
+        } 
+     }
+     
+  }
+
   const updateState = () => {
     socketRef.current.send(
       JSON.stringify({
@@ -60,23 +71,21 @@ const Satz = ({ deleteSentenceById, createSentence, user, currentShot }) => {
     {
       title: 'Inhalt',
       dataIndex: 'text',
-      width: '55%',
+      width: '40%',
       render: (text) => (
         <div className="test">
           <span> {text}</span>
         </div>
       )
     },
-    // {
-    //   title: 'Shot',
-    //   dataIndex: 'shot',
-    //   width: '15%',
-    //   render: (shot) => (
-    //     <div>
-    //       Shot: <b>{shot}</b>
-    //     </div>
-    //   )
-    // },
+     {
+       title: 'Shot',
+       dataIndex: 'shot',
+       width: '30%',
+       render: (shot) => <div>{getTitle(shot)}</div>,
+      
+       
+     },
     {
       title: 'Aktionen',
       dataIndex: 'id',
