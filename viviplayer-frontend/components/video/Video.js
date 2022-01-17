@@ -248,24 +248,26 @@ const Video = ({ loadUser, loading, user, logout, setCurrentShot }) => {
   };
 
   function changeVideoPosition(e) {
-    if (videoRef.current.readyState > 2) {
-      //check if video is ready to be played
+    if(user.is_mod){
+        if (videoRef.current.readyState > 2) {
+        //check if video is ready to be played
 
-      //calculating the relative position of the click.
-      var rect = e.currentTarget.getBoundingClientRect();
-      var offsetX = e.clientX - rect.left;
-      var newPosition = offsetX / e.currentTarget.clientWidth;
+        //calculating the relative position of the click.
+        var rect = e.currentTarget.getBoundingClientRect();
+        var offsetX = e.clientX - rect.left;
+        var newPosition = offsetX / e.currentTarget.clientWidth;
 
-      //setting the values for the progressbar and the videotime
-      setProgressBarWidth(newPosition * 100 + '%');
-      videoRef.current.currentTime = newPosition * videoRef.current.duration;
+        //setting the values for the progressbar and the videotime
+        setProgressBarWidth(newPosition * 100 + '%');
+        videoRef.current.currentTime = newPosition * videoRef.current.duration;
 
-      socketRef.current.send(
-        JSON.stringify({
+        socketRef.current.send(
+          JSON.stringify({
           action: 'skip',
           time: videoRef.current.currentTime
-        })
-      );
+          })
+        );
+       }
     }
   }
 
