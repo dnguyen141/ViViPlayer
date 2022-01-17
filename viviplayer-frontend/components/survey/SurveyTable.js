@@ -27,7 +27,6 @@ function SurveyTable({ deleteQuestion }) {
   const [labels, setLablels] = useState([]);
   const [statistic, setStatistic] = useState(null);
   const [questionData, setQuestionData] = useState(null);
-  console.log(statistic);
   const [test, setTest] = useState([
     {
       label: 'Dataset 1',
@@ -35,7 +34,6 @@ function SurveyTable({ deleteQuestion }) {
       backgroundColor: 'rgba(255, 99, 132, 0.5)'
     }
   ]);
-  console.log('QUESTION ID', idQuestion);
   useEffect(() => {
     if (questions != null && idQuestion != null) {
       setIdquestion(idQuestion);
@@ -207,7 +205,6 @@ function SurveyTable({ deleteQuestion }) {
     labels,
     datasets: test
   };
-  console.log(data);
   return (
     <>
       <Table
