@@ -166,7 +166,6 @@ const SurveyEdit = ({ id, context, updateFunc, updateSurveyById, shotData }) => 
             name="correct_answer"
             label="Antwort"
             initialValue={context.correct_answer}
-          // rules={[{ required: true }]}
           >
             <Input rows={4} placeholder="Geben Sie hier die richtige Antwort ein.(wenn es gibt)" />
           </Form.Item>
