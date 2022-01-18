@@ -20,7 +20,9 @@ import {
  JSON.stringify or JSON.parse
 */
 
-// Load User
+/**
+ * Loads the user information.
+ */
 export const loadUser = () => async (dispatch) => {
   try {
     const res = await api.get('/auth/user/');
@@ -35,7 +37,11 @@ export const loadUser = () => async (dispatch) => {
   }
 };
 
-// login with tan
+/**
+ * Logs the user in using the specified TAN.
+ * 
+ * @param {number} password1 The TAN used to log in.
+ */
 export const loginWithTanFunc = (password1) => async (dispatch) => {
   const body = { password1 };
 
@@ -61,7 +67,13 @@ export const loginWithTanFunc = (password1) => async (dispatch) => {
   }
 };
 
-// Register User
+/**
+ * Registers a new user for the admin to review.
+ * 
+ * @param {string} username The username for the new user.   
+ * @param {string} password1 The password of the new user.
+ * @param {string} password2 The confirmation of the password. This is the value of the second passwort input.
+ */
 export const register = (username, password1, password2) => async (dispatch) => {
   const body = { username, password1, password2 };
   try {
@@ -88,7 +100,13 @@ export const register = (username, password1, password2) => async (dispatch) => 
   }
 };
 
-// Login User
+/**
+ * Log in as a moderator with username and password
+ * 
+ * @param {string} username Username of the user.
+ * @param {string} password Password of the user.
+ 
+ */
 export const login = (username, password) => async (dispatch) => {
   const body = { username, password };
 
@@ -114,7 +132,9 @@ export const login = (username, password) => async (dispatch) => {
   }
 };
 
-// Logout
+/**
+ * Logs the user out.
+ */
 export const logout = () => async (dispatch) => {
   delete api.defaults.headers.common['Authorization'];
   localStorage.removeItem('token');

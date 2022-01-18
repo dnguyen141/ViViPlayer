@@ -94,7 +94,7 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById, currentSho
           <Space size="middle">
             <EditUserStory id={id} context={record} updateFunc={updateState} />
             <Popconfirm
-              title="Löschen dieses Satzes ist nicht rückgängig zu machen. Weiter?"
+              title="Löschen dieser UserStory ist nicht rückgängig zu machen. Weiter?"
               onConfirm={() => {
                 deleteUserStoryById(id);
                 updateState();

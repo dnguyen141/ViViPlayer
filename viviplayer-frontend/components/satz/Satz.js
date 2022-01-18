@@ -6,20 +6,35 @@ import { connect } from 'react-redux';
 import EditSentence from './EditSentence';
 import { WS_BACKEND } from '../../constants/constants';
 
-let socket;
-
 const { TextArea } = Input;
+
+/**
+ * Displays an user interface to create, delete and edit an existing shot.
+ * @param {Object} param0 Props being passed to the function.
+ * @returns Interface to be rendered.
+ */
 const Satz = ({ deleteSentenceById, createSentence, user, currentShot }) => {
   const [updateTable, setupdateTable] = useState(false);
   const [sentencesList, setSentencesList] = useState(null);
   const [shotList, setShotList] = useState(null);
   const [form] = Form.useForm();
+
+
+  /**
+   * Update the shotlist state.
+   */
   const getShot = async () => {
     const shotsData = await api.get('/session/shots/');
     setShotList(shotsData.data);
   };
-  // connect to socket and update sentence table
+
+  
+  /**
+   * Socket for updates between users.
+   */
   const socketRef = useRef(null);
+  
+  // connect to socket and update sentence table
   useEffect(() => {
     const url = (WS_BACKEND || 'ws://' + window.location.host) + '/ws/player/sessionid12345/';
     socketRef.current = new WebSocket(url);
@@ -32,6 +47,12 @@ const Satz = ({ deleteSentenceById, createSentence, user, currentShot }) => {
     getShot();
   }, []);
 
+
+ /**
+  * Returns the title of the corresponding shot with the given id.
+  * @param {number} shot The id of the shot which title should be returned.
+  * @returns Title of the shot with the given id.
+  */   
  const getTitle = (shot) => {
      if(shotList){
         for(let i = 0; i < shotList.length; i++){
@@ -42,6 +63,10 @@ const Satz = ({ deleteSentenceById, createSentence, user, currentShot }) => {
      }
      
   }
+
+  /**
+   * Updates the state of the table locally and for every other user.
+   */
   const updateState = () => {
     socketRef.current.send(
       JSON.stringify({
@@ -52,6 +77,9 @@ const Satz = ({ deleteSentenceById, createSentence, user, currentShot }) => {
     setupdateTable(!updateTable);
   };
 
+  /**
+   * Updates the SentencesList state.
+   */  
   async function fetchSentenc() {
     const res = await api.get('/session/sentences/');
     setSentencesList(res.data);
@@ -60,6 +88,10 @@ const Satz = ({ deleteSentenceById, createSentence, user, currentShot }) => {
   useEffect(() => {
     fetchSentenc();
   }, [updateTable]);
+
+   /**
+   * Defines the columns of the sentence table.
+   */  
   const columns = [
     {
       title: 'User',
@@ -110,6 +142,11 @@ const Satz = ({ deleteSentenceById, createSentence, user, currentShot }) => {
       )
     }
   ];
+
+  /**
+   * Creates a new sentence.
+   * @param {Object} param0 Object containing the new text and shot id.
+   */
   const createSentenceFunc = async ({ text, shot }) => {
     await createSentence(text, shot);
     setupdateTable(!updateTable);

@@ -9,8 +9,19 @@ import { loadUser } from '../../actions/auth.action';
 import { connect } from 'react-redux';
 import { WS_BACKEND, SERVER_BACKEND } from '../../constants/constants';
 
+/**
+ * Socket for updates between users.
+ */
 let socket;
+
 const { Paragraph } = Typography;
+
+
+/**
+ * Displays a table for the current session.
+ * @param {*} param0 Props being passed to the function.
+ * @returns Table to be rendered.
+ */
 const SessionTable = ({ deleteSessionById, updateLayout, updateLayoutState, loading }) => {
   const [updateTable, setupdateTable] = useState(false);
   const [sessionData, setSessionData] = useState(null);
@@ -26,23 +37,18 @@ const SessionTable = ({ deleteSessionById, updateLayout, updateLayoutState, load
     // will get a 401 response from our API
     loadUser();
 
-    // log user out from all tabs if they log out in one tab
-    // window.addEventListener('storage', () => {
-    //   if (!localStorage.token) {
-    //     type: LOGOUT;
-    //   }
-    // });
   }, []);
-  const layout = {
-    labelCol: { span: 5 },
-    wrapperCol: { span: 14 }
-  };
-  // connect to socket and update sentence table
+ 
+  
 
   //to export the data
-  const exportCSV = async () =>{
-    //const res = await api.get('/session/export/csv');
 
+
+  /**
+   * Export the current User Stories into a .csv file and download it.
+   */  
+  const exportCSV = async () =>{
+    
     api.request({
         url: "session/export/csv",
         responseType: "blob",
@@ -66,7 +72,9 @@ const SessionTable = ({ deleteSessionById, updateLayout, updateLayoutState, load
         link.remove();
     });
   }
-  
+   /**
+   * Export the current User Stories into a .odt file and download it.
+   */
    const exportODT = async () =>{
     //const res = await api.get('/session/export/csv');
 
@@ -105,6 +113,9 @@ const SessionTable = ({ deleteSessionById, updateLayout, updateLayoutState, load
     };
   }, []);
 
+  /**
+   * Update sessionData state when something changes.
+   */  
   async function fetchSession() {
     const res = await api.get('/session/');
     setSessionData(res.data);
@@ -115,6 +126,9 @@ const SessionTable = ({ deleteSessionById, updateLayout, updateLayoutState, load
   const updateState = () => {
     fetchSession();
   };
+   /**
+   * Defines the columns of the sessiontable.
+   */  
   const columns = [
     {
       title: 'ID',

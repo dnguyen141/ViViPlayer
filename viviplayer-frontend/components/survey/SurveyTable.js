@@ -186,7 +186,7 @@ function SurveyTable({ deleteQuestion, shotData }) {
               <div>
                 <SurveyEdit id={id} context={record} updateFunc={updateState} shotData={shotData} />
                 <Popconfirm
-                  title="Löschen dieses Satzes ist nicht rückgängig zu machen. Weiter?"
+                  title="Löschen dieser Frage ist nicht rückgängig zu machen. Weiter?"
                   onConfirm={() => {
                     deleteQuestion(id);
                     updateState();

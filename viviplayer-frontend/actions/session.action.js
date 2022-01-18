@@ -39,7 +39,10 @@ import {
 } from './types';
 import { Notification } from '../utils/notification';
 
-// get session
+/**
+ * Get the session information.
+ * @returns Session information api response.
+ */
 export const getInfoSession = () => async (dispatch) => {
   try {
     const res = await api.get('/session/');
@@ -60,7 +63,10 @@ export const getInfoSession = () => async (dispatch) => {
   }
 };
 
-// Create Session
+/**
+ * Creates a new Session.
+ * @param {Formadata} formData Object that includes necessary data to create a new session with the api.
+ */
 export const createSession = (formData) => async (dispatch) => {
   try {
     const res = await api.post('/session/', formData, {
@@ -86,7 +92,11 @@ export const createSession = (formData) => async (dispatch) => {
   }
 };
 
-// update session
+/**
+ * Updates a existing session with the given ID.
+ * @param {Formdata} formData Object that includes necessary data to create a new session with the api.
+ * @param {number} id Id of the Session that should be updated.
+ */
 export const updateSession = (formData, id) => async (dispatch) => {
   try {
     const res = await api.put(`/session/${id}/`, formData, {
@@ -111,7 +121,11 @@ export const updateSession = (formData, id) => async (dispatch) => {
     });
   }
 };
-// get Sentences
+
+/**
+ * 
+ * @returns 
+ */
 export const getSentences = () => async (dispatch) => {
   try {
     const res = await api.get('/session/sentences/');

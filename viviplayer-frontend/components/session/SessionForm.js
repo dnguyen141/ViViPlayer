@@ -4,7 +4,18 @@ import { createSession } from '../../actions/session.action';
 import { connect } from 'react-redux';
 import Router from 'next/router';
 import { WS_BACKEND, VIDEO_PREFIX } from '../../constants/constants';
+
+/**
+ * Socket for updates between users.
+ */
 let socket;
+
+
+/**
+ * Displays an user interface to create, edit and delete a session.
+ * @param {*} param0 Props being passed to the function.
+ * @returns Interface to be rendered.
+ */
 function SessionForm({ createSession, sessionInfo, updateLayoutState, updateLayout }) {
   const [videoInfo, setVideoInfo] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -14,15 +25,31 @@ function SessionForm({ createSession, sessionInfo, updateLayoutState, updateLayo
     const url = (WS_BACKEND || 'ws://' + window.location.host) + '/ws/player/sessionid12345/';
     socket = new WebSocket(url);
   }, []);
+  /**
+   * Layout for the Form.
+   */
   const layout = {
     labelCol: { span: 5 },
     wrapperCol: { span: 14 }
   };
+  /**
+   * Reference for the video input.
+   */
   const inputRef = React.useRef();
+
+  /**
+   * Update the File state when it changes.
+   * @param {Event} event Event triggering on change. Automatically given by onChange property of the input.
+   */
   const handleFileChange = async (event) => {
     let fileVideo = event.target.files[0];
     setFile(fileVideo);
   };
+
+  /**
+   * Gets triggered when the Form gets submitted via the button and updates the session.
+   * @param {Object} values New values for the session. Value gets automatically set by the onFinish attribute of <Form>
+   */
   const onFinish = async (values) => {
     const formData = new FormData();
     formData.append('video_path', file);
@@ -45,18 +72,28 @@ function SessionForm({ createSession, sessionInfo, updateLayoutState, updateLayo
     );
   };
 
+  /**
+   * Logging the error on the console when onFinish fails.
+   * @param {*} errorInfo Information of the specific error. Automatically set by onFinishFailed.
+   */   
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
   };
   // 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4'
+
   const { Paragraph } = Typography;
 
+  /**
+   * The video that gets displayed after you upload a video to the server. Its the same as the current video in the session.
+   * @param {} videoInfoPara Video information containing the TAN, name and video_path.
+   * @returns Video and text that should be displayed.
+   */
   const videoBuild = (videoInfoPara) => {
     return (
       <div className="row-responsive">
         <h3>
           <Paragraph copyable>
-            <b>Name of session:</b> {videoInfoPara.name}
+            <b>Name der Session:</b> {videoInfoPara.name}
           </Paragraph>
         </h3>
         <h3>
