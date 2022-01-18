@@ -313,7 +313,7 @@ class ExportCSV(APIView):
         for (i, us) in enumerate(UserStory.objects.all()):
             row = [
                 f"User Story {i + 1}",
-                f"{us.damit} {us.moechteichals1} {us.moechteichals2}",
+                f"Damit {us.damit} möchte ich als {us.moechteichals1} {us.moechteichals2}",
                 str(us.shot.image).split("/")[-1],
             ]
             writer.writerow(row)
