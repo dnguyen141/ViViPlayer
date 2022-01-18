@@ -227,7 +227,7 @@ function SurveyTable({ deleteQuestion, shotData }) {
                     setIdquestion(id);
                   }}
                 >
-                  Statistic
+                  Statistik
                 </a>
               </div>
             </Space>
