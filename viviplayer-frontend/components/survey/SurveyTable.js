@@ -102,8 +102,8 @@ function SurveyTable({ deleteQuestion, shotData }) {
   };
 
   const updateShotList = async () => {
-    //const shotsData = await api.get('/session/shots/');
-    setShotList(shotData);
+    const shotsData = await api.get('/session/shots/');
+    setShotList(shotsData.data);
   };
   const fetchStatistic = async () => {
     const res = await api.get(`/session/statistics/${idQuestion}/`);

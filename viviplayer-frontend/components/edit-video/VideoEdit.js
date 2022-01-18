@@ -429,7 +429,7 @@ const VideoEdit = ({ loadUser, loading, user, createShot, deleteShotById }) => {
               <Input placeholder="Geben Sie bitte einen Shottitel hier ein."></Input>
             </Form.Item>
             <Button type="primary" htmlType="submit">
-              Shot Erstellen
+              Shot Hinzufügen
             </Button>
           </Form>
         </Col>
@@ -450,7 +450,7 @@ const VideoEdit = ({ loadUser, loading, user, createShot, deleteShotById }) => {
             style={{ float: 'right', marginTop: '-2.6em' }}
             onClick={() => Router.push('/video')}
           >
-            Session Erstellen
+            Weiter zur Session
           </Button>
         </Col>
       </Row>

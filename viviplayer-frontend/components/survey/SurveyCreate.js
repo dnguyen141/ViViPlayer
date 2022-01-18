@@ -11,6 +11,7 @@ import { WS_BACKEND } from '../../constants/constants';
 
 let socket;
 const { Option } = Select;
+//shotData in the parameter is used only for video edit
 function SurveyCreate({ createSurvey, currentShot, shotData }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [ask, setAsk] = useState(null);
@@ -19,9 +20,11 @@ function SurveyCreate({ createSurvey, currentShot, shotData }) {
   const [form] = Form.useForm();
   const router = useRouter();
   const pathName = router.pathname;
+
+  //get the shot data from Session for SurveyCreate in session
   const updateShotList = async () => {
-    // const shotsData = await api.get('/session/shots/');
-    setShotList(shotData);
+    const shotsData = await api.get('/session/shots/');
+    setShotList(shotsData.data);
   };
   // connect to socket and update sentence table
   useEffect(() => {
@@ -90,8 +93,8 @@ function SurveyCreate({ createSurvey, currentShot, shotData }) {
               Momentaner Shot
             </Select.Option>
           )}
-          {pathName === '/video-edit'
-            ? shotData &&
+          {pathName === '/video-edit' ? 
+              shotData &&
               shotData.map((item, index) => (
                 <Option value={item.id} key={index}>
                   {item.title}
@@ -183,7 +186,7 @@ function SurveyCreate({ createSurvey, currentShot, shotData }) {
         initialValue={''}
         // rules={[{ required: true }]}
       >
-        <Input rows={4} placeholder="Geben Sie hier die richtige Antwort ein.(wenn es gibt)" />
+        <Input rows={4} placeholder="Geben Sie hier die richtige Antwort ein. (Wenn es eine gibt)" />
       </Form.Item>
 
       <Button type="primary" htmlType="submit">
