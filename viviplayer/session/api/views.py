@@ -218,6 +218,9 @@ class ExportODT(APIView):
             p.addElement(photoframe)
             textdoc.text.addElement(p)
 
+            # Add linebreak
+            textdoc.text.addElement(P())
+
             # Add shot title
             p = P(text=s.title, stylename=h2style)
             textdoc.text.addElement(p)
