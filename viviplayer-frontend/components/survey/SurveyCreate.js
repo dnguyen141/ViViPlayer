@@ -65,7 +65,6 @@ function SurveyCreate({ createSurvey, currentShot, shotData }) {
     );
     setAsk(values);
     setIsModalVisible(false);
-    console.log('stateModal', isModalVisible);
     form.resetFields();
   };
   let CreateQuestion = (

@@ -63,7 +63,6 @@ function SurveyTable({ deleteQuestion, shotData }) {
   useEffect(() => {
     if (questions != null && idQuestion != null) {
       setIdquestion(idQuestion);
-      console.log('run inside');
       fetchStatistic();
       fetchQuestion();
     }
