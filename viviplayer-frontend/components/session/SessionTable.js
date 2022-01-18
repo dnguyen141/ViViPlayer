@@ -123,9 +123,14 @@ const SessionTable = ({ deleteSessionById, updateLayout, updateLayoutState, load
   useEffect(() => {
     fetchSession();
   }, [updateTable, loading]);
+
+  /**
+   * Updates the state of the session.
+   */
   const updateState = () => {
     fetchSession();
   };
+  
    /**
    * Defines the columns of the sessiontable.
    */  

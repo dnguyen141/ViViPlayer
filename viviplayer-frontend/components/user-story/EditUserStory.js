@@ -4,8 +4,19 @@ import { Form, Button, Input, Modal } from 'antd';
 import { connect } from 'react-redux';
 import { updateUserStoryById } from '../../actions/session.action';
 
+/**
+ * Displays an user interface to edit a userstory.
+ * @param {*} param0 Props being passed to the function.
+ * @returns Interface to be rendered.
+ */
 const EditUserStory = ({ id, context, updateFunc, updateUserStoryById }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
+
+  
+  /**
+   * Updates a userstory text to the given text.
+   * @param {Object} param0 Object containing all the values the userstory should be changed to. 
+   */
   const updateUserStory = async ({ damit, moechteichals1, moechteichals2 }) => {
     await updateUserStoryById(damit, moechteichals1, moechteichals2, context.shot, id);
     setIsModalVisible(false);

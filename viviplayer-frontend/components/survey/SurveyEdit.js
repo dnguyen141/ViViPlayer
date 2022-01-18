@@ -8,12 +8,19 @@ import { updateSurveyById } from '../../actions/survey.action';
 
 const { Option } = Select;
 
+/**
+ * Layout for the form with label.
+ */
 const formItemLayout = {
   wrapperCol: {
     xs: { span: 21, offset: 4 },
     sm: { span: 21, offset: 4 }
   }
 };
+
+/**
+ * Layout for the form with label.
+ */
 const formItemLayoutWithOutLabel = {
   labelCol: {
     xs: { span: 4 },
@@ -44,7 +51,7 @@ const SurveyEdit = ({ id, context, updateFunc, updateSurveyById, shotData }) => 
   };
 
   /**
-   * Updates a survey text to the given text.
+   * Updates a survey text to the given values.
    * @param {Object} param0 Object containing all the values the survey should be changed to. 
    */
   const  updateQuestionInEdit = async ({ shot, title, choices, correct_answer, type }) => {

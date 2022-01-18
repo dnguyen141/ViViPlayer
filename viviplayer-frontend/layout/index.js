@@ -23,8 +23,11 @@ const Vivilayout = ({ children, logout, user }) => {
     setIsMod(userData.data.is_mod);
   }
 
-  let socket;
+  /**
+  * Socket for updates between users.
+  */
   const socketRef = React.useRef(null);
+  
   useEffect(async () => {
     if (localStorage.token) {
       // if there is a token set axios headers for all requests

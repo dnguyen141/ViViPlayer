@@ -13,6 +13,11 @@ import { setAuthToken } from '../../utils/setAuthToken';
 import api from '../../utils/api';
 import { WS_BACKEND, VIDEO_PREFIX } from '../../constants/constants';
 
+/**
+ * Displays the controls of the player and the markers.
+ * @param {*} param0 Props being passed to the function.
+ * @returns UI to be rendered.
+ */
 const Video = ({ loadUser, loading, user, logout, setCurrentShot }) => {
   const [userState, setUserState] = useState(null);
   const [session, setSession] = useState({
@@ -63,8 +68,14 @@ const Video = ({ loadUser, loading, user, logout, setCurrentShot }) => {
     }
   };
 
-  var markerListTemp = [];
+  /**
+   * Reference to the current video.
+   */
   const videoRef = React.useRef(null);
+
+  /**
+   * The current video.
+   */
   const playerRef = React.useRef(null);
   const socketRef = React.useRef(null);
   const [player, setPlayer] = useState(null);
@@ -81,6 +92,10 @@ const Video = ({ loadUser, loading, user, logout, setCurrentShot }) => {
   const [lastTime, setLastTime] = useState(0); //used for calculating autostop
   const [visibleChapterText, setVisibleChapterText] = useState('hidden'); // -100% = disappear, 0 = appear
   //const [shotsData, setShotsData] = useState(null);
+
+  /**
+   * Inserting the shots received by the api and inserting them into the markerList- 
+   */   
   const insertArray = async () => {
     var markerListTemp = [];
     // if(markerList == null)
@@ -97,13 +112,11 @@ const Video = ({ loadUser, loading, user, logout, setCurrentShot }) => {
     setMarkerList(markerListTemp);
   };
 
-  //maps the markers of the markersList to individual <div> elements that then get drawn on the progressbar. every change of the markerList should also rerender the
-  // markers. if not markers has to be an state too.
+  /**
+  * Maps the markers in the markersList to individual div elements representing the shots.
+  */
   function calculateMarkerPosition() {
-    // if (videoRef != null && videoRef.current.readyState < 1) {
-    //   setTimeout(calculateMarkerPosition, 500);
-    //   return;
-    // }
+    
     if (videoRef != null) {
       if (videoRef.current.readyState < 1) {
         setTimeout(calculateMarkerPosition, 500);
@@ -123,7 +136,9 @@ const Video = ({ loadUser, loading, user, logout, setCurrentShot }) => {
     );
   }
 
-  //plays and pauses the video and switches between the right icons for the state of the player.
+   /**
+   * Toggles between play and pause for everyone. It also changes the picture of the play button.
+   */
   function togglePlayPause() {
     if (videoRef != null && videoRef.current.paused) {
       videoRef.current.play();
@@ -148,13 +163,16 @@ const Video = ({ loadUser, loading, user, logout, setCurrentShot }) => {
     }
   }
 
-  //switches the AutoStop value to the opposite.
+   /**
+   * Switches on or off the autostop feature.
+   */
   function toggleautoStop() {
     setAutoStop(!autoStop);
   }
 
-  //The function updates the all visual elements of the player. It stops the the player when the autostop mode is selected when a shot is reached
-  // and displays the current chapter title. It also manages the current time and the progressbar.
+  /**
+  * Updates all visual elements of the player and also manages the autoplay functionality for everyone.
+  */
   async function updatePlayer() {
     // if it finds a marker at that spot it will pause the video and display the chapter text. the bigger time gap is necessary because the execution time isnt predictable and it will cause the player to skip the marker.
     var temp;
@@ -233,7 +251,10 @@ const Video = ({ loadUser, loading, user, logout, setCurrentShot }) => {
     });
   }
 
-  //gets called when a button in the list gets pressed. it changes the video position to the time specified in the marker.
+  /**
+   * Changes to the corresponding chapter when clicking the button of the shot.
+   * @param {Event} e Event when clicking on one of the buttons in the list.
+  */   
   function handleListClick(e) {
     if (videoRef != null && videoRef.current.readyState > 2) {
       //check if video is ready to be played
@@ -257,13 +278,10 @@ const Video = ({ loadUser, loading, user, logout, setCurrentShot }) => {
     }
   }
 
-  const createShotFunc = ({ text }) => {
-    //post the shot to the server
-    var time = videoRef.current.currentTime;
-    createShot(time, text);
-    insertArray();
-  };
-
+  /**
+    * Changes the video position of the player and the progressbar.
+    * @param {Event} e Event when clicked on the progressbar.
+    */ 
   function changeVideoPosition(e) {
     if (user.is_mod) {
       if (videoRef != null && videoRef.current.readyState > 2) {

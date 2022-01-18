@@ -22,7 +22,7 @@ import { WS_BACKEND, VIDEO_PREFIX } from '../../constants/constants';
 let socket;
 
 /**
- * Displays a user interface to add, edit and delete shots and surveys.
+ * Displays a user interface to add, edit and delete shots and surveys. It also contains the controls of the player.
  * @param {*} param0 Props being passed to the function.
  * @returns UI to be rendered.
  */
@@ -82,8 +82,13 @@ const VideoEdit = ({ loadUser, loading, user, createShot, deleteShotById }) => {
       );
     }
   };
-
+  /**
+   * Reference to the current video.
+   */
   const videoRef = React.useRef(null);
+  /**
+   * The current video.
+   */
   const playerRef = React.useRef(null);
   const [player, setPlayer] = useState(null);
   const [progressBarWidth, setProgressBarWidth] = useState('100%');
@@ -240,7 +245,7 @@ const VideoEdit = ({ loadUser, loading, user, createShot, deleteShotById }) => {
   };
    /**
     * Changes the video position of the player and the progressbar.
-    * @param {MouseEvent} e MouseEvent when clicked on the progressbar.
+    * @param {Event} e Event when clicked on the progressbar.
     */ 
   function changeVideoPosition(e) {
     if (videoRef != null && videoRef.current.readyState > 2) {
@@ -283,9 +288,7 @@ const VideoEdit = ({ loadUser, loading, user, createShot, deleteShotById }) => {
     }
     return () => {};
   }, [videoRef]);
-  /**
-   * 
-   */  
+  
  
   // connect to socket and update sentence table
   useEffect(() => {
@@ -309,7 +312,10 @@ const VideoEdit = ({ loadUser, loading, user, createShot, deleteShotById }) => {
     fetchShots();
     insertArray();
   }, [updateTable, loading]);
-
+   
+  /**
+   * Gets the shots and inserts them into the markerList
+   */ 
   const updateState = () => {
     fetchShots();
     insertArray();

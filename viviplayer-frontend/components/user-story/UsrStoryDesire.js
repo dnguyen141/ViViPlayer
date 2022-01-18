@@ -6,19 +6,36 @@ import { Button, Input, Table, Space, Popconfirm, Form, Select } from 'antd';
 import EditUserStory from './EditUserStory';
 import styles from './user-story.module.css';
 import { VIDEO_PREFIX, WS_BACKEND } from '../../constants/constants';
-let socket;
 import { createUserStory, deleteUserStoryById } from '../../actions/session.action';
+
+/**
+ * Socket for updates between users.
+ */
+let socket;
+
+/**
+ * Displays an user interface to create a User Story.
+ * @param {*} param0 Props being passed to the function.
+ * @returns Interface to be rendered.
+ */
 const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById, currentShot }) => {
   const [updateTable, setupdateTable] = useState(false);
   const [userStories, setUserStories] = useState(null);
   const [shotList, setShotList] = useState(null);
   const [form] = Form.useForm();
-
+  
+  /**
+   * Updates the User Stories if something has changed.
+   */
   async function fetchUserStories() {
     const res = await api.get('/session/userstories/');
     setUserStories(res.data);
     console.log(res.data);
   }
+
+  /**
+   * Updates the Shotlist if something has changed.
+   */
   const updateShotList = async () => {
     const shotsData = await api.get('/session/shots/');
     setShotList(shotsData.data);
@@ -26,6 +43,7 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById, currentSho
   useEffect(() => {
     fetchUserStories();
   }, [updateTable]);
+
   // connect to socket and update sentence table
   useEffect(() => {
     const url = (WS_BACKEND || 'ws://' + window.location.host) + '/ws/player/sessionid12345/';
@@ -38,7 +56,11 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById, currentSho
     };
     updateShotList();
   }, []);
-
+  /**
+  * Returns the title of the corresponding shot with the given id.
+  * @param {number} shot The id of the shot which title should be returned.
+  * @returns Title of the shot with the given id.
+  */   
   const getTitle = (shot) => {
      if(shotList){
         for(let i = 0; i < shotList.length; i++){
@@ -49,6 +71,9 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById, currentSho
      }
      
   }
+  /**
+   * Updates the state of the table locally and for every other user.
+   */
   const updateState = () => {
     socket.send(
       JSON.stringify({
@@ -58,7 +83,10 @@ const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById, currentSho
     );
     setupdateTable(!updateTable);
   };
-  // create table
+  
+   /**
+   * Defines the columns of the User Story table.
+   */  
   const columns = [
     {
       title: 'User',
