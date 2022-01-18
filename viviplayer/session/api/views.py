@@ -155,60 +155,60 @@ class ExportODT(APIView):
     # Public for testing. Should only be accessed by a Moderator
     permission_classes = [IsModerator]
 
-    # New odt document
-    textdoc = OpenDocumentText()
-
-    # ODF Styles
-    withbreak = Style(name="WithBreak", parentstylename="Standard", family="paragraph")
-    withbreak.addElement(ParagraphProperties(breakbefore="page"))
-    textdoc.automaticstyles.addElement(withbreak)
-
-    pstyle = Style(name="Paragraph 1", family="paragraph", defaultoutlinelevel="1")
-    pstyle.addElement(
-        TextProperties(attributes={"fontsize": "10pt", "fontfamily": "Arial"})
-    )
-    textdoc.automaticstyles.addElement(pstyle)
-
-    h1style = Style(name="Heading 1", family="paragraph", defaultoutlinelevel="1")
-    h1style.addElement(
-        TextProperties(
-            attributes={"fontsize": "20pt", "fontweight": "bold", "fontfamily": "Arial"}
-        )
-    )
-    textdoc.automaticstyles.addElement(h1style)
-
-    h2style = Style(name="Heading 2", family="paragraph", defaultoutlinelevel="1")
-    h2style.addElement(
-        TextProperties(
-            attributes={"fontsize": "16pt", "fontweight": "bold", "fontfamily": "Arial"}
-        )
-    )
-    textdoc.automaticstyles.addElement(h2style)
-
-    h3style = Style(name="Heading 3", family="paragraph", defaultoutlinelevel="1")
-    h3style.addElement(
-        TextProperties(
-            attributes={"fontsize": "12pt", "fontweight": "bold", "fontfamily": "Arial"}
-        )
-    )
-    textdoc.automaticstyles.addElement(h3style)
-
     def get(self, request, format=None):
+
+        # New odt document
+        textdoc = OpenDocumentText()
+
+        # ODF Styles
+        withbreak = Style(name="WithBreak", parentstylename="Standard", family="paragraph")
+        withbreak.addElement(ParagraphProperties(breakbefore="page"))
+        textdoc.automaticstyles.addElement(withbreak)
+
+        pstyle = Style(name="Paragraph 1", family="paragraph", defaultoutlinelevel="1")
+        pstyle.addElement(
+            TextProperties(attributes={"fontsize": "10pt", "fontfamily": "Arial"})
+        )
+        textdoc.automaticstyles.addElement(pstyle)
+
+        h1style = Style(name="Heading 1", family="paragraph", defaultoutlinelevel="1")
+        h1style.addElement(
+            TextProperties(
+                attributes={"fontsize": "20pt", "fontweight": "bold", "fontfamily": "Arial"}
+            )
+        )
+        textdoc.automaticstyles.addElement(h1style)
+
+        h2style = Style(name="Heading 2", family="paragraph", defaultoutlinelevel="1")
+        h2style.addElement(
+            TextProperties(
+                attributes={"fontsize": "16pt", "fontweight": "bold", "fontfamily": "Arial"}
+            )
+        )
+        textdoc.automaticstyles.addElement(h2style)
+
+        h3style = Style(name="Heading 3", family="paragraph", defaultoutlinelevel="1")
+        h3style.addElement(
+            TextProperties(
+                attributes={"fontsize": "12pt", "fontweight": "bold", "fontfamily": "Arial"}
+            )
+        )
+        textdoc.automaticstyles.addElement(h3style)
 
         # Get session and add to document
         ses = ViViSession.objects.get()
-        p = P(text=ses.name, stylename=self.h1style)
-        self.textdoc.text.addElement(p)
-        self.textdoc.text.addElement(P())
+        p = P(text=ses.name, stylename=h1style)
+        textdoc.text.addElement(p)
+        textdoc.text.addElement(P())
 
         # Get Shots
         for (i, s) in enumerate(Shot.objects.all()):
 
             # Add Shot images to document
-            p = P(text=s.title, stylename=self.h2style)
-            self.textdoc.text.addElement(p)
-            self.textdoc.text.addElement(P())
-            href = self.textdoc.addPicture(s.image)
+            p = P(text=s.title, stylename=h2style)
+            textdoc.text.addElement(p)
+            textdoc.text.addElement(P())
+            href = textdoc.addPicture(s.image)
             photoframe = Frame(
                 width="300pt",
                 height="200pt",
@@ -220,61 +220,58 @@ class ExportODT(APIView):
             p.addElement(photoframe)
 
             # Add User Stories for Shot
-            p = P(text="User Stories:", stylename=self.h3style)
-            self.textdoc.text.addElement(p)
-            self.textdoc.text.addElement(P())
+            p = P(text="User Stories:", stylename=h3style)
+            textdoc.text.addElement(p)
+            textdoc.text.addElement(P())
 
             for (j, us) in enumerate(UserStory.objects.filter(shot=s)):
                 userstorytext = (
-                    us.damit + " " + us.moechteichals1 + " " + us.moechteichals2
+                    "Damit " + us.damit + " möchte ich als " + us.moechteichals1 + " " + us.moechteichals2
                 )
-                p = P(text=userstorytext, stylename=self.pstyle)
-                self.textdoc.text.addElement(p)
-                self.textdoc.text.addElement(P())
+                p = P(text=userstorytext, stylename=pstyle)
+                textdoc.text.addElement(p)
+                textdoc.text.addElement(P())
 
             # Add Sentences for Shot
-            p = P(text="Sätze:", stylename=self.h3style)
-            self.textdoc.text.addElement(p)
-            self.textdoc.text.addElement(P())
+            p = P(text="Sätze:", stylename=h3style)
+            textdoc.text.addElement(p)
+            textdoc.text.addElement(P())
 
             for (j, sent) in enumerate(Sentence.objects.filter(shot=s)):
-                p = P(text=sent.text, stylename=self.pstyle)
-                self.textdoc.text.addElement(p)
-                self.textdoc.text.addElement(P())
+                p = P(text=sent.text, stylename=pstyle)
+                textdoc.text.addElement(p)
+                textdoc.text.addElement(P())
 
             # Add Questions for Shot
-            p = P(text="Fragen:", stylename=self.h3style)
-            self.textdoc.text.addElement(p)
-            self.textdoc.text.addElement(P())
+            p = P(text="Fragen:", stylename=h3style)
+            textdoc.text.addElement(p)
+            textdoc.text.addElement(P())
 
             for (j, q) in enumerate(Question.objects.filter(shot=s)):
-                self.textdoc.text.addElement(P(text=q.title, stylename=self.pstyle))
+                textdoc.text.addElement(P(text=q.title, stylename=pstyle))
 
                 # Add Answers for Question
-                self.textdoc.text.addElement(
-                    P(text=f'- Antwortmöglichkeiten: {", ".join(q.choices)}', stylename=self.pstyle)
+                textdoc.text.addElement(
+                    P(text=f'- Antwortmöglichkeiten: {", ".join(q.choices)}', stylename=pstyle)
                 )
                 if q.typeOfQuestion == "question":
-                    p = P(text="- Richtige Antwort: " + str(q.correct_answer), stylename=self.pstyle)
-                    self.textdoc.text.addElement(p)
-
-                # Add blank line
-                self.textdoc.text.addElement(P())
+                    p = P(text="- Richtige Antwort: " + str(q.correct_answer), stylename=pstyle)
+                    textdoc.text.addElement(p)
 
                 for choice in q.choices:
                     stat = "-- " + str(choice) + ": " + str(q.answers.count(choice)) + " Stimmen"
-                    p = P(text=stat, stylename=self.pstyle)
-                    self.textdoc.text.addElement(p)
+                    p = P(text=stat, stylename=pstyle)
+                    textdoc.text.addElement(p)
 
                 # Add blank line
-                self.textdoc.text.addElement(P())
+                textdoc.text.addElement(P())
 
             # Add page break
-            p = P(stylename=self.withbreak)
-            self.textdoc.text.addElement(p)
+            p = P(stylename=withbreak)
+            textdoc.text.addElement(p)
 
-        # Save document to server
-        self.textdoc.save("media/" + str(ses.id) + ".odt")
+        # save document to server
+        textdoc.save("media/" + str(ses.id) + ".odt")
 
         # Return document
         data = open("media/" + str(ses.id) + ".odt", "rb")
