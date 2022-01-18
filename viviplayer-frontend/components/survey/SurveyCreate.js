@@ -11,7 +11,7 @@ import { WS_BACKEND } from '../../constants/constants';
 
 let socket;
 const { Option } = Select;
-function SurveyCreate({ createSurvey, currentShot, shotData}) {
+function SurveyCreate({ createSurvey, currentShot, shotData }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [ask, setAsk] = useState(null);
   const [shotList, setShotList] = useState(null);
@@ -20,8 +20,8 @@ function SurveyCreate({ createSurvey, currentShot, shotData}) {
   const router = useRouter();
   const pathName = router.pathname;
   const updateShotList = async () => {
-    const shotsData = await api.get('/session/shots/');
-    setShotList(shotsData.data);
+    // const shotsData = await api.get('/session/shots/');
+    setShotList(shotData);
   };
   // connect to socket and update sentence table
   useEffect(() => {
@@ -49,7 +49,13 @@ function SurveyCreate({ createSurvey, currentShot, shotData}) {
     }
   };
   const createQuestion = async (values) => {
-    await createSurvey(values.shot, values.title, values.choices, values.correct_answer, values.type);
+    await createSurvey(
+      values.shot,
+      values.title,
+      values.choices,
+      values.correct_answer,
+      values.type
+    );
     socket.send(
       JSON.stringify({
         action: 'surveyChange',
@@ -78,28 +84,26 @@ function SurveyCreate({ createSurvey, currentShot, shotData}) {
         rules={[{ required: true, message: 'Wählen Sie bitte hier ein Shot' }]}
       >
         <Select placeholder="Wählen Sie bitte hier ein Shot" allowClear>
-          {pathName === '/video-edit' ?
-              ""
-            :
+          {pathName === '/video-edit' ? (
+            ''
+          ) : (
             <Select.Option key="current" value={currentShot}>
               Momentaner Shot
-            </Select.Option> 
-          }
-          {pathName === '/video-edit' ? 
-            shotData &&
-            shotData.map((item, index) => (
-              <Option value={item.id} key={index}>
-                {item.title}
-              </Option>
-            )) : 
-            shotList &&
-            shotList.map((item, index) => (
-              <Option value={item.id} key={index}>
-                {item.title}
-              </Option>
-            ))  
-          }
-          
+            </Select.Option>
+          )}
+          {pathName === '/video-edit'
+            ? shotData &&
+              shotData.map((item, index) => (
+                <Option value={item.id} key={index}>
+                  {item.title}
+                </Option>
+              ))
+            : shotList &&
+              shotList.map((item, index) => (
+                <Option value={item.id} key={index}>
+                  {item.title}
+                </Option>
+              ))}
         </Select>
       </Form.Item>
       <Form.Item
@@ -177,8 +181,8 @@ function SurveyCreate({ createSurvey, currentShot, shotData}) {
         style={{ marginBottom: '1em' }}
         name="correct_answer"
         label="Antwort"
-        initialValue={""}
-      // rules={[{ required: true }]}
+        initialValue={''}
+        // rules={[{ required: true }]}
       >
         <Input rows={4} placeholder="Geben Sie hier die richtige Antwort ein.(wenn es gibt)" />
       </Form.Item>

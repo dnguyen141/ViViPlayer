@@ -28,7 +28,6 @@ const VideoEdit = ({ loadUser, loading, user, createShot, deleteShotById }) => {
     tan: 'dummytan',
     video_path: ''
   });
-  const [isModalVisible, setIsModalVisible] = useState(false);
 
   // const [session, setSession] = useState(null);
   useEffect(async () => {
@@ -42,21 +41,34 @@ const VideoEdit = ({ loadUser, loading, user, createShot, deleteShotById }) => {
     // try to fetch a user, if no token or invalid token we
     // will get a 401 response from our API
     loadUser();
-    const res = await api.get('/session/');
-    setSession(res.data[0]);
+    fetchSession();
     // log user out from all tabs if they log out in one tab
     // window.addEventListener('storage', () => {
     //   if (!localStorage.token) {
     //     type: LOGOUT;
     //   }
     // });
-  }, [loading]);
+  }, []);
   // set user state
   useEffect(() => {
     if (user) {
       setUserState(user);
     }
   }, []);
+
+  const fetchSession = async () => {
+    try {
+      const res = await api.get('/session/');
+      setSession(res.data[0]);
+    } catch (error) {
+      console.log(error);
+      setSession(
+        ...session,
+        (video_path =
+          'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4')
+      );
+    }
+  };
 
   var markerListTemp = [];
   const videoRef = React.useRef(null);
@@ -85,16 +97,22 @@ const VideoEdit = ({ loadUser, loading, user, createShot, deleteShotById }) => {
         text: shotsData.data[i]['title']
       });
     }
-
     setMarkerList(markerListTemp);
   };
 
   //maps the markers of the markersList to individual <div> elements that then get drawn on the progressbar. every change of the markerList should also rerender the
   // markers. if not markers has to be an state too.
   function calculateMarkerPosition() {
-    if (videoRef.current.readyState < 1) {
-      setTimeout(calculateMarkerPosition, 500);
-      return;
+    // if (videoRef != null && videoRef.current.readyState < 1) {
+    //   setTimeout(calculateMarkerPosition, 500);
+    //   return;
+    // }
+
+    if (videoRef != null) {
+      if (videoRef.current.readyState < 1) {
+        setTimeout(calculateMarkerPosition, 500);
+        return;
+      }
     }
 
     // das war vor dem loop
@@ -111,7 +129,7 @@ const VideoEdit = ({ loadUser, loading, user, createShot, deleteShotById }) => {
 
   //plays and pauses the video and switches between the right icons for the state of the player.
   function togglePlayPause() {
-    if (videoRef.current.paused) {
+    if (videoRef != null && videoRef.current.paused) {
       videoRef.current.play();
       setPlayPauseIcon(<PauseOutlined style={{ fontSize: '150%' }} />);
     } else {
@@ -129,17 +147,20 @@ const VideoEdit = ({ loadUser, loading, user, createShot, deleteShotById }) => {
   // and displays the current chapter title. It also manages the current time and the progressbar.
   function updatePlayer() {
     // if it finds a marker at that spot it will pause the video and display the chapter text. the bigger time gap is necessary because the execution time isnt predictable and it will cause the player to skip the marker.
-    var temp = markerList.find(
-      (x) => videoRef.current.currentTime >= x.time && videoRef.current.currentTime <= x.time + 1
-    );
-
-    if (temp != null) {
+    // var temp = markerList.find(
+    //   (x) => videoRef.current.currentTime >= x.time && videoRef.current.currentTime <= x.time + 1
+    // );
+    var temp;
+    if (temp != null && videoRef != null) {
+      temp = markerList.find(
+        (x) => videoRef.current.currentTime >= x.time && videoRef.current.currentTime <= x.time + 1
+      );
       setVisibleChapterText('visible');
       setLastTime(temp.time); //last marker that was found.
       setChapterText(temp.text);
       if (autoStop) {
         //when the player didnt already stop at this marker the player gets paused. this prevents multiple pauses at one marker and it doesnt get stuck
-        if (videoRef.current.currentTime >= lastTime + 1) {
+        if (videoRef != null && videoRef.current.currentTime >= lastTime + 1) {
           videoRef.current.pause();
         }
       }
@@ -154,19 +175,22 @@ const VideoEdit = ({ loadUser, loading, user, createShot, deleteShotById }) => {
       }
 
       //checks if the site has loaded all necessary data and if not rerun the function after 500ms.
-      if (videoRef.current.readyState < 2) {
+      if (videoRef != null && videoRef.current.readyState < 2) {
         setTimeout(updatePlayer, 500);
       }
 
       //toggles between the play and pause icons based on the current state of the player.
-      if (videoRef.current.paused) {
+      if (videoRef != null && videoRef.current.paused) {
         setPlayPauseIcon(<CaretRightOutlined style={{ fontSize: '150%' }} />);
       } else {
         setPlayPauseIcon(<PauseOutlined style={{ fontSize: '150%' }} />);
       }
 
       //the progressbar's position gets set based on the percentage the video has completed.
-      var currentPosition = videoRef.current.currentTime / videoRef.current.duration;
+      var currentPosition;
+      if (videoRef != null) {
+        currentPosition = videoRef.current.currentTime / videoRef.current.duration;
+      }
       setProgressBarWidth(currentPosition * 100 + '%');
 
       //calculates the current time and the duration of the video in minutes and seconds and then brings in the right format.
@@ -188,17 +212,19 @@ const VideoEdit = ({ loadUser, loading, user, createShot, deleteShotById }) => {
     });
   }
 
-  const createShotFunc = async({ text }) => {
+  const createShotFunc = async ({ text }) => {
     //post the shot to the server
-    var time = videoRef.current.currentTime;
-    await createShot(time, text);
-    updateState();
-    setupdateTable(!updateTable);
-    form.resetFields();
+    if (videoRef != null) {
+      var time = videoRef.current.currentTime;
+      await createShot(time, text);
+      updateState();
+      setupdateTable(!updateTable);
+      form.resetFields();
+    }
   };
 
   function changeVideoPosition(e) {
-    if (videoRef.current.readyState > 2) {
+    if (videoRef != null && videoRef.current.readyState > 2) {
       //check if video is ready to be played
 
       //calculating the relative position of the click.
@@ -225,10 +251,10 @@ const VideoEdit = ({ loadUser, loading, user, createShot, deleteShotById }) => {
   }, [markerList]);
 
   useEffect(() => {
-    if (videoRef.current != null) {
+    if (videoRef != null && videoRef.current != null) {
       setPlayer(videoRef.current);
     }
-    if (!playerRef.current && videoRef.current != null) {
+    if (videoRef != null && !playerRef.current && videoRef.current != null) {
       const videoElement = videoRef.current;
       if (!videoElement) return;
 
@@ -236,29 +262,9 @@ const VideoEdit = ({ loadUser, loading, user, createShot, deleteShotById }) => {
         console.log('player is ready');
       }));
     }
-    return () => { };
+    return () => {};
   }, [videoRef]);
 
-  //===============================================================================
-  /*useEffect(() => {
-    // check for token in LS when app first runs
-    if (localStorage.token) {
-      // if there is a token set axios headers for all requests
-      setAuthToken(localStorage.token);
-    } else {
-      Router.push('/');
-    }
-    // try to fetch a user, if no token or invalid token we
-    // will get a 401 response from our API
-    loadUser();
-
-    // log user out from all tabs if they log out in one tab
-    // window.addEventListener('storage', () => {
-    //   if (!localStorage.token) {
-    //     type: LOGOUT;
-    //   }
-    // });
-  }, []);*/
   const layout = {
     labelCol: { span: 5 },
     wrapperCol: { span: 14 }
@@ -310,20 +316,19 @@ const VideoEdit = ({ loadUser, loading, user, createShot, deleteShotById }) => {
       title: 'Titel',
       dataIndex: 'title',
       render: (title) => <p>{title}</p>
-    }
+    },
     /*{
       title: 'Image Path',
       dataIndex: 'img_path',
       render: (img_path) => <>{img_path}</>
     },*/
-    ,
     {
       title: 'Aktionen',
       dataIndex: 'id',
       render: (id, record) => (
         <div>
           <Space size="middle">
-            <EditShot id={id} context={record} updateFunc={updateState} videoRef={videoRef}/>
+            <EditShot id={id} context={record} updateFunc={updateState} videoRef={videoRef} />
             <Popconfirm
               title="Löschen dieser Session ist nicht rückgängig zu machen. Weiter?"
               onConfirm={() => {
@@ -436,10 +441,15 @@ const VideoEdit = ({ loadUser, loading, user, createShot, deleteShotById }) => {
           <Table columns={columns} pagination={false} dataSource={shotData} scroll={{ y: 300 }} />
           <Divider />
 
-          <SurveyTable shotData={shotData}/>
+          <SurveyTable shotData={shotData} />
 
-          <SurveyCreate shotData={shotData}/>
-          <Button type="primary" className="csv-button" style={{ float: 'right' , marginTop: '-2.6em'}} onClick={() => Router.push("/video")}>
+          <SurveyCreate shotData={shotData} />
+          <Button
+            type="primary"
+            className="csv-button"
+            style={{ float: 'right', marginTop: '-2.6em' }}
+            onClick={() => Router.push('/video')}
+          >
             Session Erstellen
           </Button>
         </Col>

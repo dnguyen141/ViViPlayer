@@ -33,22 +33,35 @@ const Video = ({ loadUser, loading, user, logout, setCurrentShot }) => {
     // try to fetch a user, if no token or invalid token we
     // will get a 401 response from our API
     loadUser();
-    const res = await api.get('/session/');
-    // console.log(res.data[0]);
-    setSession(res.data[0]);
+    fetchSession();
     // log user out from all tabs if they log out in one tab
     // window.addEventListener('storage', () => {
     //   if (!localStorage.token) {
     //     type: LOGOUT;
     //   }
     // });
-  }, [loading]);
+  }, []);
   // set user state
   useEffect(() => {
     if (user) {
       setUserState(user);
     }
   }, []);
+
+  const fetchSession = async () => {
+    try {
+      const res = await api.get('/session/');
+      setSession(res.data[0]);
+      console.log(session);
+    } catch (error) {
+      console.log(error);
+      setSession(
+        ...session,
+        (video_path =
+          'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4')
+      );
+    }
+  };
 
   var markerListTemp = [];
   const videoRef = React.useRef(null);
@@ -72,13 +85,13 @@ const Video = ({ loadUser, loading, user, logout, setCurrentShot }) => {
     var markerListTemp = [];
     // if(markerList == null)
     const shotsData = await api.get('/session/shots/');
-    if(shotsData){
-        for (let i = 0; i < shotsData.data.length; i++) {
-            markerListTemp.push({
-                time: shotsData.data[i]['time'],
-                text: shotsData.data[i]['title']
-             });
-        }
+    if (shotsData) {
+      for (let i = 0; i < shotsData.data.length; i++) {
+        markerListTemp.push({
+          time: shotsData.data[i]['time'],
+          text: shotsData.data[i]['title']
+        });
+      }
     }
     setCurrentShot(shotsData.data[0].id);
     setMarkerList(markerListTemp);
@@ -87,9 +100,15 @@ const Video = ({ loadUser, loading, user, logout, setCurrentShot }) => {
   //maps the markers of the markersList to individual <div> elements that then get drawn on the progressbar. every change of the markerList should also rerender the
   // markers. if not markers has to be an state too.
   function calculateMarkerPosition() {
-    if (videoRef.current.readyState < 1) {
-      setTimeout(calculateMarkerPosition, 500);
-      return;
+    // if (videoRef != null && videoRef.current.readyState < 1) {
+    //   setTimeout(calculateMarkerPosition, 500);
+    //   return;
+    // }
+    if (videoRef != null) {
+      if (videoRef.current.readyState < 1) {
+        setTimeout(calculateMarkerPosition, 500);
+        return;
+      }
     }
 
     // das war vor dem loop
@@ -106,7 +125,7 @@ const Video = ({ loadUser, loading, user, logout, setCurrentShot }) => {
 
   //plays and pauses the video and switches between the right icons for the state of the player.
   function togglePlayPause() {
-    if (videoRef.current.paused) {
+    if (videoRef != null && videoRef.current.paused) {
       videoRef.current.play();
       setPlayPauseIcon(<PauseOutlined style={{ fontSize: '150%' }} />);
 
@@ -136,35 +155,35 @@ const Video = ({ loadUser, loading, user, logout, setCurrentShot }) => {
 
   //The function updates the all visual elements of the player. It stops the the player when the autostop mode is selected when a shot is reached
   // and displays the current chapter title. It also manages the current time and the progressbar.
-  async function updatePlayer()  {
+  async function updatePlayer() {
     // if it finds a marker at that spot it will pause the video and display the chapter text. the bigger time gap is necessary because the execution time isnt predictable and it will cause the player to skip the marker.
-    var temp = markerList.find(
-      (x) => videoRef.current.currentTime >= x.time && videoRef.current.currentTime <= x.time + 1
-    );
+    var temp;
 
-    if (temp != null) {
+    if (videoRef != null && temp != null) {
+      temp = markerList.find(
+        (x) => videoRef.current.currentTime >= x.time && videoRef.current.currentTime <= x.time + 1
+      );
       setVisibleChapterText('visible');
-      console.log(lastTime);
       setLastTime(temp.time); //last marker that was found.
       setChapterText(temp.text);
-      const shotsData = await api.get("/session/shots/");
-      if(shotsData){
-          for (let i = 0; i < shotsData.data.length; i++) {
-            if(shotsData.data[i]['time'] == temp.time){
-                setCurrentShot(shotsData.data[i]['id']);
-                break;
-            }
+      const shotsData = await api.get('/session/shots/');
+      if (shotsData) {
+        for (let i = 0; i < shotsData.data.length; i++) {
+          if (shotsData.data[i]['time'] == temp.time) {
+            setCurrentShot(shotsData.data[i]['id']);
+            break;
+          }
         }
-      }  
-      
+      }
+
       if (autoStop) {
         //when the player didnt already stop at this marker the player gets paused. this prevents multiple pauses at one marker and it doesnt get stuck
-        if (videoRef.current.currentTime >= lastTime + 1) {
+        if (videoRef != null && videoRef.current.currentTime >= lastTime + 1) {
           videoRef.current.pause();
           socketRef.current.send(
             JSON.stringify({
-            action: 'pause',
-            time: temp.time
+              action: 'pause',
+              time: temp.time
             })
           );
         }
@@ -173,8 +192,6 @@ const Video = ({ loadUser, loading, user, logout, setCurrentShot }) => {
       setLastTime(-1); //resets the last chapter so that it can be played again.
     }
 
-    
-
     requestAnimationFrame(() => {
       //checks whether the chapter title should still be shown
       if (lastTime === -1 || videoRef.current.currentTime > lastTime + 5) {
@@ -182,12 +199,12 @@ const Video = ({ loadUser, loading, user, logout, setCurrentShot }) => {
       }
 
       //checks if the site has loaded all necessary data and if not rerun the function after 500ms.
-      if (videoRef.current.readyState < 2) {
+      if (videoRef != null && videoRef.current.readyState < 2) {
         setTimeout(updatePlayer, 500);
       }
 
       //toggles between the play and pause icons based on the current state of the player.
-      if (videoRef.current.paused) {
+      if (videoRef != null && videoRef.current.paused) {
         setPlayPauseIcon(<CaretRightOutlined style={{ fontSize: '150%' }} />);
       } else {
         setPlayPauseIcon(<PauseOutlined style={{ fontSize: '150%' }} />);
@@ -218,7 +235,7 @@ const Video = ({ loadUser, loading, user, logout, setCurrentShot }) => {
 
   //gets called when a button in the list gets pressed. it changes the video position to the time specified in the marker.
   function handleListClick(e) {
-    if (videoRef.current.readyState > 2) {
+    if (videoRef != null && videoRef.current.readyState > 2) {
       //check if video is ready to be played
       var text = e.target.innerHTML.toString();
       if (text != null) {
@@ -231,10 +248,10 @@ const Video = ({ loadUser, loading, user, logout, setCurrentShot }) => {
           videoRef.current.pause();
           socketRef.current.send(
             JSON.stringify({
-            action: 'pause',
-            time: videoRef.current.currentTime
-        })
-      );
+              action: 'pause',
+              time: videoRef.current.currentTime
+            })
+          );
         }
       }
     }
@@ -248,8 +265,8 @@ const Video = ({ loadUser, loading, user, logout, setCurrentShot }) => {
   };
 
   function changeVideoPosition(e) {
-    if(user.is_mod){
-        if (videoRef.current.readyState > 2) {
+    if (user.is_mod) {
+      if (videoRef != null && videoRef.current.readyState > 2) {
         //check if video is ready to be played
 
         //calculating the relative position of the click.
@@ -263,11 +280,11 @@ const Video = ({ loadUser, loading, user, logout, setCurrentShot }) => {
 
         socketRef.current.send(
           JSON.stringify({
-          action: 'skip',
-          time: videoRef.current.currentTime
+            action: 'skip',
+            time: videoRef.current.currentTime
           })
         );
-       }
+      }
     }
   }
 
@@ -291,12 +308,12 @@ const Video = ({ loadUser, loading, user, logout, setCurrentShot }) => {
     socket.onmessage = function (e) {
       const data = JSON.parse(e.data);
       if (data.action === 'play') {
-        if (videoRef.current) {
+        if (videoRef != null && videoRef.current) {
           videoRef.current.play();
           videoRef.current.currentTime = data.time + '';
         }
       } else if (data.action === 'pause') {
-        if (videoRef.current) {
+        if (videoRef != null && videoRef.current) {
           videoRef.current.pause();
           videoRef.current.currentTime = data.time + '';
           console.log(data.time + '');
@@ -305,15 +322,14 @@ const Video = ({ loadUser, loading, user, logout, setCurrentShot }) => {
         if (user != null && user.is_mod == true) {
           Router.push('/dashboard');
         } else {
-
           logout();
           Router.push('/');
         }
-      } else if(data.action === "skip"){
-          if(videoRef.current){
-              videoRef.current.currentTime = data.time;
-          }  
+      } else if (data.action === 'skip') {
+        if (videoRef != null && videoRef.current) {
+          videoRef.current.currentTime = data.time;
         }
+      }
     };
 
     return () => {
@@ -322,10 +338,10 @@ const Video = ({ loadUser, loading, user, logout, setCurrentShot }) => {
   }, [socketRef, videoRef]);
 
   useEffect(() => {
-    if (videoRef.current != null) {
+    if (videoRef != null && videoRef.current != null) {
       setPlayer(videoRef.current);
     }
-    if (!playerRef.current && videoRef.current != null) {
+    if (!playerRef.current && videoRef.current != null && videoRef != null) {
       const videoElement = videoRef.current;
       if (!videoElement) return;
 
@@ -352,7 +368,13 @@ const Video = ({ loadUser, loading, user, logout, setCurrentShot }) => {
               preload="auto"
               data-setup='{"fluid":true}' //This is used so that the video player is responsive
               className="video-js vjs-default-skin vjs-big-play-centered"
-              onClick={user != null && user.is_mod == true ? togglePlayPause : (e) => { return }}
+              onClick={
+                user != null && user.is_mod == true
+                  ? togglePlayPause
+                  : (e) => {
+                      return;
+                    }
+              }
             >
               <source src={VIDEO_PREFIX + session.video_path} type="video/mp4" />
             </video>
