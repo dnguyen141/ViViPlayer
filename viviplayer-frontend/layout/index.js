@@ -13,6 +13,10 @@ import { WS_BACKEND, VIDEO_PREFIX } from '../constants/constants';
 const Vivilayout = ({ children, logout, user }) => {
   const [isMod, setIsMod] = useState(false);
   const router = useRouter();
+
+  /**
+   * Pathname reffering to the current path.
+   */
   const pathName = router.pathname;
   const userDataGet = async () => {
     const userData = await api.get("/auth/user/");

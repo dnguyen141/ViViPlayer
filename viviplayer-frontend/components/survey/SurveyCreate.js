@@ -9,20 +9,39 @@ import { createSurvey } from '../../actions/survey.action';
 import { connect } from 'react-redux';
 import { WS_BACKEND } from '../../constants/constants';
 
+/**
+ * Socket for updates between users.
+ */
 let socket;
+
 const { Option } = Select;
+
+/**
+ * Displays an user interface to create a survey.
+ * @param {*} param0 Props being passed to the function.
+ * @returns Interface to be rendered.
+ */
 function SurveyCreate({ createSurvey, currentShot, shotData }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [ask, setAsk] = useState(null);
   const [shotList, setShotList] = useState(null);
   const [answer, setAnswer] = useState([]);
   const [form] = Form.useForm();
+  
   const router = useRouter();
+  /**
+   * Pathname reffering to the current path.
+   */
   const pathName = router.pathname;
+
+  /**
+   * Update the shotlist when something changes.
+   */
   const updateShotList = async () => {
-    // const shotsData = await api.get('/session/shots/');
+    const shotsData = await api.get('/session/shots/');
     setShotList(shotData);
   };
+
   // connect to socket and update sentence table
   useEffect(() => {
     const url = (WS_BACKEND || 'ws://' + window.location.host) + '/ws/player/sessionid12345/';
@@ -48,6 +67,10 @@ function SurveyCreate({ createSurvey, currentShot, shotData }) {
       sm: { span: 21, offset: 4 }
     }
   };
+  /**
+   * Gets triggered when the Form gets submitted via the button and updates the question.
+   * @param {Object} values New values for the questiom. Value gets automatically set by the onFinish attribute of <Form>
+   */
   const createQuestion = async (values) => {
     await createSurvey(
       values.shot,
@@ -67,6 +90,10 @@ function SurveyCreate({ createSurvey, currentShot, shotData }) {
     setIsModalVisible(false);
     form.resetFields();
   };
+  
+  /**
+   * Dialogue for creating a question. Part of the response of the component.
+   */
   let CreateQuestion = (
     <Form form={form} name="Frage erstellt" onFinish={createQuestion} autoComplete="off">
       <Form.Item
