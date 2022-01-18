@@ -295,6 +295,9 @@ function SurveyTable({ deleteQuestion, shotData }) {
     }
   };
 
+  /**
+  * Data for the statistic.
+  */ 
   const data = {
     labels,
     datasets: test

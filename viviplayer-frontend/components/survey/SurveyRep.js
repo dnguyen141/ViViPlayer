@@ -192,8 +192,8 @@ const SurveyRep = ({ sendAnswer }) => {
   };
   
   /**
-   * Data for the Bar Component.
-   */
+   * Data for the statistic.
+   */ 
   const data = {
     labels,
     datasets: test
