@@ -85,15 +85,25 @@ function SurveyTable({ deleteQuestion, shotData }) {
 
 
   const getTitle = (shot) => {
-     if(shotList){
-        for(let i = 0; i < shotList.length; i++){
-         if(shotList[i].id == shot){
-             return shotList[i].title;
+     if(shotData){
+        for(let i = 0; i < shotData.length; i++){
+         if(shotData[i].id == shot){
+             return shotData[i].title;
          }
         } 
      }
      
   }
+  const getShotTitle = (shot) => {
+    if(shotList){
+       for(let i = 0; i < shotList.length; i++){
+        if(shotList[i].id == shot){
+            return shotList[i].title;
+        }
+       } 
+    }
+    
+ }
 
   const updateShotList = async () => {
     const shotsData = await api.get('/session/shots/');
@@ -147,7 +157,7 @@ function SurveyTable({ deleteQuestion, shotData }) {
       title: 'Typ',
       dataIndex: 'typeToRender',
       width: '15%',
-      render: (type) => <span>{type === 'checkbox' ? 'Survey' : 'Question'}</span>
+      render: (type) => <span>{type === 'checkbox' ? 'Umfrage' : 'Frage'}</span>
     },
     {
       title: 'Auswahl',
@@ -167,7 +177,7 @@ function SurveyTable({ deleteQuestion, shotData }) {
        title: 'Shot',
        dataIndex: 'shot',
        width: '20%',
-       render: (shot) => <div>{getTitle(shot)}</div>,
+       render: (shot) => <div>{pathName === '/video' ? getShotTitle(shot) : getTitle(shot)}</div>,
       
        
      },
