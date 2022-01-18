@@ -83,31 +83,28 @@ function SurveyTable({ deleteQuestion, shotData }) {
     }
   }, [questionData, statistic, idQuestion]);
 
-
   const getTitle = (shot) => {
-     if(shotData){
-        for(let i = 0; i < shotData.length; i++){
-         if(shotData[i].id == shot){
-             return shotData[i].title;
-         }
-        } 
-     }
-     
-  }
-  const getShotTitle = (shot) => {
-    if(shotList){
-       for(let i = 0; i < shotList.length; i++){
-        if(shotList[i].id == shot){
-            return shotList[i].title;
+    if (shotData) {
+      for (let i = 0; i < shotData.length; i++) {
+        if (shotData[i].id == shot) {
+          return shotData[i].title;
         }
-       } 
+      }
     }
-    
- }
+  };
+  const getShotTitle = (shot) => {
+    if (shotList) {
+      for (let i = 0; i < shotList.length; i++) {
+        if (shotList[i].id == shot) {
+          return shotList[i].title;
+        }
+      }
+    }
+  };
 
   const updateShotList = async () => {
-    const shotsData = await api.get('/session/shots/');
-    setShotList(shotsData.data);
+    //const shotsData = await api.get('/session/shots/');
+    setShotList(shotData);
   };
   const fetchStatistic = async () => {
     const res = await api.get(`/session/statistics/${idQuestion}/`);
@@ -174,13 +171,11 @@ function SurveyTable({ deleteQuestion, shotData }) {
       }
     },
     {
-       title: 'Shot',
-       dataIndex: 'shot',
-       width: '20%',
-       render: (shot) => <div>{pathName === '/video' ? getShotTitle(shot) : getTitle(shot)}</div>,
-      
-       
-     },
+      title: 'Shot',
+      dataIndex: 'shot',
+      width: '20%',
+      render: (shot) => <div>{pathName === '/video' ? getShotTitle(shot) : getTitle(shot)}</div>
+    },
     {
       title: 'Aktionen',
       dataIndex: 'id',
@@ -190,7 +185,7 @@ function SurveyTable({ deleteQuestion, shotData }) {
           {pathName === '/video-edit' ? (
             <Space size="middle">
               <div>
-                <SurveyEdit id={id} context={record} updateFunc={updateState} shotData={shotData}/>
+                <SurveyEdit id={id} context={record} updateFunc={updateState} shotData={shotData} />
                 <Popconfirm
                   title="Löschen dieses Satzes ist nicht rückgängig zu machen. Weiter?"
                   onConfirm={() => {

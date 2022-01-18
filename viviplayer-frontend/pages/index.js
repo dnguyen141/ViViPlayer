@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { setAuthToken } from '../utils/setAuthToken';
 
 const { TabPane } = Tabs;
-const Home = ({ isAuthenticated, login, loadUser, user, register, loginWithTanFunc }) => {
+const Home = ({ login, loadUser, user, register, loginWithTanFunc }) => {
   useEffect(() => {
     // check for token in LS when app first runs
     if (localStorage.token) {
@@ -25,7 +25,7 @@ const Home = ({ isAuthenticated, login, loadUser, user, register, loginWithTanFu
     //     type: LOGOUT;
     //   }
     // });
-  }, [login, user]);
+  }, []);
   if (user) {
     if (user.is_mod == true) {
       Router.push('/dashboard');
