@@ -63,7 +63,6 @@ function SurveyTable({ deleteQuestion, shotData }) {
   useEffect(() => {
     if (questions != null && idQuestion != null) {
       setIdquestion(idQuestion);
-      console.log('run inside');
       fetchStatistic();
       fetchQuestion();
     }
@@ -227,7 +226,7 @@ function SurveyTable({ deleteQuestion, shotData }) {
                     setIdquestion(id);
                   }}
                 >
-                  Statistic
+                  Statistik
                 </a>
               </div>
             </Space>
