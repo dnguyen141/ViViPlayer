@@ -205,19 +205,25 @@ class ExportODT(APIView):
         for (i, s) in enumerate(Shot.objects.all()):
 
             # Add Shot images to document
-            p = P(text=s.title, stylename=h2style)
-            textdoc.text.addElement(p)
-            textdoc.text.addElement(P())
             href = textdoc.addPicture(s.image)
             photoframe = Frame(
                 width="300pt",
                 height="200pt",
                 x="56pt",
                 y="56pt",
-                anchortype="paragraph",
+                anchortype="character",
             )
             photoframe.addElement(Image(href=href))
+            p = P(stylename=h1style)
             p.addElement(photoframe)
+            textdoc.text.addElement(p)
+
+            # Add shot title
+            p = P(text=s.title, stylename=h2style)
+            textdoc.text.addElement(p)
+
+            # Add linebreak
+            textdoc.text.addElement(P())
 
             # Add User Stories for Shot
             p = P(text="User Stories:", stylename=h3style)
