@@ -30,7 +30,7 @@ let socket;
 /**
  * Displays a table of all surveys.
  * @param {*} param0 Props being passed to the function.
- * @returns Interface to be rendered.
+ * @returns UI to be rendered.
  */
 function SurveyTable({ deleteQuestion, shotData }) {
   ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);

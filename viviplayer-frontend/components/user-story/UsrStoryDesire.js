@@ -16,7 +16,7 @@ let socket;
 /**
  * Displays an user interface to create a User Story.
  * @param {*} param0 Props being passed to the function.
- * @returns Interface to be rendered.
+ * @returns UI to be rendered.
  */
 const UsrStoryDesire = ({ createUserStory, user, deleteUserStoryById, currentShot }) => {
   const [updateTable, setupdateTable] = useState(false);

@@ -19,7 +19,7 @@ const { Option } = Select;
 /**
  * Displays an user interface to create a survey.
  * @param {*} param0 Props being passed to the function.
- * @returns Interface to be rendered.
+ * @returns UI to be rendered.
  */
 function SurveyCreate({ createSurvey, currentShot, shotData }) {
   const [isModalVisible, setIsModalVisible] = useState(false);

@@ -35,7 +35,7 @@ const formItemLayoutWithOutLabel = {
 /**
  * Displays an user interface to edit a survey.
  * @param {*} param0 Props being passed to the function.
- * @returns Interface to be rendered.
+ * @returns UI to be rendered.
  */
 const SurveyEdit = ({ id, context, updateFunc, updateSurveyById, shotData }) => {
   const [shotList, setShotList] = useState(null);

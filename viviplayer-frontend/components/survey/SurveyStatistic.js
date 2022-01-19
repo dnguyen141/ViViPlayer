@@ -16,7 +16,7 @@ import PropTypes from 'prop-types';
 /**
  * Displays the statistics to the survey.
  * @param {*} param0 Props being passed to the function.
- * @returns Interface to be rendered.
+ * @returns UI to be rendered.
  */
 function SurveyStatistic({ id, context }) {
   ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);

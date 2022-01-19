@@ -5,6 +5,11 @@ import UserStory from '../../components/user-story/UserStory';
 import Vivilayout from '../../layout';
 import { Row, Col } from 'antd';
 
+/**
+ * Creates the video page.
+ * @param {*} param0 Props being passed to the function.
+ * @returns UI to be rendered.
+ */
 function index(props) {
   const [currentShot, setCurrentShot] = React.useState(1);
   return (

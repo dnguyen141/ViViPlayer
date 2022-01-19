@@ -8,7 +8,7 @@ import { updateSession } from '../../actions/session.action';
 /**
  * Displays an user interface to edit an existing session.
  * @param {*} param0 Props being passed to the function.
- * @returns Interface to be rendered.
+ * @returns UI to be rendered.
  */
 function EditSession({ id, updateSession, updateFunc }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -76,7 +76,7 @@ function EditSession({ id, updateSession, updateFunc }) {
 
   /**
    * Logging the error on the console when onFinish fails.
-   * @param {*} errorInfo Information of the specific error. Automatically set by onFinishFailed.
+   * @param {string} errorInfo Information of the specific error. Automatically set by onFinishFailed.
    */
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);

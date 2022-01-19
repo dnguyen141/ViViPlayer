@@ -14,7 +14,7 @@ let socket;
 /**
  * Displays an user interface to create, edit and delete a session.
  * @param {*} param0 Props being passed to the function.
- * @returns Interface to be rendered.
+ * @returns UI to be rendered.
  */
 function SessionForm({ createSession, sessionInfo, updateLayoutState, updateLayout }) {
   const [videoInfo, setVideoInfo] = useState(null);
@@ -74,7 +74,7 @@ function SessionForm({ createSession, sessionInfo, updateLayoutState, updateLayo
 
   /**
    * Logging the error on the console when onFinish fails.
-   * @param {*} errorInfo Information of the specific error. Automatically set by onFinishFailed.
+   * @param {string} errorInfo Information of the specific error. Automatically set by onFinishFailed.
    */   
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);

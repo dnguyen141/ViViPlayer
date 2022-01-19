@@ -11,7 +11,7 @@ const { TextArea } = Input;
 /**
  * Displays an user interface to create, delete and edit a sentence.
  * @param {Object} param0 Props being passed to the function.
- * @returns Interface to be rendered.
+ * @returns UI to be rendered.
  */
 const Satz = ({ deleteSentenceById, createSentence, user, currentShot }) => {
   const [updateTable, setupdateTable] = useState(false);

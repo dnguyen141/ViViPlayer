@@ -9,6 +9,11 @@ import { setAuthToken } from '../../utils/setAuthToken';
 import { connect } from 'react-redux';
 import { Col, Row, Divider } from 'antd';
 
+/**
+ * Creates the dashboard page where the user can create, edit and delete a session.
+ * @param {*} param0 Props being passed to the function.
+ * @returns UI to be rendered.
+ */
 const Dashboard = ({ user, loadUser, loading }) => {
   const [updateTable, setupdateTable] = useState(false);
   const [sessionData, setSessionData] = useState([]);
@@ -35,6 +40,10 @@ const Dashboard = ({ user, loadUser, loading }) => {
   if (user && user.is_mod == false) {
     Router.push('/video');
   }
+
+  /**
+   * Updates the session state if something changed.
+   */
   async function fetchSession() {
     const res = await api.get('/session/');
     setSessionData(res.data);

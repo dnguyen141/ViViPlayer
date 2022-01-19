@@ -33,7 +33,7 @@ const tabList = [
 /**
  * Displays the three different tabs.
  * @param {*} param0 Props being passed to the function.
- * @returns Interface to be rendered.
+ * @returns UI to be rendered.
  */
 const UserStory = ({ currentShot }) => {
   // connect to socket and update sentence table

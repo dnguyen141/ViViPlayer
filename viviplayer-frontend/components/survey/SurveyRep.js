@@ -26,7 +26,7 @@ let socket;
 /**
  * Displays an user interface to respond to a survey.
  * @param {*} param0 Props being passed to the function.
- * @returns Interface to be rendered.
+ * @returns UI to be rendered.
  */
 const SurveyRep = ({ sendAnswer }) => {
   ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);

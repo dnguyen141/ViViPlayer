@@ -8,7 +8,7 @@ import api from '../../utils/api';
 /**
  * Displays an user interface to edit an existing sentence.
  * @param {Object} param0 Props being passed to the function.
- * @returns Interface to be rendered.
+ * @returns UI to be rendered.
  */
 const EditSentence = ({ id, context, updateFunc, updateSentenceById }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);

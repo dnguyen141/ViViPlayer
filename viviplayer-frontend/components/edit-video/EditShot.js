@@ -8,7 +8,7 @@ import { Notification } from '../../utils/notification';
 /**
  * Displays an user interface to edit an existing shot.
  * @param {*} param0 Props being passed to the function.
- * @returns Interface to be rendered.
+ * @returns UI to be rendered.
  */
 const EditShot = ({ id, context, updateFunc, updateShotById, videoRef }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);

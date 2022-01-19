@@ -7,7 +7,7 @@ import { updateUserStoryById } from '../../actions/session.action';
 /**
  * Displays an user interface to edit a userstory.
  * @param {*} param0 Props being passed to the function.
- * @returns Interface to be rendered.
+ * @returns UI to be rendered.
  */
 const EditUserStory = ({ id, context, updateFunc, updateUserStoryById }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
