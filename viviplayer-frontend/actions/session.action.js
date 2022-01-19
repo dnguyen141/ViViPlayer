@@ -39,7 +39,10 @@ import {
 } from './types';
 import { Notification } from '../utils/notification';
 
-// get session
+/**
+ * Get the session information.
+ * @returns Session information api response.
+ */
 export const getInfoSession = () => async (dispatch) => {
   try {
     const res = await api.get('/session/');
@@ -60,7 +63,11 @@ export const getInfoSession = () => async (dispatch) => {
   }
 };
 
-// Create Session
+/**
+ * Creates a new session.
+ * @param {*} formData Object that includes necessary data to create a new session with the api.
+ * @returns New session api response.
+ */
 export const createSession = (formData) => async (dispatch) => {
   try {
     const res = await api.post('/session/', formData, {
@@ -86,7 +93,12 @@ export const createSession = (formData) => async (dispatch) => {
   }
 };
 
-// update session
+/**
+ * Updates a existing session with the given ID.
+ * @param {Formdata} formData Object that includes necessary data to create a new session with the api.
+ * @param {number} id Id of the Session that should be updated.
+ * @returns Session update based on id api response.
+ */
 export const updateSession = (formData, id) => async (dispatch) => {
   try {
     const res = await api.put(`/session/${id}/`, formData, {
@@ -111,7 +123,11 @@ export const updateSession = (formData, id) => async (dispatch) => {
     });
   }
 };
-// get Sentences
+
+/**
+ * Load all the sentences from the backend server.
+ * @returns Sentences information api response.
+ */
 export const getSentences = () => async (dispatch) => {
   try {
     const res = await api.get('/session/sentences/');
@@ -130,7 +146,11 @@ export const getSentences = () => async (dispatch) => {
   }
 };
 
-// delete session
+/**
+ * Delete a session based on id.
+ * @param {number} id Id of the to be deleted session.
+ * @returns Session deleted api response.
+ */
 export const deleteSessionById = (id) => async (dispatch) => {
   try {
     const res = await api.delete(`/session/${id}/`);
@@ -149,7 +169,11 @@ export const deleteSessionById = (id) => async (dispatch) => {
   }
 };
 
-// get sentences by ids
+/**
+ * Load a sentence based on id from backend server.
+ * @param {number} id Id of the sentence that will be loaded.
+ * @returns Sentence information based on id api response.
+ */
 export const getSentenceById = (id) => async (dispatch) => {
   try {
     const res = await api.get(`/session/sentences/${id}/`);
@@ -168,7 +192,13 @@ export const getSentenceById = (id) => async (dispatch) => {
   }
 };
 
-// update sentence by id
+/**
+ * Updates an existing sentence based on id.
+ * @param {string} text Text of the sentence that will be updated
+ * @param {number} shot Shot id of which shot the sentence is written for.
+ * @param {number} id Id of the sentence that will be updated.
+ * @returns Sentence information update based on id api response.
+ */
 export const updateSentenceById = (text, shot, id) => async (dispatch) => {
   const body = { text, shot };
   try {
@@ -190,7 +220,11 @@ export const updateSentenceById = (text, shot, id) => async (dispatch) => {
   }
 };
 
-// get sentences by ids
+/**
+ * Deletes an existing sentence based on id.
+ * @param {number} id Id of the sentence that will be deleted.
+ * @returns Sentence deleted api response.
+ */
 export const deleteSentenceById = (id) => async (dispatch) => {
   try {
     const res = await api.delete(`/session/sentences/${id}/`);
@@ -209,7 +243,12 @@ export const deleteSentenceById = (id) => async (dispatch) => {
   }
 };
 
-// create new sentence
+/**
+ * Creates a new sentence.
+ * @param {string} text Text input from user.
+ * @param {number} shot Shot id of which shot the sentence is written for.
+ * @returns New sentence api response.
+ */
 export const createSentence = (text, shot) => async (dispatch) => {
   const body = { text, shot };
   try {
@@ -229,7 +268,10 @@ export const createSentence = (text, shot) => async (dispatch) => {
   }
 };
 
-// get all user stories from server
+/**
+ * Load all the user stories from backend server.
+ * @returns User stories information api response.
+ */
 export const getAllUserStories = () => async (dispatch) => {
   try {
     const res = await api.get('/session/userstories/');
@@ -248,7 +290,14 @@ export const getAllUserStories = () => async (dispatch) => {
   }
 };
 
-// create new user story
+/**
+ * Creates a new user story.
+ * @param {*} damit First part of user story template.
+ * @param {*} moechteichals1 Second part of user story template.
+ * @param {*} moechteichals2 Third part of user story template.
+ * @param {*} shot Shot id of which shot the user story is written for.
+ * @returns New user story api response.
+ */
 export const createUserStory =
   (damit, moechteichals1, moechteichals2, shot) => async (dispatch) => {
     const body = { damit, moechteichals1, moechteichals2, shot };
@@ -270,7 +319,15 @@ export const createUserStory =
     }
   };
 
-// update user story by id
+/**
+ * Updates an existing user story based on id.
+ * @param {*} damit First user story part that will be updated.
+ * @param {*} moechteichals1 Second user story part that will be updated.
+ * @param {*} moechteichals2 Third user story part that will be updated.
+ * @param {*} shot Shot id of which shot the user story is written for.
+ * @param {*} id Id of the user story that will be updated.
+ * @returns User story information update based on id api response.
+ */
 export const updateUserStoryById =
   (damit, moechteichals1, moechteichals2, shot, id) => async (dispatch) => {
     const body = { damit, moechteichals1, moechteichals2, shot };
@@ -292,7 +349,11 @@ export const updateUserStoryById =
     }
   };
 
-// get user story by ids
+/**
+ * Load a user story based on id from the backend server.
+ * @param {number} id Id of the user story that will be loaded.
+ * @returns User story information based on id api response.
+ */
 export const getUserStoryById = (id) => async (dispatch) => {
   try {
     const res = await api.get(`/session/userstories/${id}/`);
@@ -311,7 +372,11 @@ export const getUserStoryById = (id) => async (dispatch) => {
   }
 };
 
-// delete user story by id
+/**
+ * Deletes an extisting user story based on id.
+ * @param {number} id Id of an user story that will be deleted.
+ * @returns User story deleted api response.
+ */
 export const deleteUserStoryById = (id) => async (dispatch) => {
   try {
     const res = await api.delete(`/session/userstories/${id}/`);
@@ -330,7 +395,12 @@ export const deleteUserStoryById = (id) => async (dispatch) => {
   }
 };
 
-// create new shot
+/**
+ * Creates a new shot.
+ * @param {number} time Current time in the video.
+ * @param {string} title Title of the shot.
+ * @returns New shot api response.
+ */
 export const createShot = (time, title) => async (dispatch) => {
   const body = { time, title };
   try {
@@ -350,7 +420,11 @@ export const createShot = (time, title) => async (dispatch) => {
   }
 };
 
-// delete shot by ids
+/**
+ * Deletes an existing shot based on id.
+ * @param {number} id Id of the shot that will be deleted.
+ * @returns Shot deleted api response. 
+ */
 export const deleteShotById = (id) => async (dispatch) => {
   try {
     const res = await api.delete(`/session/shots/${id}/`);
@@ -369,7 +443,10 @@ export const deleteShotById = (id) => async (dispatch) => {
   }
 };
 
-// get Shots
+/**
+ * Load shots from backend server.
+ * @returns Shots information api response.
+ */
 export const getShots = () => async (dispatch) => {
   try {
     const res = await api.get('/session/shots/');
@@ -388,6 +465,13 @@ export const getShots = () => async (dispatch) => {
   }
 };
 
+/**
+ * Updates an existing shot based on id.
+ * @param {number} time New time to overwrite the previous time.
+ * @param {string} title New title of the shots.
+ * @param {number} id Id of the shots that will be updated.
+ * @returns Shot information update based on id api response.
+ */
 export const updateShotById = (time, title, id) => async (dispatch) => {
   const body = { time, title};
   try {

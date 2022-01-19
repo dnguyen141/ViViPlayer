@@ -2,10 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { Card, Divider } from 'antd';
 import PropTypes from 'prop-types';
 import Satz from '../satz/Satz';
-import UsrStoryDesire from './UsrStoryDesire';
+import UsrStoryDesire from '../user-story/UsrStoryDesire';
 import SurveyContainer from '../survey/SurveyContainer';
 import { VIDEO_PREFIX, WS_BACKEND } from '../../constants/constants';
+
+/**
+ * Socket for updates between users.
+ */
 let socket;
+
+/**
+ * Tabs that are displayed on the /video site.
+ */
 const tabList = [
   {
     key: 'tab1',
@@ -21,7 +29,13 @@ const tabList = [
   }
 ];
 
-const UserStory = ({ currentShot }) => {
+
+/**
+ * Displays the three different tabs.
+ * @param {*} param0 Props being passed to the function.
+ * @returns UI to be rendered.
+ */
+const TabContainer = ({ currentShot }) => {
   // connect to socket and update sentence table
   useEffect(() => {
     const url = (WS_BACKEND || 'ws://' + window.location.host) + '/ws/player/sessionid12345/';
@@ -34,10 +48,18 @@ const UserStory = ({ currentShot }) => {
     };
   }, []);
   const [activeTabKey1, setActiveTabKey1] = useState('tab1');
+
+  /**
+   * Updates the current active tab key to the right value.
+   * @param {string} key The key of the tab that is now active.
+   */
   const onTab1Change = (key) => {
     setActiveTabKey1(key);
   };
 
+   /**
+   * Defines the content of the tabs. 
+   */    
   const contentList = {
     tab1: (
       <Card style={{ border: '3px solid gray' }}>
@@ -70,6 +92,6 @@ const UserStory = ({ currentShot }) => {
   );
 };
 
-UserStory.propTypes = {};
+TabContainer.propTypes = {};
 
-export default UserStory;
+export default TabContainer;

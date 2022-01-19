@@ -18,8 +18,16 @@ import {
   Legend
 } from 'chart.js';
 
+/**
+ * Socket for updates between users.
+ */
 let socket;
 
+/**
+ * Displays an user interface to respond to a survey.
+ * @param {*} param0 Props being passed to the function.
+ * @returns UI to be rendered.
+ */
 const SurveyRep = ({ sendAnswer }) => {
   ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
   const [ask, setAsk] = useState(null);
@@ -60,6 +68,10 @@ const SurveyRep = ({ sendAnswer }) => {
       }
     };
   }, []);
+
+  /**
+   * Updates the statistic state if something changes.
+   */
   const fetchStatistic = async () => {
     try {
       const res = await api.get(`/session/statistics/${idQuestion}/`);
@@ -68,6 +80,10 @@ const SurveyRep = ({ sendAnswer }) => {
       setStatistic(null);
     }
   };
+
+  /**
+   * Updates the question data state if something changes.
+   */
   const fetchQuestion = async () => {
     try {
       const res = await api.get(`/session/questions/${idQuestion}/`);
@@ -76,6 +92,10 @@ const SurveyRep = ({ sendAnswer }) => {
       setQuestionData(null);
     }
   };
+
+  /**
+   * Updates the state of the questions if something changes.
+   */
   const fetchQuestions = async () => {
     try {
       const res = await api.get('/session/questions/');
@@ -137,6 +157,10 @@ const SurveyRep = ({ sendAnswer }) => {
     ],
     completedHtml: `Vielen Dank für Deine Antwort`
   };
+
+  /**
+   * The current survey getting displayed.
+   */
   const survey = new Survey.Model(json1);
   survey.onComplete.add((sender) => {
     sendAnswer(questionData.id, sender.data.answer, questionData.typeToRender);
@@ -151,7 +175,9 @@ const SurveyRep = ({ sendAnswer }) => {
     localStorage.removeItem('questionID');
   });
 
-  // data for statics
+  /**
+   * Options for the statistic.
+   */
   const options = {
     responsive: true,
     plugins: {
@@ -164,12 +190,18 @@ const SurveyRep = ({ sendAnswer }) => {
       }
     }
   };
-
+  
+  /**
+   * Data for the statistic.
+   */ 
   const data = {
     labels,
     datasets: test
   };
 
+  /**
+   * View before answering the Survey.
+   */  
   let BeforeAnswers = (
     <>
       {questionData != null ? (
@@ -182,6 +214,10 @@ const SurveyRep = ({ sendAnswer }) => {
       {questionData != null ? <Bar options={options} data={data} /> : ''}
     </>
   );
+
+  /**
+   * View after answering the Survey.
+   */  
   let AfterAnswers = (
     <>
       <p style={{ textAlign: 'center', width: '100%' }}>Vielen Dank für Deine Antwort</p>

@@ -22,7 +22,16 @@ import {
   Legend
 } from 'chart.js';
 
+/**
+ * Socket for updates between users.
+ */
 let socket;
+
+/**
+ * Displays a table of all surveys.
+ * @param {*} param0 Props being passed to the function.
+ * @returns UI to be rendered.
+ */
 function SurveyTable({ deleteQuestion, shotData }) {
   ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
   const [questions, setQuestions] = useState(null);
@@ -51,13 +60,6 @@ function SurveyTable({ deleteQuestion, shotData }) {
     // try to fetch a user, if no token or invalid token we
     // will get a 401 response from our API
     loadUser();
-
-    // log user out from all tabs if they log out in one tab
-    // window.addEventListener('storage', () => {
-    //   if (!localStorage.token) {
-    //     type: LOGOUT;
-    //   }
-    // });
   }, []);
 
   useEffect(() => {
@@ -68,6 +70,7 @@ function SurveyTable({ deleteQuestion, shotData }) {
     }
     updateShotList();
   }, [questions, idQuestion]);
+
   useEffect(() => {
     setLablels(questionData != null ? questionData.choices : []);
     if (statistic != null) {
@@ -81,7 +84,12 @@ function SurveyTable({ deleteQuestion, shotData }) {
       ]);
     }
   }, [questionData, statistic, idQuestion]);
-
+   
+  /**
+  * Returns the title of the corresponding shot with the given id. Works with props and only in video-edit.
+  * @param {number} shot The id of the shot which title should be returned.
+  * @returns Title of the shot with the given id.
+  */    
   const getTitle = (shot) => {
     if (shotData) {
       for (let i = 0; i < shotData.length; i++) {
@@ -91,6 +99,12 @@ function SurveyTable({ deleteQuestion, shotData }) {
       }
     }
   };
+
+  /**
+  * Returns the title of the corresponding shot with the given id. Works with ShotList state and only in video-edit.
+  * @param {number} shot The id of the shot which title should be returned.
+  * @returns Title of the shot with the given id.
+  */ 
   const getShotTitle = (shot) => {
     if (shotList) {
       for (let i = 0; i < shotList.length; i++) {
@@ -101,24 +115,45 @@ function SurveyTable({ deleteQuestion, shotData }) {
     }
   };
 
+   /**
+   * Update the shotlist when something changes.
+   */    
   const updateShotList = async () => {
     const shotsData = await api.get('/session/shots/');
     setShotList(shotsData.data);
   };
+
+  /**
+   * Updates the statistic state if something changes.
+   */
   const fetchStatistic = async () => {
     const res = await api.get(`/session/statistics/${idQuestion}/`);
     setStatistic(res.data);
   };
+
+  /**
+   * Updates the question data state if something changes.
+   */
   const fetchQuestion = async () => {
     const res = await api.get(`/session/questions/${idQuestion}/`);
     setQuestionData(res.data);
   };
+
   const router = useRouter();
+
+  /**
+   * Pathname reffering to the current path.
+   */
+  const pathName = router.pathname;
+
+  /**
+   * Updates the state of the questions if something changes.
+   */
   const fetchQuestions = async () => {
     const res = await api.get('/session/questions/');
     setQuestions(res.data);
   };
-  const pathName = router.pathname;
+
   // connect to socket and update sentence table
   useEffect(() => {
     const url = (WS_BACKEND || 'ws://' + window.location.host) + '/ws/player/sessionid12345/';
@@ -135,9 +170,17 @@ function SurveyTable({ deleteQuestion, shotData }) {
   useEffect(() => {
     fetchQuestions();
   }, [updateTable]);
+
+  /**
+   * Updates the State of the questions.
+   */
   const updateState = () => {
     fetchQuestions();
   };
+
+   /**
+   * Defines the columns of the survey table.
+   */  
   const columns = [
     {
       title: 'Frage',
@@ -186,7 +229,7 @@ function SurveyTable({ deleteQuestion, shotData }) {
               <div>
                 <SurveyEdit id={id} context={record} updateFunc={updateState} shotData={shotData} />
                 <Popconfirm
-                  title="Löschen dieses Satzes ist nicht rückgängig zu machen. Weiter?"
+                  title="Löschen dieser Frage ist nicht rückgängig zu machen. Weiter?"
                   onConfirm={() => {
                     deleteQuestion(id);
                     updateState();
@@ -235,6 +278,10 @@ function SurveyTable({ deleteQuestion, shotData }) {
       )
     }
   ];
+
+  /**
+   * Options for the statistic.
+   */
   const options = {
     responsive: true,
     plugins: {
@@ -248,6 +295,9 @@ function SurveyTable({ deleteQuestion, shotData }) {
     }
   };
 
+  /**
+  * Data for the statistic.
+  */ 
   const data = {
     labels,
     datasets: test

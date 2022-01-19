@@ -3,16 +3,33 @@ import PropTypes from 'prop-types';
 import { Form, Button, Input, Modal, Spin, Paragraph, Divider } from 'antd';
 import { connect } from 'react-redux';
 import { updateSession } from '../../actions/session.action';
+
+
+/**
+ * Displays an user interface to edit an existing session.
+ * @param {*} param0 Props being passed to the function.
+ * @returns UI to be rendered.
+ */
 function EditSession({ id, updateSession, updateFunc }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [videoInfo, setVideoInfo] = useState(null);
   const [loading, setLoading] = useState(false);
   const [file, setFile] = useState();
   const inputRef = React.useRef();
+
+  /**
+   * Update the File state when it changes.
+   * @param {Event} event Event triggering on change. Automatically given by onChange property of the input.
+   */
   const handleFileChange = async (event) => {
     let fileVideo = event.target.files[0];
     setFile(fileVideo);
   };
+
+  /**
+   * Gets triggered when the Form gets submitted via the button and updates the session.
+   * @param {Object} values New values for the session. Value gets automatically set by the onFinish attribute of <Form>
+   */
   const onFinish = async (values) => {
     const formData = new FormData();
     formData.append('video_path', file);
@@ -30,6 +47,12 @@ function EditSession({ id, updateSession, updateFunc }) {
     updateFunc();
     setIsModalVisible(false);
   };
+
+  /**
+   * The video that gets displayed after you upload a video to the server. Its the same as the current video in the session.
+   * @param {} videoInfoPara Video information containing the TAN, name and video_path.
+   * @returns Video and text that should be displayed.
+   */
   const videoBuild = (videoInfoPara) => {
     return (
       <div>
@@ -50,6 +73,11 @@ function EditSession({ id, updateSession, updateFunc }) {
       </div>
     );
   };
+
+  /**
+   * Logging the error on the console when onFinish fails.
+   * @param {string} errorInfo Information of the specific error. Automatically set by onFinishFailed.
+   */
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
   };

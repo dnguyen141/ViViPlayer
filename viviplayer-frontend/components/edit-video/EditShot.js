@@ -4,8 +4,19 @@ import { Form, Button, Input, Modal } from 'antd';
 import { connect } from 'react-redux';
 import { getShots, updateShotById } from '../../actions/session.action';
 import { Notification } from '../../utils/notification';
+
+/**
+ * Displays an user interface to edit an existing shot.
+ * @param {*} param0 Props being passed to the function.
+ * @returns UI to be rendered.
+ */
 const EditShot = ({ id, context, updateFunc, updateShotById, videoRef }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
+
+   /**
+    * Updates the shot and closes the form.
+    * @param {Object} param0 Object containing time and text to edit to update the shot.
+   */ 
   const updateShot = ({ time, text }) => {
     if(time <= videoRef.current.duration && time >= 0){
         updateShotById(time, text, id);

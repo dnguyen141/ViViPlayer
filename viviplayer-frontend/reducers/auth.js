@@ -1,5 +1,9 @@
 import { USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, LOGOUT, REGISTER_SUCCESS } from '../actions/types';
 
+
+/**
+ * Initial State for the reducer.
+ */
 const initialState = {
   token: '',
   isAuthenticated: false,
@@ -8,6 +12,12 @@ const initialState = {
   user: null
 };
 
+/**
+ * Reducer for Authentication.
+ * @param {*} state The current state.
+ * @param {*} action The action that needs to be handled.
+ * @returns 
+ */
 function authReducer(state = initialState, action) {
   const { type, payload } = action;
 

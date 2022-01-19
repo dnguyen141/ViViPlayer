@@ -5,7 +5,9 @@ import { createWrapper } from 'next-redux-wrapper';
 import rootReducer from './reducers/index.js';
 
 const middleware = [thunk];
-
+/**
+ * Create a new Redux Store.
+ */
 const makeStore = () =>
   createStore(rootReducer, composeWithDevTools(applyMiddleware(...middleware)));
 //const store = createStore(rootReducer, compose(applyMiddleware(...middleware)))

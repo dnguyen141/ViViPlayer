@@ -8,12 +8,19 @@ import { updateSurveyById } from '../../actions/survey.action';
 
 const { Option } = Select;
 
+/**
+ * Layout for the form with label.
+ */
 const formItemLayout = {
   wrapperCol: {
     xs: { span: 21, offset: 4 },
     sm: { span: 21, offset: 4 }
   }
 };
+
+/**
+ * Layout for the form with label.
+ */
 const formItemLayoutWithOutLabel = {
   labelCol: {
     xs: { span: 4 },
@@ -24,23 +31,36 @@ const formItemLayoutWithOutLabel = {
     sm: { span: 21, offset: 4 }
   }
 };
+
+/**
+ * Displays an user interface to edit a survey.
+ * @param {*} param0 Props being passed to the function.
+ * @returns UI to be rendered.
+ */
 const SurveyEdit = ({ id, context, updateFunc, updateSurveyById, shotData }) => {
   const [shotList, setShotList] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [fieldsData, setFieldsData] = useState([]);
 
+   /**
+   * Update the shotlist when something changes.
+   */  
   const updateShotList = async () => {
     const shotsData = await api.get('/session/shots/');
     setShotList(shotsData.data);
   };
+
+  /**
+   * Updates a survey text to the given values.
+   * @param {Object} param0 Object containing all the values the survey should be changed to. 
+   */
   const  updateQuestionInEdit = async ({ shot, title, choices, correct_answer, type }) => {
     await updateSurveyById(shot, title, choices, correct_answer, type, id);
     setIsModalVisible(false);
     updateFunc();
   };
-  const updateChoices = (values) => {
-    console.log(values);
-  };
+
+  
   useEffect(() => {
     updateShotList();
     setFieldsData(context.choices);

@@ -13,28 +13,11 @@ import { Modal } from 'antd';
 import api from '../../utils/api';
 import PropTypes from 'prop-types';
 
-// const data = {
-//   question_id: 9,
-//   question_title: 'day la nam bao nhieu',
-//   data: [
-//     {
-//       choice: '2019',
-//       quantity: 1
-//     },
-//     {
-//       choice: '2020',
-//       quantity: 1
-//     },
-//     {
-//       choice: '2021',
-//       quantity: 1
-//     },
-//     {
-//       choice: '2022',
-//       quantity: 2
-//     }
-//   ]
-// };
+/**
+ * Displays the statistics to the survey.
+ * @param {*} param0 Props being passed to the function.
+ * @returns UI to be rendered.
+ */
 function SurveyStatistic({ id, context }) {
   ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
   console.log(id, context);
@@ -43,6 +26,10 @@ function SurveyStatistic({ id, context }) {
   useEffect(() => {
     setLablels(context ? context.choices : '');
   }, []);
+
+  /**
+   * Options for the statistic.
+   */
   const options = {
     responsive: true,
     plugins: {
@@ -55,6 +42,10 @@ function SurveyStatistic({ id, context }) {
       }
     }
   };
+
+  /**
+   * Data for the statistic.
+   */ 
   const data = {
     labels,
     datasets: [
@@ -70,7 +61,7 @@ function SurveyStatistic({ id, context }) {
         Statistic
       </a>
       <Modal
-        title="Ümfrage statistic"
+        title="Umfrage statistic"
         visible={isModalVisible}
         footer={null}
         onOk={() => setIsModalVisible(false)}

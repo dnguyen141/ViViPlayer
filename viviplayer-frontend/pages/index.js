@@ -8,6 +8,12 @@ import { connect } from 'react-redux';
 import { setAuthToken } from '../utils/setAuthToken';
 
 const { TabPane } = Tabs;
+
+/**
+ * Displays the log in page.
+ * @param {*} param0 Props being passed to the function.
+ * @returns UI to be rendered.
+ */
 const Home = ({ login, loadUser, user, register, loginWithTanFunc }) => {
   useEffect(() => {
     // check for token in LS when app first runs
@@ -33,15 +39,27 @@ const Home = ({ login, loadUser, user, register, loginWithTanFunc }) => {
       Router.push('/video');
     }
   }
-
+   
+   /**
+   * Register a user as a moderator.
+   * @param {Object} param0 Object respresenting the credentials.
+   */
   const registerMod = async ({ username, password1, password2 }) => {
     register(username.trim(), password1.trim(), password2.trim());
   };
-
+   /**
+   * Logs in a user as a moderator.
+   * @param {Object} param0 Object respresenting the credentials.
+   */
   const onFinish = async ({ username, password }) => {
     await login(username.trim(), password.trim());
   };
+  
 
+   /**
+   * Logs in a user as a normal user with a TAN.
+   * @param {Object} param0 Object respresenting the TAN.
+   */
   const loginWithTan = async ({ tan }) => {
     // if (values.tan !== '112021') {
     //   console.log('run here');
@@ -51,7 +69,11 @@ const Home = ({ login, loadUser, user, register, loginWithTanFunc }) => {
     // }
     await loginWithTanFunc(tan.trim());
   };
-
+  
+  /**
+   * Logging the error on the console when onFinish fails.
+   * @param {string} errorInfo Information of the specific error. Automatically set by onFinishFailed.
+   */
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
   };
@@ -75,7 +97,7 @@ const Home = ({ login, loadUser, user, register, loginWithTanFunc }) => {
                 <Input prefix={<NumberOutlined />} placeholder="TAN" />
               </Form.Item>
               <Button type="primary" htmlType="submit">
-                Submit
+                Einloggen
               </Button>
             </Form>
           </TabPane>
@@ -95,11 +117,11 @@ const Home = ({ login, loadUser, user, register, loginWithTanFunc }) => {
               onFinishFailed={onFinishFailed}
               autoComplete="off"
             >
-              <Form.Item className="form-login-label" label="Username" name="username">
+              <Form.Item className="form-login-label" label="Benutzername" name="username">
                 <Input />
               </Form.Item>
 
-              <Form.Item className="form-login-label" label="Password" name="password">
+              <Form.Item className="form-login-label" label="Kennwort" name="password">
                 <Input.Password />
               </Form.Item>
               <Form.Item
@@ -110,7 +132,7 @@ const Home = ({ login, loadUser, user, register, loginWithTanFunc }) => {
                   span: 16
                 }}
               >
-                <Checkbox className="text-white">Remember me</Checkbox>
+                <Checkbox className="text-white">Login merken</Checkbox>
               </Form.Item>
 
               <Form.Item
@@ -120,7 +142,7 @@ const Home = ({ login, loadUser, user, register, loginWithTanFunc }) => {
                 }}
               >
                 <Button type="primary" htmlType="submit">
-                  Submit
+                  Einloggen
                 </Button>
               </Form.Item>
             </Form>

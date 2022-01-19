@@ -16,8 +16,16 @@ import EditShot from './EditShot';
 import Router from 'next/router';
 import { WS_BACKEND, VIDEO_PREFIX } from '../../constants/constants';
 
+/**
+ * Socket for updates between users.
+ */
 let socket;
-// !!! markers need to be an Integer
+
+/**
+ * Displays a user interface to add, edit and delete shots and surveys. It also contains the controls of the player.
+ * @param {*} param0 Props being passed to the function.
+ * @returns UI to be rendered.
+ */
 const VideoEdit = ({ loadUser, loading, user, createShot, deleteShotById }) => {
   const [updateTable, setupdateTable] = useState(false);
   const [shotData, setShotData] = useState(null);
@@ -30,6 +38,8 @@ const VideoEdit = ({ loadUser, loading, user, createShot, deleteShotById }) => {
   });
 
   // const [session, setSession] = useState(null);
+
+
   useEffect(async () => {
     // check for token in LS when app first runs
     if (localStorage.token) {
@@ -56,6 +66,9 @@ const VideoEdit = ({ loadUser, loading, user, createShot, deleteShotById }) => {
     }
   }, []);
 
+  /**
+   * Updates the session state.
+   */  
   const fetchSession = async () => {
     try {
       const res = await api.get('/session/');
@@ -69,9 +82,13 @@ const VideoEdit = ({ loadUser, loading, user, createShot, deleteShotById }) => {
       );
     }
   };
-
-  var markerListTemp = [];
+  /**
+   * Reference to the current video.
+   */
   const videoRef = React.useRef(null);
+  /**
+   * The current video.
+   */
   const playerRef = React.useRef(null);
   const [player, setPlayer] = useState(null);
   const [progressBarWidth, setProgressBarWidth] = useState('100%');
@@ -87,6 +104,9 @@ const VideoEdit = ({ loadUser, loading, user, createShot, deleteShotById }) => {
   const [lastTime, setLastTime] = useState(0);
   const [visibleChapterText, setVisibleChapterText] = useState('hidden'); // -100% = disappear, 0 = appear
 
+  /**
+   * Inserting the shots received by the api and inserting them into the markerList- 
+   */  
   const insertArray = async () => {
     //create and update list of shots
     var markerListTemp = [];
@@ -100,14 +120,11 @@ const VideoEdit = ({ loadUser, loading, user, createShot, deleteShotById }) => {
     setMarkerList(markerListTemp);
   };
 
-  //maps the markers of the markersList to individual <div> elements that then get drawn on the progressbar. every change of the markerList should also rerender the
-  // markers. if not markers has to be an state too.
+ /**
+  * Maps the markers in the markersList to individual div elements representing the shots.
+  */
   function calculateMarkerPosition() {
-    // if (videoRef != null && videoRef.current.readyState < 1) {
-    //   setTimeout(calculateMarkerPosition, 500);
-    //   return;
-    // }
-
+  
     if (videoRef != null) {
       if (videoRef.current.readyState < 1) {
         setTimeout(calculateMarkerPosition, 500);
@@ -115,7 +132,6 @@ const VideoEdit = ({ loadUser, loading, user, createShot, deleteShotById }) => {
       }
     }
 
-    // das war vor dem loop
     setMarkers(
       markerList.map((marker) => (
         <div
@@ -127,7 +143,9 @@ const VideoEdit = ({ loadUser, loading, user, createShot, deleteShotById }) => {
     );
   }
 
-  //plays and pauses the video and switches between the right icons for the state of the player.
+  /**
+   * Toggles between play and pause. It also changes the picture of the play button.
+   */
   function togglePlayPause() {
     if (videoRef != null && videoRef.current.paused) {
       videoRef.current.play();
@@ -138,18 +156,17 @@ const VideoEdit = ({ loadUser, loading, user, createShot, deleteShotById }) => {
     }
   }
 
-  //switches the AutoStop value to the opposite.
+  /**
+   * Switches on or off the autostop feature.
+   */
   function toggleautoStop() {
     setAutoStop(!autoStop);
   }
 
-  //The function updates the all visual elements of the player. It stops the the player when the autostop mode is selected when a shot is reached
-  // and displays the current chapter title. It also manages the current time and the progressbar.
+ /**
+  * Updates all visual elements of the player and also manages the autoplay functionality.
+  */
   function updatePlayer() {
-    // if it finds a marker at that spot it will pause the video and display the chapter text. the bigger time gap is necessary because the execution time isnt predictable and it will cause the player to skip the marker.
-    // var temp = markerList.find(
-    //   (x) => videoRef.current.currentTime >= x.time && videoRef.current.currentTime <= x.time + 1
-    // );
     var temp;
     if (temp != null && videoRef != null) {
       temp = markerList.find(
@@ -212,6 +229,10 @@ const VideoEdit = ({ loadUser, loading, user, createShot, deleteShotById }) => {
     });
   }
 
+  /**
+   * Creates a new shot and displays it in the progressbar.
+   * @param {Object} param0 String containing the text of the new shot.
+   */  
   const createShotFunc = async ({ text }) => {
     //post the shot to the server
     if (videoRef != null) {
@@ -222,7 +243,10 @@ const VideoEdit = ({ loadUser, loading, user, createShot, deleteShotById }) => {
       form.resetFields();
     }
   };
-
+   /**
+    * Changes the video position of the player and the progressbar.
+    * @param {Event} e Event when clicked on the progressbar.
+    */ 
   function changeVideoPosition(e) {
     if (videoRef != null && videoRef.current.readyState > 2) {
       //check if video is ready to be played
@@ -264,11 +288,8 @@ const VideoEdit = ({ loadUser, loading, user, createShot, deleteShotById }) => {
     }
     return () => {};
   }, [videoRef]);
-
-  const layout = {
-    labelCol: { span: 5 },
-    wrapperCol: { span: 14 }
-  };
+  
+ 
   // connect to socket and update sentence table
   useEffect(() => {
     const url = (WS_BACKEND || 'ws://' + window.location.host) + '/ws/player/sessionid12345/';
@@ -280,7 +301,9 @@ const VideoEdit = ({ loadUser, loading, user, createShot, deleteShotById }) => {
       }
     };
   }, []);
-
+  /**
+   * Update the shotData state.
+   */
   async function fetchShots() {
     const res = await api.get('/session/shots');
     setShotData(res.data);
@@ -289,12 +312,17 @@ const VideoEdit = ({ loadUser, loading, user, createShot, deleteShotById }) => {
     fetchShots();
     insertArray();
   }, [updateTable, loading]);
-
+   
+  /**
+   * Gets the shots and inserts them into the markerList
+   */ 
   const updateState = () => {
     fetchShots();
     insertArray();
   };
-
+  /**
+   * Defines the columns of the shottable.
+   */  
   const columns = [
     {
       title: 'ID',
@@ -330,7 +358,7 @@ const VideoEdit = ({ loadUser, loading, user, createShot, deleteShotById }) => {
           <Space size="middle">
             <EditShot id={id} context={record} updateFunc={updateState} videoRef={videoRef} />
             <Popconfirm
-              title="Löschen dieser Session ist nicht rückgängig zu machen. Weiter?"
+              title="Löschen dieses Shots ist nicht rückgängig zu machen. Weiter?"
               onConfirm={() => {
                 deleteShotById(id);
                 updateState();

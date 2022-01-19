@@ -15,6 +15,12 @@ const initialState = {
   sentences: null
 };
 
+/**
+ * Redux Reducer for Session.
+ * @param {*} state Current State
+ * @param {*} action Action that needs to be handled.
+ * @returns 
+ */
 function sessionReducer(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
