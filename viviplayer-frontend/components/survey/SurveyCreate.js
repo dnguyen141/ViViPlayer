@@ -39,7 +39,7 @@ function SurveyCreate({ createSurvey, currentShot, shotData }) {
    */
   const updateShotList = async () => {
     const shotsData = await api.get('/session/shots/');
-    setShotList(shotData);
+    setShotList(shotsData.data);
   };
 
   // connect to socket and update sentence table

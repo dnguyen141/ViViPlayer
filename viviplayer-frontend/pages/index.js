@@ -117,11 +117,11 @@ const Home = ({ login, loadUser, user, register, loginWithTanFunc }) => {
               onFinishFailed={onFinishFailed}
               autoComplete="off"
             >
-              <Form.Item className="form-login-label" label="Username" name="username">
+              <Form.Item className="form-login-label" label="Benutzername" name="username">
                 <Input />
               </Form.Item>
 
-              <Form.Item className="form-login-label" label="Password" name="password">
+              <Form.Item className="form-login-label" label="Kennwort" name="password">
                 <Input.Password />
               </Form.Item>
               <Form.Item
@@ -142,7 +142,7 @@ const Home = ({ login, loadUser, user, register, loginWithTanFunc }) => {
                 }}
               >
                 <Button type="primary" htmlType="submit">
-                  Submit
+                  Einloggen
                 </Button>
               </Form.Item>
             </Form>

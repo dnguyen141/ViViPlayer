@@ -120,7 +120,7 @@ function SurveyTable({ deleteQuestion, shotData }) {
    */    
   const updateShotList = async () => {
     const shotsData = await api.get('/session/shots/');
-    setShotList(shotsData);
+    setShotList(shotsData.data);
   };
 
   /**
