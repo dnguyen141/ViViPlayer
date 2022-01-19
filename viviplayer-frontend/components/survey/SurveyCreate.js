@@ -117,8 +117,8 @@ function SurveyCreate({ createSurvey, currentShot, shotData }) {
               Momentaner Shot
             </Select.Option>
           )}
-          {pathName === '/video-edit'
-            ? shotData &&
+          {pathName === '/video-edit' ? 
+              shotData &&
               shotData.map((item, index) => (
                 <Option value={item.id} key={index}>
                   {item.title}
@@ -210,7 +210,7 @@ function SurveyCreate({ createSurvey, currentShot, shotData }) {
         initialValue={''}
         // rules={[{ required: true }]}
       >
-        <Input rows={4} placeholder="Geben Sie hier die richtige Antwort ein.(wenn es gibt)" />
+        <Input rows={4} placeholder="Geben Sie hier die richtige Antwort ein. (Wenn es eine gibt)" />
       </Form.Item>
 
       <Button type="primary" htmlType="submit">
