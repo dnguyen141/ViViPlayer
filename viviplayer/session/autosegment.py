@@ -13,6 +13,15 @@ from scenedetect.detectors.content_detector import ContentDetector
 
 
 def find_scenes(video_path, session_id):
+    """ scans video to visually identify scenes
+
+           :returns: list of timestamps marking the beginning of scenes
+           :rtype: List[Float]
+           :param video_path: path where videos files are located
+           :type video_path: String
+           :param session_id: session id from model
+           :type session_id: Int
+    """
 
     video_manager = VideoManager([video_path])
     stats_manager = StatsManager()

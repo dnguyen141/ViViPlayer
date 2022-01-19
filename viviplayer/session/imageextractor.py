@@ -13,6 +13,18 @@ from scenedetect.detectors.content_detector import ContentDetector
 
 # Input: path to video file, a session id and a list of time stamps
 def extract(video_path, session_id, timestamps):
+    """ extracts single frames per scene from video and saves them at relative path m
+        edia/screenshots/<session_id>/<nnnnn>.jpg
+
+            :returns: list of timestamps marking the beginning of scenes
+            :rtype: List[Float]
+            :param video_path: path where videos files are located
+            :type video_path: String
+            :param session_id: session id from model
+            :type session_id: Int
+            :param timestamps: list of timestamps marking the beginning of scenes
+            :type timestamps: List[Float]
+    """
 
     video_manager = VideoManager([video_path])
     stats_manager = StatsManager()
