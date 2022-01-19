@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, Divider } from 'antd';
 import PropTypes from 'prop-types';
 import Satz from '../satz/Satz';
-import UsrStoryDesire from './UsrStoryDesire';
+import UsrStoryDesire from '../user-story/UsrStoryDesire';
 import SurveyContainer from '../survey/SurveyContainer';
 import { VIDEO_PREFIX, WS_BACKEND } from '../../constants/constants';
 
@@ -35,7 +35,7 @@ const tabList = [
  * @param {*} param0 Props being passed to the function.
  * @returns UI to be rendered.
  */
-const UserStory = ({ currentShot }) => {
+const TabContainer = ({ currentShot }) => {
   // connect to socket and update sentence table
   useEffect(() => {
     const url = (WS_BACKEND || 'ws://' + window.location.host) + '/ws/player/sessionid12345/';
@@ -92,6 +92,6 @@ const UserStory = ({ currentShot }) => {
   );
 };
 
-UserStory.propTypes = {};
+TabContainer.propTypes = {};
 
-export default UserStory;
+export default TabContainer;

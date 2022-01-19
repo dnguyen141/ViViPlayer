@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Video from '../../components/video/Video';
-import UserStory from '../../components/user-story/UserStory';
+import TabContainer from '../../components/tab-container/TabContainer';
 import Vivilayout from '../../layout';
 import { Row, Col } from 'antd';
 
@@ -27,7 +27,7 @@ function index(props) {
           span={12}
           style={{ padding: '25px', justifyContent: 'center' }}
         >
-          <UserStory currentShot={currentShot} />
+          <TabContainer currentShot={currentShot} />
         </Col>
       </Row>
     </Vivilayout>
