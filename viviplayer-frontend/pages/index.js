@@ -97,7 +97,7 @@ const Home = ({ login, loadUser, user, register, loginWithTanFunc }) => {
                 <Input prefix={<NumberOutlined />} placeholder="TAN" />
               </Form.Item>
               <Button type="primary" htmlType="submit">
-                Submit
+                TAN Einloggen
               </Button>
             </Form>
           </TabPane>
