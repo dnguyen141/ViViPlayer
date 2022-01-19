@@ -25,9 +25,9 @@ class ViViSession(models.Model):
         ordering = ['id']
 
 
-# Segment video and create Shots
 @receiver(post_save, sender=ViViSession)
 def segment_video(sender, instance, created, *args, **kwargs):
+    """ Segment video and create Shots """
     if created:
         time_stamps = autosegment.find_scenes(instance.video_path.path, instance.name)
         for i, time in enumerate(time_stamps):
@@ -52,9 +52,9 @@ class Shot(models.Model):
         ordering = ['time']
 
 
-# Create Screenshot when a Shot is created
 @receiver(post_save, sender=Shot)
 def get_screenshot(sender, instance, created, *args, **kwargs):
+    """ Create Screenshot when a Shot is created """
     if created:
         vid = ViViSession.objects.get(shots=instance)
         imageextractor.extract(vid.video_path.path, vid.id, [instance.time])

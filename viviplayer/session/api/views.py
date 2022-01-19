@@ -150,8 +150,8 @@ class QuestionViewSet(viewsets.ModelViewSet):
         )
 
 
-# API View for download a session as a .odt file
 class ExportODT(APIView):
+    """ API View for download a session as a .odt file """
     # Public for testing. Should only be accessed by a Moderator
     permission_classes = [IsModerator]
 
@@ -292,8 +292,8 @@ class ExportODT(APIView):
         return response
 
 
-# API View for downloading User Stories as .csv
 class ExportCSV(APIView):
+    """API View for downloading User Stories as .csv"""
     # Public for testing. Should only be accessed by a Moderator
     permission_classes = [IsModerator]
 
@@ -338,8 +338,8 @@ class ExportCSV(APIView):
         return response
 
 
-# API for member to send their answer for question to server
 class PostAnswerAPIView(generics.CreateAPIView):
+    """ API for member to send their answer for question to server """
     permission_classes = [IsAuthenticated]
     serializer_class = AnswerSerializer
 
@@ -373,8 +373,8 @@ class PostAnswerAPIView(generics.CreateAPIView):
         return Response(data=data, status=status.HTTP_200_OK)
 
 
-# API for moderator to get statistics data
 class GetStatisticsAPIView(APIView):
+    """ API for moderator to get statistics data """
     permission_classes = [IsAuthenticated]
 
     def get(self, request, *args, **kwargs):
