@@ -11,6 +11,15 @@ import {
 } from './types';
 import { Notification } from '../utils/notification';
 
+/**
+ * Creates a new survey/question.
+ * @param {number} shot Id of the shot which the question/survey is written for.
+ * @param {string} title Question for the survey/question.
+ * @param {*} choices Answer choices.
+ * @param {string} correct_answer Correct answer from answer choices. Must be the same as one of the choices.
+ * @param {string} typeToRender Type of the question that will be rendered(Survey or Question).
+ * @returns 
+ */
 export const createSurvey =
   (shot, title, choices, correct_answer, typeToRender) => async (dispatch) => {
     const body = { shot, title, choices, correct_answer, typeToRender };
@@ -32,6 +41,11 @@ export const createSurvey =
     }
   };
 
+  /**
+   * Deletes an existing survey/question based on id.
+   * @param {number} id Id of the survey/question that will be deleted.
+   * @returns 
+   */
 export const deleteQuestion = (id) => async (dispatch) => {
   try {
     await api.delete(`/session/questions/${id}/`);
@@ -50,6 +64,13 @@ export const deleteQuestion = (id) => async (dispatch) => {
   }
 };
 
+/**
+ * Sends an answer to sent survey/question during the session.
+ * @param {number} question_id Id of the question that is answered.
+ * @param {*} answer Answer chosen by User.
+ * @param {*} type Type of the question(Survey or Question).
+ * @returns 
+ */
 export const sendAnswer = (question_id, answer, type) => async (dispatch) => {
   const body = { question_id, answer };
   try {
@@ -77,7 +98,16 @@ export const sendAnswer = (question_id, answer, type) => async (dispatch) => {
   }
 };
 
-//edit Survey
+/**
+ * Updates an existing survey/question based on id.
+ * @param {number} shot Id of the shot which the question/survey is written for.
+ * @param {string} title Question for the survey/question.
+ * @param {*} choices Answer choices.
+ * @param {string} correct_answer Correct answer from answer choices. Must be the same as one of the choices.
+ * @param {string} typeToRender Type of the question that will be rendered(Survey or Question).
+ * @param {number} id Id of the survey/question that will be updated.
+ * @returns 
+ */
 export const updateSurveyById =
   (shot, title, choices, correct_answer, typeToRender, id) => async (dispatch) => {
     const body = { shot, title, choices, correct_answer, typeToRender };
@@ -100,7 +130,11 @@ export const updateSurveyById =
     }
   };
 
-//get question by id
+/**
+ * Load a survey/question based on id from the backend server.
+ * @param {number} id Id of the survey/question that will be loaded.
+ * @returns 
+ */
 export const getQuestionById = (id) => async (dispatch) => {
   try {
     await api.get(`/session/questions/${id}/`);
