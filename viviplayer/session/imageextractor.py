@@ -13,6 +13,17 @@ from scenedetect.detectors.content_detector import ContentDetector
 
 # Input: path to video file, a session id and a list of time stamps
 def extract(video_path, session_id, timestamps):
+    """ extracts single frames per scene from video and saves them at relative path media/screenshots/<session_id>/<nnnnn>.jpg
+
+        :returns: list of timestamps marking the beginning of scenes
+        :rtype: List[Float]
+        :param video_path: path where videos files are located
+        :type video_path: String
+        :param session_id: session id from model
+        :type session_id: Int
+        :param timestamps: list of timestamps marking the beginning of scenes
+        :type timestamps: List[Float]
+    """
 
     video_manager = VideoManager([video_path])
     stats_manager = StatsManager()
@@ -34,8 +45,8 @@ def extract(video_path, session_id, timestamps):
 
         # Generate scene list from timestamps
         for t in timestamps:
-            ftc = (scenedetect.FrameTimecode(timecode=t+.1, fps=video_manager.get_framerate()),
-                   scenedetect.FrameTimecode(timecode=t+.2, fps=video_manager.get_framerate()))
+            ftc = (scenedetect.FrameTimecode(timecode=t + .1, fps=video_manager.get_framerate()),
+                   scenedetect.FrameTimecode(timecode=t + .2, fps=video_manager.get_framerate()))
             scene_list.append(ftc)
 
         # Generate images for scenes and save on server
@@ -62,4 +73,3 @@ def extract(video_path, session_id, timestamps):
         video_manager.release()
 
     return data
-
