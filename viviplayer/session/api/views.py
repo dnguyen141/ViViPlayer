@@ -30,6 +30,10 @@ from .serializers import (
 
 
 def tan_generator():
+    """ generates a random string from letters, digits and certain special characters
+        :returns: a random string
+        :rtype: String
+    """
     pwd_chars = [
         random.choice(string.ascii_lowercase + string.ascii_uppercase)
         for _ in range(random.randint(5, 6))
