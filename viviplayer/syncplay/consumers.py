@@ -3,7 +3,10 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 
 
 class AsyncPlayerConsumer(AsyncWebsocketConsumer):
+    """combines all Websocket handling in backend"""
     async def connect(self):
+        """is called when a client opens a new Websocket connection. The broadcast group ist implicitely createtd
+        here """
         self.room_name = self.scope['url_route']['kwargs']['room_name']
         self.room_group_name = 'player_%s' % self.room_name
 
@@ -16,6 +19,7 @@ class AsyncPlayerConsumer(AsyncWebsocketConsumer):
         await self.accept()
 
     async def disconnect(self, close_code):
+        """is called when Websocket is disconnected and cleans up broadcast group"""
         # Leave room group
         await self.channel_layer.group_discard(
             self.room_group_name,
@@ -24,6 +28,7 @@ class AsyncPlayerConsumer(AsyncWebsocketConsumer):
 
     # Receive message from WebSocket
     async def receive(self, text_data=None, bytes_data=None):
+        """passes json messages containing an "action" field to all connected clients"""
         text_data_json = json.loads(text_data)
         action = text_data_json['action']
         if "time" in text_data_json:
@@ -48,6 +53,7 @@ class AsyncPlayerConsumer(AsyncWebsocketConsumer):
         )
 
     async def player_message(self, event):
+        """handles passing broadcast messages back to the individual Websocket connections"""
         action = event['action']
         time = event['time']
         payload = event['payload']
