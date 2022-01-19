@@ -13,7 +13,6 @@ class ViViSessionManager(models.Manager):
 
 # Create your models here.
 class ViViSession(models.Model):
-    """ represents a shared session in which all users are synchronously watch the same video"""
     name = models.CharField(max_length=255, null=False, blank=False, unique=True)
     owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="sessions")
     tan = models.CharField(max_length=20, blank=False)
@@ -26,9 +25,9 @@ class ViViSession(models.Model):
         ordering = ['id']
 
 
+# Segment video and create Shots
 @receiver(post_save, sender=ViViSession)
 def segment_video(sender, instance, created, *args, **kwargs):
-    """ Segment video and create Shots """
     if created:
         time_stamps = autosegment.find_scenes(instance.video_path.path, instance.name)
         for i, time in enumerate(time_stamps):
@@ -39,7 +38,6 @@ def segment_video(sender, instance, created, *args, **kwargs):
 
 
 class Shot(models.Model):
-    """ represents a segment of a video including all user stories and surveys concerning this that timespan """
     session = models.ForeignKey(ViViSession, on_delete=models.CASCADE, related_name="shots")
     time = models.FloatField()
     title = models.CharField(max_length=50, null=False, blank=False)
@@ -54,9 +52,9 @@ class Shot(models.Model):
         ordering = ['time']
 
 
+# Create Screenshot when a Shot is created
 @receiver(post_save, sender=Shot)
 def get_screenshot(sender, instance, created, *args, **kwargs):
-    """ Create Screenshot when a Shot is created """
     if created:
         vid = ViViSession.objects.get(shots=instance)
         imageextractor.extract(vid.video_path.path, vid.id, [instance.time])
@@ -65,7 +63,6 @@ def get_screenshot(sender, instance, created, *args, **kwargs):
 
 
 class UserStory(models.Model):
-    """ represents a user story in the sense of software engineering """
     session = models.ForeignKey(ViViSession, on_delete=models.CASCADE, related_name="userstories")
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="userstories")
     shot = models.ForeignKey(Shot, on_delete=models.CASCADE, related_name="userstories")
@@ -80,7 +77,6 @@ class UserStory(models.Model):
 
 
 class Sentence(models.Model):
-    """ represents comment or unformated requirement """
     session = models.ForeignKey(ViViSession, on_delete=models.CASCADE, related_name="sentences")
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="sentences")
     shot = models.ForeignKey(Shot, on_delete=models.CASCADE, related_name="sentences")
@@ -97,7 +93,6 @@ def _get_default_json_for_question():
 
 
 class Question(models.Model):
-    """ can represent either a single choice or a multiple choice question"""
     RENDER_TYPE = (
         ("checkbox", _("Checkbox")),
         ("radiogroup", _("Radiogroup"))
