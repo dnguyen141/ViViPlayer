@@ -18,7 +18,7 @@ import { Notification } from '../utils/notification';
  * @param {*} choices Answer choices.
  * @param {string} correct_answer Correct answer from answer choices. Must be the same as one of the choices.
  * @param {string} typeToRender Type of the question that will be rendered(Survey or Question).
- * @returns 
+ * @returns New survey/question api response.
  */
 export const createSurvey =
   (shot, title, choices, correct_answer, typeToRender) => async (dispatch) => {
@@ -44,7 +44,7 @@ export const createSurvey =
   /**
    * Deletes an existing survey/question based on id.
    * @param {number} id Id of the survey/question that will be deleted.
-   * @returns 
+   * @returns Survey/Question deleted api response.
    */
 export const deleteQuestion = (id) => async (dispatch) => {
   try {
@@ -69,7 +69,7 @@ export const deleteQuestion = (id) => async (dispatch) => {
  * @param {number} question_id Id of the question that is answered.
  * @param {*} answer Answer chosen by User.
  * @param {*} type Type of the question(Survey or Question).
- * @returns 
+ * @returns Answer sent api response.
  */
 export const sendAnswer = (question_id, answer, type) => async (dispatch) => {
   const body = { question_id, answer };
@@ -106,7 +106,7 @@ export const sendAnswer = (question_id, answer, type) => async (dispatch) => {
  * @param {string} correct_answer Correct answer from answer choices. Must be the same as one of the choices.
  * @param {string} typeToRender Type of the question that will be rendered(Survey or Question).
  * @param {number} id Id of the survey/question that will be updated.
- * @returns 
+ * @returns Survey/Question information update based on id api response.
  */
 export const updateSurveyById =
   (shot, title, choices, correct_answer, typeToRender, id) => async (dispatch) => {
@@ -133,7 +133,7 @@ export const updateSurveyById =
 /**
  * Load a survey/question based on id from the backend server.
  * @param {number} id Id of the survey/question that will be loaded.
- * @returns 
+ * @returns Survey/Question information based on id api response.
  */
 export const getQuestionById = (id) => async (dispatch) => {
   try {
