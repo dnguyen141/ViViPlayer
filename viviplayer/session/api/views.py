@@ -235,7 +235,7 @@ class ExportODT(APIView):
 
             for (j, us) in enumerate(UserStory.objects.filter(shot=s)):
                 userstorytext = (
-                    "Damit " + us.damit + " möchte ich als " + us.moechteichals1 + " " + us.moechteichals2
+                    "Damit " + us.reason + " möchte ich als " + us.role + " " + us.requirement
                 )
                 p = P(text=userstorytext, stylename=pstyle)
                 textdoc.text.addElement(p)
@@ -316,7 +316,7 @@ class ExportCSV(APIView):
         for (i, us) in enumerate(UserStory.objects.all()):
             row = [
                 f"User Story {i + 1}",
-                f"Damit {us.damit} möchte ich als {us.moechteichals1} {us.moechteichals2}",
+                f"Damit {us.reason} möchte ich als {us.role} {us.requirement}",
                 str(us.shot.image).split("/")[-1],
             ]
             writer.writerow(row)

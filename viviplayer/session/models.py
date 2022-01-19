@@ -66,9 +66,9 @@ class UserStory(models.Model):
     session = models.ForeignKey(ViViSession, on_delete=models.CASCADE, related_name="userstories")
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="userstories")
     shot = models.ForeignKey(Shot, on_delete=models.CASCADE, related_name="userstories")
-    damit = models.CharField(max_length=500, null=False, blank=False)
-    moechteichals1 = models.CharField(max_length=500, null=False, blank=False)
-    moechteichals2 = models.CharField(max_length=500, null=False, blank=False)
+    reason = models.CharField(max_length=500, null=False, blank=False)
+    role = models.CharField(max_length=500, null=False, blank=False)
+    requirement = models.CharField(max_length=500, null=False, blank=False)
 
     class Meta:
         verbose_name = _("UserStory")

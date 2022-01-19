@@ -6,8 +6,8 @@ import { updateUserStoryById } from '../../actions/session.action';
 
 const EditUserStory = ({ id, context, updateFunc, updateUserStoryById }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const updateUserStory = async ({ damit, moechteichals1, moechteichals2 }) => {
-    await updateUserStoryById(damit, moechteichals1, moechteichals2, context.shot, id);
+  const updateUserStory = async ({ damit: reason, moechteichals1, moechteichals2 }) => {
+    await updateUserStoryById(reason, moechteichals1, moechteichals2, context.shot, id);
     setIsModalVisible(false);
     updateFunc();
   };
